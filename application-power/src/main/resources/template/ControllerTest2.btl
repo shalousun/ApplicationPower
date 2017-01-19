@@ -1,0 +1,83 @@
+package ${basePackage}.controller;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import javax.annotation.Resource;
+
+import ${basePackage}.model.${entitySimpleName};
+
+/**
+ * controller 接口单元测试
+ * @author ${authorName}
+ * @date ${createTime}
+ *
+ */
+public class ${entitySimpleName}ControllerTest extends ControllerBaseTest {
+
+    // 模拟request,response
+    private MockHttpServletRequest request;
+    private MockHttpServletResponse response;
+
+
+    @Resource
+    private ${entitySimpleName}Controller ${firstLowerName}Controller;
+
+    // 执行测试方法之前初始化模拟request,response
+    @Before
+    public void setUp(){
+        request = new MockHttpServletRequest();
+        request.setCharacterEncoding("UTF-8");
+        response = new MockHttpServletResponse();
+    }
+
+    /**
+     * 测试controller add接口
+     * @throws Exception
+     */
+    @Test
+    public void testAdd(){
+        ${entitySimpleName} entity = new ${entitySimpleName}();
+        ${firstLowerName}Controller.save(entity);
+    }
+
+    /**
+     * 测试controller queryById接口
+     * @throws Exception
+     */
+    @Test
+    public void testQueryById() throws Exception {
+
+    }
+
+    /**
+     * 测试controller update接口
+     * @throws Exception
+     */
+    @Test
+    public void testUpdate() throws Exception {
+
+    }
+    /**
+     * 测试controller delete接口
+     * @throws Exception
+     */
+    @Test
+    public void testDelete() throws Exception {
+
+
+    }
+
+    /**
+     * 测试controller page分页接口
+     * @throws Exception
+     */
+    public void testQueryPage() throws Exception{
+
+    }
+
+}
+
+

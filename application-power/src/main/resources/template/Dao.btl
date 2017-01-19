@@ -1,0 +1,58 @@
+package ${basePackage}.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import ${basePackage}.model.${entitySimpleName};
+
+/**
+ *
+ * @author ${authorName}
+ * @date ${createTime}
+ *
+ *
+ */
+
+public interface ${entitySimpleName}Dao{
+
+	/**
+	 * 保存数据
+	 * @param entity
+	 * @return
+     */
+	int save(${entitySimpleName} entity);
+
+    /**
+     * 批量添加数据
+     * @param entityList
+     * @return
+     */
+	int batchSave(List<${entitySimpleName}> entityList);
+
+	/**
+	 * 更新数据
+	 * @param entity
+	 * @return
+     */
+	int update(${entitySimpleName} entity);
+
+	/**
+	 * 删除数据
+	 * @param id
+	 * @return
+     */
+	int delete(int id);
+
+	/**
+	 * 根据id查询数据
+	 * @param id
+	 * @return
+     */
+	${entitySimpleName} queryById(int id);
+
+	/**
+	 * 分页查询数据
+	 * @return
+     */
+	List<${entitySimpleName}> queryPage();
+}

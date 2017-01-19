@@ -1,0 +1,97 @@
+package ${basePackage}.service.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import ${basePackage}.vo.CommonResult;
+import ${basePackage}.model.${entitySimpleName};
+import ${basePackage}.dao.${entitySimpleName}Dao;
+import ${basePackage}.service.${entitySimpleName}Service;
+
+/**
+ *
+ * @author ${authorName}
+ * @date ${createTime}
+ *
+ */
+@Service("${firstLowerName}Service")
+public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Service{
+
+    /**
+     * 日志
+     */
+    private static Logger logger = LoggerFactory.getLogger(${entitySimpleName}Service.class);
+
+	@Resource
+	private ${entitySimpleName}Dao ${firstLowerName}Dao;
+
+	@Override
+	public CommonResult save(${entitySimpleName} entity){
+		CommonResult result = new CommonResult();
+        try{
+        	${firstLowerName}Dao.save(entity);
+        	result.setSuccess(true);
+        }catch(Exception e){
+        	result.setMessage("添加数据失败");
+        	logger.error("添加数据异常：",e);
+        }
+        return result;
+	}
+
+	@Override
+	public CommonResult update(${entitySimpleName} entity){
+		CommonResult result = new CommonResult();
+        try{
+            ${firstLowerName}Dao.update(entity);
+            result.setSuccess(true);
+        }catch(Exception e){
+            result.setMessage("修改数据失败");
+            logger.error("修改数据异常：",e);
+        }
+        return result;
+	}
+
+	@Override
+	public CommonResult delete(int id){
+		CommonResult result = new CommonResult();
+        try{
+            ${firstLowerName}Dao.delete(id);
+            result.setSuccess(true);
+        }catch(Exception e){
+            result.setMessage("删除数据失败");
+            logger.error("删除数据异常：",e);
+        }
+        return result;
+	}
+
+
+
+	@Override
+	public CommonResult queryById(int id){
+	    CommonResult result = new CommonResult();
+	    ${entitySimpleName} entity = ${firstLowerName}Dao.queryById(id);
+	    if(null != entity){
+        	result.setData(entity);//成功返回数据
+        	result.setSuccess(true);
+        }else{
+        	result.setMessage("没有找到匹配数据");
+        	logger.info("未查询到数据，编号：{}",id);
+        }
+        return result;
+	}
+
+	@Override
+    public PageInfo queryPage(int offset, int limit) {
+        PageHelper.offsetPage(offset,limit);
+        List<${entitySimpleName}> list = ${firstLowerName}Dao.queryPage();
+        return new PageInfo(list);
+    }
+
+}

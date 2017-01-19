@@ -1,0 +1,51 @@
+package ${basePackage}.service;
+
+import com.github.pagehelper.PageInfo;
+import ${basePackage}.vo.CommonResult;
+import ${basePackage}.model.${entitySimpleName};
+
+/**
+ *
+ * @author ${authorName}
+ * @date ${createTime}
+ *
+ */
+
+public interface ${entitySimpleName}Service{
+
+	/**
+	 * 保存数据
+	 * @param entity
+	 * @return
+     */
+	CommonResult save(${entitySimpleName} entity);
+
+	/**
+	 * 修改数据
+	 * @param entity
+	 * @return
+     */
+	CommonResult update(${entitySimpleName} entity);
+
+	/**
+	 * 删除数据
+	 * @param id
+	 * @return
+     */
+	CommonResult delete(int id);
+
+	/**
+	 * 根据id查询数据
+	 * @param id
+	 * @return
+     */
+	CommonResult queryById(int id);
+
+	/**
+     * 分页查询
+     * @param offset 偏移量
+     * @param limit 每页大小
+     * @return
+     */
+    PageInfo queryPage(int offset, int limit);
+}

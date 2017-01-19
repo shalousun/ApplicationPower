@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+	    <!--是否开启缓存-->
+		<setting name="cacheEnabled" value="${cacheEnabled}"/>
+		<!--是否开启mybatis自动转驼峰-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	<!--配置分页插件-->
+    <plugins>
+    	<plugin interceptor="com.github.pagehelper.PageInterceptor">
+    	</plugin>
+    </plugins>
+</configuration>

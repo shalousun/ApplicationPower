@@ -1,0 +1,19 @@
+package ${basePackage}.model;
+
+import java.io.Serializable;
+${modelImports}
+
+/**
+ * Table:${tableComment}
+ * @author ${authorName}
+ * @date ${createTime}
+ *
+ */
+public class ${entitySimpleName} implements Serializable{
+
+    private static final long serialVersionUID = ${SerialVersionUID}L;
+
+   ${fields}
+	//getters and setters
+   ${gettersAndSetters}
+}
