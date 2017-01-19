@@ -2,8 +2,8 @@
         最终生成基于maven构建的可运行web工程，生成完后只需要将生成的项目导入到eclipse、idea或者及其他开发工具部署至tomcat即可运行，
         当然生成的项目基于maven环境集成了jetty web容器，eclipse使用jetty:run命令即可运行，idea的用户只需点击maven projects下的
         plugins中找到jetty run即可启动项目。
-        ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower相对
-    mybatis generator来说配置更少、代码灵活性和可控性更高。
+        ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower
+        相对mybatis generator来说配置更少、代码灵活性和可控性更高。
 
     
 ## 功能
