@@ -1,34 +1,45 @@
 package ${basePackage}.controller;
 
-
+<%if(queryToListMap){ %>
 import java.util.List;
+import java.util.Map;
+<%}%>
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.ResponseBody;
+<%if(delete||query||page||queryToListMap){ %>
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+<%}%>
+<%if(queryToListMap){ %>
+import org.springframework.web.bind.annotation.RequestParam;
+<%}%>
+<%if(add||update){ %>
+import org.springframework.web.bind.annotation.PostMapping;
+<%}%>
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+<%if(page){ %>
 import com.github.pagehelper.PageInfo;
-import ${basePackage}.vo.CommonResult;
+<%}%>
+<%if(add||query||delete||update){ %>
+import com.boco.common.model.CommonResult;
+<%}%>
 import ${basePackage}.model.${entitySimpleName};
 import ${basePackage}.service.${entitySimpleName}Service;
 
 /**
  *
- * @author ${authorName}
- * @date ${createTime}
- *
+ * @author ${authorName} on ${createTime}.
  */
 @Controller
 @RequestMapping("${firstLowerName}")
-public class ${entitySimpleName}Controller{
+public class ${entitySimpleName}Controller {
     /**
      * 日志
      */
@@ -36,34 +47,52 @@ public class ${entitySimpleName}Controller{
 
 	@Resource
 	private ${entitySimpleName}Service ${firstLowerName}Service;
+    <%if(add){ %>
 
 	@ResponseBody
-	@RequestMapping(value="/add",method = RequestMethod.POST)
-	public CommonResult save(${entitySimpleName} entity){
+	@PostMapping(value = "/add")
+	public CommonResult save(${entitySimpleName} entity) {
 		return ${firstLowerName}Service.save(entity);
 	}
+	<%}%>
+    <%if(update){ %>
 
 	@ResponseBody
-	@RequestMapping(value="/update",method = RequestMethod.POST)
-	public CommonResult update(${entitySimpleName} entity){
+	@PostMapping(value = "/update")
+	public CommonResult update(${entitySimpleName} entity) {
 		return ${firstLowerName}Service.update(entity);
 	}
+    <%}%>
+    <%if(delete){ %>
 
 	@ResponseBody
-	@RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
-	public CommonResult delete(@PathVariable int id){
+	@GetMapping(value = "/delete/{id}")
+	public CommonResult delete(@PathVariable int id) {
 		return ${firstLowerName}Service.delete(id);
 	}
+    <%}%>
+    <%if(query){ %>
 
 	@ResponseBody
-	@RequestMapping(value="/query/{id}",method = RequestMethod.GET)
-	public CommonResult queryById(@PathVariable int id){
+	@GetMapping(value = "/query/{id}")
+	public CommonResult queryById(@PathVariable int id) {
 		return ${firstLowerName}Service.queryById(id);
 	}
+	<%}%>
+    <%if(page){ %>
 
     @ResponseBody
-    @RequestMapping(value = "page/{offset}/{limit}",method = RequestMethod.GET)
-    public PageInfo queryPage(@PathVariable int offset,@PathVariable int limit){
+    @GetMapping(value = "/page/{offset}/{limit}")
+    public PageInfo queryPage(@PathVariable int offset,@PathVariable int limit) {
         return ${firstLowerName}Service.queryPage(offset,limit);
     }
+    <%}%>
+    <%if(queryToListMap){ %>
+
+    @ResponseBody
+    @GetMapping(value = "/listMap")
+    public List<Map<String,Object>> queryToListMap(@RequestParam Map<String,Object> params) {
+        return ${firstLowerName}Service.queryToListMap(params);
+    }
+    <%}%>
 }

@@ -2,6 +2,7 @@ package com.power.database;
 
 /**
  * 数据库表信息
+ *
  * @author sunyu 2016/12/11.
  */
 public class TableInfo {

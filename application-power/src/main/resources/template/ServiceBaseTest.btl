@@ -6,6 +6,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * service层业务单元测试基础类
+ * @author ${authorName} on ${createTime}.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({

@@ -1,0 +1,40 @@
+#Spring boot application.yml
+
+
+spring:
+  #profiles : dev
+  datasource:
+    name: mydb
+    type: com.alibaba.druid.pool.DruidDataSource
+    #jdbc:mysql://localhost:3306/cookbook?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
+    url: ${dbUrl}
+    username: ${dbUserName}
+    password: ${dbPassword}
+    driver-class-name: ${dbDriver}
+    minIdle: 1
+    maxActive: 2
+    initialSize: 1
+    timeBetweenEvictionRunsMillis: 3000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'ZTM' FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+  <%if(isJTA){%>
+  # transaction manager
+  jta:
+    log-dir: classpath:tx-logs
+    transaction-manager-id: txManager
+  <%}%>
+
+
+mybatis:
+  type-aliases-package: ${basePackage}
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath*:${mappingDir}/mapping/*.xml
+server:
+  port: 8080
+  undertow:
+     accesslog:
+      enabled: true
+      dir: ../logs

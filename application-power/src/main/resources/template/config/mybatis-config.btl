@@ -8,6 +8,8 @@
 		<setting name="cacheEnabled" value="${cacheEnabled}"/>
 		<!--是否开启mybatis自动转驼峰-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--use log4j2-->
+        <setting name="logImpl" value="LOG4J2"/>
 	</settings>
 	<!--配置分页插件-->
     <plugins>

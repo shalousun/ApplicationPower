@@ -23,10 +23,10 @@ public class Column {
 
     /**
      * 是否自增
+     *
      * @return
      */
     private boolean isAutoIncrement;
-
 
 
     public String getColumnName() {

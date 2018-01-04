@@ -1,0 +1,42 @@
+#Spring boot application.yml
+
+# spring
+spring:
+  #profiles : dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      <%for(item in list){%>
+      ${item}:
+        url: ${dbUrl}
+        username: ${dbUserName}
+        password: ${dbPassword}
+        driver-class-name: ${dbDriver}
+        minIdle: 1
+        maxActive: 2
+        initialSize: 1
+        timeBetweenEvictionRunsMillis: 3000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 'ZTM' FROM DUAL
+        validationQueryTimeout: 10000
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        maxWait: 60000
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,wall,log4j2
+        <% }%>
+  <%if(isJTA){%>
+  # transaction manager
+  jta:
+    log-dir: classpath:tx-logs
+    transaction-manager-id: txManager
+  <%}%>
+server:
+  port: 8080
+  undertow:
+     accesslog:
+      enabled: true
+      dir: ../logs

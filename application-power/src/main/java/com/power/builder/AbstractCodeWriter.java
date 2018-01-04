@@ -2,6 +2,7 @@ package com.power.builder;
 
 import com.power.constant.PackageConfig;
 import com.power.constant.ProjectConfig;
+import com.power.constant.SpringBootProjectConfig;
 import com.power.database.DbProvider;
 import com.power.factory.DbProviderFactory;
 
@@ -26,6 +27,8 @@ public abstract class AbstractCodeWriter {
     private ProjectConfig projectConfig;
 
 
+    private SpringBootProjectConfig springBootProjectConfig;
+
     /**
      *
      */
@@ -37,7 +40,18 @@ public abstract class AbstractCodeWriter {
     protected void initConfig() {
         if (null == config) {
             dataBaseInfo = new DbProviderFactory().getInstance();
-            config = new ConfigBuilder(dataBaseInfo,packageConfig,projectConfig);
+            config = new ConfigBuilder(dataBaseInfo, packageConfig, projectConfig);
+
+        }
+    }
+
+    /**
+     * 初始化spring boot的配置
+     */
+    protected void initSpringBootConfig() {
+        if (null == config) {
+            dataBaseInfo = new DbProviderFactory().getInstance();
+            config = new ConfigBuilder(dataBaseInfo, packageConfig, springBootProjectConfig);
 
         }
     }
@@ -72,5 +86,13 @@ public abstract class AbstractCodeWriter {
 
     public void setConfig(ConfigBuilder config) {
         this.config = config;
+    }
+
+    public SpringBootProjectConfig getSpringBootProjectConfig() {
+        return springBootProjectConfig;
+    }
+
+    public void setSpringBootProjectConfig(SpringBootProjectConfig springBootProjectConfig) {
+        this.springBootProjectConfig = springBootProjectConfig;
     }
 }

@@ -5,6 +5,7 @@ import java.sql.*;
 
 /**
  * jdbc链接数据库的工具
+ *
  * @author sunyu
  */
 public class DbUtil {
@@ -16,11 +17,13 @@ public class DbUtil {
 
     /**
      * 获取数据
+     *
      * @return
      */
     public static Connection getConnection() {
         try {
             Class.forName(DRIVER);
+            DriverManager.setLoginTimeout(1000);
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -33,6 +36,7 @@ public class DbUtil {
 
     /**
      * 获取数据库元数据
+     *
      * @param connection
      * @return
      */
@@ -48,19 +52,26 @@ public class DbUtil {
 
     /**
      * 关闭链接
+     *
      * @param conn
      */
-    public static void close(Connection conn){
-        try {
-            if (null != conn) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static void close(Connection conn) {
+        DbUtil.close(conn, null, null);
     }
+
     /**
      * 关闭链接
+     *
+     * @param conn
+     * @param rs
+     */
+    public static void close(Connection conn, ResultSet rs) {
+        DbUtil.close(conn, null, rs);
+    }
+
+    /**
+     * 关闭链接
+     *
      * @param conn
      * @param pstmt
      * @param rs

@@ -1,37 +1,21 @@
 package ${basePackage}.controller;
 
-import org.junit.Before;
 import org.junit.Test;
-
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.web.context.WebApplicationContext;
-import javax.annotation.Resource;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
  * controller restful接口单元测试
- * @author ${authorName}
- * @date ${createTime}
+ * @author ${authorName} on ${createTime}.
  *
  */
-public class ${entitySimpleName}ControllerTest extends ControllerBaseTest{
-
-	@Resource
-	private WebApplicationContext wac;
-
-	private MockMvc mockMvc;
-
-	@Before
-	public void setup() {
-		this.mockMvc = webAppContextSetup(this.wac).build();
-	}
+public class ${entitySimpleName}ControllerTest extends ControllerBaseTest {
+    <%if(add){ %>
 
 	/**
 	 * 测试controller add接口
@@ -40,12 +24,12 @@ public class ${entitySimpleName}ControllerTest extends ControllerBaseTest{
 	@Test
 	public void testAdd() throws Exception {
 		MvcResult result = mockMvc.perform(post("/${firstLowerName}/add")
- 			.contentType(MediaType.APPLICATION_JSON)
- 			.param("param1", "pm1")
+ 			.contentType(MediaType.APPLICATION_JSON)${params}
  		).andExpect(status().isOk()).andDo(print()).andReturn();
 		System.out.println("result:"+result.getResponse().getContentAsString());
 	}
-
+	<%}%>
+    <%if(query){ %>
 
 	/**
 	 * 测试controller queryById接口
@@ -59,6 +43,8 @@ public class ${entitySimpleName}ControllerTest extends ControllerBaseTest{
  		).andExpect(status().isOk()).andDo(print()).andReturn();
 		System.out.println("result:"+result.getResponse().getContentAsString());
 	}
+    <%}%>
+    <%if(update){ %>
 
 	/**
 	 * 测试controller update接口
@@ -66,8 +52,14 @@ public class ${entitySimpleName}ControllerTest extends ControllerBaseTest{
      */
 	@Test
 	public void testUpdate() throws Exception {
-
+        MvcResult result = mockMvc.perform(post("/${firstLowerName}/update")
+         	.contentType(MediaType.APPLICATION_JSON)
+         	${params}
+        ).andExpect(status().isOk()).andDo(print()).andReturn();
+        System.out.println("result:"+result.getResponse().getContentAsString());
 	}
+	<%}%>
+    <%if(delete){ %>
 
 	/**
 	 * 测试controller delete接口
@@ -81,6 +73,8 @@ public class ${entitySimpleName}ControllerTest extends ControllerBaseTest{
  		).andExpect(status().isOk()).andDo(print()).andReturn();
 		System.out.println("result:"+result.getResponse().getContentAsString());
 	}
+    <%}%>
+    <%if(page){ %>
 
     /**
      * 测试controller queryPage分页接口
@@ -94,4 +88,5 @@ public class ${entitySimpleName}ControllerTest extends ControllerBaseTest{
         ).andExpect(status().isOk()).andDo(print()).andReturn();
         System.out.println("result:"+result.getResponse().getContentAsString());
     }
+    <%}%>
 }

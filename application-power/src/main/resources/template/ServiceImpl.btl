@@ -1,25 +1,30 @@
 package ${basePackage}.service.impl;
 
+<%if(page||queryToListMap){ %>
 import java.util.List;
-
+<%}%>
+<%if(queryToListMap){ %>
+import java.util.Map;
+<%}%>
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+<%if(page){ %>
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import ${basePackage}.vo.CommonResult;
+<%}%>
+<%if(add||query||delete||update){ %>
+import com.boco.common.model.CommonResult;
+<%}%>
 import ${basePackage}.model.${entitySimpleName};
 import ${basePackage}.dao.${entitySimpleName}Dao;
 import ${basePackage}.service.${entitySimpleName}Service;
 
 /**
- *
- * @author ${authorName}
- * @date ${createTime}
- *
+ * @author ${authorName} on ${createTime}.
  */
 @Service("${firstLowerName}Service")
 public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Service{
@@ -31,61 +36,70 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
 
 	@Resource
 	private ${entitySimpleName}Dao ${firstLowerName}Dao;
+    <%if(add){ %>
 
 	@Override
-	public CommonResult save(${entitySimpleName} entity){
+	public CommonResult save(${entitySimpleName} entity) {
 		CommonResult result = new CommonResult();
-        try{
+        try {
         	${firstLowerName}Dao.save(entity);
         	result.setSuccess(true);
-        }catch(Exception e){
-        	result.setMessage("添加数据失败");
-        	logger.error("添加数据异常：",e);
+        } catch (Exception e) {
+        	logger.error("${entitySimpleName}Service添加数据异常：",e);
+        	//抛出异常方便事务管理，并且会被RestExceptionHandler自动处理
+        	throw new RuntimeException("添加数据失败");
         }
         return result;
 	}
+    <%}%>
+    <%if(update){ %>
 
 	@Override
-	public CommonResult update(${entitySimpleName} entity){
+	public CommonResult update(${entitySimpleName} entity) {
 		CommonResult result = new CommonResult();
-        try{
+        try {
             ${firstLowerName}Dao.update(entity);
             result.setSuccess(true);
-        }catch(Exception e){
-            result.setMessage("修改数据失败");
-            logger.error("修改数据异常：",e);
+        } catch (Exception e) {
+            logger.error("${entitySimpleName}Service修改数据异常：",e);
+            throw new RuntimeException("修改数据失败");
         }
         return result;
 	}
+	<%}%>
+    <%if(delete){ %>
 
 	@Override
-	public CommonResult delete(int id){
+	public CommonResult delete(int id) {
 		CommonResult result = new CommonResult();
-        try{
+        try {
             ${firstLowerName}Dao.delete(id);
             result.setSuccess(true);
-        }catch(Exception e){
-            result.setMessage("删除数据失败");
-            logger.error("删除数据异常：",e);
+        } catch (Exception e) {
+            logger.error("${entitySimpleName}Service删除数据异常：",e);
+            throw new RuntimeException("删除数据异常");
         }
         return result;
 	}
-
-
+	<%}%>
+    <%if(query){ %>
 
 	@Override
-	public CommonResult queryById(int id){
+	public CommonResult queryById(int id) {
 	    CommonResult result = new CommonResult();
 	    ${entitySimpleName} entity = ${firstLowerName}Dao.queryById(id);
-	    if(null != entity){
-        	result.setData(entity);//成功返回数据
+	    if (null != entity) {
+	        //成功返回数据
+        	result.setData(entity);
         	result.setSuccess(true);
-        }else{
+        } else {
         	result.setMessage("没有找到匹配数据");
-        	logger.info("未查询到数据，编号：{}",id);
+        	logger.info("${entitySimpleName}Service未查询到数据，编号：{}",id);
         }
         return result;
 	}
+	<%}%>
+    <%if(page){ %>
 
 	@Override
     public PageInfo queryPage(int offset, int limit) {
@@ -93,5 +107,12 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
         List<${entitySimpleName}> list = ${firstLowerName}Dao.queryPage();
         return new PageInfo(list);
     }
+    <%}%>
+    <%if(queryToListMap){ %>
 
+    @Override
+    public List<Map<String,Object>> queryToListMap(Map<String,Object> params){
+        return ${firstLowerName}Dao.queryToListMap(params);
+    }
+    <%}%>
 }

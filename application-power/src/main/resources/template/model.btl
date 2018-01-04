@@ -5,15 +5,17 @@ ${modelImports}
 
 /**
  * Table:${tableComment}
- * @author ${authorName}
- * @date ${createTime}
- *
+ * @author ${authorName} on ${createTime}.
  */
-public class ${entitySimpleName} implements Serializable{
+public class ${entitySimpleName} implements Serializable {
 
     private static final long serialVersionUID = ${SerialVersionUID}L;
 
    ${fields}
-	//getters and setters
+	/** getters and setters */
    ${gettersAndSetters}
+    @Override
+    public String toString() {
+        return ${toString}
+    }
 }

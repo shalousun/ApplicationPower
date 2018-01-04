@@ -7,52 +7,57 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.boco.health.common.model.CommonResult;
+import com.boco.common.model.CommonResult;
 import ${basePackage}.model.${entitySimpleName};
 import ${basePackage}.service.${entitySimpleName}Service;
 
 /**
- *
- * @author ${authorName}
- * @date ${createTime}
- *
+ * @author ${authorName} on ${createTime}.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
-public class ${entitySimpleName}ServiceTest extends ServiceBaseTest{
+public class ${entitySimpleName}ServiceTest extends ServiceBaseTest {
 
 	@Resource
 	private ${entitySimpleName}Service ${firstLowerName}Service;
+    <%if(add){ %>
 
 	@Test
-	public void testSave(){
+	public void testSave() {
 		${entitySimpleName} entity = new ${entitySimpleName}();
 		CommonResult result = ${firstLowerName}Service.save(entity);
 	}
+    <%}%>
+    <%if(update){ %>
 
 	@Test
-	public void testUpdate(){
+	public void testUpdate() {
 		${entitySimpleName} entity = new ${entitySimpleName}();
 		CommonResult result = ${firstLowerName}Service.update(entity);
 	}
+	<%}%>
+    <%if(delete){ %>
 
 	@Test
-	public void testDelete(){
+	public void testDelete() {
 		CommonResult result = ${firstLowerName}Service.delete(1);
 	}
+	<%}%>
+    <%if(query){ %>
 
 	@Test
-	public void testQueryById(){
+	public void testQueryById() {
 
 	}
+    <%}%>
+    <%if(page){ %>
 
     /**
      * 分页查询
      *
      */
 	@Test
-	public void testQueryPage(){
+	public void testQueryPage() {
 
 	}
+	<%}%>
 
 }

@@ -1,11 +1,30 @@
 package com.power.constant;
 
+import com.boco.common.util.DateTimeUtil;
+import com.power.utils.GeneratorProperties;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.boco.common.util.DateTimeUtil;
+import com.boco.power.utils.GeneratorProperties;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 代码创建工具，模板变量
  *
  * @author on 2016/12/7.
  */
 public class GeneratorConstant {
+
+    public static final Map<String,Object> COMMON_VARIABLE = new HashMap<>();
+    static {
+        COMMON_VARIABLE.put(GeneratorConstant.BASE_PACKAGE, GeneratorProperties.basePackage());
+        COMMON_VARIABLE.put(GeneratorConstant.AUTHOR, System.getProperty("user.name"));
+        COMMON_VARIABLE.put(GeneratorConstant.CREATE_TIME, DateTimeUtil.getTime());
+    }
 
     /**
      * 代码作者
@@ -54,18 +73,22 @@ public class GeneratorConstant {
      * 代码创建时间
      */
     public static final String CREATE_TIME = "createTime";
+
     /**
      * insert sql语句模板变量
      */
     public static final String INSERT_SQL = "insertSql";
+
     /**
      * 批量插入数据数据的sql模板变量
      */
     public static final String BATCH_INSERT_SQL = "batchInsertSql";
+
     /**
      * 更新语句的变量
      */
     public static final String UPDATE_SQL = "updateSql";
+
     /**
      * 查询语句
      */
@@ -75,6 +98,7 @@ public class GeneratorConstant {
      * mybatis mapper文件result map部分
      */
     public static final String RESULT_MAP = "resultMap";
+
     /**
      * 是否需要生成result map
      */
@@ -84,4 +108,14 @@ public class GeneratorConstant {
      * 是否开启驼峰转换
      */
     public static final String UNDERSCORE_TO_CAMEL_CASE = "underscoreToCamelCase";
+
+    /**
+     * toString方法
+     */
+    public static final String TO_STRING = "toString";
+
+    /**
+     *
+     */
+    public static final String IS_MULTIPLE_DATA_SOURCE = "isMultipleDataSource";
 }

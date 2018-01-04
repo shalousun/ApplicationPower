@@ -9,13 +9,15 @@ import java.util.Map;
 public interface DbProvider {
     /**
      * 根据表名获取列信息
+     *
      * @param tableName
      * @return
      */
-    Map<String,Column> getColumnsInfo(String tableName);
+    Map<String, Column> getColumnsInfo(String tableName);
 
     /**
      * 获取所有表信息
+     *
      * @return
      */
     List<TableInfo> getTablesInfo(String tableName);

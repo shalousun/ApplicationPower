@@ -21,7 +21,13 @@ public class PackageConfig {
 
     private String utils = "utils";
 
-    private String vo = "vo";
+    private String config = "config";
+
+    private String aspect = "aspect";
+
+    private String constants = "constants";
+
+    private String restError = "error";
 
     public String getService() {
         return service;
@@ -55,7 +61,19 @@ public class PackageConfig {
         return utils;
     }
 
-    public String getVo() {
-        return vo;
+    public String getConfig() {
+        return config;
+    }
+
+    public String getConstants() {
+        return constants;
+    }
+
+    public String getAspect() {
+        return aspect;
+    }
+
+    public String getRestError() {
+        return restError;
     }
 }

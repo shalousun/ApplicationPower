@@ -1,0 +1,9 @@
+package ${basePackage}.constants;
+
+/**
+ * 数据源常量
+ */
+public class DataSourceKey {
+
+${datasource}
+}

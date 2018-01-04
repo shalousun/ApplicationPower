@@ -4,12 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.common.power</groupId>
+    <groupId>com.boco.power</groupId>
     <artifactId>ApplicationPower</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>application-power</module>
+        <module>api-doc</module>
+        <module>Common-util</module>
+        <module>datasource-aspect</module>
+        <module>mybatis-template</module>
     </modules>
 
 

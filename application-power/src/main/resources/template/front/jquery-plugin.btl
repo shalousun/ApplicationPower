@@ -1,0 +1,98 @@
+/*******************************************************************************
+ * jquery-${pluginObject} v0.1 requires jQuery 1.11+
+ * @version 0.1
+ * @author ${authorName}
+ * @link
+ * @date ${createTime}
+ *
+ ******************************************************************************/
+//support AMD
+;(function(factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define([ 'jquery' ], factory);
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function($) {
+	'use strict';
+	var ${pluginObject} = function(element, options) {
+		this.options = options;
+		this.$el = $(element);
+		this.init();
+	};
+	${pluginObject}.DEFAULTS = {
+		//default settings
+	};
+	${pluginObject}.LOCALES = [];
+	${pluginObject}.LOCALES['zh-CN'] = ${pluginObject}.LOCALES['cn'] = {};
+	$.extend(${pluginObject}.DEFAULTS,${pluginObject}.LOCALES['zh-CN']);
+
+	// private function definition
+	${pluginObject}.prototype.init = function() {
+		console.log("init method invoked");
+		//this.create();
+	};
+	${pluginObject}.prototype.initLocale = function(){
+		if (this.options.locale) {
+			var parts = this.options.locale.split(/-|_/);
+			parts[0].toLowerCase();
+			parts[1] && parts[1].toUpperCase();
+			if ($.fn.${pluginObject}.locales[this.options.locale]) {
+				// locale as requested
+				$.extend(this.options, $.fn.${pluginObject}.locales[this.options.locale]);
+			} else if ($.fn.${pluginObject}.locales[parts.join('-')]) {
+				// locale with sep set to - (in case original was specified with _)
+				$.extend(this.options, $.fn.${pluginObject}.locales[parts.join('-')]);
+			} else if ($.fn.${pluginObject}.locales[parts[0]]) {
+				// short locale language code (i.e. 'en')
+				$.extend(this.options, $.fn.${pluginObject}.locales[parts[0]]);
+			}
+		}
+	};
+	${pluginObject}.prototype.create = function() {
+		//create something
+	};
+	${pluginObject}.prototype.bindEvent = function() {
+		//bindle event;
+	};
+
+	// public function definition
+	${pluginObject}.prototype.destroy = function() {
+		this.$el.removeData('${pluginObject}');
+	};
+	// public definition
+	var methods = ['destroy'];
+	$.fn.${pluginObject} = function(option) {
+		var value;
+		var args = Array.prototype.slice.call(arguments, 1);
+		this.each(function() {
+			var $this = $(this);
+			var data = $this.data('${pluginObject}');
+			var options = $.extend({},${pluginObject}.DEFAULTS, $this.data(),
+				typeof option === 'object' && option);
+			if (typeof option === 'string') {
+				if ($.inArray(option, methods) < 0) {
+					throw new Error('Method ' + option
+					+ ' does not exist on jQuery-${pluginObject}');
+				}
+				if (!data) {
+					return;
+				}
+				value = data[option].apply(data, args);
+
+			}
+			if (!data) {
+				$this.data('${pluginObject}',(data = new ${pluginObject}(this, options)));
+			}
+		});
+		return typeof value === 'undefined' ? this : value;
+	};
+	$.fn.${pluginObject}.Constructor = ${pluginObject};
+	$.fn.${pluginObject}.defaults = ${pluginObject}.DEFAULTS;
+	$.fn.${pluginObject}.methods = methods;
+	$(function() {
+		$('[data-toggle="${pluginObject}"]').${pluginObject}();
+	});
+}));

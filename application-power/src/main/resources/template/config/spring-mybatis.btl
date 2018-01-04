@@ -3,13 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 	  	http://www.springframework.org/schema/context
-	  	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	  	http://www.springframework.org/schema/context/spring-context-4.3.xsd
 	    http://www.springframework.org/schema/tx
-	    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	    http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 	    http://www.springframework.org/schema/aop
-	    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
   		">
     <!-- 自动扫描 -->
     <context:component-scan base-package="${basePackage}" />
@@ -44,7 +44,7 @@
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
         <property name="minEvictableIdleTimeMillis" value="300000" />
 
-        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="validationQuery" value="SELECT 'x' FROM DUAL" />
         <property name="testWhileIdle" value="true" />
         <property name="testOnBorrow" value="false" />
         <property name="testOnReturn" value="false" />
@@ -55,7 +55,7 @@
                   value="20" />
 
         <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="stat" />
+        <property name="filters" value="stat,log4j2" />
     </bean>
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

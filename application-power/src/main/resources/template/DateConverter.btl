@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * spring 时间自动转换器
- * @author sunyu  on 2016/12/29.
+ * @author ${authorName} on ${createTime}.
  *
  */
 public class DateConverter implements Converter<String, Timestamp> {
@@ -22,13 +22,13 @@ public class DateConverter implements Converter<String, Timestamp> {
      */
     private static Logger logger = LoggerFactory.getLogger(DateConverter.class);
 
-    private static final List<String> formarts = new ArrayList<>(4);
+    private static final List<String> FORMARTS = new ArrayList<>(4);
 
     static {
-        formarts.add("yyyy-MM");
-        formarts.add("yyyy-MM-dd");
-        formarts.add("yyyy-MM-dd HH:mm");
-        formarts.add("yyyy-MM-dd HH:mm:ss");
+        FORMARTS.add("yyyy-MM");
+        FORMARTS.add("yyyy-MM-dd");
+        FORMARTS.add("yyyy-MM-dd hh:mm");
+        FORMARTS.add("yyyy-MM-dd hh:mm:ss");
     }
 
     /**
@@ -42,13 +42,13 @@ public class DateConverter implements Converter<String, Timestamp> {
             return null;
         }
         if (source.matches("^\\d{4}-\\d{1,2}$")) {
-            return parseTimestamp(source, formarts.get(0));
+            return parseTimestamp(source, FORMARTS.get(0));
         } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2}$")) {
-            return parseTimestamp(source, formarts.get(1));
+            return parseTimestamp(source, FORMARTS.get(1));
         } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}$")) {
-            return parseTimestamp(source, formarts.get(2));
+            return parseTimestamp(source, FORMARTS.get(2));
         } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}:\\d{1,2}$")) {
-            return parseTimestamp(source, formarts.get(3));
+            return parseTimestamp(source, FORMARTS.get(3));
         } else {
             logger.error("输入的日期格式错误，接收的值为：{}",source);
             throw new IllegalArgumentException("Invalid boolean value '" + source + "'");

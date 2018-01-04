@@ -4,11 +4,11 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
                         http://www.springframework.org/schema/context
-                        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+                        http://www.springframework.org/schema/context/spring-context-4.3.xsd
                         http://www.springframework.org/schema/mvc
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
                         http://www.springframework.org/schema/aop
                         http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
@@ -35,6 +35,7 @@
            <!--<mvc:mapping path="/resources/**"-->
                         <!--allowed-origins="http://domain1.com"/>-->
     <!--</mvc:cors>-->
+    <!--<mvc:default-servlet-handler/>-->
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
@@ -52,14 +53,14 @@
 		</property>
 	</bean>
 	<!--时间转换器-->
-    	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-    		<property name="converters">
-    			<set>
-    				<bean class="${basePackage}.convert.DateConverter" />
-    			</set>
-    		</property>
-    	</bean>
-    	<mvc:annotation-driven conversion-service="conversionService" />
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="${basePackage}.convert.DateConverter" />
+            </set>
+        </property>
+    </bean>
+    <mvc:annotation-driven conversion-service="conversionService" />
 	<!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->

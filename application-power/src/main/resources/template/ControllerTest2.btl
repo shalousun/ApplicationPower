@@ -11,8 +11,7 @@ import ${basePackage}.model.${entitySimpleName};
 
 /**
  * controller 接口单元测试
- * @author ${authorName}
- * @date ${createTime}
+ * @author ${authorName} on ${createTime}.
  *
  */
 public class ${entitySimpleName}ControllerTest extends ControllerBaseTest {
@@ -74,7 +73,7 @@ public class ${entitySimpleName}ControllerTest extends ControllerBaseTest {
      * 测试controller page分页接口
      * @throws Exception
      */
-    public void testQueryPage() throws Exception{
+    public void testQueryPage() throws Exception {
 
     }
 

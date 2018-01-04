@@ -1,0 +1,29 @@
+
+
+<%
+for(doc in list){
+%>
+# ${doc.desc}
+**url**:
+```
+${doc.url}
+```
+**type:**
+${doc.type}
+**请求参数说明**：
+
+${doc.requestParams}
+
+
+**响应数据示例**：
+
+注意：本接口返回json数据
+
+```
+${doc.responseUsage}
+```
+**响应参数字段说明：**
+
+${doc.responseParams}
+
+<% } %>

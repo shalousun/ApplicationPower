@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <properties>
+        <property name="LOG_HOME">${LOG_PATH}</property>
+    </properties>
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingRandomAccessFile name="infoLog" fileName="${LOG_HOME}/app.log"
+                                 filePattern="${LOG_HOME}/app.%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout pattern="[%date{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%level][%class][%line]:%message%n"/>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            </Filters>
+            <Policies>
+                <!-- 对应 filePattern维度，此处为天数-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+
+        <!--mybatis debug log-->
+        <AsyncLogger name="log4j.logger.org.mybatis" level="debug" additivity="false">
+            <!--<appender-ref ref="Console"/>-->
+            <AppenderRef ref="infoLog"/>
+        </AsyncLogger>
+        <AsyncLogger name="log4j.logger.java.sql" level="debug" additivity="false">
+            <!--<appender-ref ref="Console"/>-->
+            <AppenderRef ref="infoLog"/>
+        </AsyncLogger>
+        <AsyncLogger name="log4j.logger.java.sql.Connection" level="debug" additivity="false">
+            <!--<appender-ref ref="Console"/>-->
+            <AppenderRef ref="infoLog"/>
+        </AsyncLogger>
+        <AsyncLogger name="log4j.logger.java.sql.Statement" level="debug" additivity="false">
+            <!--<appender-ref ref="Console"/>-->
+            <AppenderRef ref="infoLog"/>
+        </AsyncLogger>
+        <AsyncLogger name="log4j.logger.java.sql.PreparedStatement" level="debug" additivity="false">
+            <!--<appender-ref ref="Console"/>-->
+            <AppenderRef ref="infoLog"/>
+        </AsyncLogger>
+        <AsyncLogger name="log4j.logger.java.sql.ResultSet" level="debug" additivity="false">
+            <!--<appender-ref ref="Console"/>-->
+            <AppenderRef ref="infoLog"/>
+        </AsyncLogger>
+        <!--TRACE、DEBUG、INFO、WARN、ERROR和FATAL-->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

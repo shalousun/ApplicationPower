@@ -1,17 +1,24 @@
 package ${basePackage}.service;
 
+<%if(queryToListMap){ %>
+import java.util.List;
+import java.util.Map;
+<%}%>
+
+<%if(page){ %>
 import com.github.pagehelper.PageInfo;
-import ${basePackage}.vo.CommonResult;
+<%}%>
+<%if(add||query||delete||update){ %>
+import com.boco.common.model.CommonResult;
+<%}%>
 import ${basePackage}.model.${entitySimpleName};
 
 /**
  *
- * @author ${authorName}
- * @date ${createTime}
- *
+ * @author ${authorName} on ${createTime}.
  */
-
-public interface ${entitySimpleName}Service{
+public interface ${entitySimpleName}Service {
+    <%if(add){ %>
 
 	/**
 	 * 保存数据
@@ -19,6 +26,8 @@ public interface ${entitySimpleName}Service{
 	 * @return
      */
 	CommonResult save(${entitySimpleName} entity);
+    <%}%>
+    <%if(update){ %>
 
 	/**
 	 * 修改数据
@@ -26,6 +35,8 @@ public interface ${entitySimpleName}Service{
 	 * @return
      */
 	CommonResult update(${entitySimpleName} entity);
+    <%}%>
+    <%if(delete){ %>
 
 	/**
 	 * 删除数据
@@ -33,6 +44,8 @@ public interface ${entitySimpleName}Service{
 	 * @return
      */
 	CommonResult delete(int id);
+    <%}%>
+    <%if(query){ %>
 
 	/**
 	 * 根据id查询数据
@@ -40,6 +53,8 @@ public interface ${entitySimpleName}Service{
 	 * @return
      */
 	CommonResult queryById(int id);
+    <%}%>
+    <%if(page){ %>
 
 	/**
      * 分页查询
@@ -48,4 +63,14 @@ public interface ${entitySimpleName}Service{
      * @return
      */
     PageInfo queryPage(int offset, int limit);
+    <%}%>
+    <%if(queryToListMap){ %>
+
+    /**
+     * query result to list of map
+     * @param params Map查询参数
+     * @return
+     */
+    List<Map<String,Object>> queryToListMap(Map<String,Object> params);
+    <%}%>
 }

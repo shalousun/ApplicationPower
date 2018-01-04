@@ -1,0 +1,64 @@
+package ${basePackage}.config;
+
+
+import com.power.datasource.database.DynamicDataSource;
+import com.power.mybatis.CustomSqlSessionTemplate;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+@MapperScan(basePackages = ${basePackage}.config.MyBatisConfig.PACKAGE, sqlSessionTemplateRef = "sqlSessionTemplate")
+public class MyBatisConfig extends AbstractDataSourceConfig {
+
+    static final String PACKAGE = "${basePackage}.dao";
+
+    static final String MAPPER_LOCATION = "classpath:${mappingDir}/mapping/*.xml";
+
+    ${dataSource}
+
+    @Bean("dynamicDataSource")
+    public DynamicDataSource dynamicDataSource(${dynamicDataSource}) {
+        Map<Object, Object> targetDataSources = new HashMap<>();
+${targetDataSources}
+        DynamicDataSource dataSource = new DynamicDataSource();
+        dataSource.setTargetDataSources(targetDataSources);
+        dataSource.setDefaultTargetDataSource(${defaultDataSource});
+        return dataSource;
+    }
+
+${sqlSessionFactory}
+
+
+    @Bean(name = "sqlSessionTemplate")
+    public CustomSqlSessionTemplate sqlSessionTemplate(${sqlSessionTemplate}) throws Exception {
+        Map<Object,SqlSessionFactory> sqlSessionFactoryMap = new HashMap<>();
+${sqlSessionFactoryMap}
+        CustomSqlSessionTemplate customSqlSessionTemplate = new CustomSqlSessionTemplate(${defaultSqlSessionFactory});
+        customSqlSessionTemplate.setTargetSqlSessionFactorys(sqlSessionFactoryMap);
+        return customSqlSessionTemplate;
+    }
+
+    /**
+     * 创建数据源
+     * @param dataSource
+     * @return
+     */
+    private SqlSessionFactory createSqlSessionFactory(DataSource dataSource) throws Exception{
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setTypeAliasesPackage("${basePackage}.model");
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
+        return bean.getObject();
+    }
+}
