@@ -1,6 +1,6 @@
 ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据库便可快速的创建一个基于maven构建的SpringMvc+Mybatis或者是Spring Boot+Mybatis架构的项目。
 创建的标准工程无论是基于SpringMvc的传统项目还是基于Spring Boot的微服务项目都可做到开箱即可正确运行，使用它两分钟就可以快速的创建一个学习的demo或者是一个项目初期的
-架构。ApplicationPower在创建过程中会帮您创建许多标准的配置文件和通用代码，屏蔽了人工创建项目初期中的配置繁琐和错误情况，大大减少了初期建项目工程的时间。
+架构。ApplicationPower在创建过程中会帮您创建许多标准的配置文件和通用代码，屏蔽了人工创建项目初期中的配置繁琐和错误情况，大大减少了初期建项目工程的时间。<br/>
         ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower在一直不断努力地去减少项目开发
         中的各种重复工作。<br/>
     **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
