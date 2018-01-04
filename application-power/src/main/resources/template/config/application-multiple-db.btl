@@ -13,7 +13,7 @@ spring:
         password: ${dbPassword}
         driver-class-name: ${dbDriver}
         minIdle: 1
-        maxActive: 2
+        maxActive: 20
         initialSize: 1
         timeBetweenEvictionRunsMillis: 3000
         minEvictableIdleTimeMillis: 300000
