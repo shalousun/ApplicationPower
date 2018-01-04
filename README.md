@@ -1,13 +1,20 @@
-ApplicationPower 是一个基于数据库单表Crud操作的项目生成器，生成的web项目自动集成spring,spring mvc,mybatis框架，最终生成基于maven构建的可
-    运行web工程，生成完后只需要将生成的项目导入到eclipse、idea或者及其他开发工具部署至tomcat即可运行，当然生成的项目基于maven环境集成了
-    jetty web容器，eclipse使用jetty:run命令即可运行，idea的用户只需点击maven projects下的plugins中找到jetty run即可启动项目。<br/>
-        ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower相对
-    mybatis generator来说配置更少、代码灵活性和可控性更高。<br/>
-    **重点：** ApplicationPower目前已经完全支持生成Springboot+Mybatis框架的Springboot项目，推荐使用生成springboot，后期项目对springmvc生成维护会减少。
+ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据库便可快速的创建一个基于maven构建的SpringMvc+Mybatis或者是Spring Boot+Mybatis架构的项目。
+创建的标准工程无论是基于SpringMvc的传统项目还是基于Spring Boot的微服务项目都可做到开箱即可正确运行，使用它两分钟就可以快速的创建一个学习的demo或者是一个项目初期的
+架构。ApplicationPower在创建过程中会帮您创建许多标准的配置文件和通用代码，屏蔽了人工创建项目初期中的配置繁琐和错误情况，大大减少了初期建项目工程的时间。
+        ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower在一直不断努力地去减少项目开发
+        中的各种重复工作。<br/>
+    **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
+## 创建的项目技术
+   1. Spring Boot或者Spring MVC
+   2. alibaba druid
+   3. mybatis
+   4. pagehelper
+   5. log4j2
+   7. atomikos
 ## 结构说明
-   1. apidoc是一个未来将使用原生doc注释来生成markdown api文档的项目，目前不可用
+   1. api-doc是一个未来将使用原生doc注释来生成markdown api文档的项目，目前不可用
    2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，在使用application-power前需要将它安装到你的本地。
-   3. application-power是整个项目的核心，专门用于生成Springboot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
+   3. application-power是整个项目的核心，专门用于生成Spring Boot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
    4. datasource-aspect是spring web应用下多数据源动态切换的通用模块
    5. mybatis-template是用于重写SqlSessionTemplate来支持分布式事务环境下的动态数据源切换
 ## 版本说明
@@ -21,6 +28,7 @@ ApplicationPower 是一个基于数据库单表Crud操作的项目生成器，�
     8. v1.5版本增加springboot项目基于assembly的服务化打包功能，完备的服务脚本使得在window或linux系统启动和运维项目更轻松
     9. v1.6版本增加配置来支持springmvc和springboot多数据源动态切换和atomikos分布式事务支持，快随构建一个数据一致性架构的项目.
        demo:https://gitee.com/sunyurepository/multiple-datasource
+ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
 ## 功能
   1. 根据连接的数据生成dao,model,service,controller,mapper,controllerTest,serviceTest代码
   2. 项目的maven web基础骨架
@@ -28,6 +36,7 @@ ApplicationPower 是一个基于数据库单表Crud操作的项目生成器，�
   4. 生成web.xml配置文件
   5. 可以修改模板生成自己喜欢风格或者说修改修改来生成自己习惯的方法名
   6. 基于SL4J面向接口的标注化日志输出
+  7. 支持创建多数据源和集成atomikos分布式事务
 
 ## 使用说明
   1.使用注意事项
