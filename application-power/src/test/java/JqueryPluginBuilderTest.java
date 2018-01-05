@@ -1,5 +1,5 @@
 import com.boco.common.util.FileUtil;
-import com.power.builder.JqueryPluginBuilder;
+import com.power.generator.builder.JqueryPluginBuilder;
 
 public class JqueryPluginBuilderTest {
 

@@ -1,4 +1,4 @@
-import com.power.utils.BeetlTemplateUtil;
+import com.power.generator.utils.BeetlTemplateUtil;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-import com.power.database.MySqlProvider;
+import com.power.generator.database.MySqlProvider;
 
 public class MysqlProviderTest {
 
