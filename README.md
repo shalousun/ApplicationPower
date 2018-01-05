@@ -5,12 +5,12 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
         中的各种重复工作。<br/>
     **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
 ## 创建的项目技术
-   1. Spring Boot或者Spring MVC
-   2. alibaba druid
-   3. mybatis
-   4. pagehelper
-   5. log4j2
-   7. atomikos
+     ● 核心框架：Spring Boot 1.5.9 或Spring MVC 4.3.6
+     ● 数据库连接池：druid-spring-boot-starter 1.1.6或druid 1.1.6
+     ● 持久层框架：mybatis-spring-boot-starter或MyBatis 3.4.2
+     ● 分页插件：pagehelper-spring-boot-starter或pagehelper 5.x
+     ● 分布式事务管理：spring-boot-starter-jta-atomikos或atomikos 4.04
+     ● 日志管理：SLF4J和log4j2
 ## 结构说明
    1. api-doc是一个未来将使用原生doc注释来生成markdown api文档的项目，目前不可用
    2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，在使用application-power前需要将它安装到你的本地。
