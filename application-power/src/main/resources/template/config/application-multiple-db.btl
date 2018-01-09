@@ -28,12 +28,16 @@ spring:
         maxPoolPreparedStatementPerConnectionSize: 20
         filters: stat,wall,log4j2
         <% }%>
+
   <%if(isJTA){%>
   # transaction manager
   jta:
-    log-dir: classpath:tx-logs
+    atomikos:
+      properties:
+        log-base-dir: ../logs
     transaction-manager-id: txManager
   <%}%>
+# set server config
 server:
   port: 8080
   undertow:
