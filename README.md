@@ -28,6 +28,7 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
     8. v1.5版本增加springboot项目基于assembly的服务化打包功能，完备的服务脚本使得在window或linux系统启动和运维项目更轻松
     9. v1.6版本增加配置来支持springmvc和springboot多数据源动态切换和atomikos分布式事务支持，快随构建一个数据一致性架构的项目.
        demo:https://gitee.com/sunyurepository/multiple-datasource
+    10. v1.6.1版本修改生成的springboot项目打成jar包后mybatis别名扫描出错的bug
 ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
 ## 功能
   1. 根据连接的数据生成dao,model,service,controller,mapper,controllerTest,serviceTest代码
