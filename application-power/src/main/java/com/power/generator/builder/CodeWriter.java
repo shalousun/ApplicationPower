@@ -208,7 +208,7 @@ public class CodeWriter extends AbstractCodeWriter {
         if(GeneratorProperties.isJTA()||dataSources.size()>0){
             Template jtaTpl = BeetlTemplateUtil.getByName(ConstVal.TPL_JTA);
             jtaTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(jtaTpl.render(),dirMap.get(ConstVal.DATA_SOURCE_FIG)+"\\TransactionManagerConfig.java");
+//            FileUtil.writeFileNotAppend(jtaTpl.render(),dirMap.get(ConstVal.DATA_SOURCE_FIG)+"\\TransactionManagerConfig.java");
         }
         if(dataSources.size()>0){
             String configPath = dirMap.get(ConstVal.DATA_SOURCE_FIG);
