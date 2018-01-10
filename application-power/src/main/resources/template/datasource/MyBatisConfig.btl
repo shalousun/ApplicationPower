@@ -19,10 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@MapperScan(basePackages = ${basePackage}.config.MyBatisConfig.PACKAGE, sqlSessionTemplateRef = "sqlSessionTemplate")
+@MapperScan(basePackages = MyBatisConfig.BASE_PACKAGE, sqlSessionTemplateRef = "sqlSessionTemplate")
 public class MyBatisConfig extends AbstractDataSourceConfig {
 
-    static final String PACKAGE = "${basePackage}.dao";
+    static final String BASE_PACKAGE = "${basePackage}.dao";
+
+    static final String ALIASES_PACKAGE = "${basePackage}.model";
 
     static final String MAPPER_LOCATION = "classpath:${mappingDir}/mapping/*.xml";
 
@@ -59,7 +61,7 @@ ${sqlSessionFactoryMap}
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setVfs(SpringBootVFS.class);
-        bean.setTypeAliasesPackage("${basePackage}.model");
+        bean.setTypeAliasesPackage(ALIASES_PACKAGE);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
         return bean.getObject();
     }
