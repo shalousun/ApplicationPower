@@ -3,6 +3,7 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
 架构。ApplicationPower在创建过程中会帮您创建许多标准的配置文件和通用代码，屏蔽了人工创建项目初期中的配置繁琐和错误情况，大大减少了初期建项目工程的时间。<br/>
         ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower在一直不断努力地去减少项目开发
         中的各种重复工作。<br/>
+        技术交流群：170651381<br/>
     **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
 ## 创建的项目技术
      ● 核心框架：Spring Boot 1.5.9 或Spring MVC 4.3.6
