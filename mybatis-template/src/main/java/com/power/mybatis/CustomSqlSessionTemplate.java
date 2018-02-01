@@ -23,6 +23,7 @@ import static org.mybatis.spring.SqlSessionUtils.*;
  * from https://github.com/igool/spring-jta-mybatis
  */
 public class CustomSqlSessionTemplate extends SqlSessionTemplate {
+
     private final SqlSessionFactory sqlSessionFactory;
     private final ExecutorType executorType;
     private final SqlSession sqlSessionProxy;
@@ -44,12 +45,10 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
     }
 
     public CustomSqlSessionTemplate(SqlSessionFactory sqlSessionFactory, ExecutorType executorType) {
-        this(sqlSessionFactory, executorType, new MyBatisExceptionTranslator(sqlSessionFactory.getConfiguration()
-                .getEnvironment().getDataSource(), true));
+        this(sqlSessionFactory, executorType, new MyBatisExceptionTranslator(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(), true));
     }
 
-    public CustomSqlSessionTemplate(SqlSessionFactory sqlSessionFactory, ExecutorType executorType,
-                                    PersistenceExceptionTranslator exceptionTranslator) {
+    public CustomSqlSessionTemplate(SqlSessionFactory sqlSessionFactory, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator) {
 
         super(sqlSessionFactory, executorType, exceptionTranslator);
 
@@ -57,10 +56,7 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
         this.executorType = executorType;
         this.exceptionTranslator = exceptionTranslator;
 
-        this.sqlSessionProxy = (SqlSession) newProxyInstance(
-                SqlSessionFactory.class.getClassLoader(),
-                new Class[] { SqlSession.class },
-                new SqlSessionInterceptor());
+        this.sqlSessionProxy = (SqlSession) newProxyInstance(SqlSessionFactory.class.getClassLoader(), new Class[] { SqlSession.class }, new SqlSessionInterceptor());
 
         this.defaultTargetSqlSessionFactory = sqlSessionFactory;
     }
@@ -269,6 +265,7 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
 
     /**
      * {@inheritDoc}
+     *
      * @since 1.0.2
      */
     public List<BatchResult> flushStatements() {
@@ -276,16 +273,12 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
     }
 
     /**
-     * Proxy needed to route MyBatis method calls to the proper SqlSession got from Spring's Transaction Manager It also
-     * unwraps exceptions thrown by {@code Method#invoke(Object, Object...)} to pass a {@code PersistenceException} to
-     * the {@code PersistenceExceptionTranslator}.
+     * Proxy needed to route MyBatis method calls to the proper SqlSession got from Spring's Transaction Manager It also unwraps exceptions thrown by {@code Method#invoke(Object, Object...)} to pass a {@code PersistenceException} to the
+     * {@code PersistenceExceptionTranslator}.
      */
     private class SqlSessionInterceptor implements InvocationHandler {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            final SqlSession sqlSession = getSqlSession(
-                    CustomSqlSessionTemplate.this.getSqlSessionFactory(),
-                    CustomSqlSessionTemplate.this.executorType,
-                    CustomSqlSessionTemplate.this.exceptionTranslator);
+            final SqlSession sqlSession = getSqlSession(CustomSqlSessionTemplate.this.getSqlSessionFactory(), CustomSqlSessionTemplate.this.executorType, CustomSqlSessionTemplate.this.exceptionTranslator);
             try {
                 Object result = method.invoke(sqlSession, args);
                 if (!isSqlSessionTransactional(sqlSession, CustomSqlSessionTemplate.this.getSqlSessionFactory())) {
@@ -297,8 +290,7 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
             } catch (Throwable t) {
                 Throwable unwrapped = unwrapThrowable(t);
                 if (CustomSqlSessionTemplate.this.exceptionTranslator != null && unwrapped instanceof PersistenceException) {
-                    Throwable translated = CustomSqlSessionTemplate.this.exceptionTranslator
-                            .translateExceptionIfPossible((PersistenceException) unwrapped);
+                    Throwable translated = CustomSqlSessionTemplate.this.exceptionTranslator.translateExceptionIfPossible((PersistenceException) unwrapped);
                     if (translated != null) {
                         unwrapped = translated;
                     }
