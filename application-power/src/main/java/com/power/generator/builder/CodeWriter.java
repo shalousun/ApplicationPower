@@ -125,6 +125,7 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding("useAssembly",GeneratorProperties.getAssembly());
                 template.binding("useJTA",GeneratorProperties.isJTA());
                 template.binding("isMultipleDataSource",GeneratorProperties.isMultipleDataSource());
+                template.binding("jdkVersion","${java.version}");
                 //log4j2
                 template.binding("LOG_HOME", "${LOG_HOME}");
                 template.binding("LOG_PATH","${sys:logging.path}");
