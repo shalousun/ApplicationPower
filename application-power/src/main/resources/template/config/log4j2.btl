@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <properties>
-        <property name="LOG_HOME">${LOG_PATH}</property>
+        <!--if packaged by assembly change the value of  LOG_HOME to ${LOG_PATH}-->
+        <property name="LOG_HOME">logs</property>
     </properties>
     <Appenders>
-
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-
         <RollingRandomAccessFile name="infoLog" fileName="${LOG_HOME}/app.log"
                                  filePattern="${LOG_HOME}/app.%d{yyyy-MM-dd}-%i.log.gz" append="true">
             <PatternLayout pattern="[%date{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%level][%class][%line]:%message%n"/>
@@ -23,7 +22,6 @@
         </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
-
         <!--mybatis debug log-->
         <AsyncLogger name="log4j.logger.org.mybatis" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
@@ -49,8 +47,8 @@
             <!--<appender-ref ref="Console"/>-->
             <AppenderRef ref="infoLog"/>
         </AsyncLogger>
-        <!--TRACE、DEBUG、INFO、WARN、ERROR和FATAL-->
-        <Root level="INFO">
+        <!--TRACE、DEBUG、INFO、WARN、ERROR、上FATAL-->
+        <Root level="ERROR">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

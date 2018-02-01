@@ -24,19 +24,16 @@
     </bean>
 
     <!-- 两个数据源的功用配置，方便下面直接引用 -->
-    <bean id="abstractXADataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
-          destroy-method="close" abstract="true">
-        <property name="xaDataSourceClassName" value="com.alibaba.druid.pool.xa.DruidXADataSource"/>
+    <bean id="abstractXADataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close" abstract="true">
         <property name="poolSize" value="10" />
-        <property name="minPoolSize" value="10"/>
-        <property name="maxPoolSize" value="30"/>
-        <property name="borrowConnectionTimeout" value="60"/>
-        <property name="reapTimeout" value="20"/>
-        <!--&lt;!&ndash; 最大空闲时间 &ndash;&gt;-->
-        <property name="maxIdleTime" value="60"/>
+        <property name="minPoolSize" value="10" />
+        <property name="maxPoolSize" value="10" />
+        <property name="borrowConnectionTimeout" value="60" />
+        <property name="reapTimeout" value="60" />
+        <property name="maxIdleTime" value="60" />
         <property name="maintenanceInterval" value="60" />
-        <property name="loginTimeout" value="60"/>
-        <property name="logWriter" value="60"/>
+        <property name="loginTimeout" value="60" />
+        <property name="logWriter" value="60" />
     </bean>
 
     <% for(entry in dataSourceMap){%>
@@ -45,23 +42,28 @@
         <!-- value只要两个数据源不同就行，随便取名 -->
         <property name="uniqueResourceName" value="${entry.value}" />
         <property name="xaDataSourceClassName" value="com.alibaba.druid.pool.xa.DruidXADataSource" />
+        <property name="testQuery" value="SELECT 'x' FROM DUAL" />
         <property name="xaProperties">
             <props>
                 <prop key="driverClassName">${jdbcDriver}</prop>
                 <prop key="url">${jdbcUrl}</prop>
                 <prop key="password">${jdbcPassword}</prop>
                 <prop key="username">${jdbcUserName}</prop>
-                <prop key="initialSize">0</prop>
+                <prop key="initialSize">1</prop>
                 <prop key="maxActive">20</prop>
-                <prop key="minIdle">0</prop>
+                <prop key="minIdle">1</prop>
                 <prop key="maxWait">6000</prop>
+                <prop key="timeBetweenEvictionRunsMillis">60000</prop>
+                <prop key="minEvictableIdleTimeMillis">300000</prop>
+                <prop key="removeAbandoned">false</prop>
+                <prop key="removeAbandonedTimeout">1800</prop>
                 <prop key="validationQuery">SELECT 'x' FROM DUAL</prop>
+                <prop key="testWhileIdle">true</prop>
                 <prop key="testOnBorrow">false</prop>
                 <prop key="testOnReturn">false</prop>
-                <prop key="testWhileIdle">true</prop>
-                <prop key="removeAbandoned">true</prop>
-                <prop key="removeAbandonedTimeout">1800</prop>
-                <prop key="logAbandoned">true</prop>
+                <prop key="poolPreparedStatements">true</prop>
+                <prop key="maxPoolPreparedStatementPerConnectionSize">20</prop>
+                <prop key="useGlobalDataSourceStat">true</prop>
                 <prop key="filters">stat,log4j2</prop>
             </props>
         </property>

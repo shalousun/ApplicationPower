@@ -91,5 +91,14 @@ public class DbUtil {
             e.printStackTrace();
         }
     }
+
+    public static String getSchema(Connection conn) throws Exception {
+        String schema;
+        schema = conn.getMetaData().getUserName();
+        if ((schema == null) || (schema.length() == 0)) {
+            throw new Exception("ORACLE数据库模式不允许为空");
+        }
+        return schema.toUpperCase().toString();
+    }
 }
 

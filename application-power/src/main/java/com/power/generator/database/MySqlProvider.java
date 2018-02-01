@@ -1,5 +1,6 @@
 package com.power.generator.database;
 
+import com.alibaba.fastjson.JSON;
 import com.boco.common.util.StringUtil;
 
 import java.sql.*;
@@ -69,9 +70,7 @@ public class MySqlProvider implements DbProvider {
             connection = DbUtil.getConnection();
             stmt = connection.prepareStatement(sql.toString());
             rs = stmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            tableList = new ArrayList<>(columnCount);
+            tableList = new ArrayList<>();
             while (rs.next()) {
                 tableInfo = new TableInfo();
                 tableInfo.setName(rs.getString("Name"));

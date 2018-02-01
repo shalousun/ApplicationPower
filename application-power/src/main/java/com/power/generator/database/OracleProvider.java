@@ -2,8 +2,13 @@ package com.power.generator.database;
 
 
 import com.boco.common.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,10 +18,25 @@ import java.util.Map;
  *
  * @author sunyu 2016/12/11.
  */
-public class OracleProvider implements DbProvider {
+public class OracleProvider extends BaseProvider implements DbProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OracleProvider.class);
+
     @Override
     public Map<String, Column> getColumnsInfo(String tableName) {
-        return null;
+        String sql = "SELECT COL.table_name, col.column_name, col.data_type, c.comments , CASE uc.constraint_type " +
+                "WHEN 'P' THEN 'yes' ELSE '' END AS \"PRIMARY_KEY\" FROM user_tab_columns col LEFT JOIN " +
+                "user_cons_columns ucc ON ucc.table_name = col.table_name AND ucc.column_name = col.column_name LEFT JOIN " +
+                "user_constraints uc ON uc.constraint_name = ucc.constraint_name AND uc.constraint_type = 'P' LEFT JOIN " +
+                "user_col_comments c ON col.table_name = c.table_name";
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append(sql);
+        if (StringUtil.isNotEmpty(tableName)) {
+            sqlBuilder.append(" where col.table_name = '").append(tableName).append("'");
+        }
+        System.out.println("sql:" + sqlBuilder.toString());
+        LOGGER.debug("oracle provider sql:{}", sqlBuilder.toString());
+        return getColumnsSchema(sqlBuilder.toString());
     }
 
     @Override
@@ -27,7 +47,9 @@ public class OracleProvider implements DbProvider {
         if (StringUtil.isNotEmpty(tableName)) {
             sql.append(" AND TABLE_NAME LIK ");
             sql.append("'%").append(tableName).append("%'");
-
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Query table sql:" + sql.toString());
         }
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -37,9 +59,7 @@ public class OracleProvider implements DbProvider {
             conn = DbUtil.getConnection();
             stmt = conn.prepareStatement(sql.toString());
             rs = stmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            tableList = new ArrayList<>(columnCount);
+            tableList = new ArrayList<>();
             while (rs.next()) {
                 tableInfo = new TableInfo();
                 tableInfo.setName(rs.getString("TABLE_NAME").toLowerCase());
@@ -53,6 +73,5 @@ public class OracleProvider implements DbProvider {
             DbUtil.close(conn, stmt, rs);
         }
         return tableList;
-
     }
 }

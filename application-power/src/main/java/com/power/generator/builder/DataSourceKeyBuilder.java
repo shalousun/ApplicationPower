@@ -21,7 +21,7 @@ public class DataSourceKeyBuilder {
         for(String str:sourceKeys){
             builder.append("    /** 数据库源").append(str).append("*/\n");
             builder.append("    public static final String ").append(str.toUpperCase());
-            builder.append("= \"").append(str).append("\";\n\n");
+            builder.append(" = \"").append(str).append("\";\n\n");
         }
         return builder.toString();
     }
