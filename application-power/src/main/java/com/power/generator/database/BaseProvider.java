@@ -1,11 +1,12 @@
 package com.power.generator.database;
 
-import com.alibaba.fastjson.JSON;
-import org.beetl.ext.fn.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,7 +20,8 @@ public class BaseProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseProvider.class);
 
     /**
-     * 获取字段信息
+     * 获取字段信息,DatabaseMetaData.getColumns无法获取oracle的字段注释，
+     * 因此调用次方法
      * @param sql
      * @return
      */
@@ -33,12 +35,14 @@ public class BaseProvider {
             pst = connection.prepareStatement(sql);
             colRet = pst.executeQuery();
             while (colRet.next()) {
-                String columnName = colRet.getString("column_name");
+                String columnName = colRet.getString("column_name").toLowerCase();
                 String remarks = colRet.getString("comments");
+                String columnType = colRet.getString("data_type").toLowerCase();
                 //设置列信息
                 Column column = new Column();
                 column.setColumnName(columnName);
                 column.setRemarks(remarks);
+                column.setColumnType(TypeConvert.sqlTypeToJavaType(columnType));
                 colMap.put(columnName, column);
             }
         } catch (Exception e) {
@@ -65,12 +69,10 @@ public class BaseProvider {
             connection = DbUtil.getConnection();
             stmt = connection.prepareStatement(sql);
             rs = stmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            tableList = new ArrayList<>(columnCount);
+            tableList = new ArrayList<>();
             while (rs.next()) {
                 tableInfo = new TableInfo();
-                tableInfo.setName(rs.getString("name"));
+                tableInfo.setName(rs.getString("TABLE_NAME").toLowerCase());
                 tableInfo.setRemarks(rs.getString("comments"));
                 tableList.add(tableInfo);
             }
@@ -81,10 +83,5 @@ public class BaseProvider {
             DbUtil.close(connection, stmt, rs);
         }
         return tableList;
-    }
-
-    public static void main(String[] args) {
-        Map<String, Column> list = new OracleProvider().getColumnsInfo("TB_HZJL");
-        System.out.println("json:"+JSON.toJSONString(list));
     }
 }

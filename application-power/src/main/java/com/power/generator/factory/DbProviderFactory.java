@@ -23,13 +23,16 @@ public class DbProviderFactory {
         DbProvider provider = null;
         if ("com.mysql.jdbc.Driver".equals(driverName)) {
             provider = new MySqlProvider();
+            return provider;
         }
         if ("com.mysql.cj.jdbc.Driver".equals(driverName)) {
             provider = new MySqlProvider();
+            return provider;
         }
-        if ("oracle.jdbc.driver.OracleDriver".equals(driverName)) {
+        if ("oracle.jdbc.OracleDriver".equals(driverName)) {
             provider = new OracleProvider();
+            return provider;
         }
-        return provider;
+        return null;
     }
 }

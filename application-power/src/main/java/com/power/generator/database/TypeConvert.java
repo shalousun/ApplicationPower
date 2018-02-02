@@ -59,7 +59,62 @@ public class TypeConvert {
         return dataType;
     }
 
-    public static String processOracleType(String type) {
-        return null;
+    /**
+     *
+     * @param type
+     * @return
+     */
+    public static String sqlTypeToJavaType(String type) {
+        String dataType = "";
+        switch (type){
+            case "char":
+                dataType = "String";
+                break;
+            case "varchar2":
+                dataType = "String";
+                break;
+            case "varchar":
+                dataType = "String";
+                break;
+            case "nvarchar":
+                dataType = "String";
+                break;
+            case "nvarchar2":
+                dataType = "String";
+                break;
+            case "number":
+                dataType = "Integer";
+                break;
+            case "numeric":
+                dataType = "Integer";
+                break;
+            case "int":
+                dataType = "Integer";
+                break;
+            case "decimal":
+                dataType = "BigDecimal";
+                break;
+            case "bigint":
+                dataType = "Long";
+                break;
+            case "float":
+                dataType= "Float";
+                break;
+            case "date":
+                dataType = "Timestamp";
+                break;
+            case "datetime":
+                dataType = "Timestamp";
+                break;
+            case "timestamp(6)":
+                dataType = "Timestamp";
+                break;
+            case "timestamp":
+                dataType = "Timestamp";
+                break;
+            default:
+                dataType = "String";
+        }
+        return dataType;
     }
 }

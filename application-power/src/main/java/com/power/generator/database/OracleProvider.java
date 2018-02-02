@@ -5,11 +5,6 @@ import com.boco.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,46 +27,21 @@ public class OracleProvider extends BaseProvider implements DbProvider {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append(sql);
         if (StringUtil.isNotEmpty(tableName)) {
-            sqlBuilder.append(" where col.table_name = '").append(tableName).append("'");
+            sqlBuilder.append(" where col.table_name = '").append(tableName.toUpperCase()).append("'");
         }
-        System.out.println("sql:" + sqlBuilder.toString());
-        LOGGER.debug("oracle provider sql:{}", sqlBuilder.toString());
+        LOGGER.debug("oracle provider sql: {}", sqlBuilder.toString());
         return getColumnsSchema(sqlBuilder.toString());
     }
 
     @Override
     public List<TableInfo> getTablesInfo(String tableName) {
-        List<TableInfo> tableList;
         StringBuilder sql = new StringBuilder();
-        sql.append("select * from USER_TAB_COMMENTS WHERE 1=1");
+        sql.append("select table_name,comments from USER_TAB_COMMENTS WHERE 1=1");
         if (StringUtil.isNotEmpty(tableName)) {
-            sql.append(" AND TABLE_NAME LIK ");
-            sql.append("'%").append(tableName).append("%'");
+            sql.append(" AND TABLE_NAME LIKE ");
+            sql.append("'%").append(tableName.toUpperCase()).append("%'");
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Query table sql:" + sql.toString());
-        }
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        TableInfo tableInfo;
-        try {
-            conn = DbUtil.getConnection();
-            stmt = conn.prepareStatement(sql.toString());
-            rs = stmt.executeQuery();
-            tableList = new ArrayList<>();
-            while (rs.next()) {
-                tableInfo = new TableInfo();
-                tableInfo.setName(rs.getString("TABLE_NAME").toLowerCase());
-                tableInfo.setRemarks(rs.getString("COMMENTS"));
-                tableList.add(tableInfo);
-            }
-        } catch (SQLException e) {
-            tableList = new ArrayList<>(0);
-            e.printStackTrace();
-        } finally {
-            DbUtil.close(conn, stmt, rs);
-        }
-        return tableList;
+        LOGGER.debug("Query table sql: {}" , sql.toString());
+        return getTablesSchema(sql.toString());
     }
 }
