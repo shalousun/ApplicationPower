@@ -1,4 +1,10 @@
 #!/bin/bash
+# Startup script for a spring boot project
+# @author shalousun
+# see https://github.com/Shalousun/ApplicationPower
+
+# include yaml_parse function
+. "$(dirname "$0")"/yaml.sh
 
 SERVER_NAME='${appName}'
 JAR_NAME='${appName}.jar'
@@ -7,14 +13,30 @@ BIN_DIR=`pwd`
 cd ..
 DEPLOY_DIR=`pwd`
 CONF_DIR=$DEPLOY_DIR/config
-# SERVER_PORT=`sed '/server.port/!d;s/.*=//' config/application.properties | tr -d '\r'`
-SERVER_PORT=`sed -nr '/port: [0-9]+/ s/.*port: +([0-9]+).*/\1/p' config/application.yml`
+# log file
+LOG_IMPL_FILE=log4j2.xml
+APPLICATION_FILE=application.yml
+
+# ======================FIND SERVER PORT==========================================
+SERVER_PORT=""
+if [ "$APPLICATION_FILE"="application.yml" ]
+then
+    # remove ^M in file
+    sed -i "s/$(echo -e '\015')/\n/g" config/application.yml
+    # read yml file
+    eval $(YamlParse__parse "config/application.yml" "config_")
+    SERVER_PORT=$config_server_port
+else
+    SERVER_PORT=`sed '/server.port/!d;s/.*=//' config/application.properties | tr -d '\r'`
+fi
+# ======================FIND SERVER PORT END=======================================
 
 PIDS=`ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}'`
 if [ "$1" = "status" ]; then	  
     if [ -n "$PIDS" ]; then
         echo "The $SERVER_NAME is running...!"
         echo "PID: $PIDS"
+        echo "Used port: $SERVER_PORT"
         exit 0
     else
         echo "The $SERVER_NAME is stopped"
@@ -25,6 +47,7 @@ fi
 if [ -n "$PIDS" ]; then
     echo "ERROR: The $SERVER_NAME already started!"
     echo "PID: $PIDS"
+    echo "Used port: $SERVER_PORT"
     exit 1
 fi
 
@@ -61,7 +84,14 @@ else
     JAVA_MEM_OPTS=" -server -Xms512m -Xmx512m -XX:PermSize=128m -XX:SurvivorRatio=2 -XX:+UseParallelGC "
 fi
 
-CONFIG_FILES=" -Dlogging.path=$LOGS_DIR -Dlogging.config=$CONF_DIR/log4j2.xml -Dspring.config.location=$CONF_DIR/application.properties "
+LOGGING_CONFIG=""
+if [ -f "$CONF_DIR/$LOG_IMPL" ]
+then
+    LOGGING_CONFIG="-Dlogging.config=$CONF_DIR/$LOG_IMPL"
+fi
+
+CONFIG_FILES=" -Dlogging.path=$LOGS_DIR $LOGGING_CONFIG -Dspring.config.location=$CONF_DIR/$APPLICATION_FILE "
+
 echo -e "Starting the $SERVER_NAME ..."
 nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS $CONFIG_FILES -jar $DEPLOY_DIR/lib/$JAR_NAME > $STDOUT_FILE 2>&1 &
 
@@ -83,4 +113,5 @@ done
 echo "OK!"
 PIDS=`ps -f | grep java | grep "$DEPLOY_DIR" | awk '{print $2}'`
 echo "PID: $PIDS"
+echo "PORT: $SERVER_PORT"
 echo "STDOUT: $STDOUT_FILE"

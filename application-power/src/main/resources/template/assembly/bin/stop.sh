@@ -1,4 +1,8 @@
 #!/bin/bash
+# script for stop spring boot project
+# @author shalousun
+# see https://github.com/Shalousun/ApplicationPower
+
 cd `dirname $0`
 BIN_DIR=`pwd`
 cd ..

@@ -2,6 +2,8 @@
 # Startup script for a spring boot project
 # chkconfig: 2345 80 90
 # description: spring boot project
+# @author shalousun
+# see https://github.com/Shalousun/ApplicationPower
 # Source function library.
 # if you want make as a boot server on linux ,edit and enable the next line
 # cd /usr/local/project_name/bin
