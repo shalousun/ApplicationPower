@@ -123,7 +123,7 @@ public class ConfigBuilder {
      * @param dbProvider
      */
     private void getTableInfoList(DbProvider dbProvider) {
-        tableInfo = dbProvider.getTablesInfo(GeneratorProperties.getTableName());
+        tableInfo = dbProvider.getTablesInfo(GeneratorProperties.getTableName(),GeneratorProperties.tableFilterPrefix());
     }
 
     /**

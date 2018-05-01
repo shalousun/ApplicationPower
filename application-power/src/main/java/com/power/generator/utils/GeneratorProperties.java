@@ -39,6 +39,14 @@ public class GeneratorProperties {
     }
 
     /**
+     * 过滤表
+     * @return
+     */
+    public static String tableFilterPrefix(){
+        return props.getProperty("generator.table.filter.prefix");
+    }
+
+    /**
      * 获取应用名称
      *
      * @return

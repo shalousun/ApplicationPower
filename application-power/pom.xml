@@ -12,7 +12,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <project.build.jdkVersion>1.7</project.build.jdkVersion>
+        <project.build.jdkVersion>1.8</project.build.jdkVersion>
         <!-- spring版本号 -->
         <spring.version>4.3.6.RELEASE</spring.version>
         <!-- mybatis版本号 -->

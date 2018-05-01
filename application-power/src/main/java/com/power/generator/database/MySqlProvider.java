@@ -1,7 +1,8 @@
 package com.power.generator.database;
 
-import com.alibaba.fastjson.JSON;
 import com.boco.common.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Map;
  */
 public class MySqlProvider implements DbProvider {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MySqlProvider.class);
     /**
      *
      * @param tableName
@@ -55,13 +57,16 @@ public class MySqlProvider implements DbProvider {
     }
 
     @Override
-    public List<TableInfo> getTablesInfo(String tableName) {
+    public List<TableInfo> getTablesInfo(String tableName,String filter) {
         List<TableInfo> tableList;
         StringBuilder sql = new StringBuilder();
         sql.append("show table status where ENGINE IS NOT NULL ");
         if (StringUtil.isNotEmpty(tableName)) {
             sql.append(" and NAME LIKE '%").append(tableName).append("%'");
+        } else if(StringUtil.isNotEmpty(filter)){
+            sql.append(" and NAME LIKE '").append(filter).append("%'");
         }
+        LOGGER.debug("oracle provider sql: {}",sql.toString());
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
