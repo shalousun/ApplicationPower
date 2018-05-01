@@ -31,6 +31,7 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
        demo:https://gitee.com/sunyurepository/multiple-datasource
     10. v1.6.1版本修改生成的springboot项目打成jar包后mybatis别名扫描出错的bug
     11. v1.6.2版本修改创建的springmvc分布式事务多数据源项目8小时中断的配置bug，添加支持oracle库代码生成
+    12. v1.6.3版本添加generator.table.filter.prefix用来过滤表，修改连接oracle库表生成的代码字段错误的bug
 ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
 ## 功能
   1. 根据连接的数据生成dao,model,service,controller,mapper,controllerTest,serviceTest代码
@@ -46,55 +47,62 @@ ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
         在已经进行后，请勿将ApplicationPower的输出目录指定到当前工程，否则会出现代码覆盖，因此建议项目开发启动后将代码生成到别的地方拷贝到自己工        程下，后续会提供不覆盖配置，但是也有可能忘记修改配置，所以还是要小心。
   2.根据自己实际需求，修改generator.properties中的配置
  ```
-  #是否生成注释
-  generator.comment=true
   
-  #代码输出目录
-  generator.outDir=E:\\Test
-  
-  #基包名
-  generator.basePackage=com.boco.demo
-  
-  #数据库表前缀,例如表t_user则需要去除前缀生成正确的实体
-  generator.table.prefix=t_
-  
-  #指定需要用哪张数据表生成代码，不指定则生成全部表的代码
-  generator.table.name=
-  
-  #生成项目的名称
-  generator.applicationName=bootstrap-tree
-  
-  #需要生成的代码层
-  #可生成的代码层dao,model,service,controller,mapper,controllerTest,serviceTest
-  generator.layers=dao,model,service,controller,mapper,controllerTest
-  
-  #需要生成的方法，方法间用英文逗号隔开，写错将无法生成基础方法
-  #可生成的方法包括add,update,delete,query,page,queryToListMap。
-  # query方法查询单条数据，page生成分页,queryToListMap是查询结果以List<Map<Stirng,Object>>返回
-  generator.methods=add,update,delete,query,page,queryToListMap
-  
-  #mybatis自动转驼峰映射，默认开启
-  generator.mapUnderscoreToCamelCase=true
-  #是否开启mybatis缓存，只能填写true或者false
-  generator.enableCache=true
-  
-  #是否需要生成mybatis mapper配置文件的ResultMap
-  #默认不生成result
-  generator.resultMap=false
+#是否生成注释
+generator.comment=true
 
-  # @since 1.5
-  # 打包springboot时是否采用assembly
-  # 如果采用则将生成一系列的相关配置和一系列的部署脚本
-  generator.package.assembly=false
+#代码输出目录
+generator.outDir=E:\\Test
 
-  #@since 1.6
-  # 多数据源多个数据数据源用逗号隔开，不需要多数据源环境则空出来
-  # 对于多数据源会集成分布式事务
-  generator.multiple.datasource=one,two
+#基包名
+generator.basePackage=com.sunyu.hbase
 
-  # @since 1.6
-  # jta-atomikos分布式事务支持
-  generator.jta=true
+
+
+#数据库表前缀,例如表t_user则需要去除前缀生成正确的实体
+generator.table.prefix=tb_
+
+#指定需要用哪张数据表生成代码，不指定则生成全部表的代码,指定表名后下面的过滤器将失效
+generator.table.name=
+
+# 过滤数据库表，生成的时候只生成和过滤器匹配的表
+generator.table.filter.prefix=TB_
+
+#生成项目的名称
+generator.applicationName=test
+
+#需要生成的代码层
+#可生成的代码层dao,model,service,controller,mapper,controllerTest,serviceTest
+generator.layers=dao,model,service,controller,mapper,controllerTest,serviceTest
+
+#需要生成的方法，方法间用英文逗号隔开，写错将无法生成基础方法
+#可生成的方法包括add,update,delete,query,page,queryToListMap。
+# query方法查询单条数据，page生成分页,queryToListMap是查询结果以List<Map<Stirng,Object>>返回
+generator.methods=add,update,delete,query,page
+
+#mybatis自动转驼峰映射，默认开启
+generator.mapUnderscoreToCamelCase=true
+#是否开启mybatis缓存，只能填写true或者false
+generator.enableCache=true
+
+#是否需要生成mybatis mapper配置文件的ResultMap
+#默认不生成result
+generator.resultMap=false
+
+# @since 1.5
+# 打包springboot时是否采用assembly
+# 如果采用则将生成一系列的相关配置和一系列的部署脚本
+generator.package.assembly=true
+
+#@since 1.6
+# 多数据源多个数据数据源用逗号隔开，不需要多数据源环境则空出来
+# 对于多数据源会集成分布式事务
+generator.multiple.datasource=
+
+# @since 1.6
+# jta-atomikos分布式事务支持
+generator.jta=true
+
 ```
   3.修改数据库配置jdbc.properties
 ```
