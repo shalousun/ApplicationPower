@@ -230,6 +230,12 @@ public class CodeWriter extends AbstractCodeWriter {
             FileUtil.writeFileNotAppend(mybatisCfgTpl,configPath+"\\MyBatisConfig.java");
         }
     }
+
+    /**
+     * assembly
+     * @param config
+     * @param projectConfig
+     */
     private void writeAssemblyConfig(ConfigBuilder config, SpringBootProjectConfig projectConfig){
         if(GeneratorProperties.getAssembly()){
             Map<String,String> configPath = config.getBaseConfigPathInfo();
@@ -243,13 +249,14 @@ public class CodeWriter extends AbstractCodeWriter {
             String assemblyRoot = configPath.get(ConstVal.ASSEMBLY_DIR);
             String assemblyXml = Thread.currentThread().getContextClassLoader().getResource(ConstVal.TPL_ASSEMBLY_XML).getPath();
             FileUtil.nioTransferCopy(new File(assemblyXml), new File(assemblyRoot+"\\assembly.xml"));
-            //拷贝配置文件
-            String basePath = config.getProjectPath().getBasePath();
 
-            String ymlPath = PathUtil.connectPath(basePath, projectConfig.getApplicationYmlAssembly());
-            FileUtil.nioTransferCopy(new File(PathUtil.connectPath(basePath,projectConfig.getApplicationYml())),new File(ymlPath));
-            String log4j2Path = PathUtil.connectPath(basePath,projectConfig.getLog4j2Assembly());
-            FileUtil.nioTransferCopy(new File(PathUtil.connectPath(basePath,projectConfig.getLog4j2())),new File(log4j2Path));
+            //拷贝配置文件
+//            String basePath = config.getProjectPath().getBasePath();
+//
+//            String ymlPath = PathUtil.connectPath(basePath, projectConfig.getApplicationYmlAssembly());
+//            FileUtil.nioTransferCopy(new File(PathUtil.connectPath(basePath,projectConfig.getApplicationYml())),new File(ymlPath));
+//            String log4j2Path = PathUtil.connectPath(basePath,projectConfig.getLog4j2Assembly());
+//            FileUtil.nioTransferCopy(new File(PathUtil.connectPath(basePath,projectConfig.getLog4j2())),new File(log4j2Path));
         }
     }
 
