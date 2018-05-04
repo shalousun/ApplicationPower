@@ -3,12 +3,14 @@
     <formats>
         <format>tar.gz</format>
     </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <fileSet>
             <directory>src/main/assembly/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
+        <!--collecting config files-->
         <fileSet>
             <directory>src/main/resources</directory>
             <outputDirectory>config</outputDirectory>
@@ -30,6 +32,7 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
+        <!--collecting documents and copy to docs directory-->
         <fileSet>
             <directory>src/main/resources</directory>
             <outputDirectory>logs</outputDirectory>
@@ -37,6 +40,24 @@
             <excludes>
                 <exclude>**/*</exclude>
             </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>docs</outputDirectory>
+            <includes>
+                <include>*.md</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>docs</directory>
+            <outputDirectory>docs</outputDirectory>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/docs</directory>
+            <outputDirectory>docs</outputDirectory>
+            <fileMode>0644</fileMode>
         </fileSet>
     </fileSets>
 </assembly>
