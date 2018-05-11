@@ -488,4 +488,17 @@ public class StringUtil {
 		}
 		return str;
 	}
+
+	/**
+	 *
+	 * @param str
+	 * @param regex
+	 * @return
+	 */
+	public static String[] split(String str,String regex){
+		if(null != str){
+			return str.split(regex);
+		}
+		return null;
+	}
 }

@@ -348,3 +348,12 @@ Usage:
 ```
 StringUtil.getNotChinese("hello 中国");//return hello
 ```
+
+## 16. split(String str,String regex)方法
+该方法用于根据指定的字符切割字符串到数组中，第一个参数是源字符串，第二个参数是切割使用的字符
+
+```
+String a = "a,b";
+String[] strArray = StringUtil.split(a,",");
+
+```

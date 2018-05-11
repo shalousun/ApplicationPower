@@ -3,6 +3,7 @@ package com.boco.common.util;
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -230,5 +231,51 @@ public class FileUtil {
         URL url = loader.getResource(folder);
         String path = url.getPath();
         return new File(path).listFiles();
+    }
+
+    /**
+     * Use nio write file
+     * @param filePath file path
+     * @param contents
+     * @return
+     */
+    public static boolean nioWriteFile(String filePath,String contents){
+        return nioWriteFile(filePath,contents,null);
+    }
+
+    /**
+     * Appending The New Data To The Existing File
+     * @param filePath
+     * @param contents
+     * @return
+     */
+    public static boolean nioWriteAppendable(String filePath,String contents){
+        return nioWriteFile(filePath,contents, StandardOpenOption.APPEND);
+    }
+
+    /**
+     * Use nio write file
+     * @param filePath
+     * @param contents
+     * @param openOption
+     * @return
+     */
+    public static boolean nioWriteFile(String filePath, String contents, OpenOption openOption){
+        Path path = Paths.get(filePath);
+        try{
+            Files.createDirectories(path.getParent());
+            if( !Files.exists(path)){
+                Files.createFile(path);
+            }
+            if(null == openOption){
+                Files.write(path, contents.getBytes("utf-8"));
+            }else{
+                Files.write(path, contents.getBytes("utf-8"),openOption);
+            }
+            return true;
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
