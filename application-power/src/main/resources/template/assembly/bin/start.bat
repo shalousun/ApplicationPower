@@ -4,12 +4,34 @@ echo off
 :: @author Shalousun
 :: see https://github.com/Shalousun/ApplicationPower
 ::----------------------------------------------------------------------
+set num=0
+setlocal enabledelayedexpansion
 
 set APP_NAME=${appName}.jar
 
 set SPRING_CONFIG_LOCATION=../config/application.yml
 
-set CONFIG= -Dlogging.path=../logs -Dlogging.config=../config/${logConfig} -Dspring.config.location=%SPRING_CONFIG_LOCATION%
+set LOG_IMPL=log4j2.xml
+
+set log_dir=../logs
+
+set lib_dir=../lib
+
+set conf_dir=../config
+
+::---------------------------------------------------------------------
+:: Dynamically loading the properties configuration file.
+::---------------------------------------------------------------------
+for /R "%conf_dir%" %%s in (*.properties) do (
+  set /a num+=1
+  IF !num! equ 1 (
+    set config_location= !config_location!%conf_dir%/%%~nxs
+  ) ELSE (
+    set config_location= !config_location!,%conf_dir%/%%~nxs
+  )
+)
+
+set CONFIG= -Dlogging.path=%log_dir% -Dlogging.config=%conf_dir%/%LOG_IMPL% -Dspring.config.location=%SPRING_CONFIG_LOCATION%,"%config_location%"
 ::----------------------------------------------------------------------
 :: set jvm  -Xms、-Xmx、-Xss.
 :: Usage:set JAVA_OPTS=-server -Xms512M -Xmx512M -Xss256K -Djava.awt.headless=true -Dfile.encoding=utf-8 -XX:PermSize=64M -XX:MaxPermSize=128m
@@ -18,7 +40,7 @@ set JVM_OPTS=-server -Xms512m -Xmx512m
 
 set DEBUG_OPTS=
 if ""%1"" == ""debug"" (
-   set DEBUG_OPTS= -Xloggc:../logs/gc.log -verbose:gc -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=../logs
+   set DEBUG_OPTS= -Xloggc:%log_dir%/gc.log -verbose:gc -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=%log_dir%
    goto debug
 )
 
@@ -28,17 +50,19 @@ if ""%1"" == ""jmx"" (
    goto jmx
 )
 
-echo "Starting the %APP_NAME%"
-java %JVM_OPTS% %DEBUG_OPTS% %JMX_OPTS% %CONFIG% -jar ../lib/%APP_NAME%
+echo "INFO: Starting the %APP_NAME%"
+echo.
+echo "LOG OUT: %log_dir%/app-%date:~0,4%%date:~5,2%%date:~8,2%.log"
+java %JVM_OPTS% %DEBUG_OPTS% %JMX_OPTS% %CONFIG% -jar %lib_dir%/%APP_NAME% > %log_dir%/app-%date:~0,4%%date:~5,2%%date:~8,2%.log
 goto end
 
 :debug
 echo "debug"
-java %JVM_OPTS% %DEBUG_OPTS% %CONFIG% -jar ../lib/%APP_NAME%
+java %JVM_OPTS% %DEBUG_OPTS% %CONFIG% -jar %lib_dir%/%APP_NAME% > %log_dir%/app-%date:~0,4%%date:~5,2%%date:~8,2%.log
 goto end
 
 :jmx
-java %JVM_OPTS% %JMX_OPTS% %CONFIG% -jar ../lib/%APP_NAME%
+java %JVM_OPTS% %JMX_OPTS% %CONFIG% -jar %lib_dir%/%APP_NAME% > %log_dir%/app-%date:~0,4%%date:~5,2%%date:~8,2%.log
 goto end
 
 :end
