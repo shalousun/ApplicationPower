@@ -1,8 +1,8 @@
 #!/bin/bash
-cd `dirname $0`
-BIN_DIR=`pwd`
+cd $(dirname $0)
+BIN_DIR=$(pwd)
 cd ..
-DEPLOY_DIR=`pwd`
+DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
 
 SERVER_NAME=$DEPLOY_DIR
@@ -10,10 +10,10 @@ LOGS_DIR=$DEPLOY_DIR
 LOGS_FILE=$LOGS_DIR/logs/app.log
 
 if [ -z "$SERVER_NAME" ]; then
-	SERVER_NAME=`hostname`
+	SERVER_NAME=$(hostname)
 fi
 
-PIDS=`ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}'`
+PIDS=$(ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}')
 if [ -z "$PIDS" ]; then
     echo "ERROR: The $SERVER_NAME does not started!"
     exit 1
@@ -21,7 +21,7 @@ fi
 
 LOGS_DIR=""
 if [ -n "$LOGS_FILE" ]; then
-	LOGS_DIR=`dirname $LOGS_FILE`
+	LOGS_DIR=$(dirname $LOGS_FILE)
 else
 	LOGS_DIR=$DEPLOY_DIR/logs
 fi
@@ -32,7 +32,7 @@ DUMP_DIR=$LOGS_DIR/dump
 if [ ! -d $DUMP_DIR ]; then
 	mkdir $DUMP_DIR
 fi
-DUMP_DATE=`date +%Y%m%d%H%M%S`
+DUMP_DATE=$(date +%Y%m%d%H%M%S)
 DATE_DIR=$DUMP_DIR/$DUMP_DATE
 if [ ! -d $DATE_DIR ]; then
 	mkdir $DATE_DIR

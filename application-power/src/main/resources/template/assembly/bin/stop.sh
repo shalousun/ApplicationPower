@@ -3,15 +3,15 @@
 # @author shalousun
 # see https://github.com/Shalousun/ApplicationPower
 
-cd `dirname $0`
-BIN_DIR=`pwd`
+cd $(dirname $0)
+BIN_DIR=$(pwd)
 cd ..
-DEPLOY_DIR=`pwd`
+DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
 
 SERVER_NAME=$DEPLOY_DIR
 
-PIDS=`ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}'`
+PIDS=$(ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}')
 if [ -z "$PIDS" ]; then
     echo "ERROR: The $SERVER_NAME does not started!"
     exit 1
@@ -32,7 +32,7 @@ while [ $COUNT -lt 1 ]; do
     sleep 1
     COUNT=1
     for PID in $PIDS ; do
-        PID_EXIST=`ps -f -p $PID | grep java`
+        PID_EXIST=$(ps -f -p $PID | grep java)
         if [ -n "$PID_EXIST" ]; then
             COUNT=0
             break

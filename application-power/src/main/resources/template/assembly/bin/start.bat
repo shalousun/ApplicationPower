@@ -7,13 +7,15 @@ echo off
 
 set APP_NAME=${appName}.jar
 
+::set SPRING_CONFIG_LOCATION=classpath:/data/myapp/config,classpath:/data/myapp/external/config
+
 ::----------------------------------------------------------------------
 :: set jvm  -Xms、-Xmx、-Xss.
 :: Usage:set JAVA_OPTS=-server -Xms512M -Xmx512M -Xss256K -Djava.awt.headless=true -Dfile.encoding=utf-8 -XX:PermSize=64M -XX:MaxPermSize=128m
 ::----------------------------------------------------------------------
 set JVM_OPTS=-server -Xms512m -Xmx512m
 
-set CONFIG= -Dlogging.path=../logs -Dlogging.config=../config/log4j2.xml -Dspring.config.location=../config/application.yml
+set CONFIG= -Dlogging.path=../logs -Dlogging.config=../config/${logConfig} -Dspring.config.location=../config/application.yml
 
 set DEBUG_OPTS=
 if ""%1"" == ""debug"" (

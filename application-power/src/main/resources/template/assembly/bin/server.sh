@@ -7,7 +7,7 @@
 # Source function library.
 # if you want make as a boot server on linux ,edit and enable the next line
 # cd /usr/local/project_name/bin
-cd `dirname $0`
+cd $(dirname $0)
 
 start(){
     ./start.sh
