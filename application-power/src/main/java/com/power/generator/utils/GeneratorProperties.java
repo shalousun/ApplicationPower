@@ -158,4 +158,12 @@ public class GeneratorProperties {
         }
         return map;
     }
+
+    /**
+     * 系统实现的日志配置
+     * @return
+     */
+    public static String getLogConfig(){
+        return props.getProperty("generator.application.logConfig");
+    }
 }
