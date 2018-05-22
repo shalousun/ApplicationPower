@@ -66,7 +66,7 @@ public class MySqlProvider implements DbProvider {
         } else if(StringUtil.isNotEmpty(filter)){
             sql.append(" and NAME LIKE '").append(filter).append("%'");
         }
-        LOGGER.debug("oracle provider sql: {}",sql.toString());
+        LOGGER.debug("MySQL provider sql: {}",sql.toString());
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
