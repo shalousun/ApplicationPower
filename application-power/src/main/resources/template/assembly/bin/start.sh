@@ -14,7 +14,7 @@ cd ..
 DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
 # log file
-LOG_IMPL_FILE=log4j2.xml
+LOG_IMPL_FILE=${logConfig}
 APPLICATION_FILE=application.yml
 
 # ====================================FIND SERVER PORT===================================================
