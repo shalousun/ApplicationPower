@@ -22,6 +22,7 @@ public class ScriptBuilder {
     public Map<String,String> generateScripts(){
         Map<String,Object> placeholders = new HashMap<>();
         placeholders.put("appName", GeneratorProperties.applicationName());
+        placeholders.put("logConfig",GeneratorProperties.getLogConfig());
         return BeetlTemplateUtil.getTemplatesRendered("template/assembly/bin",placeholders);
     }
 }
