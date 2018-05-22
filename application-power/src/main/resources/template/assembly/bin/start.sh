@@ -14,7 +14,7 @@ cd ..
 DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
 # log file
-LOG_IMPL_FILE=${logConfig}
+LOG_IMPL_FILE=log4j2.xml
 APPLICATION_FILE=application.yml
 
 # ====================================FIND SERVER PORT===================================================
@@ -67,9 +67,9 @@ fi
 STDOUT_FILE=$LOGS_DIR/stdout.log
 
 LOGGING_CONFIG=""
-if [ -f "$CONF_DIR/$LOG_IMPL" ]
+if [ -f "$CONF_DIR/$LOG_IMPL_FILE" ]
 then
-    LOGGING_CONFIG="-Dlogging.config=$CONF_DIR/$LOG_IMPL"
+    LOGGING_CONFIG="-Dlogging.config=$CONF_DIR/$LOG_IMPL_FILE"
 fi
 
 CONFIG_FILES=" -Dlogging.path=$LOGS_DIR $LOGGING_CONFIG -Dspring.config.location=$CONF_DIR/$APPLICATION_FILE "
