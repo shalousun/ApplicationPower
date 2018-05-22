@@ -1,5 +1,5 @@
 #!/bin/bash
-# Startup script for a spring boot project
+# Startup script for spring boot project
 # @author shalousun
 # see https://github.com/Shalousun/ApplicationPower
 
