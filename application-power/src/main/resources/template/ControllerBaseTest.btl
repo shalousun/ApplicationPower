@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
         "classpath:spring-mvc.xml"
 })
 @WebAppConfiguration
-public class ControllerBaseTest {
+public abstract class ControllerBaseTest {
 
     @Resource
 	private WebApplicationContext wac;
