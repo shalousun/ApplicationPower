@@ -27,10 +27,34 @@ then
     eval $(YamlParse__parse "config/application.yml" "config_")
     SERVER_PORT=$config_server_port
 else
-
     SERVER_PORT=$(sed '/server.port/!d;s/.*=//' config/application.properties | tr -d '\r')
 fi
+# ===================================OS specific support================================================
+unameOut="$(uname -s)"
+case "$unameOut" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:$unameOut"
+esac
+echo "INFO: $machine platform"
 # ===================================FIND SERVER PORT END================================================
+if [ -n "$SERVER_PORT" ]; then
+    SERVER_PORT_COUNT=""
+    if [ "$machine" == "Linux" ]; then
+        SERVER_PORT_COUNT=$(netstat -tln | grep $SERVER_PORT | wc -l)
+    elif [ "$machine" == "Mac" ]; then
+        SERVER_PORT_COUNT=$(lsof -t -i :$SERVER_PORT)
+    else
+        SERVER_PORT_COUNT=$(netstat -tln | grep $SERVER_PORT | wc -l)
+    fi
+    if [ "$SERVER_PORT_COUNT" -gt 0 ]; then
+        echo "ERROR: The $SERVER_NAME port $SERVER_PORT already used!"
+        exit 1
+    fi
+fi
+
 
 PIDS=$(ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}')
 if [ "$1" = "status" ]; then
@@ -50,14 +74,6 @@ if [ -n "$PIDS" ]; then
     echo "PID: $PIDS"
     echo "Used port: $SERVER_PORT"
     exit 1
-fi
-
-if [ -n "$SERVER_PORT" ]; then
-    SERVER_PORT_COUNT=$(netstat -tln | grep $SERVER_PORT | wc -l)
-    if [ "$SERVER_PORT_COUNT" -gt 0 ]; then
-        echo "ERROR: The $SERVER_NAME port $SERVER_PORT already used!"
-        exit 1
-    fi
 fi
 # =================================init logging dir and config===========================================
 LOGS_DIR=$DEPLOY_DIR/logs
