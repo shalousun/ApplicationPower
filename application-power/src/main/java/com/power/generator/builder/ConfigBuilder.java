@@ -13,6 +13,11 @@ import java.util.*;
  * 构建配置
  */
 public class ConfigBuilder {
+
+    /**
+     * 项目的doc文档目录
+     */
+    private Map<String,String> docsPath;
     /**
      * 路径配置信息
      */
@@ -21,7 +26,7 @@ public class ConfigBuilder {
     /**
      * 用于注入mvc代码层的路径，不包含其他配置类和配置文件路径
      */
-    private Map<String,String> mybatisGenPath;
+    private Map<String, String> mybatisGenPath;
     /**
      * 包配置详情
      */
@@ -56,11 +61,13 @@ public class ConfigBuilder {
         String javaDir = basePath + fileSeparator + ConstVal.JAVA_PATH;
         String testDir = basePath + fileSeparator + ConstVal.TEST_JAVA_PATH;
         String resourceDir = basePath + fileSeparator + ConstVal.RESOURCE_DIR;
+        String docsDir = basePath + fileSeparator + ConstVal.DOCS_PATH;
 
         projectPath.setBasePath(basePath);
         projectPath.setJavaSrcPath(javaDir);
         projectPath.setResourceDir(resourceDir);
         projectPath.setTestJavaSrcPath(testDir);
+
 
     }
 
@@ -69,9 +76,12 @@ public class ConfigBuilder {
         initProjectPath();
         //包配置
         if (null == packageConfig) {
-            handlerPackage(new PackageConfig(),false);
+            packageConfig = new PackageConfig();
+            handlerPackage(packageConfig, false);
+            handlerDocsPath(packageConfig);
         } else {
-            handlerPackage(packageConfig,false);
+            handlerPackage(packageConfig, false);
+            handlerDocsPath(packageConfig);
         }
         //创建工程所需配置
         if (null == projectConfig) {
@@ -99,9 +109,11 @@ public class ConfigBuilder {
         initProjectPath();
         //包配置
         if (null == packageConfig) {
-            handlerPackage(new PackageConfig(),true);
+            handlerPackage(new PackageConfig(), true);
+            handlerDocsPath(new PackageConfig());
         } else {
-            handlerPackage(packageConfig,true);
+            handlerPackage(packageConfig, true);
+            handlerDocsPath(packageConfig);
         }
         //创建工程所需配置
         if (null == projectConfig) {
@@ -123,7 +135,7 @@ public class ConfigBuilder {
      * @param dbProvider
      */
     private void getTableInfoList(DbProvider dbProvider) {
-        tableInfo = dbProvider.getTablesInfo(GeneratorProperties.getTableName(),GeneratorProperties.tableFilterPrefix());
+        tableInfo = dbProvider.getTablesInfo(GeneratorProperties.getTableName(), GeneratorProperties.tableFilterPrefix());
     }
 
     /**
@@ -131,8 +143,8 @@ public class ConfigBuilder {
      *
      * @param config
      */
-    private void handlerPackage(PackageConfig config,boolean isSpringBoot) {
-        packageInfo = new HashMap<>(8);
+    private void handlerPackage(PackageConfig config, boolean isSpringBoot) {
+        packageInfo = new HashMap<>(9);
         pathInfo = new LinkedHashMap<>(8);
         mybatisGenPath = new LinkedHashMap<>(8);
 
@@ -152,51 +164,51 @@ public class ConfigBuilder {
                 packageInfo.put(ConstVal.SERVICEIMPL, joinPackage(basePackage, config.getServiceImpl()));
                 pathInfo.put(ConstVal.SERVICE_PATH, joinPath(javaDir, packageInfo.get(ConstVal.SERVICE)));
                 pathInfo.put(ConstVal.SERVICEIMPL_PATH, joinPath(javaDir, packageInfo.get(ConstVal.SERVICEIMPL)));
-                mybatisGenPath.put(BuilderCfg.SERVICE_BUILDER,joinJavaFilePath(packageInfo.get(ConstVal.SERVICE),ConstVal.SERVICE_SUBFIX));
-                mybatisGenPath.put(BuilderCfg.SERVICEIMPL_BUILER,joinJavaFilePath(packageInfo.get(ConstVal.SERVICEIMPL),ConstVal.SERVICEIMPL_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.SERVICE_BUILDER, joinJavaFilePath(packageInfo.get(ConstVal.SERVICE), ConstVal.SERVICE_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.SERVICEIMPL_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.SERVICEIMPL), ConstVal.SERVICEIMPL_SUBFIX));
             } else if (ConstVal.SERVICE_TEST.equals(str)) {
                 packageInfo.put(ConstVal.SERVICE_TEST, joinPackage(basePackage, config.getService()));
                 pathInfo.put(ConstVal.SERVICE_TEST_PATH, joinPath(testDir, packageInfo.get(ConstVal.SERVICE_TEST)));
-                mybatisGenPath.put(BuilderCfg.SERVICE_TEST_BUILER,joinFinalPath(testDir,packageInfo.get(ConstVal.SERVICE_TEST),ConstVal.SERVICE_TEST_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.SERVICE_TEST_BUILER, joinFinalPath(testDir, packageInfo.get(ConstVal.SERVICE_TEST), ConstVal.SERVICE_TEST_SUBFIX));
             } else if (ConstVal.CONTROLLER_TEST.equals(str)) {
                 packageInfo.put(ConstVal.CONTROLLER_TEST, joinPackage(basePackage, config.getController()));
                 pathInfo.put(ConstVal.CONTROLLER_TEST_PATH, joinPath(testDir, packageInfo.get(ConstVal.CONTROLLER_TEST)));
-                mybatisGenPath.put(BuilderCfg.CONTROLLER_TEST_BUILER,joinFinalPath(testDir,packageInfo.get(ConstVal.CONTROLLER_TEST),ConstVal.CONTROLLER_TEST_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.CONTROLLER_TEST_BUILER, joinFinalPath(testDir, packageInfo.get(ConstVal.CONTROLLER_TEST), ConstVal.CONTROLLER_TEST_SUBFIX));
             } else if (ConstVal.DAO.equals(str)) {
                 packageInfo.put(ConstVal.DAO, joinPackage(basePackage, config.getDao()));
                 pathInfo.put(ConstVal.DAO_PATH, joinPath(javaDir, packageInfo.get(ConstVal.DAO)));
-                mybatisGenPath.put(BuilderCfg.DAO_BUILER,joinJavaFilePath(packageInfo.get(ConstVal.DAO),ConstVal.DAO_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.DAO_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.DAO), ConstVal.DAO_SUBFIX));
             } else if (ConstVal.ENTITY.equals(str)) {
                 packageInfo.put(ConstVal.ENTITY, joinPackage(basePackage, config.getEntity()));
                 pathInfo.put(ConstVal.ENTITY_PATH, joinPath(javaDir, packageInfo.get(ConstVal.ENTITY)));
-                mybatisGenPath.put(BuilderCfg.MODEL_BUILER,joinJavaFilePath(packageInfo.get(ConstVal.ENTITY),ConstVal.JAVA_SUFFIX));
+                mybatisGenPath.put(BuilderCfg.MODEL_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.ENTITY), ConstVal.JAVA_SUFFIX));
             } else if (ConstVal.MAPPER.equals(str)) {
                 packageInfo.put(ConstVal.MAPPER, joinPackage(basePackage, config.getMapper()));
                 pathInfo.put(ConstVal.MAPPER_PATH, joinPath(resourceDir, packageInfo.get(ConstVal.MAPPER)));
-                mybatisGenPath.put(BuilderCfg.MAPPER_BUILDER,joinFinalPath(resourceDir,packageInfo.get(ConstVal.MAPPER),ConstVal.MAPPER_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.MAPPER_BUILDER, joinFinalPath(resourceDir, packageInfo.get(ConstVal.MAPPER), ConstVal.MAPPER_SUBFIX));
             } else if (ConstVal.CONTROLLER.equals(str)) {
                 packageInfo.put(ConstVal.CONTROLLER, joinPackage(basePackage, config.getController()));
                 pathInfo.put(ConstVal.CONTROLLER_PATH, joinPath(javaDir, packageInfo.get(ConstVal.CONTROLLER)));
-                mybatisGenPath.put(BuilderCfg.CONTROLLER_BUILER,joinJavaFilePath(packageInfo.get(ConstVal.CONTROLLER),ConstVal.CONTROLLER_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.CONTROLLER_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.CONTROLLER), ConstVal.CONTROLLER_SUBFIX));
             }
         }
         packageInfo.put(ConstVal.DATE_CONVERTER, joinPackage(basePackage, config.getConverter()));
         pathInfo.put(ConstVal.DATE_CONVERTER_PATH, joinPath(javaDir, packageInfo.get(ConstVal.DATE_CONVERTER)));
-        packageInfo.put(ConstVal.REST_EXCEPTION,joinPackage(basePackage, config.getRestError()));
+        packageInfo.put(ConstVal.REST_EXCEPTION, joinPackage(basePackage, config.getRestError()));
         pathInfo.put(ConstVal.REST_ERROR_PATH, joinPath(javaDir, packageInfo.get(ConstVal.REST_EXCEPTION)));
-        if(GeneratorProperties.getMultipleDataSource().size()>0){
-            packageInfo.put(ConstVal.ASPECT,joinPackage(basePackage,config.getAspect()));
-            pathInfo.put(ConstVal.ASPECT,joinPath(javaDir,packageInfo.get(ConstVal.ASPECT)));
-            packageInfo.put(ConstVal.CONSTANTS,joinPackage(basePackage,config.getConstants()));
-            pathInfo.put(ConstVal.CONSTANTS,joinPath(javaDir,packageInfo.get(ConstVal.CONSTANTS)));
-            if(isSpringBoot){
-                packageInfo.put(ConstVal.DATA_SOURCE_FIG,joinPackage(basePackage,config.getConfig()));
-                pathInfo.put(ConstVal.DATA_SOURCE_FIG,joinPath(javaDir,packageInfo.get(ConstVal.DATA_SOURCE_FIG)));
+        if (GeneratorProperties.getMultipleDataSource().size() > 0) {
+            packageInfo.put(ConstVal.ASPECT, joinPackage(basePackage, config.getAspect()));
+            pathInfo.put(ConstVal.ASPECT, joinPath(javaDir, packageInfo.get(ConstVal.ASPECT)));
+            packageInfo.put(ConstVal.CONSTANTS, joinPackage(basePackage, config.getConstants()));
+            pathInfo.put(ConstVal.CONSTANTS, joinPath(javaDir, packageInfo.get(ConstVal.CONSTANTS)));
+            if (isSpringBoot) {
+                packageInfo.put(ConstVal.DATA_SOURCE_FIG, joinPackage(basePackage, config.getConfig()));
+                pathInfo.put(ConstVal.DATA_SOURCE_FIG, joinPath(javaDir, packageInfo.get(ConstVal.DATA_SOURCE_FIG)));
             }
         }
-        if(GeneratorProperties.isJTA()){
-            packageInfo.put(ConstVal.DATA_SOURCE_FIG,joinPackage(basePackage,config.getConfig()));
-            pathInfo.put(ConstVal.DATA_SOURCE_FIG,joinPath(javaDir,packageInfo.get(ConstVal.DATA_SOURCE_FIG)));
+        if (GeneratorProperties.isJTA()) {
+            packageInfo.put(ConstVal.DATA_SOURCE_FIG, joinPackage(basePackage, config.getConfig()));
+            pathInfo.put(ConstVal.DATA_SOURCE_FIG, joinPath(javaDir, packageInfo.get(ConstVal.DATA_SOURCE_FIG)));
         }
     }
 
@@ -216,9 +228,9 @@ public class ConfigBuilder {
         baseConfigFilesPath.put(ConstVal.TPL_404, connectPath(basePath, config.getHtml404()));
         baseConfigFilesPath.put(ConstVal.TPL_500, connectPath(basePath, config.getHtml500()));
         baseConfigFilesPath.put(ConstVal.TPL_SPRING_MVC, connectPath(basePath, config.getSpringMvc()));
-        if(GeneratorProperties.isMultipleDataSource()){
+        if (GeneratorProperties.isMultipleDataSource()) {
             baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS_MULTIPLE, connectPath(basePath, config.getSpringMybatis()));
-        }else {
+        } else {
             baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS, connectPath(basePath, config.getSpringMybatis()));
         }
         baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS, connectPath(basePath, config.getSpringMybatis()));
@@ -237,9 +249,9 @@ public class ConfigBuilder {
         String basePath = projectPath.getBasePath();
         baseConfigFilesPath = new HashMap<>(10);
         baseConfigFilesPath.put(ConstVal.TPL_SPRING_BOOT_POM, connectPath(basePath, config.getPom()));
-        if(GeneratorProperties.isMultipleDataSource()){
-            baseConfigFilesPath.put(ConstVal.TPL_MULTIPLE_DATASOURCE_YML,connectPath(basePath, config.getApplicationYml()));
-        }else {
+        if (GeneratorProperties.isMultipleDataSource()) {
+            baseConfigFilesPath.put(ConstVal.TPL_MULTIPLE_DATASOURCE_YML, connectPath(basePath, config.getApplicationYml()));
+        } else {
             baseConfigFilesPath.put(ConstVal.TPL_SPRING_BOOT_CFG_YML, connectPath(basePath, config.getApplicationYml()));
         }
         baseConfigFilesPath.put(ConstVal.TPL_LOF4J2, connectPath(basePath, config.getLog4j2()));
@@ -257,12 +269,13 @@ public class ConfigBuilder {
     private void handlerSpringBootConfigPath(SpringBootProjectConfig config) {
         String basePath = projectPath.getBasePath();
         baseConfigPathInfo = new HashMap<>(5);
+
         baseConfigPathInfo.put(ConstVal.RESOURCE_PATH, connectPath(basePath, config.getResource()));
         baseConfigPathInfo.put(ConstVal.STRING_BOOT_EORRO_DIR, connectPath(basePath, config.getErrorPath()));
-        if(GeneratorProperties.getAssembly()){
-            baseConfigPathInfo.put(ConstVal.ASSEMBLY_DIR,connectPath(basePath,config.getAssemblyRoot()));
-            baseConfigPathInfo.put(ConstVal.ASSEMBLY_BIN,connectPath(basePath,config.getAssemblyBin()));
-            baseConfigPathInfo.put(ConstVal.ASSEMBLY_CFG,connectPath(basePath,config.getAssemblyCfg()));
+        if (GeneratorProperties.getAssembly()) {
+            baseConfigPathInfo.put(ConstVal.ASSEMBLY_DIR, connectPath(basePath, config.getAssemblyRoot()));
+            baseConfigPathInfo.put(ConstVal.ASSEMBLY_BIN, connectPath(basePath, config.getAssemblyBin()));
+            baseConfigPathInfo.put(ConstVal.ASSEMBLY_CFG, connectPath(basePath, config.getAssemblyCfg()));
         }
 
     }
@@ -274,6 +287,18 @@ public class ConfigBuilder {
         baseConfigPathInfo.put(ConstVal.RESOURCE_PATH, connectPath(basePath, config.getResource()));
         baseConfigPathInfo.put(ConstVal.WEB_INFO_PATH, connectPath(basePath, config.getWebInfoPath()));
         baseConfigPathInfo.put(ConstVal.ERROR_PATH, connectPath(basePath, config.getErrorPath()));
+    }
+
+    /**
+     * 项目的docs目录
+     * @param config
+     */
+    private void handlerDocsPath(PackageConfig config){
+        docsPath = new HashMap<>();
+        String basePath = projectPath.getBasePath();
+        String fileSeparator = System.getProperty("file.separator");
+        String docsDir = basePath + fileSeparator + ConstVal.DOCS_PATH;
+        docsPath.put(config.getDocs(),docsDir);
     }
 
     /**
@@ -289,17 +314,18 @@ public class ConfigBuilder {
 
     /**
      * 配置出最终的连接路径
+     *
      * @param packageName
      * @param postfix
      * @return
      */
-    private String joinJavaFilePath(String packageName,String postfix){
+    private String joinJavaFilePath(String packageName, String postfix) {
         String javaDir = projectPath.getJavaSrcPath();
-        return PathUtil.joinPath(javaDir, packageName)+"\\%s"+postfix;
+        return PathUtil.joinPath(javaDir, packageName) + "\\%s" + postfix;
     }
 
-    private String joinFinalPath(String parentDir, String packageName,String postfix){
-        return PathUtil.joinPath(parentDir, packageName)+"\\%s"+postfix;
+    private String joinFinalPath(String parentDir, String packageName, String postfix) {
+        return PathUtil.joinPath(parentDir, packageName) + "\\%s" + postfix;
     }
 
     /**
@@ -350,5 +376,9 @@ public class ConfigBuilder {
 
     public Map<String, String> getMybatisGenPath() {
         return mybatisGenPath;
+    }
+
+    public Map<String, String> getDocsPath() {
+        return docsPath;
     }
 }

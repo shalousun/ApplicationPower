@@ -12,6 +12,7 @@ public class ConstVal {
     public static final String TEST_JAVA_PATH = "src\\test\\java";
     public static final String JAVA_PATH = "src\\main\\java";
     public static final String RESOURCE_DIR = "src\\main\\resources";
+    public static final String DOCS_PATH="docs";
 
     //assembly路径配置
     public static final String ASSEMBLY_DIR = "src\\main\\assembly";
@@ -116,6 +117,10 @@ public class ConstVal {
     public static final String TPL_SPRING_BOOT_MAIN = "SpringBootMainApplication.btl";
 
     public static final String TPL_ASSEMBLY_XML = "template/assembly/assembly.xml";
+
+    public static final String TPL_DEPLOY_MD = "assembly/docs/DEPLOY.md";
+
+    public static final String TPL_GITIGNORE = "gitignore.btl";
 
     //多数据源模板定义(针对springboot)
     public static final String TPL_DATASOURCE_CFG = "datasource\\AbstractDataSourceConfig.btl";

@@ -26,6 +26,8 @@ public class ProjectPath {
     private String resourceDir;
 
 
+
+
     //getters and setters
     public String getBasePath() {
         return basePath;
@@ -58,4 +60,6 @@ public class ProjectPath {
     public void setResourceDir(String resourceDir) {
         this.resourceDir = resourceDir;
     }
+
+
 }

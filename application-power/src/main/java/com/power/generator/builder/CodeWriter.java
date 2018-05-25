@@ -4,6 +4,7 @@ import com.boco.common.util.FileUtil;
 import com.boco.common.util.StringUtil;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
+import com.power.generator.constant.PackageConfig;
 import com.power.generator.constant.SpringBootProjectConfig;
 import com.power.generator.database.Column;
 import com.power.generator.database.DbProvider;
@@ -34,6 +35,8 @@ public class CodeWriter extends AbstractCodeWriter {
         mkdirs(config.getPathInfo());
         //创建配置文件路径
         mkdirs(config.getBaseConfigPathInfo());
+        //创建文档路径
+        mkdirs(config.getDocsPath());
         //创建配置文件
         writeBaseConfig(config.getBaseConfigFilesPath());
         //创建代码
@@ -51,6 +54,8 @@ public class CodeWriter extends AbstractCodeWriter {
         mkdirs(config.getPathInfo());
         //创建配置文件路径
         mkdirs(config.getBaseConfigPathInfo());
+        //创建文档路径
+        mkdirs(config.getDocsPath());
         //创建配置文件
         writeBaseConfig(config.getBaseConfigFilesPath());
         //创建代码
@@ -143,6 +148,8 @@ public class CodeWriter extends AbstractCodeWriter {
                 FileUtil.writeFileNotAppend(template.render(), entry.getValue());
             }
         }
+        template = BeetlTemplateUtil.getByName(ConstVal.TPL_GITIGNORE);
+        FileUtil.writeFileNotAppend(template.render(),config.getProjectPath().getBasePath()+"/.gitignore");
     }
 
     /**
@@ -249,6 +256,13 @@ public class CodeWriter extends AbstractCodeWriter {
             String assemblyRoot = configPath.get(ConstVal.ASSEMBLY_DIR);
             String assemblyXml = Thread.currentThread().getContextClassLoader().getResource(ConstVal.TPL_ASSEMBLY_XML).getPath();
             FileUtil.nioTransferCopy(new File(assemblyXml), new File(assemblyRoot+"\\assembly.xml"));
+
+            Map<String,String> docsPath = config.getDocsPath();
+            String deployDoc = docsPath.get(ConstVal.DOCS_PATH);
+            System.out.println(deployDoc);
+            Template deployTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_DEPLOY_MD);
+            deployTemplate.binding("appName", GeneratorProperties.applicationName());
+            FileUtil.writeFileNotAppend(deployTemplate.render(),deployDoc+"/DEPLOY.md");
 
             //拷贝配置文件
 //            String basePath = config.getProjectPath().getBasePath();

@@ -29,6 +29,8 @@ public class PackageConfig {
 
     private String restError = "error";
 
+    private String docs = "docs";
+
     public String getService() {
         return service;
     }
@@ -75,5 +77,13 @@ public class PackageConfig {
 
     public String getRestError() {
         return restError;
+    }
+
+    public String getDocs() {
+        return docs;
+    }
+
+    public void setDocs(String docs) {
+        this.docs = docs;
     }
 }
