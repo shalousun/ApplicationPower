@@ -1,0 +1,110 @@
+项目说明
+
+# 环境要求
+
+jdk版本：jdk 1.8
+
+系统：linux /windows
+
+# 项目部署
+
+打包后的项目部署比较简单，开箱即可启动
+```
+//解压tar.gz包
+tar -zxvf ${appName}-1.0.tar.gz
+//解压后启动脚本在项目的bin目录中，项目配置文件在config中，日志文件在logs目录中
+```
+
+# 启动应用
+
+第一种通过start.sh来启动
+```
+# 启动应用
+
+./start.sh
+
+# 以debug方式启动，此处debug为jvm环境的debug
+./start.sh debug
+
+# 启动并开启jmx监控
+
+./start.sh jmx
+# 获取应用当前的运行状态
+./start.sh status
+```
+第二种通过server.sh来启动
+
+```
+# 启动应用
+
+./server.sh
+
+# 以debug方式启动，此处debug为jvm环境的debug
+./server.sh debug
+
+# 启动任务并开启jmx监控
+
+./server.sh jmx
+# 获取当前的运行状态
+./server.sh status
+
+```
+# 停止应用
+```
+./stop.sh
+或
+./server.sh stop
+```
+
+# 启动日志
+
+启动日志在应用的logs下
+## 日志调整
+目前默认开启的日志是debug，对于生产环境需要将日志关闭，修改日志只需要在config中的log4j2.xml修改日志级别即可
+
+```
+<!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
+<!--TRACE、DEBUG、INFO、WARN、ERROR、上FATAL-->
+<Root level="ERROR">
+    <AppenderRef ref="Console"/>
+</Root>
+```
+
+
+# jvm参数调整
+
+服务启动的jvm参数设置是在setenv.sh中，目前设置比较小，但是如果setenv.sh不存在，应用使用start.sh中默认的
+jvm参数，强力推荐不要在start.sh中去修改jvm，设置也相对麻烦，因此推荐在setenv.sh中去设置jvm参数.
+```
+# set jvm params
+
+export JAVA_OPTS="$JAVA_OPTS -Xms512m"
+export JAVA_OPTS="$JAVA_OPTS -Xmx512m"
+export JAVA_OPTS="$JAVA_OPTS -Xss256K"
+
+# The hotspot server JVM has specific code-path optimizations
+# which yield an approximate 10% gain over the client version.
+export JAVA_OPTS="$JAVA_OPTS -server"
+
+# Basically tell the JVM not to load awt libraries
+export JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true"
+
+# set encoding
+export JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=utf-8"
+
+# set garbage collector
+# export java_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
+
+# only for jdk 1.7
+#export JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize="256m
+```
+
+# 配置修改
+注意在修改yml文件中的配置时请严格按照原来的格式修改，字符缩进错误可能会影响，应用的启动
+## 应用端口号修改
+端口号在config/application.yml
+
+```
+server:
+  port: 9089
+```
