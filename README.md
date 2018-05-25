@@ -22,8 +22,8 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
     1. v1.0版本的CommonResult依赖于boco-health-common模块
     2. v1.1版本的CommonResult改为依赖独立模块Common-util
     3. v1.2版本升级spring到4.3.6，Controller层生成的代码使用@GetMapping和@PostMapping代替@RequestMapping注解。
-    4. v1.3版本升级mybatis和druid的版本，项目框架摒弃log4j，全面将日志升级到log4j2框架，mysql驱动升级到6.x,支持创建springboot项目。
-    5. v1.4版本升级实现生成方法可自由控制(ps:参考generator.properties中配置)，基础方法增加一个返回List<Map<String,Object>>的方法。
+    4. v1.3版本升级mybatis和druid的版本，全面将日志升级到log4j2框架，mysql驱动升级到6.x,支持创建springboot项目。
+    5. v1.4版本升级实现生成方法可自由控制(ps:参考generator.properties)，基础方法增加返回List<Map<String,Object>>的方法。
     6. v1.4.1版本升级springboot和其他依赖的版本，修改springboot测试模板错误，springboot项目增加springloaded热部署插件。
     7. v1.4.2版本优化生成代码时对数据库的连接次数，restful接口单元测试生成中add和update方法增加自动添加参数和赋予随机值的功能
     8. v1.5版本增加springboot项目基于assembly的服务化打包功能，完备的服务脚本使得在window或linux系统启动和运维项目更轻松
@@ -32,6 +32,8 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
     10. v1.6.1版本修改生成的springboot项目打成jar包后mybatis别名扫描出错的bug
     11. v1.6.2版本修改创建的springmvc分布式事务多数据源项目8小时中断的配置bug，添加支持oracle库代码生成
     12. v1.6.3版本添加generator.table.filter.prefix用来过滤表，修改连接oracle库表生成的代码字段错误的bug
+    13. v1.7版本添.gitignore的模板创建，选择assembly打包springboot项目时自动生成部署文档，
+        将assembly打包的springboot启动脚本jvm参数设置提取到setenv.sh中
 ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
 ## 功能
   1. 根据连接的数据生成dao,model,service,controller,mapper,controllerTest,serviceTest代码
@@ -42,7 +44,7 @@ ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
   6. 基于SL4J面向接口的标注化日志输出
   7. 支持创建多数据源和集成atomikos分布式事务
   8. 自动为您创建.gitignore模版到项目中
-  9. 创建规划化的非docker部署打包方案和完整服务启动脚本和部署文档
+  9. 创建标准化的非docker部署打包方案和完整服务启动脚本和部署文档
 
 ## 使用说明
   1.使用注意事项
