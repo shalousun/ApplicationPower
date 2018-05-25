@@ -136,6 +136,8 @@ new CodeWriter().executeSpringBoot();
 1. 目前对于互联网的项目，推荐使用docker容器化部署
 2. 对于传统企业小应用单体部署，推荐使用application-power的整合assembly后的整套标准打包方案，
    application-power自动为您生成优雅的启动停止服务脚本，并且为您的项目自动创建了一个基本的部署文档。
+ 
+ps：关于spring的非docker打包，请了解改方案[Springboot基于assembly的服务化打包方案](https://my.oschina.net/u/1760791/blog/1587996)
 
 
 
