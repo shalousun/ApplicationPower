@@ -100,6 +100,24 @@ export JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=utf-8"
 # only for jdk 1.7
 #export JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize="256m
 ```
+# 关于配置文件加载
+目前start.sh能够实现除xml外的配置文件自动从打包的config目录加载配置文件。xml主要有些配置文件需要相应xsd解析，
+脚本自动加载的路径并不是classpath,解析会有问题。建议不要在少在springboot中使用xml配置，如果要用请在开发阶段修改assembly.xml，
+主要就是增加一个将xml配置文件打包到和jar同级的目录中。
+
+开发人员注意：对于properties配置文件，start.sh会帮你在启动时自动加载作为jar项目的配置，
+但是目前只能使用spring的注解来加载properties,因为这里打包后的config不是classpath，
+如果自己编写properties工具获取的将是jar中原始properties设置，值无法覆盖。
+
+Usage:
+```
+@PropertySource(value = {"config.properties"})
+public class Config{
+   @Value("${application.name}")
+   private String name;//tps
+
+}
+```
 
 # 配置修改
 注意在修改yml文件中的配置时请严格按照原来的格式修改，字符缩进错误可能会影响，应用的启动

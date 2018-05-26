@@ -21,6 +21,10 @@ public class ScriptBuilder {
      */
     public Map<String,String> generateScripts(){
         Map<String,Object> placeholders = new HashMap<>();
+        //处理start.sh特殊字符
+        placeholders.put("arr_file","(${arr[*]} $file)");
+        placeholders.put("arr","${arr[*]}");
+        placeholders.put("extension","${filename##*.}");
         placeholders.put("appName", GeneratorProperties.applicationName());
         placeholders.put("logConfig",GeneratorProperties.getLogConfig());
         return BeetlTemplateUtil.getTemplatesRendered("template/assembly/bin",placeholders);
