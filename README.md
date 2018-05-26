@@ -140,8 +140,26 @@ new CodeWriter().executeSpringBoot();
 ps：关于spring的非docker打包，请了解改方案[Springboot基于assembly的服务化打包方案](https://my.oschina.net/u/1760791/blog/1587996)
 
 
-
-
+## application-power创建的项目结构
+```
+├─docs
+│      DEPLOY.md
+└─src
+│   ├─main
+│   │  ├─assembly
+│   │  ├─bin  
+│   │  │  └─config
+│   │  ├─java
+│   │  │  └─com.company.script
+│   │  └─resources
+│   │                  
+│   └─test
+│      └─java
+│          └─com.company.script
+│                               
+│ .gitignore
+│ pom.xml
+```
 
 
 
