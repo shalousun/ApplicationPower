@@ -117,6 +117,14 @@ public class GeneratorProperties {
     }
 
     /**
+     * 是否需要生成docker配置
+     * @return
+     */
+    public static Boolean useDocker(){
+        return Boolean.valueOf(props.getProperty("generator.docker"));
+    }
+
+    /**
      *  获取多数据源
      * @return
      */

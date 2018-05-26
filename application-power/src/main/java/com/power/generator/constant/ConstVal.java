@@ -6,11 +6,15 @@ package com.power.generator.constant;
  */
 public class ConstVal {
 
+    public static final String FILE_SEPARATOR =  System.getProperty("file.separator");
+
     public static final String JAVA_SUFFIX = ".java";
     public static final String XML_SUFFIX = ".xml";
 
+
     public static final String TEST_JAVA_PATH = "src\\test\\java";
     public static final String JAVA_PATH = "src\\main\\java";
+    public static final String MAIN_PATH = "src\\main";
     public static final String RESOURCE_DIR = "src\\main\\resources";
     public static final String DOCS_PATH="docs";
 

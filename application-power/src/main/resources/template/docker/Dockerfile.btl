@@ -1,0 +1,12 @@
+FROM java:8
+
+MAINTAINER yusun4@iflytek.com
+EXPOSE 8080
+
+#install Spring Boot artifact
+VOLUME /tmp
+ADD ${applicationName}-1.0-SNAPSHOT.jar app.jar
+RUN sh -c 'touch /app.jar'
+# set jvm
+ENV JAVA_OPTS="-server -Xmx1024m -Xms1024m -Djava.awt.headless=true"
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]

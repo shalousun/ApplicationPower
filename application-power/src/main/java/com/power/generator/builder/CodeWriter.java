@@ -67,6 +67,8 @@ public class CodeWriter extends AbstractCodeWriter {
 
         writeDbSourceAndJTACode(config,new SpringBootProjectConfig());
 
+        new DockerCodeBuilder();
+
     }
 
     /**

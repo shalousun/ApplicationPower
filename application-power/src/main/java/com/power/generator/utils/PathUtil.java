@@ -3,6 +3,7 @@ package com.power.generator.utils;
 import com.power.generator.constant.ConstVal;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * Created by yu on 2017/4/29.
@@ -56,6 +57,20 @@ public class PathUtil {
             return subPackage;
         }
         return parent + "." + subPackage;
+    }
+
+    /**
+     *
+     * 创建代码输出路径
+     * @param pathInfo 路径信息
+     */
+    public static void mkdirs(Map<String, String> pathInfo) {
+        for (Map.Entry<String, String> entry : pathInfo.entrySet()) {
+            File dir = new File(entry.getValue());
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+        }
     }
 
 }
