@@ -16,6 +16,24 @@ jdk版本：jdk 1.8
 tar -zxvf ${appName}-1.0.tar.gz
 //解压后启动脚本在项目的bin目录中，项目配置文件在config中，日志文件在logs目录中
 ```
+解压后的项目大致结构
+```
+├─bin
+│      dump.sh
+│      server.sh
+│      setenv.sh
+│      start.bat
+│      start.sh
+│      stop.sh
+│      yaml.sh   
+├─config
+│      application.yml
+├─docs
+│      DEPLOY.md
+├─lib
+│      ${appName}.jar  
+└─logs
+```
 
 # 启动应用
 
@@ -113,7 +131,7 @@ Usage:
 ```
 @PropertySource(value = {"config.properties"})
 public class Config{
-   @Value("${application.name}")
+   @Value("${application_name}")
    private String name;//tps
 
 }

@@ -259,9 +259,9 @@ public class CodeWriter extends AbstractCodeWriter {
 
             Map<String,String> docsPath = config.getDocsPath();
             String deployDoc = docsPath.get(ConstVal.DOCS_PATH);
-            System.out.println(deployDoc);
             Template deployTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_DEPLOY_MD);
             deployTemplate.binding("appName", GeneratorProperties.applicationName());
+            deployTemplate.binding("application_name","${application.name}");
             FileUtil.writeFileNotAppend(deployTemplate.render(),deployDoc+"/DEPLOY.md");
 
             //拷贝配置文件

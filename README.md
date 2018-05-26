@@ -139,8 +139,29 @@ new CodeWriter().executeSpringBoot();
  
 ps：关于spring的非docker打包，请了解改方案[Springboot基于assembly的服务化打包方案](https://my.oschina.net/u/1760791/blog/1587996)
 
+application-power整合的springboot打包后的结构参考
+```
+├─bin
+│      dump.sh
+│      server.sh
+│      setenv.sh
+│      start.bat
+│      start.sh
+│      stop.sh
+│      yaml.sh   
+├─config
+│      application.yml
+│      log4j2.xml
+│      mybatis-config.xml
+├─docs
+│      DEPLOY.md
+├─lib
+│      springboot-script.jar  
+└─logs
+```
 
-## application-power创建的项目结构
+
+## application-power创建的springboot项目结构
 ```
 ├─docs
 │      DEPLOY.md
