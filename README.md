@@ -168,7 +168,7 @@ application-power整合的springboot打包后的结构参考
 └─src
 │   ├─main
 │   │  ├─assembly
-│   │  ├─bin  
+│   │  │  ├─bin  
 │   │  │  └─config
 │   │  ├─java
 │   │  │  └─com.company.script
