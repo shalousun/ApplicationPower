@@ -2,9 +2,11 @@ package com.power.generator.builder;
 
 import com.boco.common.util.FileUtil;
 import com.boco.common.util.StringUtil;
+import com.power.generator.code.impl.AssemblyCodeBuilder;
+import com.power.generator.code.impl.DockerCodeBuilder;
+import com.power.generator.code.impl.PomCodeBuilder;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
-import com.power.generator.constant.PackageConfig;
 import com.power.generator.constant.SpringBootProjectConfig;
 import com.power.generator.database.Column;
 import com.power.generator.database.DbProvider;
@@ -63,11 +65,13 @@ public class CodeWriter extends AbstractCodeWriter {
         //创建项目所需基础类
         writeSpringBootBaseCode(config);
         //创建assembly配置
-        writeAssemblyConfig(config,new SpringBootProjectConfig());
+        writeAssemblyConfig();
 
         writeDbSourceAndJTACode(config,new SpringBootProjectConfig());
 
         new DockerCodeBuilder();
+
+        new PomCodeBuilder();
 
     }
 
@@ -129,10 +133,16 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding("slf4jVersion", "${slf4j.version}");
                 template.binding("log4j2Version", "${log4j2.version}");
                 template.binding("atomikosVersion","${atomikos.version}");
-                template.binding("useAssembly",GeneratorProperties.getAssembly());
+                template.binding("project_basedir","${project.basedir}");
+                template.binding("project_build_directory","${project.build.directory}");
+                template.binding("project_build_finalName","${project.build.finalName}");
+                template.binding("project_version","${project.version}");
+                template.binding("project_groupId","${project.groupId}");
+                template.binding("useAssembly", GeneratorProperties.getAssembly());
                 template.binding("useJTA",GeneratorProperties.isJTA());
                 template.binding("isMultipleDataSource",GeneratorProperties.isMultipleDataSource());
                 template.binding("jdkVersion","${java.version}");
+                template.binding("isUseDocker",GeneratorProperties.useDocker());
                 //log4j2
                 template.binding("LOG_HOME", "${LOG_HOME}");
                 template.binding("LOG_PATH","${sys:logging.path}");
@@ -242,38 +252,9 @@ public class CodeWriter extends AbstractCodeWriter {
 
     /**
      * assembly
-     * @param config
-     * @param projectConfig
      */
-    private void writeAssemblyConfig(ConfigBuilder config, SpringBootProjectConfig projectConfig){
-        if(GeneratorProperties.getAssembly()){
-            Map<String,String> configPath = config.getBaseConfigPathInfo();
-            //创建脚本
-            String binPath = configPath.get(ConstVal.ASSEMBLY_BIN);
-            Map<String,String> scripts = new ScriptBuilder().generateScripts();
-            for(Map.Entry<String,String> entry:scripts.entrySet()){
-                FileUtil.writeFileNotAppend(entry.getValue(),binPath+"\\"+entry.getKey());
-            }
-            //复制assembly.xml
-            String assemblyRoot = configPath.get(ConstVal.ASSEMBLY_DIR);
-            String assemblyXml = Thread.currentThread().getContextClassLoader().getResource(ConstVal.TPL_ASSEMBLY_XML).getPath();
-            FileUtil.nioTransferCopy(new File(assemblyXml), new File(assemblyRoot+"\\assembly.xml"));
-
-            Map<String,String> docsPath = config.getDocsPath();
-            String deployDoc = docsPath.get(ConstVal.DOCS_PATH);
-            Template deployTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_DEPLOY_MD);
-            deployTemplate.binding("appName", GeneratorProperties.applicationName());
-            deployTemplate.binding("application_name","${application.name}");
-            FileUtil.writeFileNotAppend(deployTemplate.render(),deployDoc+"/DEPLOY.md");
-
-            //拷贝配置文件
-//            String basePath = config.getProjectPath().getBasePath();
-//
-//            String ymlPath = PathUtil.connectPath(basePath, projectConfig.getApplicationYmlAssembly());
-//            FileUtil.nioTransferCopy(new File(PathUtil.connectPath(basePath,projectConfig.getApplicationYml())),new File(ymlPath));
-//            String log4j2Path = PathUtil.connectPath(basePath,projectConfig.getLog4j2Assembly());
-//            FileUtil.nioTransferCopy(new File(PathUtil.connectPath(basePath,projectConfig.getLog4j2())),new File(log4j2Path));
-        }
+    private void writeAssemblyConfig(){
+        new AssemblyCodeBuilder();
     }
 
     /**

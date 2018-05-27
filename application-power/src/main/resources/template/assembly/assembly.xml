@@ -36,7 +36,7 @@
         <fileSet>
             <directory>src/main/resources</directory>
             <outputDirectory>logs</outputDirectory>
-            <fileMode>0755</fileMode>
+            <fileMode>0644</fileMode>
             <excludes>
                 <exclude>**/*</exclude>
             </excludes>

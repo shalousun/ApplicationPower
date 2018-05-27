@@ -1,14 +1,13 @@
-package com.power.generator.builder;
+package com.power.generator.code;
 
 
 import com.power.generator.constant.ConstVal;
 import com.power.generator.utils.GeneratorProperties;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 代码
+ * 各模块代码生成的流程模板
  */
 public interface ICodeBuilder {
 

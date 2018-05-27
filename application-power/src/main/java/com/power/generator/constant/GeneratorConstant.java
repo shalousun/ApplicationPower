@@ -18,6 +18,7 @@ public class GeneratorConstant {
         COMMON_VARIABLE.put(GeneratorConstant.BASE_PACKAGE, GeneratorProperties.basePackage());
         COMMON_VARIABLE.put(GeneratorConstant.AUTHOR, System.getProperty("user.name"));
         COMMON_VARIABLE.put(GeneratorConstant.CREATE_TIME, DateTimeUtil.getTime());
+        COMMON_VARIABLE.put(GeneratorConstant.APPLICATION_NAME, GeneratorProperties.applicationName());
     }
 
     /**

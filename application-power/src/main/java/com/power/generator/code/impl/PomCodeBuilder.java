@@ -1,6 +1,8 @@
-package com.power.generator.builder;
+package com.power.generator.code.impl;
 
+import com.power.generator.code.ICodeBuilder;
 import com.power.generator.constant.ConstVal;
+import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.utils.BeetlTemplateUtil;
 import com.power.generator.utils.CodeWriteUtil;
 import com.power.generator.utils.GeneratorProperties;
@@ -11,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 处理maven项目的pom.xml
+ * 处理SpringBoot maven项目的pom.xml
  * @author yu
  */
 public class PomCodeBuilder implements ICodeBuilder {
@@ -43,7 +45,10 @@ public class PomCodeBuilder implements ICodeBuilder {
 
     @Override
     public Map<String, String> handleTemplates() {
+        String basePackage = GeneratorProperties.basePackage();
         Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_SPRING_BOOT_POM);
+        template.binding(GeneratorConstant.BASE_PACKAGE, basePackage);
+        template.binding(GeneratorConstant.APPLICATION_NAME, GeneratorProperties.applicationName());
         template.binding("projectVersion", "${project.version}");
         template.binding("springVersion", "${spring.version}");
         template.binding("mybatisVersion", "${mybatis.version}");
@@ -51,6 +56,11 @@ public class PomCodeBuilder implements ICodeBuilder {
         template.binding("slf4jVersion", "${slf4j.version}");
         template.binding("log4j2Version", "${log4j2.version}");
         template.binding("atomikosVersion","${atomikos.version}");
+        template.binding("project_basedir","${project.basedir}");
+        template.binding("project_build_directory","${project.build.directory}");
+        template.binding("project_build_finalName","${project.build.finalName}");
+        template.binding("project_version","${project.version}");
+        template.binding("project_groupId","${project.groupId}");
         template.binding("useAssembly", GeneratorProperties.getAssembly());
         template.binding("useJTA",GeneratorProperties.isJTA());
         template.binding("isMultipleDataSource",GeneratorProperties.isMultipleDataSource());

@@ -176,7 +176,7 @@ application-power整合的springboot打包后的结构参考
 │   │                  
 │   └─test
 │      └─java
-│          └─com.company.script
+│         └─com.company.script
 │                               
 │ .gitignore
 │ pom.xml

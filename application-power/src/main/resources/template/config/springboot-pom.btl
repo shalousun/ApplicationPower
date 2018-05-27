@@ -163,6 +163,24 @@
                 </executions>
             </plugin>
             <%} %>
+            <%if(isUseDocker){ %>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.13</version>
+                <configuration>
+                    <!--<dockerHost>http://192.168.248.135:2376</dockerHost>-->
+                    <imageName>${project_groupId}/${project_build_finalName}:${project_version}</imageName>
+                    <dockerDirectory>${project_basedir}/src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <directory>${project_build_directory}</directory>
+                            <include>${project_build_finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+            <%} %>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

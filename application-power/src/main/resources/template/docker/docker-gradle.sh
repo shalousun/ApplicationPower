@@ -1,5 +1,5 @@
 #!/bin/bash
-# @author yusun4@iflytek.com
+# @author shalousun
 # shell script to build docker images while use jenkins.
 
 source /etc/profile
