@@ -75,7 +75,7 @@ tar -zxvf ${appName}-1.0.tar.gz
 或
 ./server.sh stop
 ```
-
+**注意：** 以上脚本如果不能正常执行请先检查脚本的用户权限
 # 启动日志
 
 启动日志在应用的logs下
