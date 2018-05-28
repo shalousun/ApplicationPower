@@ -113,6 +113,10 @@ generator.jta=true
 # 推荐根据自己的日志在自动生成前指定好，屏蔽在系统间修改脚本的发生字符不一致问题
 generator.application.logConfig=log4j2.xml
 
+# @since 1.7.1
+# 该值为true时会为springboot maven项目创建Dockerfile和相应的构建脚本
+generator.docker=true
+
 ```
   3.修改数据库配置jdbc.properties
 ```
