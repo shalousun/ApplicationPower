@@ -18,21 +18,6 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
    3. application-power是整个项目的核心，专门用于生成Spring Boot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
    4. datasource-aspect是spring web应用下多数据源动态切换的通用模块
    5. mybatis-template是用于重写SqlSessionTemplate来支持分布式事务环境下的动态数据源切换
-## 版本说明
-    1. v1.0版本的CommonResult依赖于boco-health-common模块
-    2. v1.1版本的CommonResult改为依赖独立模块Common-util
-    3. v1.2版本升级spring到4.3.6，Controller层生成的代码使用@GetMapping和@PostMapping代替@RequestMapping注解。
-    4. v1.3版本升级mybatis和druid的版本，全面将日志升级到log4j2框架，mysql驱动升级到6.x,支持创建springboot项目。
-    5. v1.4版本升级实现生成方法可自由控制(ps:参考generator.properties)，基础方法增加返回List<Map<String,Object>>的方法。
-    6. v1.4.1版本升级springboot和其他依赖的版本，修改springboot测试模板错误，springboot项目增加springloaded热部署插件。
-    7. v1.4.2版本优化生成代码时对数据库的连接次数，restful接口单元测试生成中add和update方法增加自动添加参数和赋予随机值的功能
-    8. v1.5版本增加springboot项目基于assembly的服务化打包功能，完备的服务脚本使得在window或linux系统启动和运维项目更轻松
-    9. v1.6版本增加配置来支持springmvc和springboot多数据源动态切换和atomikos分布式事务支持，快随构建一个数据一致性架构的项目.
-       demo:https://gitee.com/sunyurepository/multiple-datasource
-    10. v1.6.1版本修改生成的springboot项目打成jar包后mybatis别名扫描出错的bug
-    11. v1.6.2版本修改创建的springmvc分布式事务多数据源项目8小时中断的配置bug，添加支持oracle库代码生成
-    12. v1.6.3版本添加generator.table.filter.prefix用来过滤表，修改连接oracle库表生成的代码字段错误的bug
-    13. v1.7版本添.gitignore的模板创建，选择assembly打包springboot项目时自动生成部署文档，
         将assembly打包的springboot启动脚本jvm参数设置提取到setenv.sh中
 ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
 ## 功能
@@ -185,7 +170,34 @@ application-power整合的springboot打包后的结构参考
 │ .gitignore
 │ pom.xml
 ```
+##更新日志
+ 
+#### 历史更新
+    1. v1.0版本的CommonResult依赖于boco-health-common模块
+    2. v1.1版本的CommonResult改为依赖独立模块Common-util
+    3. v1.2版本升级spring到4.3.6，Controller层生成的代码使用@GetMapping和@PostMapping代替@RequestMapping注解。
+    4. v1.3版本升级mybatis和druid的版本，全面将日志升级到log4j2框架，mysql驱动升级到6.x,支持创建springboot项目。
+    5. v1.4版本升级实现生成方法可自由控制(ps:参考generator.properties)，基础方法增加返回List<Map<String,Object>>的方法。
+    6. v1.4.1版本升级springboot和其他依赖的版本，修改springboot测试模板错误，springboot项目增加springloaded热部署插件。
+    7. v1.4.2版本优化生成代码时对数据库的连接次数，restful接口单元测试生成中add和update方法增加自动添加参数和赋予随机值的功能
+    8. v1.5版本增加springboot项目基于assembly的服务化打包功能，完备的服务脚本使得在window或linux系统启动和运维项目更轻松
+    9. v1.6版本增加配置来支持springmvc和springboot多数据源动态切换和atomikos分布式事务支持，快随构建一个数据一致性架构的项目.
+       demo:https://gitee.com/sunyurepository/multiple-datasource
+    10. v1.6.1版本修改生成的springboot项目打成jar包后mybatis别名扫描出错的bug
+    11. v1.6.2版本修改创建的springmvc分布式事务多数据源项目8小时中断的配置bug，添加支持oracle库代码生成
+    12. v1.6.3版本添加generator.table.filter.prefix用来过滤表，修改连接oracle库表生成的代码字段错误的bug
 
+#### 版本号：1.7.0  
+- 更新日期：2018-05-25  
+- 更新内容：
+	1. 添加.gitignore的创建.
+	2. assembly打包springboot项目时自动生成DEPLOY.md部署文档，并将DEPLOY.md存放到docs下.
+	3. 将assembly打包的springboot启动脚本jvm参数设置提取到setenv.sh中.
+#### 版本号：1.7.1  
+- 更新日期：2018-05-28 
+- 更新内容：
+	1. 修改assembly打包的springboot项目的start.sh和start.bat启动脚本,支持动态加载打包后的properties配置文件.
+	2. 增加创建maven项目自动创建dockerfile和docker.sh构建脚本.
 
 
 
