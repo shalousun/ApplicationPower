@@ -11,7 +11,7 @@ datasource-aspect是一个spring web应用中的多数据源切换模块。依�
 
 1. 在需要动态切换数据源的类或者方法上注入注解,注解的value就是项目制定的一个数据源的唯一标识名
 ```
-@CustomDataSource("one")
+@TargetDataSource("one")
 ```
 因为是公用的模块
 2. 继承DataSourceAspect
