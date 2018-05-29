@@ -24,7 +24,7 @@ public class DataSourceAspect {
 
 
     /**
-     * 根据@ChooseDataSource的属性值设置不同的dataSourceKey,以供DynamicDataSource
+     * 根据@TargetDataSource的属性值设置不同的dataSourceKey,以供DynamicDataSource
      */
     @Before("datasourceAspect()")
     public void changeDataSourceBeforeMethodExecution(JoinPoint jp) {
@@ -47,10 +47,8 @@ public class DataSourceAspect {
         String methodName = jp.getSignature().getName();
         Class targetClass = jp.getSignature().getDeclaringType();
         String dataSourceForTargetClass = resolveDataSourceFromClass(targetClass);
-        String dataSourceForTargetMethod = resolveDataSourceFromMethod(
-                targetClass, methodName);
-        String resultDS = determinateDataSource(dataSourceForTargetClass,
-                dataSourceForTargetMethod);
+        String dataSourceForTargetMethod = resolveDataSourceFromMethod(targetClass, methodName);
+        String resultDS = determinateDataSource(dataSourceForTargetClass, dataSourceForTargetMethod);
         return resultDS;
     }
 
@@ -71,8 +69,7 @@ public class DataSourceAspect {
      * @param methodName
      * @return
      */
-    private String resolveDataSourceFromMethod(Class targetClass,
-                                               String methodName) {
+    private String resolveDataSourceFromMethod(Class targetClass, String methodName) {
         Method m = findUniqueMethod(targetClass, methodName);
         if (m != null) {
             TargetDataSource choDs = m.getAnnotation(TargetDataSource.class);
@@ -97,8 +94,7 @@ public class DataSourceAspect {
      * @return
      */
     private String resolveDataSourceFromClass(Class targetClass) {
-        TargetDataSource classAnnotation = (TargetDataSource) targetClass
-                .getAnnotation(TargetDataSource.class);
+        TargetDataSource classAnnotation = (TargetDataSource) targetClass.getAnnotation(TargetDataSource.class);
         return null != classAnnotation ? resolveDataSourceName(classAnnotation) : null;
     }
 
