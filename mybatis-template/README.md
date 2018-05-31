@@ -14,7 +14,9 @@ mybatis-template模块依赖于datasource-aspect模块，因此使用过程中�
 
 ```
 /**
- * 数据源配置,针对druid数据库连接池
+ * 针对druid数据源配置
+ *
+ * @author ${authorName} on ${createTime}.
  */
 public abstract class AbstractDataSourceConfig {
 
@@ -32,18 +34,13 @@ public abstract class AbstractDataSourceConfig {
         prop.put("url", env.getProperty(prefix + "url"));
         prop.put("username", env.getProperty(prefix + "username"));
         prop.put("password", env.getProperty(prefix + "password"));
-        prop.put("driverClassName", env.getProperty(prefix + "driverClassName", ""));
+        prop.put("driverClassName", env.getProperty(prefix + "driver-class-name", ""));
         prop.put("initialSize", env.getProperty(prefix + "initialSize", Integer.class));
         prop.put("maxActive", env.getProperty(prefix + "maxActive", Integer.class));
         prop.put("minIdle", env.getProperty(prefix + "minIdle", Integer.class));
         prop.put("maxWait", env.getProperty(prefix + "maxWait", Integer.class));
         prop.put("poolPreparedStatements", env.getProperty(prefix + "poolPreparedStatements", Boolean.class));
-
-        prop.put("maxPoolPreparedStatementPerConnectionSize",
-                env.getProperty(prefix + "maxPoolPreparedStatementPerConnectionSize", Integer.class));
-
-        prop.put("maxPoolPreparedStatementPerConnectionSize",
-                env.getProperty(prefix + "maxPoolPreparedStatementPerConnectionSize", Integer.class));
+        prop.put("maxPoolPreparedStatementPerConnectionSize",env.getProperty(prefix + "maxPoolPreparedStatementPerConnectionSize", Integer.class));
         prop.put("validationQuery", env.getProperty(prefix + "validationQuery"));
         prop.put("validationQueryTimeout", env.getProperty(prefix + "validationQueryTimeout", Integer.class));
         prop.put("testOnBorrow", env.getProperty(prefix + "testOnBorrow", Boolean.class));
@@ -51,6 +48,7 @@ public abstract class AbstractDataSourceConfig {
         prop.put("testWhileIdle", env.getProperty(prefix + "testWhileIdle", Boolean.class));
         prop.put("timeBetweenEvictionRunsMillis", env.getProperty(prefix + "timeBetweenEvictionRunsMillis", Integer.class));
         prop.put("minEvictableIdleTimeMillis", env.getProperty(prefix + "minEvictableIdleTimeMillis", Integer.class));
+        prop.put("useGlobalDataSourceStat",env.getProperty(prefix + "useGlobalDataSourceStat", Boolean.class))
         prop.put("filters", env.getProperty(prefix + "filters"));
         return prop;
     }
@@ -60,68 +58,65 @@ public abstract class AbstractDataSourceConfig {
 项目的多数据源配置
 ```
 @Configuration
-@MapperScan(basePackages =MyBatisConfig.PACKAGE, sqlSessionTemplateRef = "sqlSessionTemplate")
+@MapperScan(basePackages = MyBatisConfig.BASE_PACKAGE, sqlSessionTemplateRef = "sqlSessionTemplate")
 public class MyBatisConfig extends AbstractDataSourceConfig {
 
-    //mybatis mapper接口层的包
-    static final String PACKAGE = "com.boco.sunyu.dao";
+    static final String BASE_PACKAGE = "com.power.learn.dao";
 
-    static final String MAPPER_LOCATION = "classpath:/mapper/*Dao.xml";
+    static final String ALIASES_PACKAGE = "com.power.learn.model";
+
+    static final String MAPPER_LOCATION = "classpath:com/power/learn/mapping/*.xml";
+
 
     @Primary
     @Bean(name = "dataSourceOne")
     public DataSource dataSourceOne(Environment env) {
-        String prefix = "spring.datasource.one.";
+        String prefix = "spring.datasource.druid.one.";
         return getDataSource(env,prefix,"one");
     }
 
     @Bean(name = "dataSourceTwo")
-    public DataSource dataSourceTwo(Environment env){
-        String prefix = "spring.datasource.two.";
+    public DataSource dataSourceTwo(Environment env) {
+        String prefix = "spring.datasource.druid.two.";
         return getDataSource(env,prefix,"two");
     }
 
+
+
     @Bean("dynamicDataSource")
-    public DynamicDataSource dynamicDataSource(@Qualifier("dataSourceOne") DataSource masterDataSource,
-                                               @Qualifier("dataSourceTwo") DataSource slaverDataSource) {
+    public DynamicDataSource dynamicDataSource(@Qualifier("dataSourceOne")DataSource dataSourceOne,@Qualifier("dataSourceTwo")DataSource dataSourceTwo) {
         Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put("one", masterDataSource);
-        targetDataSources.put("two", slaverDataSource);
+        targetDataSources.put("one",dataSourceOne);
+        targetDataSources.put("two",dataSourceTwo);
+
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(targetDataSources);
-        dataSource.setDefaultTargetDataSource(masterDataSource);
+        dataSource.setDefaultTargetDataSource(dataSourceOne);
         return dataSource;
     }
+
     @Bean(name = "sqlSessionFactoryOne")
     public SqlSessionFactory sqlSessionFactoryOne(@Qualifier("dataSourceOne") DataSource dataSource)
-            throws Exception {
+        throws Exception {
         return createSqlSessionFactory(dataSource);
     }
+
     @Bean(name = "sqlSessionFactoryTwo")
-    public SqlSessionFactory sqlSessionFactoryTest(@Qualifier("dataSourceTwo") DataSource dataSource)
-            throws Exception {
+    public SqlSessionFactory sqlSessionFactoryTwo(@Qualifier("dataSourceTwo") DataSource dataSource)
+        throws Exception {
         return createSqlSessionFactory(dataSource);
     }
 
 
-//    @Bean(name = "sqlSessionFactory")
-//    public SqlSessionFactory sqlSessionFactoryTest(@Qualifier("dynamicDataSource") DynamicDataSource dataSource)
-//            throws Exception {
-//        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-//        bean.setDataSource(dataSource);
-//        bean.setTypeAliasesPackage("com.boco.sunyu.model");
-//        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
-//        return bean.getObject();
-//    }
+
 
     @Bean(name = "sqlSessionTemplate")
-    public CustomSqlSessionTemplate sqlSessionTemplateTest(
-            @Qualifier("sqlSessionFactoryOne") SqlSessionFactory sqlSessionFactoryOne,
-            @Qualifier("sqlSessionFactoryTwo") SqlSessionFactory sqlSessionFactoryTwo) throws Exception {
+    public CustomSqlSessionTemplate sqlSessionTemplate(@Qualifier("sqlSessionFactoryOne")SqlSessionFactory factoryOne,@Qualifier("sqlSessionFactoryTwo")SqlSessionFactory factoryTwo) throws Exception {
         Map<Object,SqlSessionFactory> sqlSessionFactoryMap = new HashMap<>();
-        sqlSessionFactoryMap.put("one",sqlSessionFactoryOne);
-        sqlSessionFactoryMap.put("two",sqlSessionFactoryTwo);
-        CustomSqlSessionTemplate customSqlSessionTemplate = new CustomSqlSessionTemplate(sqlSessionFactoryOne);
+        sqlSessionFactoryMap.put("one",factoryOne);
+        sqlSessionFactoryMap.put("two",factoryTwo);
+
+        CustomSqlSessionTemplate customSqlSessionTemplate = new CustomSqlSessionTemplate(factoryOne);
         customSqlSessionTemplate.setTargetSqlSessionFactorys(sqlSessionFactoryMap);
         return customSqlSessionTemplate;
     }
@@ -134,7 +129,9 @@ public class MyBatisConfig extends AbstractDataSourceConfig {
     private SqlSessionFactory createSqlSessionFactory(DataSource dataSource) throws Exception{
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("com.boco.sunyu.model");
+        bean.setVfs(SpringBootVFS.class);
+        bean.setTypeAliasesPackage(ALIASES_PACKAGE);
+        bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
         return bean.getObject();
     }
