@@ -26,7 +26,7 @@ spring:
         # 打开PSCache，并且指定每个连接上PSCache的大小
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
-        seGlobalDataSourceStat: true
+        useGlobalDataSourceStat: true
         filters: stat,wall,log4j2
         <% }%>
 

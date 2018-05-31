@@ -41,7 +41,7 @@ public abstract class AbstractDataSourceConfig {
         prop.put("testWhileIdle", env.getProperty(prefix + "testWhileIdle", Boolean.class));
         prop.put("timeBetweenEvictionRunsMillis", env.getProperty(prefix + "timeBetweenEvictionRunsMillis", Integer.class));
         prop.put("minEvictableIdleTimeMillis", env.getProperty(prefix + "minEvictableIdleTimeMillis", Integer.class));
-        prop.put("useGlobalDataSourceStat",env.getProperty(prefix + "seGlobalDataSourceStat", Boolean.class))
+        prop.put("useGlobalDataSourceStat",env.getProperty(prefix + "useGlobalDataSourceStat", Boolean.class))
         prop.put("filters", env.getProperty(prefix + "filters"));
         return prop;
     }
