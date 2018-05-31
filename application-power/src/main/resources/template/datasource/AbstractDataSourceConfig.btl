@@ -27,7 +27,7 @@ public abstract class AbstractDataSourceConfig {
         prop.put("url", env.getProperty(prefix + "url"));
         prop.put("username", env.getProperty(prefix + "username"));
         prop.put("password", env.getProperty(prefix + "password"));
-        prop.put("driverClassName", env.getProperty(prefix + "driverClassName", ""));
+        prop.put("driverClassName", env.getProperty(prefix + "driver-class-name", ""));
         prop.put("initialSize", env.getProperty(prefix + "initialSize", Integer.class));
         prop.put("maxActive", env.getProperty(prefix + "maxActive", Integer.class));
         prop.put("minIdle", env.getProperty(prefix + "minIdle", Integer.class));
@@ -41,6 +41,7 @@ public abstract class AbstractDataSourceConfig {
         prop.put("testWhileIdle", env.getProperty(prefix + "testWhileIdle", Boolean.class));
         prop.put("timeBetweenEvictionRunsMillis", env.getProperty(prefix + "timeBetweenEvictionRunsMillis", Integer.class));
         prop.put("minEvictableIdleTimeMillis", env.getProperty(prefix + "minEvictableIdleTimeMillis", Integer.class));
+        prop.put("useGlobalDataSourceStat",env.getProperty(prefix + "seGlobalDataSourceStat", Boolean.class))
         prop.put("filters", env.getProperty(prefix + "filters"));
         return prop;
     }
