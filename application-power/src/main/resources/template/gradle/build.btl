@@ -1,0 +1,96 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        maven {url 'http://localhost:8081/nexus/content/groups/public/'}
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        <%if(isUseDocker){ %>
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+         <% } %>
+    }
+}
+group 'com.iflytek.iot.platform.smart.platform.third.ctcc'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+<%if(isUseDocker){ %>
+apply plugin: 'docker'
+ <% } %>
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url "http://maven.springframework.org/release" }
+    maven { url "http://maven.restlet.org" }
+    mavenCentral()
+}
+configurations.compile {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    exclude group: 'org.springframework.boot', module: 'logback-classic'
+}
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile('org.springframework.boot:spring-boot-starter'){
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.1'
+    compile 'com.alibaba:druid-spring-boot-starter:1.1.6'
+    compile 'mysql:mysql-connector-java:6.0.6'
+    compile('org.springframework.boot:spring-boot-starter-undertow')
+    compile('org.springframework.boot:spring-boot-starter-log4j2')
+    compile 'com.lmax:disruptor:3.3.6'
+    compile('org.springframework.boot:spring-boot-starter-aop')
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
+    compile 'org.apache.commons:commons-lang3:3.5'
+    <%if(useJTA){ %>
+    compile('org.springframework.boot:spring-boot-starter-jta-atomikos')
+    <% } %>
+    <% if(isMultipleDataSource){%>
+    compile 'com.power.mybatis:mybatis-template:1.0-SNAPSHOT'
+    <% } %>
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+}
+<%if(isUseDocker){ %>
+task buildDocker(type: Docker, dependsOn: build) {
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
+ <% } %>
+//upload jar to nexus
+def nexusUrl = "http://localhost:8081/nexus/content/repositories/releases/"
+if (version.endsWith("-SNAPSHOT")) {
+    nexusUrl = "http://localhost:8081/nexus/content/repositories/snapshots/"
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: nexusUrl) {
+                authentication(userName: "admin", password: "admin123")
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$project.name"
+            pom.groupId = "$project.group"
+        }
+    }
+}
