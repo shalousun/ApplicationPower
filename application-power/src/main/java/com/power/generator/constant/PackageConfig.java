@@ -31,6 +31,11 @@ public class PackageConfig {
 
     private String docs = "docs";
 
+    /**
+     * VO add tony.su 2018-6-1 11:35:30
+     */
+    private String vo = "vo";
+
     public String getService() {
         return service;
     }
@@ -85,5 +90,9 @@ public class PackageConfig {
 
     public void setDocs(String docs) {
         this.docs = docs;
+    }
+
+    public String getVo(){
+        return vo;
     }
 }

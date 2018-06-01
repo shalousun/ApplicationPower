@@ -38,11 +38,18 @@ public class MySqlProvider implements DbProvider {
                 int dataType = colRet.getInt("DATA_TYPE");
                 String remarks = colRet.getString("REMARKS");
                 String columnType = TypeConvert.sqlTypeToJavaType(dataType, digits);
+                //add fujunsu 2018-3-29 14:10:37
+                int nullable = colRet.getInt("NULLABLE");
+                int datasize = colRet.getInt("COLUMN_SIZE");
+
                 //设置列信息
                 Column column = new Column();
                 column.setColumnName(columnName);
                 column.setColumnType(columnType);
                 column.setRemarks(remarks);
+                //add fujunsu 2018-3-29 14:10:37
+                column.setDataSize(datasize);
+                column.setNullable(1 != nullable);
                 if ("YES".equals(isAutoIncrement)) {
                     column.setAutoIncrement(true);
                 }

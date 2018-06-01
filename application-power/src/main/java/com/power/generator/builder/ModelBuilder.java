@@ -46,12 +46,13 @@ public class ModelBuilder implements IBuilder {
      * @param columnMap
      * @return
      */
-    private String generateFields(Map<String, Column> columnMap) {
+    protected String generateFields(Map<String, Column> columnMap) {
         StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             Column column = entry.getValue();
             if (StringUtil.isNotEmpty(column.getRemarks())) {
-                builder.append("	/** ").append(column.getRemarks()).append(" */").append("\n");
+                //修改规范
+                builder.append("	/** \n	* ").append(column.getRemarks()).append("\n	*/\n");
             }
             if ("Timestamp".equals(column.getColumnType())) {
                 builder.append("	@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\",timezone = \"GMT+8\")\n");
@@ -69,11 +70,13 @@ public class ModelBuilder implements IBuilder {
      * @param columnMap
      * @return
      */
-    private String generateImport(Map<String, Column> columnMap) {
+    protected String generateImport(Map<String, Column> columnMap) {
         StringBuilder builder = new StringBuilder();
 
         List<String> list = new ArrayList<>();
         boolean flag = true;
+        //swagger 注解
+        boolean isSwagger = true;
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             String type = entry.getValue().getColumnType();
             if ("BigDecimal".equals(type)) {
@@ -90,10 +93,15 @@ public class ModelBuilder implements IBuilder {
                 list.add("import java.sql.Time;\n");
             }
         }
+        if(isSwagger){
+            list.add("import io.swagger.annotations.ApiModelProperty; \n");
+        }
+
         if (flag) {
             list.add("import com.fasterxml.jackson.annotation.JsonFormat;\n\n");
             Collections.reverse(list);
         }
+
         Set<String> set = new HashSet<>();
         set.addAll(list);
         for (String str : set) {
@@ -108,7 +116,7 @@ public class ModelBuilder implements IBuilder {
      * @param columnMap
      * @return
      */
-    private String generateSetAndGetMethods(Map<String, Column> columnMap) {
+    protected String generateSetAndGetMethods(Map<String, Column> columnMap) {
         StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             Column column = entry.getValue();
@@ -136,7 +144,7 @@ public class ModelBuilder implements IBuilder {
      * @param columnMap 类的字段map表
      * @return
      */
-    private String generateToStringMethod(String className, Map<String, Column> columnMap) {
+    protected String generateToStringMethod(String className, Map<String, Column> columnMap) {
         StringBuilder builder = new StringBuilder();
         builder.append("\"").append(className).append("{\" + \n");
         int index = 0;

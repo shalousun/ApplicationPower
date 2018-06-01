@@ -2,7 +2,7 @@ package ${basePackage}.vo;
 
 /**
  * 公共返回结果
- * @author sunyu
+ * @author ${authorName} on ${createTime}.
  *
  */
 public class CommonResult<T> {

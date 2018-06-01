@@ -168,6 +168,13 @@ public class GeneratorProperties {
     }
 
     /**
+     * 支持 swagger接口管理
+     * @return true 支持 false 不支持
+     */
+    public static boolean isSwagger(){
+        return Boolean.valueOf(props.getProperty("generator.isSwagger"));
+    }
+    /**
      * 系统实现的日志配置
      * @return
      */

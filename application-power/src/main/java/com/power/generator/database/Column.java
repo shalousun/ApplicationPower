@@ -23,11 +23,18 @@ public class Column {
 
     /**
      * 是否自增
-     *
-     * @return
      */
     private boolean isAutoIncrement;
-
+    /**
+     * 长度
+     * add fujunsu 2018-3-29 14:12:13
+     */
+    private int dataSize;
+    /**
+     * 是否可空
+     * add fujunsu 2018年3月29日14:12:29
+     */
+    private boolean nullable;
 
     public String getColumnName() {
         return columnName;
@@ -67,5 +74,21 @@ public class Column {
 
     public void setAutoIncrement(boolean autoIncrement) {
         isAutoIncrement = autoIncrement;
+    }
+
+    public int getDataSize() {
+        return dataSize;
+    }
+
+    public void setDataSize(int size) {
+        this.dataSize = size;
+    }
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 }

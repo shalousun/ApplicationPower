@@ -140,19 +140,20 @@ public class ConfigBuilder {
 
     /**
      * 处理包
-     *
+     * <p>
+     * 添加VO tony.su 2018-6-1 11:39:58
+     * </p>
      * @param config
      */
     private void handlerPackage(PackageConfig config, boolean isSpringBoot) {
         packageInfo = new HashMap<>(9);
-        pathInfo = new LinkedHashMap<>(8);
-        mybatisGenPath = new LinkedHashMap<>(8);
+        pathInfo = new LinkedHashMap<>(9);
+        mybatisGenPath = new LinkedHashMap<>(9);
 
         String basePackage = GeneratorProperties.basePackage();
         String javaDir = projectPath.getJavaSrcPath();
         String testDir = projectPath.getTestJavaSrcPath();
         String resourceDir = projectPath.getResourceDir();
-
 
         String layers = GeneratorProperties.layers();
         String[] layerArr = layers.split(",");
@@ -190,6 +191,10 @@ public class ConfigBuilder {
                 packageInfo.put(ConstVal.CONTROLLER, joinPackage(basePackage, config.getController()));
                 pathInfo.put(ConstVal.CONTROLLER_PATH, joinPath(javaDir, packageInfo.get(ConstVal.CONTROLLER)));
                 mybatisGenPath.put(BuilderCfg.CONTROLLER_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.CONTROLLER), ConstVal.CONTROLLER_SUBFIX));
+            } else if (ConstVal.VO.equals(str)) {
+                packageInfo.put(ConstVal.VO, joinPackage(basePackage, config.getVo()));
+                pathInfo.put(ConstVal.VO_PATH, joinPath(javaDir, packageInfo.get(ConstVal.VO)));
+                mybatisGenPath.put(BuilderCfg.VO_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.VO), ConstVal.VO_SUBFIX));
             }
         }
         packageInfo.put(ConstVal.DATE_CONVERTER, joinPackage(basePackage, config.getConverter()));

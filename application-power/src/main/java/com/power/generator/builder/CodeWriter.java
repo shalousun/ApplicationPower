@@ -157,6 +157,7 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding("dbDriver", dbProp.getProperty("jdbc.driver"));
                 template.binding("list",GeneratorProperties.getMultipleDataSource());
                 template.binding("isJTA",GeneratorProperties.isJTA());
+
                 FileUtil.writeFileNotAppend(template.render(), entry.getValue());
             }
         }
@@ -203,6 +204,8 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
                 FileUtil.writeFileNotAppend(template.render(), value + "\\RestExceptionHandler.java");
             }
+
+
         }
     }
 

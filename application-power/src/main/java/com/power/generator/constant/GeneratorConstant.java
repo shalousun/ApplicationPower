@@ -110,7 +110,12 @@ public class GeneratorConstant {
     public static final String TO_STRING = "toString";
 
     /**
-     *
+     * 多数据源
      */
     public static final String IS_MULTIPLE_DATA_SOURCE = "isMultipleDataSource";
+
+    /**
+     * ApiModelProperty
+     */
+    public static final String API_MODEL_PROPERTY = "apiModelProperty";
 }

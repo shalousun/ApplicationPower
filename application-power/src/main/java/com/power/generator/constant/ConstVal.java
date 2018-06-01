@@ -27,6 +27,9 @@ public class ConstVal {
     public static final String STRING_BOOT_STATIC_DIR = RESOURCE_DIR + "\\static";
     public static final String STRING_BOOT_EORRO_DIR = STRING_BOOT_STATIC_DIR + "\\errors";
 
+    /**modules*/
+    public static final String VO = "vo";
+    public static final String VO_SUBFIX = "VO.java";
     public static final String ENTITY = "model";
     public static final String SERVICE = "service";
     public static final String SERVICE_SUBFIX = "Service.java";
@@ -40,12 +43,14 @@ public class ConstVal {
     public static final String CONTROLLER_SUBFIX = "Controller.java";
     public static final String CONTROLLER_TEST = "controllerTest";
     public static final String CONTROLLER_TEST_SUBFIX = "ControllerTest.java";
+
+
     public static final String SERVICE_TEST = "serviceTest";
     public static final String SERVICE_TEST_SUBFIX = "ServiceTest.java";
     public static final String DATE_CONVERTER = "DateConverter";
     public static final String REST_EXCEPTION = "RestExceptionHandler";
 
-    //多数据源配置
+    /**多数据源配置*/
     public static final String ASPECT = "spect";
     public static final String DATA_SOURCE_FIG = "datasource_cfg";
     public static final String CONSTANTS = "constants";
@@ -54,6 +59,8 @@ public class ConstVal {
 
     public static final String WEB_INFO = "web-info";
 
+    /**path*/
+    public static final String VO_PATH = "vo_path";
     public static final String ENTITY_PATH = "entity_path";
     public static final String SERVICE_PATH = "serivce_path";
     public static final String SERVICEIMPL_PATH = "serviceimpl_path";
@@ -84,7 +91,8 @@ public class ConstVal {
 
 
 
-    //定义模板名
+    /**定义模板名*/
+    public static final String TPL_VO = "vo.btl";
     public static final String TPL_ENTITY = "model.btl";
     public static final String TPL_DAO = "Dao.btl";
     public static final String TPL_MAPPER = "Mapper.btl";

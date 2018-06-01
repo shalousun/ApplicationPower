@@ -1,12 +1,17 @@
 package ${basePackage}.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+
 ${modelImports}
 
 /**
  * Table:${tableComment}
- * @author ${authorName} on ${createTime}.
+ *
+ * @author ${authorName}
+ * @date ${createTime}
  */
+${apiModelProperty}
 public class ${entitySimpleName} implements Serializable {
 
     private static final long serialVersionUID = ${SerialVersionUID}L;
