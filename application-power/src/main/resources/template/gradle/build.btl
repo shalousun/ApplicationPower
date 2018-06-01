@@ -61,6 +61,7 @@ dependencies {
     <% if(isMultipleDataSource){%>
     compile 'com.power.mybatis:mybatis-template:1.0-SNAPSHOT'
     <% } %>
+    compile 'com.boco.sp:Common-util:1.0-SNAPSHOT'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
