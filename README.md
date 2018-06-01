@@ -4,7 +4,7 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
         ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower在一直不断努力地去减少项目开发
         中的各种重复工作。<br/>
         技术交流群：170651381<br/>
-    **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
+    **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更佳，因此推荐选择她来创建springboot。
 ## 创建的项目技术
      ● 核心框架：Spring Boot 1.5.9 或Spring MVC 4.3.6
      ● 数据库连接池：druid-spring-boot-starter 1.1.6或druid 1.1.6
@@ -198,6 +198,8 @@ application-power整合的springboot打包后的结构参考
 - 更新内容：
 	1. 修改assembly打包的springboot项目的start.sh和start.bat启动脚本,支持动态加载打包后的properties配置文件.
 	2. 增加创建maven项目自动创建dockerfile和docker.sh构建脚本.
+	
+
 
 
 
