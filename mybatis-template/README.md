@@ -3,7 +3,7 @@ mybatis-template主要作用是重写了mybatis的SqlSessionTemplate，
 基于分布式事务的动态数据源切或多或少都有问题，该解决方法目前测试有效。
 ```
 <dependency>
-    <groupId>com.power.mybatis</groupId>
+    <groupId>com.github.shalousun</groupId>
     <artifactId>mybatis-template</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>

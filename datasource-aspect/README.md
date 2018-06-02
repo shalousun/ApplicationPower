@@ -1,7 +1,7 @@
 datasource-aspect是一个spring web应用中的多数据源切换模块。依赖配置如下
 ```
 <dependency>
-    <groupId>com.power.datasource</groupId>
+    <groupId>com.github.shalousun</groupId>
     <artifactId>datasource-aspect</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
