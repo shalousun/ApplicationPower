@@ -1,6 +1,6 @@
 package com.power.generator.utils;
 
-import com.boco.common.util.FileUtil;
+import com.power.common.util.FileUtil;
 
 import java.util.Map;
 

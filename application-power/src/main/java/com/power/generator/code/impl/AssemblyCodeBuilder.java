@@ -1,6 +1,6 @@
 package com.power.generator.code.impl;
 
-import com.boco.common.util.FileUtil;
+import com.power.common.util.FileUtil;
 import com.power.generator.builder.ScriptBuilder;
 import com.power.generator.code.ICodeBuilder;
 import com.power.generator.constant.ConstVal;

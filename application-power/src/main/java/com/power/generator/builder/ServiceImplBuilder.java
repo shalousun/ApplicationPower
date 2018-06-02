@@ -1,6 +1,6 @@
 package com.power.generator.builder;
 
-import com.boco.common.util.StringUtil;
+import com.power.common.util.StringUtil;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.database.Column;

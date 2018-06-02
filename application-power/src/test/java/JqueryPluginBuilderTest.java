@@ -1,4 +1,4 @@
-import com.boco.common.util.FileUtil;
+import com.power.common.util.FileUtil;
 import com.power.generator.builder.JqueryPluginBuilder;
 
 public class JqueryPluginBuilderTest {

@@ -1,7 +1,7 @@
 package com.power.generator.builder;
 
-import com.boco.common.util.FileUtil;
-import com.boco.common.util.StringUtil;
+import com.power.common.util.FileUtil;
+import com.power.common.util.StringUtil;
 import com.power.generator.code.impl.AssemblyCodeBuilder;
 import com.power.generator.code.impl.DockerCodeBuilder;
 import com.power.generator.code.impl.PomCodeBuilder;

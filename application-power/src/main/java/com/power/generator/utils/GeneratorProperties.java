@@ -1,6 +1,6 @@
 package com.power.generator.utils;
 
-import com.boco.common.util.StringUtil;
+import com.power.common.util.StringUtil;
 
 import java.util.*;
 

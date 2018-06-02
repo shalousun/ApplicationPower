@@ -1,7 +1,7 @@
 package com.power.generator.database;
 
 
-import com.boco.common.util.StringUtil;
+import com.power.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
