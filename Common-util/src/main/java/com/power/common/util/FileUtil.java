@@ -12,35 +12,33 @@ import java.util.List;
  */
 public class FileUtil {
 
+    private static final String DEFAULT_CHARSET = "utf-8";
+
     /**
-     * 创建目录
+     * make dir
      *
-     * @param path
+     * @param path file path
      */
-    public static void mkdir(String path) {
+    public static boolean mkdir(String path) {
         File file = new File(path);
-        if (!file.exists()) {
-            file.mkdir();
-        }
+        return !file.exists() && file.mkdir();
     }
 
     /**
-     * 创建多级目录
+     * make dirs
      *
-     * @param path
+     * @param path file path
      */
-    public static void mkdirs(String path) {
+    public static boolean mkdirs(String path) {
         File file = new File(path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
+        return !file.exists() && file.mkdirs();
     }
 
     /**
-     * 复制文件到目标目录
+     * use nio copy file
      *
-     * @param source
-     * @param target
+     * @param source source file
+     * @param target target file
      */
     public static void nioTransferCopy(File source, File target) {
         FileChannel in = null;
@@ -57,48 +55,64 @@ public class FileUtil {
             e.printStackTrace();
         } finally {
             try {
-                inStream.close();
-                in.close();
-                outStream.close();
-                out.close();
+                if (null != inStream) {
+                    inStream.close();
+                }
+                if (null != in) {
+                    in.close();
+                }
+                if (null != outStream) {
+                    outStream.close();
+                }
+                if (null != out) {
+                    out.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    //将输入流转byte
-    public static final byte[] input2byte(InputStream inStream)
+
+    /**
+     * Convert InputStream to byte array
+     *
+     * @param inStream InputStream
+     * @return byte array
+     * @throws IOException io exception
+     */
+    public static byte[] input2byte(InputStream inStream)
             throws IOException {
         ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
         byte[] buff = new byte[100];
-        int rc = 0;
+        int rc;
         while ((rc = inStream.read(buff, 0, 100)) > 0) {
             swapStream.write(buff, 0, rc);
         }
-        byte[] in2b = swapStream.toByteArray();
-        return in2b;
+        return swapStream.toByteArray();
     }
 
     /**
-     * 写文件
+     * write string contents to file
      *
-     * @param source
-     * @param filePath
-     * @param append
-     * @return
+     * @param source   string contents
+     * @param filePath local file path
+     * @param append   append operate
+     * @return boolean
      */
     public static boolean writeFile(String source, String filePath, boolean append) {
-        return writeFile(source, filePath, append, "utf-8");
+        return writeFile(source, filePath, append, DEFAULT_CHARSET);
     }
 
     /**
-     * @param source
-     * @param filePath
-     * @return
+     * write string contents to file,overwrite any existing file
+     *
+     * @param source   string content
+     * @param filePath file path
+     * @return boolean
      */
     public static boolean writeFileNotAppend(String source, String filePath) {
-        return writeFile(source, filePath, false, "utf-8");
+        return writeFile(source, filePath, false, DEFAULT_CHARSET);
     }
 
     /**
@@ -111,7 +125,7 @@ public class FileUtil {
      * @return boolean
      */
     public static boolean writeFile(String source, String filePath, boolean append, String encoding) {
-        boolean flag = false;
+        boolean flag;
         OutputStreamWriter osw = null;
         try {
             osw = new OutputStreamWriter(new FileOutputStream(filePath, append), encoding);
@@ -137,12 +151,12 @@ public class FileUtil {
      * @param file   File
      * @return boolean
      */
-    public static boolean writeFile(String source, File file) {
-        boolean flag = true;
+    public static boolean writeFile(String source, File file, boolean append) {
+        boolean flag;
         BufferedWriter output = null;
         try {
             file.createNewFile();
-            output = new BufferedWriter(new FileWriter(file, true));
+            output = new BufferedWriter(new FileWriter(file, append));
             output.write(source);
             flag = true;
         } catch (IOException e) {
@@ -150,7 +164,9 @@ public class FileUtil {
             flag = false;
         } finally {
             try {
-                output.close();
+                if (null != output) {
+                    output.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -165,43 +181,28 @@ public class FileUtil {
      * @return String
      */
     public static String getFileContent(String fileName) {
-        BufferedReader reader = null;
-        StringBuilder fileContent = new StringBuilder();
+        InputStream inputStream;
         try {
-            File f = new File(fileName);
-            reader = new BufferedReader(new FileReader(f));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                fileContent.append(line);
-                fileContent.append("\n");
-            }
-
-        } catch (Exception e) {
+            inputStream = new FileInputStream(fileName);
+            return getFileContent(inputStream);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            return null;
         }
-        return fileContent.toString();
     }
 
     /**
      * Get String by input stream
      *
-     * @param is InputStream
+     * @param inputStream InputStream
      * @return String
      */
-    public static String getFileContent(InputStream is) {
+    public static String getFileContent(InputStream inputStream) {
         BufferedReader reader = null;
         StringBuilder fileContent = new StringBuilder();
         try {
-            reader = new BufferedReader(new InputStreamReader(is));
-            String line = "";
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
             while ((line = reader.readLine()) != null) {
                 fileContent.append(line);
                 fileContent.append("\n");
@@ -222,58 +223,65 @@ public class FileUtil {
     }
 
     /**
-     * 获取文件加下的文件
-     * @param folder
-     * @return
+     * get files from folder
+     *
+     * @param folder folder
+     * @return files array
      */
-    public static File[] getResourceFolderFiles (String folder) {
+    public static File[] getResourceFolderFiles(String folder) {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         URL url = loader.getResource(folder);
+        if(null == url){
+            throw new RuntimeException("url is null");
+        }
         String path = url.getPath();
         return new File(path).listFiles();
     }
 
     /**
      * Use nio write file
+     *
      * @param filePath file path
-     * @param contents
-     * @return
+     * @param contents string contents
+     * @return boolean
      */
-    public static boolean nioWriteFile(String filePath,String contents){
-        return nioWriteFile(filePath,contents,null);
+    public static boolean nioWriteFile(String filePath, String contents) {
+        return nioWriteFile(filePath, contents, null);
     }
 
     /**
      * Appending The New Data To The Existing File
-     * @param filePath
-     * @param contents
-     * @return
+     *
+     * @param filePath file path
+     * @param contents string contents
+     * @return boolean
      */
-    public static boolean nioWriteAppendable(String filePath,String contents){
-        return nioWriteFile(filePath,contents, StandardOpenOption.APPEND);
+    public static boolean nioWriteAppendable(String filePath, String contents) {
+        return nioWriteFile(filePath, contents, StandardOpenOption.APPEND);
     }
 
     /**
      * Use nio write file
-     * @param filePath
-     * @param contents
-     * @param openOption
-     * @return
+     *
+     * @param filePath   file path
+     * @param contents   string contents
+     * @param openOption open or create options
+     * @return boolean
      */
-    public static boolean nioWriteFile(String filePath, String contents, OpenOption openOption){
+    private static boolean nioWriteFile(String filePath, String contents, OpenOption openOption) {
         Path path = Paths.get(filePath);
-        try{
+        try {
             Files.createDirectories(path.getParent());
-            if( !Files.exists(path)){
+            if (!Files.exists(path)) {
                 Files.createFile(path);
             }
-            if(null == openOption){
-                Files.write(path, contents.getBytes("utf-8"));
-            }else{
-                Files.write(path, contents.getBytes("utf-8"),openOption);
+            if (null == openOption) {
+                Files.write(path, contents.getBytes(DEFAULT_CHARSET));
+            } else {
+                Files.write(path, contents.getBytes(DEFAULT_CHARSET), openOption);
             }
             return true;
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return false;
