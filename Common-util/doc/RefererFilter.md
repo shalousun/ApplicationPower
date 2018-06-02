@@ -6,7 +6,7 @@ RefererFilter过滤器是用来拦击跨站钓鱼伪造referer的行为，在黄
 ```
  <filter>
     <filter-name>RefererFilter</filter-name>
-    <filter-class>com.boco.common.filter.RefererFilter</filter-class>
+    <filter-class>com.power.common.filter.RefererFilter</filter-class>
     <init-param>
         <param-name>ignores</param-name>
         <!--Setting Servers allow to referer,Multiple services are separated by semicolons  -->

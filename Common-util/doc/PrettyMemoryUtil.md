@@ -1,5 +1,5 @@
 # PrettyMemoryUtil介绍
-该工具用于计算内存的占用大小，该工具根据文件的大小个性化显示，所属的包为com.boco.common.util。
+该工具用于计算内存的占用大小，该工具根据文件的大小个性化显示，所属的包为com.power.common.util。
 
 ## 1. prettyByteSize(long byteSize)方法
 根据传入的字节数，友情显示内存大小

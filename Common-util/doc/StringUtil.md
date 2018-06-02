@@ -1,5 +1,5 @@
 # StringUtil方法介绍
-StringUtil所属的包为com.boco.common.util
+StringUtil所属的包为com.power.common.util
 
 ## 1. isEmpty(String str)方法
 

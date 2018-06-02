@@ -8,7 +8,7 @@ SessionFilter的配置参考如下：
 ```
  <filter>
     <filter-name>SessionFilter</filter-name>
-    <filter-class>com.boco.common.filter.SessionFilter</filter-class>
+    <filter-class>com.power.common.filter.SessionFilter</filter-class>
     <init-param>
         <!--系统重要存放用户名sessionKey-->
         <param-name>sessionKey</param-name>
@@ -35,7 +35,7 @@ SessionFilter的配置参考如下：
 ```
 <filter>
     <filter-name>SessionFilter</filter-name>
-    <filter-class>com.boco.common.filter.SessionFilter</filter-class>
+    <filter-class>com.power.common.filter.SessionFilter</filter-class>
     <init-param>
         <!--系统重要存放用户名sessionKey-->
         <param-name>sessionKey</param-name>

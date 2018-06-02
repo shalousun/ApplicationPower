@@ -8,7 +8,7 @@ XssAndSqlFilter过滤器是用来对系统xss攻击和sql注入做统一过滤�
 ```
 <filter>
     <filter-name>XssAndSqlFilter</filter-name>
-    <filter-class>com.boco.common.filter.XssAndSqlFilter</filter-class>
+    <filter-class>com.power.common.filter.XssAndSqlFilter</filter-class>
     <init-param>
         <param-name>ignores</param-name>
         <param-value>/test/*;/user/add</param-value>
@@ -23,7 +23,7 @@ XssAndSqlFilter过滤器是用来对系统xss攻击和sql注入做统一过滤�
 ```
 <filter>
     <filter-name>XssAndSqlFilter</filter-name>
-    <filter-class>com.boco.common.filter.XssAndSqlFilter</filter-class>
+    <filter-class>com.power.common.filter.XssAndSqlFilter</filter-class>
 </filter>
 <filter-mapping>
     <filter-name>XssAndSqlFilter</filter-name>

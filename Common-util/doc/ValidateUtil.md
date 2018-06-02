@@ -1,5 +1,5 @@
 # ValidateUtil方法说明
-ValidateUtil里面主要是封装了一些常用字段验证方法，例如：邮箱、手机号等，ValidateUtil所属的包为com.boco.common.util。
+ValidateUtil里面主要是封装了一些常用字段验证方法，例如：邮箱、手机号等，ValidateUtil所属的包为com.power.common.util。
 
 ## 1. isEmail(String str)方法
 该方法用于验证输入的字符是否是邮箱。
