@@ -11,9 +11,9 @@ public class PropertiesUtil {
 
     /**
      * 从文件读取属性文件
-     * @param filename
-     * @return
-     * @throws IOException
+     * @param filename file name
+     * @return properties
+     * @throws IOException io exception
      */
     public static Properties loadFromFile(String filename) throws IOException {
         try (InputStream stream = Thread.currentThread().getContextClassLoader()

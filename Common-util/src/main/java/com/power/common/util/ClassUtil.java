@@ -45,7 +45,7 @@ public class ClassUtil {
 	 *  读取源代码获取类名
 	 * @param filePath java源文件路径
 	 * @param simpleClassName 和简单的类名进行对比，避免再往下读取
-	 * @return
+	 * @return string
 	 */
 	public static String getClassName(String filePath,String simpleClassName) {
 		final String  regex = "(class (.*?)\\{)|(interfase (.*?)\\{)";

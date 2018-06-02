@@ -29,7 +29,7 @@ public class ApiSignUtil {
      *          密钥
      * @param nonceStr
      *          无意义的字符
-     * @return
+     * @return hash map
      */
     public static Map<String,Object> sign(String appID,String SECRET,String nonceStr){
         Map<String,Object> ret = new HashMap<>();
@@ -52,7 +52,7 @@ public class ApiSignUtil {
      *          无意义的字符
      * @param timestamp
      *          接口请求时间
-     * @return
+     * @return string
      */
     public static String getSignature(String appID,String SECRET,String nonceStr,long timestamp){
         String string1;

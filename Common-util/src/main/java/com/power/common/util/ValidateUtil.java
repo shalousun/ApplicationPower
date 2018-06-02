@@ -45,10 +45,9 @@ public class ValidateUtil {
             "%3C", "\\(", "%28", "alert", "eval((.*))", "script","location.href"};
 
     /**
-     * 根据正则表达式匹配字符串
-     *
-     * @param str     字符串
-     * @param pattern 正则表达式
+     * Match strings based on regular expressions
+     * @param str     String
+     * @param pattern regular expressions
      * @return boolean
      */
     public static boolean validate(String str, String pattern) {
@@ -56,6 +55,7 @@ public class ValidateUtil {
     }
 
     /**
+     * Check if the string is a email
      * @param email Email
      * @return boolean
      */
@@ -64,7 +64,7 @@ public class ValidateUtil {
     }
 
     /**
-     * not email
+     * Check if the string is  not a email
      *
      * @param email email
      * @return booleans
@@ -133,10 +133,10 @@ public class ValidateUtil {
     }
 
     /**
-     * 和isNumber方法返回值相反
+     * Verify whether not numbers
      *
-     * @param str
-     * @return
+     * @param str String
+     * @return boolean
      */
     public static boolean isNotNumber(String str) {
         return !validate(str, NUMBER_PATTERN);
@@ -228,6 +228,7 @@ public class ValidateUtil {
     }
 
     /**
+     * validate password
      * @param str password
      * @return boolean
      */
@@ -236,28 +237,27 @@ public class ValidateUtil {
     }
 
     /**
-     * 非负整数
+     * Verify non-negative integers
      *
-     * @param str
-     * @return
+     * @param str string
+     * @return boolean
      */
     public static boolean isNonnegativeInteger(String str) {
         return validate(str, "^\\d+$");
     }
 
     /**
-     * 验证是否是合法的uuid,正常情况是数据字母和"-"组成36为长度字符串
-     * 如果去掉"-"也必须保持有32位长度
-     *
-     * @param str
-     * @return
+     * Verify that it is a valid uuid,
+     * If you remove the "-" you must also have a 32-bit length.
+     * @param str String
+     * @return boolean
      */
     public static boolean isUuid(String str) {
         return validate(str, UUID_PATTERN) || validate(str, "[0-9a-z]{32}");
     }
 
     /**
-     * 验证不是uuid
+     * Verify that it is not a valid uuid
      *
      * @param str
      * @return
@@ -267,7 +267,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 验证日期格式是否正确必须是yyyy-MM-dd
+     * Verification date format matches yyyy-MM-dd
      *
      * @param date
      * @return
@@ -277,7 +277,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 和isDate方法相反
+     * Verification date format not matches yyyy-MM-dd
      *
      * @param date
      * @return
@@ -287,9 +287,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 验证时间格式是否是yyyy-MM-dd HH:mm:ss
-     * 可以做到精准验证
-     *
+     * Verification time format matches yyyy-MM-dd HH:mm:ss.
      * @param date
      * @return
      */
@@ -298,20 +296,20 @@ public class ValidateUtil {
     }
 
     /**
-     * 和isTimestamp方法相反
+     * Verification time format not matches yyyy-MM-dd HH:mm:ss.
      *
      * @param date
-     * @return
+     * @return boolean
      */
     public static boolean isNotTimestamp(String date) {
         return !validate(date, TIME_STAMP_PATTERN);
     }
 
     /**
-     * 检测ip地址包括ipv4和ipv6
+     * Verify ip address is legal, including ipv4 and ipv6
      *
-     * @param ip
-     * @return
+     * @param ip ip address
+     * @return boolean
      */
     public static boolean isIP(String ip) {
         if (StringUtil.isEmpty(ip)) {
@@ -323,17 +321,19 @@ public class ValidateUtil {
     }
 
     /**
-     * 和isIP方法返回值相反
+     * Verify ip address is invalid, including ipv4 and ipv6
      *
-     * @param ip
-     * @return
+     * @param ip ip address
+     * @return boolean
      */
     public static boolean isNotIP(String ip) {
         return !ValidateUtil.isIP(ip);
     }
 
     /**
-     * 验证是否是合法的url地址，不支持中文，验证包含：https://www.baidu.com:8080/a/n?a=5，
+     * Verify that it is a valid url address and does not support Chinese.
+     * Usage:
+     * https://www.baidu.com:8080/a/n?a=5，
      * https://192.168.15.96:8080/a/n?a=5
      *
      * @param url http,https,ftp url
@@ -344,27 +344,28 @@ public class ValidateUtil {
     }
 
     /**
-     * 和isUrl方法相反
+     * Verify that it is not a valid url address
      *
-     * @param url
-     * @return
+     * @param url url
+     * @return boolean
      */
     public static boolean isNotUrl(String url) {
         return !validate(url, URL_PATTERN);
     }
 
     /**
-     * 验证域名是否合法：只能是www.baidu.com这类标准域名
+     * Verify that the domain name is valid.
+     * Can only be a standard domain name like www.baidu.com.
      *
-     * @param domain
-     * @return
+     * @param domain domain
+     * @return boolean
      */
     public static boolean isDomain(String domain) {
         return validate(domain, DOMAIN_PATTERN);
     }
 
     /**
-     * 和isDomain相反
+     * Verify that the domain name is not valid
      *
      * @param domain
      * @return

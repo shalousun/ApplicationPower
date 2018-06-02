@@ -16,26 +16,27 @@ public class StringUtil {
 	private static final char UNDERLINE = '_';
 
 	/**
+	 * Checks if a CharSequence is empty or null.
 	 * @param str String
-	 * @return boolean
+	 * @return {@code true} if the CharSequence is empty or null
 	 */
 	public static boolean isEmpty(String str) {
 		return null == str || "".equals(str.trim()) || "null".equals(str.trim()) || "NaN".equals(str.trim());
 	}
 
 	/**
+	 * Checks if a CharSequence is empty or null.
 	 * @param str String
-	 * @return boolean
+	 * @return {@code false } if the CharSequence is empty or null
 	 */
 	public static boolean isNotEmpty(String str) {
 		return !isEmpty(str);
 	}
 
 	/**
-	 * 判断字符串中字符是否都相同
-	 *
-	 * @param s
-	 * @return
+	 * Check if characters are the same in the string.
+	 * @param s the CharSequence to check.
+	 * @return {@code true } if characters are the same in the string
 	 */
 	public static boolean isSameCharacter(String s) {
 		s = s.toUpperCase();
@@ -46,10 +47,10 @@ public class StringUtil {
 	}
 
 	/**
-	 * 判断字符串中的字符是否为连续字符
+	 * Check if the character in a string is a continuous character
 	 *
-	 * @param s
-	 * @return
+	 * @param s  the CharSequence to check
+	 * @return {@code true } if the character in a string is a continuous character
 	 */
 	public static boolean isContinuityCharacter(String s) {
 		boolean continuity = true;
@@ -63,6 +64,7 @@ public class StringUtil {
 	}
 
 	/**
+	 * get char code
 	 * @param str String
 	 * @return String
 	 */
@@ -96,7 +98,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 去除字符串空格
+	 * Remove string space
 	 *
 	 * @param sourceStr input string
 	 * @return string
@@ -110,7 +112,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 过滤特殊字符串
+	 * Clear special characters in a string
 	 *
 	 * @param str String
 	 * @return String
@@ -133,9 +135,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * sql字符清除
-	 * @param str
-	 * @return
+	 * Clear wildcards in sql
+	 * @param str sql
+	 * @return string
 	 */
 	public static String cleanSqlWildCharater(String str) {
 		if (isEmpty(str)) {
@@ -149,21 +151,21 @@ public class StringUtil {
 	}
 
 	/**
-	 * 清除xss脚本注入
+	 * Clear xss script injection
 	 *
-	 * @param value
-	 * @return
+	 * @param value script
+	 * @return not contains xss script
 	 */
 	public static String cleanXSS(String value) {
 		if (null == value) {
 			return value;
 		} else {
-			value = value.replaceAll("\\bselect\\b", "非法字符");
-			value = value.replaceAll("\\band\\b", "非法字符");
-			value = value.replaceAll("\\bor\\b", "非法字符");
-			value = value.replaceAll("\\bdelete\\b", "非法字符");
-			value = value.replaceAll("\\bjoin\\b", "非法字符");
-			value = value.replaceAll("\\bdrop\\b", "非法字符");
+			value = value.replaceAll("\\bselect\\b", "invalid character");
+			value = value.replaceAll("\\band\\b", "invalid character");
+			value = value.replaceAll("\\bor\\b", "invalid character");
+			value = value.replaceAll("\\bdelete\\b", "invalid character");
+			value = value.replaceAll("\\bjoin\\b", "invalid character");
+			value = value.replaceAll("\\bdrop\\b", "invalid character");
 
 			value = value.replaceAll("\\+", "&#43;");
 			value = value.replaceAll("&", "&amp;");
@@ -184,9 +186,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * 驼峰书写转化为下划线
+	 * camel to underline
 	 *
-	 * @param param 待转换字符
+	 * @param param pending character
 	 * @return String
 	 */
 	public static String camelToUnderline(String param) {
@@ -208,9 +210,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * 下滑线写法转化为驼峰书写
+	 * underline to camel
 	 *
-	 * @param param 待转换字符
+	 * @param param pending character
 	 * @return String
 	 */
 	public static String underlineToCamel(String param) {
@@ -245,9 +247,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * 首字母转大写
+	 * Turn the first letter into a uppercase
 	 *
-	 * @param param String
+	 * @param param pending character
 	 * @return String
 	 */
 	public static String firstToUpperCase(String param) {
@@ -259,9 +261,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * 首字母转小写
+	 * Turn the first letter into a lowercase
 	 *
-	 * @param param String
+	 * @param param pending character
 	 * @return String
 	 */
 	public static String firstToLowerCase(String param) {
@@ -273,7 +275,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 根据时间生成可视序列号
+	 * Generating sequence number according to timestamp
 	 *
 	 * @return String
 	 */
@@ -284,29 +286,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * 二分法实现字符串反序 该方法效率不及原生的StringBuffer 或者StringBuildder提供的 reverse效率高
-	 *
-	 * @param str 待反序的字符
-	 * @return String
-	 */
-	public static String reverse(String str) {
-
-		int length = str.length();
-		int half = (length >> 1) + 1;
-		char[] a = str.toCharArray();
-		for (int i = 0, j = length - 1; i < half; i++, j--) {
-			char str1 = str.charAt(i);
-			char str2 = str.charAt(j);
-			a[i] = str2;
-			a[j] = str1;
-		}
-		return String.valueOf(a);
-
-	}
-
-	/**
-	 * 对url传递的参数进行解码
-	 * @param str
+	 * Decoding the parameters passed by the URL
+	 * @param str pending character
 	 * @return
 	 */
 	public static String urlDecode(String str) {
@@ -323,9 +304,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * 8859编码转换称utf8
+	 * convert 8859 to utf-8
 	 *
-	 * @param str String
+	 * @param str pending character
 	 * @return String
 	 */
 	public static String ios8859ToUtf8(String str) {
@@ -340,9 +321,15 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Convert binary strings to hexadecimal strings
+	 * @param bString binary string
+	 * @return String
+	 */
 	public static String binaryString2hexString(String bString) {
-		if (bString == null || bString.equals("") || bString.length() % 8 != 0)
+		if (bString == null || bString.equals("") || bString.length() % 8 != 0){
 			return null;
+		}
 		StringBuilder tmp = new StringBuilder();
 		int iTmp;
 		for (int i = 0; i < bString.length(); i += 4) {
@@ -355,6 +342,11 @@ public class StringUtil {
 		return tmp.toString();
 	}
 
+	/**
+	 * Convert hex strings to binary strings
+	 * @param hexString hexadecimal strings
+	 * @return binary strings
+	 */
 	public static String hexString2binaryString(String hexString) {
 		if (hexString == null || hexString.length() % 2 != 0)
 			return null;
@@ -366,6 +358,12 @@ public class StringUtil {
 		return bString;
 	}
 
+	/**
+	 *
+	 * @param str
+	 * @param arr
+	 * @return
+	 */
 	private static String fillStringByArgs(String str, String[] arr) {
 		Matcher m = Pattern.compile("\\{(\\d)\\}").matcher(str);
 		while (m.find()) {
@@ -376,8 +374,8 @@ public class StringUtil {
 
 	/**
 	 * left trim and right trim
-	 * @param str
-	 * @return
+	 * @param str string
+	 * @return string
 	 */
 	public static String trimBlank(String str) {
 		if (isEmpty(str)) {
@@ -408,7 +406,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 移除查询关键词中单引号或双引号，避免sql错误
+	 * Remove single or double quotes in query keywords to avoid sql errors
 	 *
 	 * @param str String
 	 * @return String
@@ -421,6 +419,11 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 *
+	 * @param html
+	 * @return
+	 */
 	public static String replaceHtml(String html) {
 		if (isEmpty(html)) {
 			return "";
@@ -432,6 +435,11 @@ public class StringUtil {
 		return s;
 	}
 
+	/**
+	 *
+	 * @param html
+	 * @return
+	 */
 	public static String replaceMobileHtml(String html) {
 		if (html == null) {
 			return "";
@@ -449,10 +457,10 @@ public class StringUtil {
 	}
 
 	/**
-	 * 提取中文
+	 * Extract Chinese in a string
 	 *
 	 * @param str
-	 * @return
+	 * @return Chinese characters
 	 */
 	public static String getChinese(String str) {
 		String reg = "[^\u4e00-\u9fa5]";
@@ -461,22 +469,23 @@ public class StringUtil {
 	}
 
 	/**
-	 * 提非中文
+	 * Extract non-Chinese characters in a string
 	 *
 	 * @param str
-	 * @return
+	 * @return non-Chinese characters
 	 */
 	public static String getNotChinese(String str) {
 		String reg = "[^A-Za-z0-9_]";
 		str = str.replaceAll(reg, "");
 		return str;
 	}
+
 	/**
-	 * 去掉指定前缀
+	 * Remove the specified prefix
 	 *
-	 * @param str    字符串
-	 * @param prefix 前缀
-	 * @return 切掉后的字符串，若前缀不是 preffix， 返回原字符串
+	 * @param str    source
+	 * @param prefix prefix
+	 * @return If the prefix does not match, return the original string
 	 */
 	public static String removePrefix(String str, String prefix) {
 		if (isEmpty(str) || isEmpty(prefix)) {

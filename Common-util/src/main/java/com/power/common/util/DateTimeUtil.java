@@ -46,7 +46,7 @@ public class DateTimeUtil {
      * Formats a java.sql.Date using a format string
      * @param date java.sql.Date
      * @param format format like yyyy-MM-dd
-     * @return
+     * @return String
      */
     public static String parseDateToStr(java.sql.Date date, String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
@@ -976,7 +976,7 @@ public class DateTimeUtil {
     /**
      * 判断是否是今年
      * @param ms
-     * @return
+     * @return boolean
      */
     public static boolean isCurrentYear(long ms){
         Calendar calTemp = Calendar.getInstance();

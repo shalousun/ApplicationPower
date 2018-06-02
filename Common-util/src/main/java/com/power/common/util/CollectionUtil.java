@@ -3,13 +3,7 @@ package com.power.common.util;
 import java.util.*;
 
 /**
- * 
- * ClassName: CollectionUtil <br/>
- * Function: TODO ADD FUNCTION 集合工具类
- * date: 2017年9月7日 上午9:24:00 <br/>
- *
  * @author yu
- * @version 
  * @since JDK 1.7+
  */
 public class CollectionUtil {
@@ -17,10 +11,8 @@ public class CollectionUtil {
 	/**
 	 * 
 	 * isNotEmpty:(检查集合是否为空，不为空返回true)
-	 * @author yolanda0608
-	 * @param <T>
-	 * @param c
-	 * @return
+	 * @param c collection
+	 * @return boolean
 	 */
 	public static <T> boolean isNotEmpty(Collection<T> c){
 		if(c != null && c.size() != 0){
@@ -34,10 +26,8 @@ public class CollectionUtil {
 	/**
 	 * 
 	 * checkEmpty:(检查集合是否为空，为空返回true)
-	 * @author yolanda0608
-	 * @param <T>
-	 * @param c
-	 * @return
+	 * @param c collection
+	 * @return boolean
 	 */
 	public static  <T> boolean isEmpty(Collection<T> c){
 		if(c == null || c.size() == 0){
@@ -53,8 +43,7 @@ public class CollectionUtil {
 	 * @param source List
 	 * @param from   from index
 	 * @param to     to index
-	 * @param <T>
-	 * @return
+	 * @return list
 	 */
 	public static <T> List<T> subList(List<T> source, int from, int to) {
 		if (CollectionUtil.isEmpty(source)) {
@@ -71,9 +60,8 @@ public class CollectionUtil {
 	/**
 	 * 将数组转换为List,如果数组为空则返回一个空list
 	 *
-	 * @param a
-	 * @param <T>
-	 * @return
+	 * @param a object array
+	 * @return List
 	 */
 	public static <T> List<T> asList(T... a) {
 		if (null != a) {
@@ -90,7 +78,7 @@ public class CollectionUtil {
 	 *
 	 * @param result1
 	 * @param result2
-	 * @return
+	 * @return List
 	 */
 	public static <T> List<T> mergeAndSwap(List<T> result1, List<T> result2) {
 
@@ -148,7 +136,7 @@ public class CollectionUtil {
 	 *  即使map中这些指定字段有值,只要其他的key是无效的数据都会被被移除，但是0并不代表没有值
 	 * @param list
 	 * @param exceptKeys
-	 * @return
+	 * @return List
 	 */
 	public static List<Map<String, Object>> filterEmpty(List<Map<String, Object>> list, String... exceptKeys) {
 		List<Map<String,Object>> tempList = new ArrayList<>();

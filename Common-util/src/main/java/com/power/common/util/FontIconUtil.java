@@ -18,8 +18,8 @@ public class FontIconUtil {
     /**
      * 读取font-awesome.min.css等字体库样式文件获取图标列表
      * 注意：在读取文件前需要将css文件格式化，即转化为非压缩模式
-     * @param cssFile
-     * @return
+     * @param cssFile css file
+     * @return List
      */
     public static List<String> getIcons(File cssFile) {
         List<String> icons = new ArrayList<>(790);
@@ -50,8 +50,8 @@ public class FontIconUtil {
 
     /**
      * 获取单个图标名称
-     * @param selector
-     * @return
+     * @param selector css selector
+     * @return String
      */
     private static String getIcon(String selector){
         return selector.substring(selector.indexOf(".")+1,selector.indexOf(":"));

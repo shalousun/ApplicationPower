@@ -7,8 +7,8 @@ public class JsonFormatUtil {
     /**
      * 格式化json字符串
      *
-     * @param jsonStr
-     * @return
+     * @param jsonStr json content
+     * @return string
      */
     public static String formatJson(String jsonStr) {
         if (null == jsonStr || "".equals(jsonStr)) return "";

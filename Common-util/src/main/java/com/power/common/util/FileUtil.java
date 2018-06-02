@@ -18,6 +18,7 @@ public class FileUtil {
      * make dir
      *
      * @param path file path
+     * @return boolean
      */
     public static boolean mkdir(String path) {
         File file = new File(path);
@@ -28,6 +29,7 @@ public class FileUtil {
      * make dirs
      *
      * @param path file path
+     * @return boolean
      */
     public static boolean mkdirs(String path) {
         File file = new File(path);
@@ -149,6 +151,7 @@ public class FileUtil {
      *
      * @param source String source
      * @param file   File
+     * @param append append operate
      * @return boolean
      */
     public static boolean writeFile(String source, File file, boolean append) {
