@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import com.github.pagehelper.PageInfo;
 <%}%>
 <%if(add||query||delete||update){ %>
-import com.boco.common.model.CommonResult;
+import com.power.common.model.CommonResult;
 <%}%>
 import ${basePackage}.model.${entitySimpleName};
 import ${basePackage}.service.${entitySimpleName}Service;

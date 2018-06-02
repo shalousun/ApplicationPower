@@ -9,7 +9,7 @@ import java.util.Map;
 import com.github.pagehelper.PageInfo;
 <%}%>
 <%if(add||query||delete||update){ %>
-import com.boco.common.model.CommonResult;
+import com.power.common.model.CommonResult;
 <%}%>
 import ${basePackage}.model.${entitySimpleName};
 
