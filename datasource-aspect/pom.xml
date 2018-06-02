@@ -8,7 +8,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.power.datasource</groupId>
+    <groupId>com.github.shalousun</groupId>
     <version>1.0-SNAPSHOT</version>
     <artifactId>datasource-aspect</artifactId>
     <packaging>jar</packaging>
@@ -25,8 +25,8 @@
     </licenses>
     <scm>
         <url>https://github.com/shalousun/ApplicationPower.git</url>
-        <connection>scm:https://github.com/shalousun/ApplicationPower.git</connection>
-        <developerConnection>scm:https://github.com/shalousun/ApplicationPower.git</developerConnection>
+        <connection>git@github.com:shalousun/ApplicationPower.git</connection>
+        <developerConnection>git@github.com:shalousun/ApplicationPower.git</developerConnection>
     </scm>
     <developers>
         <developer>
@@ -124,4 +124,27 @@
         </plugins>
         <finalName>datasource-aspect</finalName>
     </build>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
