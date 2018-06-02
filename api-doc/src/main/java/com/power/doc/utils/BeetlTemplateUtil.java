@@ -1,6 +1,6 @@
 package com.power.doc.utils;
 
-import com.boco.common.util.FileUtil;
+import com.power.common.util.FileUtil;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;

@@ -15,12 +15,12 @@
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+            <url>http://192.168.15.202:12345/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+            <url>http://192.168.15.202:12345/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <dependencies>
@@ -48,9 +48,9 @@
             <version>2.0-M6</version>
         </dependency>
         <dependency>
-            <groupId>com.boco.sp</groupId>
-            <artifactId>Common-util</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.github.shalousun</groupId>
+            <artifactId>common-util</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
     <build>

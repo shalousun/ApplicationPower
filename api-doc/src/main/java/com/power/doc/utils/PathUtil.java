@@ -1,6 +1,6 @@
 package com.power.doc.utils;
 
-import com.boco.common.util.StringUtil;
+import com.power.common.util.StringUtil;
 
 import java.io.File;
 
