@@ -16,7 +16,7 @@ jdk版本：jdk 1.8
 ```
 # mvn clean package docker:build -DskipTests
 ```
-第二种方式：使用docker.sh
+第二种方式【推荐】：使用docker.sh
 ```
 # chmod 0755 docker.sh
 # ./docker.sh
@@ -25,19 +25,18 @@ jdk版本：jdk 1.8
 
 # docker.sh脚本说明
 
-docker.sh目前针对maven环境下的构建还比较粗略，目前ApplicationPower中预定速成的镜像规则是：
-$GROUP/$PROJECT_NAME:$APP_VERSION，其中$GROUP代码group当前使用的基础包名；$PROJECT_NAME是
+docker.sh目前针对maven环境下的构建处理已经比较完善，能够自动根据pom.xml中的配置自动构建镜像名称，
+即便你修改pom.xml中的项目配置，也可以不理Dockerfile中的jar名称，docker自动在构建前修正Dockerfile，从目前来看docker.sh
+的容错度比较高的，并且该脚本无需做修改就可移植到其他maven项目。
+
+目前ApplicationPower中约定速成的镜像规则是：$GROUP/$PROJECT_NAME:$APP_VERSION，其中$GROUP代码group当前使用的基础包名；$PROJECT_NAME是
 ApplicationPower生成项目时指定的项目名；$APP_VERSION目前使用的版本都是项目初期的0.0.1-SNAPSHOT。
-如果想更改镜像规则请相应修改pom.xml，Dockerfile,docker.sh中的响应docker配置，否则可能导致构建的镜像
-和启动的镜像名不统一。
 
 docker.sh目前已经默认内置了将镜像推送到自建仓库的功能，需要则将脚本中的命令去注释打开即可。
 
-当然随着ApplicationPower不断更新，后期会对脚本做深度优化到尽可能规范和减少配置修改，敬请期待！！！
-
 # 项目结构
 
-项目基础结构
+项目标准结构(此图已省略部分)
 ```
 ├─docs
 │      DOCKER.md

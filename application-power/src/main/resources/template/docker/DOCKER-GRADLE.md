@@ -16,7 +16,7 @@ jdk版本：jdk 1.8
 ```
 # gradle build buildDocker
 ```
-第二种方式【推荐】：使用docker.sh，
+第二种方式【推荐】：使用docker.sh
 ```
 # chmod 0755 docker.sh
 # ./docker.sh

@@ -62,7 +62,7 @@ then
     if [ -n "$FINAL_NAME" ]; then
         PROJECT_NAME=$FINAL_NAME
     else
-        PROJECT_NAME=$ARTIFACT_ID
+        PROJECT_NAME=$ARTIFACT_ID-$APP_VERSION
     fi
 else
     echo "INFO: Use maven process pom.xml,The process is slower, please wait patiently !"
@@ -73,7 +73,7 @@ else
     if [ -n "$FINAL_NAME" ]; then
         PROJECT_NAME=$FINAL_NAME
     else
-        PROJECT_NAME=$ARTIFACT_ID
+        PROJECT_NAME=$ARTIFACT_ID-$APP_VERSION
     fi
 fi
 # ====================define IMAGE=======================================
@@ -110,6 +110,15 @@ then
     docker images | grep ${MYIMAGE} | awk '{print $3}' | xargs docker rmi -f
 else
     echo "ERROR: Can't find image ${MYIMAGE}"
+fi
+# ========================modify Dockerfile===============================
+#  If the jar name is set error in Dockerfile,This script could auto fix
+#=========================================================================
+if ! grep "$PROJECT_NAME.jar" $CUR_PATH/src/main/docker/Dockerfile
+then
+    sed -i "s/^ADD \(.*\) app.jar/ADD $PROJECT_NAME.jar app.jar/g" $CUR_PATH/src/main/docker/Dockerfile
+    JAR_NAME=$(sed -n "s/^ADD \(.*\) app.jar/\1/p" $CUR_PATH/src/main/docker/Dockerfile)
+    echo "INFO: The build jar name is $JAR_NAME"
 fi
 # =========================build docker image=============================
 echo "INFO: use maven build docker image"
