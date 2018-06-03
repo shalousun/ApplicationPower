@@ -1,6 +1,6 @@
 FROM java:8
 
-MAINTAINER yusun4@iflytek.com
+MAINTAINER shalousun
 EXPOSE 8080
 
 #install Spring Boot artifact

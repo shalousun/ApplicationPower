@@ -132,6 +132,34 @@ public class CollectionUtil {
 	}
 
 	/**
+	 * split list
+	 * @param list
+	 * @param pageSize
+	 * @return List
+	 */
+	public static <T> List<List<T>> splitList(List<T> list, int pageSize) {
+		List<List<T>> listArray = new ArrayList<>();
+		if(list != null && list.size()>0){
+			int listSize = list.size();
+			int page = (listSize + (pageSize-1))/ pageSize;
+			for(int i=0;i<page;i++) {
+				List<T> subList = new ArrayList<>();
+				for(int j=0;j<listSize;j++) {
+					int pageIndex = ( (j + 1) + (pageSize-1) ) / pageSize;
+					if(pageIndex == (i + 1)) {
+						subList.add(list.get(j));
+					}
+
+					if( (j + 1) == ((j + 1) * pageSize) ) {
+						break;
+					}
+				}
+				listArray.add(subList);
+			}
+		}
+		return listArray;
+	}
+	/**
 	 *  将List集合中的无效的map数据清空，被指定为排除的字段
 	 *  即使map中这些指定字段有值,只要其他的key是无效的数据都会被被移除，但是0并不代表没有值
 	 * @param list

@@ -1,5 +1,6 @@
 package com.power.common.util;
 
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -96,5 +97,43 @@ public class RandomUtil {
      */
     public static double randomDouble(){
         return randomDouble(0.00,100.00);
+    }
+
+    /**
+     * Generate random initial values based on type
+     * @param type
+     * @return string
+     */
+    public static String randomValueByType(String type) {
+        String dataType = "";
+        switch (type) {
+            case "String":  //12
+                dataType = randomString(6);
+                break;
+            case "Integer":    //4
+                dataType = String.valueOf(randomInt(1000));
+                break;
+            case "Long": //-5
+                dataType = String.valueOf(randomInt(1000));
+                break;
+            case "Double": //8
+                dataType = String.valueOf(randomDouble());
+                break;
+            case "Float": //6
+                dataType = String.valueOf(randomDouble());
+                break;
+            case "BigDecimal":    //3
+                dataType = "BigDecimal";
+                break;
+            case "Time":  //91
+                dataType = DateTimeUtil.dateToStr(new Date());
+                break;
+            case "Timestamp":  //91
+                dataType = DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
+                break;
+            default:
+                dataType = randomString(6);
+        }
+        return dataType;
     }
 }

@@ -26,8 +26,11 @@ public class PomCodeBuilder implements ICodeBuilder {
     private Map<String,String> paths;
 
     public PomCodeBuilder(){
-        buildPath();
-        buildCode();
+        if(GeneratorProperties.useMaven()){
+            buildPath();
+            buildCode();
+        }
+
     }
 
     @Override

@@ -40,9 +40,10 @@ public class GeneratorProperties {
 
     /**
      * 过滤表
+     *
      * @return
      */
-    public static String tableFilterPrefix(){
+    public static String tableFilterPrefix() {
         return props.getProperty("generator.table.filter.prefix");
     }
 
@@ -102,76 +103,104 @@ public class GeneratorProperties {
 
     /**
      * 是否采用assembly打包
+     *
      * @return
      */
-    public static Boolean getAssembly(){
+    public static Boolean getAssembly() {
         return Boolean.valueOf(props.getProperty("generator.package.assembly"));
     }
 
     /**
      * 分布式事务
+     *
      * @return
      */
-    public static Boolean isJTA(){
-        return Boolean.valueOf(props.getProperty("generator.jta"))||isMultipleDataSource();
+    public static Boolean isJTA() {
+        return Boolean.valueOf(props.getProperty("generator.jta")) || isMultipleDataSource();
     }
 
     /**
      * 是否需要生成docker配置
+     *
      * @return
      */
-    public static Boolean useDocker(){
+    public static Boolean useDocker() {
         return Boolean.valueOf(props.getProperty("generator.docker"));
     }
 
     /**
-     *  获取多数据源
+     * 使用gradle构建
+     *
+     * @return
+     */
+    public static Boolean useGradle() {
+        if ("gradle".equals(props.getProperty("generator.build.tool"))) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 使用maven构建
+     *
+     * @return
+     */
+    public static Boolean useMaven() {
+        return !useGradle();
+    }
+
+    /**
+     * 获取多数据源
+     *
      * @return
      */
     public static Set<String> getMultipleDataSource() {
         String datasourceStr = props.getProperty("generator.multiple.datasource");
         Set<String> dataSourceSet = new LinkedHashSet<>();
-        if(StringUtil.isNotEmpty(datasourceStr)){
+        if (StringUtil.isNotEmpty(datasourceStr)) {
             String[] dataSources = datasourceStr.split(",");
-            for(String str:dataSources){
+            for (String str : dataSources) {
                 dataSourceSet.add(str);
             }
         }
         return dataSourceSet;
     }
-    public static boolean isMultipleDataSource(){
-        return getMultipleDataSource().size()>0;
+
+    public static boolean isMultipleDataSource() {
+        return getMultipleDataSource().size() > 0;
     }
 
     /**
      * 获取需要生成的方法
+     *
      * @return
      */
-    public static Map<String,Boolean> getGenerateMethods(){
+    public static Map<String, Boolean> getGenerateMethods() {
         String methodsStr = props.getProperty("generator.methods");
-        if(StringUtil.isEmpty(methodsStr)){
+        if (StringUtil.isEmpty(methodsStr)) {
             throw new RuntimeException("generator.methods can not be null or ''");
         }
         String[] methods = methodsStr.split(",");
         //约定的方法，
-        Map<String,Boolean> map = new HashMap<>();
-        map.put("add",false);
-        map.put("delete",false);
-        map.put("update",false);
-        map.put("query",false);
-        map.put("page",false);
-        map.put("queryToListMap",false);
-        for(String str:methods){
-            map.put(str,true);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("add", false);
+        map.put("delete", false);
+        map.put("update", false);
+        map.put("query", false);
+        map.put("page", false);
+        map.put("queryToListMap", false);
+        for (String str : methods) {
+            map.put(str, true);
         }
         return map;
     }
 
     /**
      * 系统实现的日志配置
+     *
      * @return
      */
-    public static String getLogConfig(){
+    public static String getLogConfig() {
         return props.getProperty("generator.application.logConfig");
     }
 }

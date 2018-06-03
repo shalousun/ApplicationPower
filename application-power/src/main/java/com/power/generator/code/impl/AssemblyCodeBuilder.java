@@ -27,7 +27,7 @@ public class AssemblyCodeBuilder implements ICodeBuilder {
     private Map<String,String> paths;
 
     public AssemblyCodeBuilder(){
-        if(GeneratorProperties.getAssembly()){
+        if(GeneratorProperties.getAssembly()&&GeneratorProperties.useMaven()){
             buildPath();
             buildCode();
         }

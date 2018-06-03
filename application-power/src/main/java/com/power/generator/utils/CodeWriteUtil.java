@@ -1,7 +1,9 @@
 package com.power.generator.utils;
 
 import com.power.common.util.FileUtil;
+import com.power.generator.constant.ConstVal;
 
+import java.io.File;
 import java.util.Map;
 
 public class CodeWriteUtil {
@@ -14,5 +16,15 @@ public class CodeWriteUtil {
         for(Map.Entry<String,String> entry:files.entrySet()){
             FileUtil.writeFileNotAppend(entry.getValue(),entry.getKey());
         }
+    }
+
+    public static void nioCopy(String source,String target){
+        String currentPath = Thread.currentThread().getContextClassLoader().getResource(source).getPath();
+        FileUtil.nioTransferCopy(new File(currentPath),new File(target));
+    }
+
+    public static void nioCopyDir(String sourceFolder,String targetFolder){
+        String currentPath = Thread.currentThread().getContextClassLoader().getResource(sourceFolder).getPath();
+        FileUtil.copyDir(currentPath,targetFolder);
     }
 }

@@ -17,7 +17,7 @@ public class ConfigBuilder {
     /**
      * 项目的doc文档目录
      */
-    private Map<String,String> docsPath;
+    private Map<String, String> docsPath;
     /**
      * 路径配置信息
      */
@@ -222,6 +222,7 @@ public class ConfigBuilder {
         String basePath = projectPath.getBasePath();
         baseConfigFilesPath = new HashMap<>(10);
 
+
         baseConfigFilesPath.put(ConstVal.TPL_POM, connectPath(basePath, config.getPom()));
         baseConfigFilesPath.put(ConstVal.TPL_LOF4J2, connectPath(basePath, config.getLog4j2()));
         baseConfigFilesPath.put(ConstVal.TPL_400, connectPath(basePath, config.getHtml400()));
@@ -248,7 +249,10 @@ public class ConfigBuilder {
 
         String basePath = projectPath.getBasePath();
         baseConfigFilesPath = new HashMap<>(10);
-        baseConfigFilesPath.put(ConstVal.TPL_SPRING_BOOT_POM, connectPath(basePath, config.getPom()));
+        if (GeneratorProperties.useMaven()) {
+            baseConfigFilesPath.put(ConstVal.TPL_SPRING_BOOT_POM, connectPath(basePath, config.getPom()));
+        }
+
         if (GeneratorProperties.isMultipleDataSource()) {
             baseConfigFilesPath.put(ConstVal.TPL_MULTIPLE_DATASOURCE_YML, connectPath(basePath, config.getApplicationYml()));
         } else {
@@ -272,11 +276,6 @@ public class ConfigBuilder {
 
         baseConfigPathInfo.put(ConstVal.RESOURCE_PATH, connectPath(basePath, config.getResource()));
         baseConfigPathInfo.put(ConstVal.STRING_BOOT_EORRO_DIR, connectPath(basePath, config.getErrorPath()));
-        if (GeneratorProperties.getAssembly()) {
-            baseConfigPathInfo.put(ConstVal.ASSEMBLY_DIR, connectPath(basePath, config.getAssemblyRoot()));
-            baseConfigPathInfo.put(ConstVal.ASSEMBLY_BIN, connectPath(basePath, config.getAssemblyBin()));
-            baseConfigPathInfo.put(ConstVal.ASSEMBLY_CFG, connectPath(basePath, config.getAssemblyCfg()));
-        }
 
     }
 
@@ -291,14 +290,15 @@ public class ConfigBuilder {
 
     /**
      * 项目的docs目录
+     *
      * @param config
      */
-    private void handlerDocsPath(PackageConfig config){
+    private void handlerDocsPath(PackageConfig config) {
         docsPath = new HashMap<>();
         String basePath = projectPath.getBasePath();
         String fileSeparator = System.getProperty("file.separator");
         String docsDir = basePath + fileSeparator + ConstVal.DOCS_PATH;
-        docsPath.put(config.getDocs(),docsDir);
+        docsPath.put(config.getDocs(), docsDir);
     }
 
     /**

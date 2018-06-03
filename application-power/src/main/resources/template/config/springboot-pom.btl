@@ -123,9 +123,9 @@
         <%}%>
           <!--https://gitee.com/sunyurepository/ApplicationPower-->
         <dependency>
-            <groupId>com.boco.sp</groupId>
-            <artifactId>Common-util</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.github.shalousun</groupId>
+            <artifactId>common-util</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 

@@ -38,8 +38,15 @@ public class DockerCodeBuilder implements ICodeBuilder {
      */
     private final String DOCKER_MAVEN_SH_TPL = "docker/docker-maven.sh";
 
+    /**
+     * 基于gradle构建docker
+     */
+    private final String DOCKER_GRADLE_SH_TPL = "docker/docker-gradle.sh";
 
     private final String DOCKER_DOC_TPL = "docker/DOCKER.md";
+
+    private final String DOCKER_DOC_GRADLE_TPL = "docker/DOCKER-GRADLE.md";
+
     public DockerCodeBuilder(){
         if(GeneratorProperties.useDocker()){
             buildPath();
@@ -71,12 +78,26 @@ public class DockerCodeBuilder implements ICodeBuilder {
     @Override
     public Map<String,String> handleTemplates() {
         Map<String,String> templates = new HashMap<>(2);
+
+        String applicationName;
+        String dockerShTplPath;
+        String dockerDocTpl;
+        if(GeneratorProperties.useMaven()){
+            applicationName = GeneratorProperties.applicationName();
+            dockerShTplPath = DOCKER_MAVEN_SH_TPL;
+            dockerDocTpl = DOCKER_DOC_TPL;
+        }else{
+            applicationName = GeneratorProperties.applicationName()+"-1.0-SNAPSHOT";
+            dockerShTplPath = DOCKER_GRADLE_SH_TPL;
+            dockerDocTpl = DOCKER_DOC_GRADLE_TPL;
+        }
+
         Template dockerFile = BeetlTemplateUtil.getByName(DOCKER_FILE_TPL);
-        dockerFile.binding(GeneratorConstant.COMMON_VARIABLE);
+        dockerFile.binding(GeneratorConstant.APPLICATION_NAME,applicationName);
         String dockerFileOutPath = paths.get(DOCKER_DIR)+ConstVal.FILE_SEPARATOR+"Dockerfile";
         templates.put(dockerFileOutPath,dockerFile.render());
 
-        Template dockerSh = BeetlTemplateUtil.getByName(DOCKER_MAVEN_SH_TPL);
+        Template dockerSh = BeetlTemplateUtil.getByName(dockerShTplPath);
         dockerSh.binding(GeneratorConstant.COMMON_VARIABLE);
         dockerSh.binding("MYIMAGE","${MYIMAGE}");
         dockerSh.binding("DOCKER_REGISTRY","${DOCKER_REGISTRY}");
@@ -87,7 +108,7 @@ public class DockerCodeBuilder implements ICodeBuilder {
         String yarmShPath = PathUtil.connectPath(getBasePath(),"yaml.sh");
         templates.put(yarmShPath,yamlShTemplate.render());
 
-        Template dockerDoc = BeetlTemplateUtil.getByName(DOCKER_DOC_TPL);
+        Template dockerDoc = BeetlTemplateUtil.getByName(dockerDocTpl);
         String docPath = PathUtil.connectPath(getBasePath(),"docs/DOCKER.md");
         templates.put(docPath,dockerDoc.render());
 

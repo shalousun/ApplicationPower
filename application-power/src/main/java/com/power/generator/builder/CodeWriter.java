@@ -4,6 +4,7 @@ import com.power.common.util.FileUtil;
 import com.power.common.util.StringUtil;
 import com.power.generator.code.impl.AssemblyCodeBuilder;
 import com.power.generator.code.impl.DockerCodeBuilder;
+import com.power.generator.code.impl.GradleCodeBuilder;
 import com.power.generator.code.impl.PomCodeBuilder;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
@@ -72,6 +73,8 @@ public class CodeWriter extends AbstractCodeWriter {
         new DockerCodeBuilder();
 
         new PomCodeBuilder();
+
+        new GradleCodeBuilder();
 
     }
 

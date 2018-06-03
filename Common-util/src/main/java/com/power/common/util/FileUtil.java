@@ -37,6 +37,29 @@ public class FileUtil {
     }
 
     /**
+     * copy dir
+     * @param path path
+     * @param copyPath target path
+     */
+    public static void copyDir(String path, String copyPath){
+        File filePath = new File(path);
+        if(filePath.isDirectory()){
+            File[] list = filePath.listFiles();
+            for(int i=0; i<list.length; i++){
+                String newPath = path + File.separator + list[i].getName();
+                String newCopyPath = copyPath + File.separator + list[i].getName();
+                File newFile = new File(copyPath);
+                if(!newFile.exists()){
+                    newFile.mkdir();
+                }
+                nioTransferCopy(new File(newPath),new File(newCopyPath) );
+            }
+        }else{
+            throw new IllegalArgumentException(String.format("%s is not a directory", filePath.getAbsolutePath()));
+        }
+    }
+
+    /**
      * use nio copy file
      *
      * @param source source file

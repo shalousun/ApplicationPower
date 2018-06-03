@@ -23,6 +23,9 @@ public class ConstVal {
     public static final String ASSEMBLY_BIN = "src\\main\\assembly\\bin";
     public static final String ASSEMBLY_CFG = "src\\main\\assembly\\config";
 
+    //gradle wrapper
+    public static final String GRADLE_WRAPPER = "gradle"+FILE_SEPARATOR+"wrapper";
+
 
     public static final String STRING_BOOT_STATIC_DIR = RESOURCE_DIR + "\\static";
     public static final String STRING_BOOT_EORRO_DIR = STRING_BOOT_STATIC_DIR + "\\errors";
