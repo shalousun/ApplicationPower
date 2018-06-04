@@ -12,9 +12,9 @@ spring:
         username: ${dbUserName}
         password: ${dbPassword}
         driver-class-name: ${dbDriver}
-        minIdle: 1
+        minIdle: 5
         maxActive: 20
-        initialSize: 1
+        initialSize: 5
         timeBetweenEvictionRunsMillis: 3000
         minEvictableIdleTimeMillis: 300000
         validationQuery: SELECT 'ZTM' FROM DUAL
@@ -23,7 +23,7 @@ spring:
         testOnBorrow: false
         testOnReturn: false
         maxWait: 60000
-        # 打开PSCache，并且指定每个连接上PSCache的大小
+        # open PSCache
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
         useGlobalDataSourceStat: true
