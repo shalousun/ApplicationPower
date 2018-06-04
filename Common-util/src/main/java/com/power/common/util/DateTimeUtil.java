@@ -140,10 +140,10 @@ public class DateTimeUtil {
     }
 
     /**
-     *
-     * @param date
-     * @param format
-     * @return
+     * Convert String to Timestamp
+     * @param date String of date content
+     * @param format data format
+     * @return Timestamp
      */
     public static Timestamp strToStamp(String date,String format){
         Timestamp time = null;
@@ -202,10 +202,10 @@ public class DateTimeUtil {
     }
 
     /**
-     *
-     * @param before
-     * @param after
-     * @return
+     * Get Distance Of ms between and two date
+     * @param before before date
+     * @param after after date
+     * @return long
      */
     public static long getDistanceOfTwoDate(Date before, Date after) {
         long beforeTime = before.getTime();
@@ -450,7 +450,7 @@ public class DateTimeUtil {
      *          需要格式的样式(yyyy-MM-dd等)
      * @param locale
      *          语言地域
-     * @return
+     * @return String
      */
     public static String long2Str(long millSec, String format,Locale locale){
         SimpleDateFormat sdf = new SimpleDateFormat(format,locale);
@@ -527,8 +527,8 @@ public class DateTimeUtil {
 
     /**
      * 根据long时间戳获取所属于的天数
-     * @param ms
-     * @return
+     * @param ms millisecond
+     * @return int
      */
     public static int getCurrentMonthDays(long ms){
         Calendar cal = Calendar.getInstance();
@@ -536,9 +536,9 @@ public class DateTimeUtil {
         return getCurrentMonthDays(cal);
     }
     /**
-     *
-     * @param cal
-     * @return
+     * 根据long时间戳获取所属于的天数
+     * @param cal Calendar
+     * @return int
      */
     public static int getCurrentMonthDays(Calendar cal){
         if(null != cal){
@@ -628,8 +628,8 @@ public class DateTimeUtil {
 
     /**
      * 将时间重置到上月的第一天
-     * @param ms
-     * @return
+     * @param ms millisecond
+     * @return millisecond
      */
     public static long setToFirstDayOfLastMonth(long ms){
         Calendar cal = Calendar.getInstance();
@@ -645,8 +645,8 @@ public class DateTimeUtil {
 
     /**
      * 上月同期
-     * @param ms
-     * @return
+     * @param ms millisecond
+     * @return millisecond
      */
     public static long setToLastMonthCommonDay(long ms){
         Calendar calendar = Calendar.getInstance();
@@ -704,8 +704,8 @@ public class DateTimeUtil {
 
     /**
      * 去年同期
-     * @param millis
-     * @return
+     * @param millis millisecond
+     * @return long
      */
     public static long setToLastYearCommonDay(long millis){
         Calendar calendar = Calendar.getInstance();
@@ -913,9 +913,9 @@ public class DateTimeUtil {
 
     /**
      * 去年同期
-     * @param strDate
+     * @param strDate String of date
      * @param format time format
-     * @return
+     * @return String
      */
     public static String getLastYearCommonDay(String strDate,String format){
         Date date = parseDate(strDate,format);
@@ -929,7 +929,7 @@ public class DateTimeUtil {
      * 上月同期,如果是最后一天则重置到月末
      * @param strDate strDate
      * @param format time format
-     * @return
+     * @return String
      */
     public static String getLastMonthCommonDay(String strDate,String format){
         Date date = parseDate(strDate,format);
@@ -965,9 +965,9 @@ public class DateTimeUtil {
     }
 
     /**
-     *
-     * @param idCard
-     * @return
+     * get birthday from chinese idcard
+     * @param idCard chinese idcard
+     * @return long
      */
     public static long getLongBirthFormIdCard(String idCard){
         return getBirthdayFormIdCard(idCard).getTime();
@@ -975,7 +975,7 @@ public class DateTimeUtil {
 
     /**
      * 判断是否是今年
-     * @param ms
+     * @param ms millisecond
      * @return boolean
      */
     public static boolean isCurrentYear(long ms){

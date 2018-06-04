@@ -8,7 +8,7 @@ import java.util.List;
  * 主要用于前端内容展示分页,分页链接由后台输出
  * PageVo根据自定义的url直接生成链接，messageFormat占位替换生成页码
  * USAGE:
- * @RequestMapping(value="news/p{pageIndex}.htm",method = RequestMethod.GET)
+ * RequestMapping(value="news/p{pageIndex}.htm",method = RequestMethod.GET)
  * public String list(@PathVariable int pageIndex,Model model){
  * 	try{
  *      PageVo pageDto = this.newsService.getPage(0,pageIndex,12);
@@ -20,7 +20,7 @@ import java.util.List;
  *	return "forward:/news.jsp";
  *}
  * @author sunyu
- * @param <T>
+ * @param <T> Generics
  */
 public class PageVo<T> implements Serializable {
 	private static final long serialVersionUID = 1923401118856169487L;

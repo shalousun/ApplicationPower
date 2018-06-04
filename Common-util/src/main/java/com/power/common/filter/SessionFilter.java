@@ -78,8 +78,8 @@ public class SessionFilter extends AbstractUrlMatcher implements Filter {
 
     /**
      * 判断是否是ajax异步
-     * @param request
-     * @return
+     * @param request HttpServletRequest
+     * @return boolean
      */
     public boolean isAjaxRequest(HttpServletRequest request) {
         String header = request.getHeader("X-Requested-With");

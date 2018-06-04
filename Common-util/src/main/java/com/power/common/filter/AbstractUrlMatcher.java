@@ -12,7 +12,7 @@ public abstract class AbstractUrlMatcher {
      * 匹配返回true，不匹配返回false
      * @param patterns 正则表达式或通配符
      * @param url 请求的url
-     * @return
+     * @return boolean
      */
     protected boolean isMatches(Set<String> patterns, String url) {
         if(null == patterns){

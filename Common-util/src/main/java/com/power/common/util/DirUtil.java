@@ -21,9 +21,8 @@ public class DirUtil {
     /**
      * Copies a directory tree
      *
-     * @param from
-     * @param to
-     * @throws IOException
+     * @param from from
+     * @param to to
      */
     public static void copy(Path from, Path to)  {
         validate(from);
@@ -36,7 +35,7 @@ public class DirUtil {
 
     /**
      * validate path
-     * @param paths
+     * @param paths array of path
      */
     private static void validate(Path... paths) {
         for (Path path : paths) {

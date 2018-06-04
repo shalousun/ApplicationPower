@@ -32,7 +32,7 @@ public class CommonResult<T> implements Serializable {
 	/**
 	 * 错误代码
 	 */
-	private int code;
+	private String code;
 
 	/**
 	 * 默认构造器
@@ -62,10 +62,10 @@ public class CommonResult<T> implements Serializable {
 
 	/**
 	 *
-	 * @param code
-	 * @param message
+	 * @param code error code
+	 * @param message success or error messages
 	 */
-	public CommonResult(int code,String message){
+	public CommonResult(String code,String message){
 		this.code = code;
 		this.message = message;
 	}
@@ -102,11 +102,11 @@ public class CommonResult<T> implements Serializable {
 		this.data = data;
 	}
 
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 }

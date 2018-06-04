@@ -101,7 +101,7 @@ public class RandomUtil {
 
     /**
      * Generate random initial values based on type
-     * @param type
+     * @param type type of object
      * @return string
      */
     public static String randomValueByType(String type) {
