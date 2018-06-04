@@ -1,6 +1,6 @@
 #!/bin/bash
 # @author shalousun
-# shell script to build docker images while use jenkins.
+# shell script to build docker images while use jenkins，only support gradle project.
 
 source /etc/profile
 
@@ -100,10 +100,6 @@ then
     JAR_NAME=$(sed -n "s/^ADD \(.*\) app.jar/\1/p" $CUR_PATH/src/main/docker/Dockerfile)
     echo "INFO: The build jar name is $JAR_NAME"
 fi
-
-
-# use maven build jar and image
-# mvn clean package docker:build -DskipTests
 
 # use gradle build jar and images
 

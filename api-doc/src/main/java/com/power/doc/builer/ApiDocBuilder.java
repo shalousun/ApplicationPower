@@ -1,6 +1,6 @@
 package com.power.doc.builer;
 
-import com.boco.common.util.FileUtil;
+import com.power.common.util.FileUtil;
 import com.power.doc.model.ApiDoc;
 import com.power.doc.utils.BeetlTemplateUtil;
 

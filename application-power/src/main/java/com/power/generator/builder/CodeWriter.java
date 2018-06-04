@@ -1,9 +1,10 @@
 package com.power.generator.builder;
 
-import com.boco.common.util.FileUtil;
-import com.boco.common.util.StringUtil;
+import com.power.common.util.FileUtil;
+import com.power.common.util.StringUtil;
 import com.power.generator.code.impl.AssemblyCodeBuilder;
 import com.power.generator.code.impl.DockerCodeBuilder;
+import com.power.generator.code.impl.GradleCodeBuilder;
 import com.power.generator.code.impl.PomCodeBuilder;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
@@ -12,10 +13,7 @@ import com.power.generator.database.Column;
 import com.power.generator.database.DbProvider;
 import com.power.generator.database.TableInfo;
 import com.power.generator.factory.DbProviderFactory;
-import com.power.generator.utils.BeetlTemplateUtil;
-import com.power.generator.utils.GeneratorProperties;
-import com.power.generator.utils.PathUtil;
-import com.power.generator.utils.PropertiesUtils;
+import com.power.generator.utils.*;
 import org.beetl.core.Template;
 
 import java.io.File;
@@ -72,6 +70,8 @@ public class CodeWriter extends AbstractCodeWriter {
         new DockerCodeBuilder();
 
         new PomCodeBuilder();
+
+        new GradleCodeBuilder();
 
     }
 
@@ -152,8 +152,8 @@ public class CodeWriter extends AbstractCodeWriter {
 
                 //SpringBoot yml
                 template.binding("dbUrl", dbProp.getProperty("jdbc.url"));
-                template.binding("dbUserName", dbProp.getProperty("jdbc.username"));
-                template.binding("dbPassword", dbProp.getProperty("jdbc.password"));
+                template.binding("dbUserName", YmlUtil.addDoubleQuote(dbProp.getProperty("jdbc.username")));
+                template.binding("dbPassword", YmlUtil.addDoubleQuote(dbProp.getProperty("jdbc.password")));
                 template.binding("dbDriver", dbProp.getProperty("jdbc.driver"));
                 template.binding("list",GeneratorProperties.getMultipleDataSource());
                 template.binding("isJTA",GeneratorProperties.isJTA());

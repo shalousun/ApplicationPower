@@ -102,6 +102,11 @@ generator.application.logConfig=log4j2.xml
 # 该值为true时会为springboot maven项目创建Dockerfile和相应的构建脚本
 generator.docker=true
 
+# @since 1.7.2
+# default is use maven build,current support maven and gradle
+# generator.build.tool=gradle //use gradle
+generator.build.tool=
+
 ```
   3.修改数据库配置jdbc.properties
 ```

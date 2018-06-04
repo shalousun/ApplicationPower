@@ -1,6 +1,6 @@
 package com.power.doc.builer;
 
-import com.boco.common.util.StringUtil;
+import com.power.common.util.StringUtil;
 import com.power.doc.model.ApiDoc;
 import com.power.doc.model.ApiMethodDoc;
 import com.thoughtworks.qdox.JavaProjectBuilder;

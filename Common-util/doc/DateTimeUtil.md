@@ -1,5 +1,5 @@
 # DateTimeUtil方法介绍
-DateTimeUtil是对时间转换的操作统一封装。所属的包为com.boco.common.util。
+DateTimeUtil是对时间转换的操作统一封装。所属的包为com.power.common.util。
 
 DateTimeUtil也定义一些常用的时间格式表达式，如下：
 

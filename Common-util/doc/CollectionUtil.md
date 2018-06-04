@@ -1,5 +1,5 @@
 # CollectionUtil方法介绍
-CollectionUtil所属的包为com.boco.common.util,CollectionUtil工具包含一些对java 集合对象的判断方法。
+CollectionUtil所属的包为com.power.common.util,CollectionUtil工具包含一些对java 集合对象的判断方法。
 
 ## 1. isEmpty(Collection<T> c)方法
 

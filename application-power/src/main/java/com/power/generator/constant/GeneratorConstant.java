@@ -1,6 +1,6 @@
 package com.power.generator.constant;
 
-import com.boco.common.util.DateTimeUtil;
+import com.power.common.util.DateTimeUtil;
 import com.power.generator.utils.GeneratorProperties;
 
 import java.util.HashMap;

@@ -1,5 +1,5 @@
 # ObjectUtil方法介绍
-ObjectUtil所属的包为com.boco.common.util,ObjectUtil工具包含一些对java对象的判断方法。
+ObjectUtil所属的包为com.power.common.util,ObjectUtil工具包含一些对java对象的判断方法。
 
 ## 1. isEmpty(Object object)方法
 

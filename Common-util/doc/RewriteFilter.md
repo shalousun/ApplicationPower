@@ -26,7 +26,7 @@ public class SpringBootMainApplication {
 ```
  <filter>
     <filter-name>RewriteFilter</filter-name>
-    <filter-class>com.boco.common.filter.RewriteFilter</filter-class>
+    <filter-class>com.power.common.filter.RewriteFilter</filter-class>
     <init-param>
         <param-name>rewriteToUrl</param-name>
         <!--Setting Servers allow to referer,Multiple services are separated by semicolons  -->

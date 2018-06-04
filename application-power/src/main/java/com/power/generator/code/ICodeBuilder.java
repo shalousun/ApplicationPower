@@ -4,6 +4,9 @@ package com.power.generator.code;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.utils.GeneratorProperties;
 
+import java.io.File;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Map;
 
 /**
@@ -24,9 +27,10 @@ public interface ICodeBuilder {
 
     /**
      * 处理个模块的模板，key为路径，value是模板内容
+     *
      * @return
      */
-    Map<String,String> handleTemplates();
+    Map<String, String> handleTemplates();
 
     /**
      * 代码输出的基目录
@@ -41,6 +45,7 @@ public interface ICodeBuilder {
 
     /**
      * src/main
+     *
      * @return
      */
     default String getMainPath() {
@@ -48,6 +53,7 @@ public interface ICodeBuilder {
         String mainPath = basePath + ConstVal.FILE_SEPARATOR + ConstVal.MAIN_PATH;
         return mainPath;
     }
+
 
     /**
      * java src目录
@@ -59,7 +65,6 @@ public interface ICodeBuilder {
         String javaPath = basePath + ConstVal.FILE_SEPARATOR + ConstVal.JAVA_PATH;
         return javaPath;
     }
-
 
 
 }
