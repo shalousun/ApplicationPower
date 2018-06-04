@@ -47,9 +47,15 @@
             <!--<appender-ref ref="Console"/>-->
             <AppenderRef ref="infoLog"/>
         </AsyncLogger>
-        <!--TRACE、DEBUG、INFO、WARN、ERROR、上FATAL-->
-        <Root level="ERROR">
+        <!--global log level-->
+        <!--TRACE、DEBUG、INFO、WARN、ERROR、FATAL-->
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
         </Root>
+        <!--customer log level for this project-->
+        <Logger name="${basePackage}" level="trace" additivity="false">
+            <AppenderRef ref="RollingFile" />
+            <AppenderRef ref="Console" />
+        </Logger>
     </Loggers>
 </Configuration>
