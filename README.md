@@ -203,6 +203,15 @@ application-power整合的springboot打包后的结构参考
 - 更新内容：
 	1. 修改assembly打包的springboot项目的start.sh和start.bat启动脚本,支持动态加载打包后的properties配置文件.
 	2. 增加创建maven项目自动创建dockerfile和docker.sh构建脚本.
+#### 版本号：1.7.2
+- 更新日期：2018-06-06
+- 更新内容：
+	1. 优化使用maven构建下的docker构建脚本docker.sh.
+	2. 将common-util模块的包名变更为com.power.common，完善common-util各工具类的的文档。
+	3. 修改若干模板配置bug.
+	4. 增加生成gradle项目的功能，包括SpringBoot在gradle下docker的容器化配置实现。
+	5. 将common-util、datasource-aspect、mybatis-template发布到maven中央仓库。使用是无需
+	再将这些模块安装到本地在使用
 
 
 
