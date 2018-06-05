@@ -18,11 +18,13 @@ import java.util.Set;
 public class RefererFilter implements Filter {
 
     private static final long serialVersionUID = 1L;
+
+    public static final String IGNORES = "ignores";
     private Set<String> excluded = null;
 
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
-        String excludedString = fConfig.getInitParameter("ignores");
+        String excludedString = fConfig.getInitParameter(IGNORES);
         if (excludedString != null) {
             excluded = Collections.unmodifiableSet(
                     new HashSet<>(Arrays.asList(excludedString.split(";", 0))));
