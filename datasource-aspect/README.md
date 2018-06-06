@@ -3,7 +3,7 @@ datasource-aspect是一个spring web应用中的多数据源切换模块。依�
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>datasource-aspect</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
 </dependency>
 ```
 

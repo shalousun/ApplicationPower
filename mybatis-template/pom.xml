@@ -58,9 +58,9 @@
         </dependency>
         <!--datasource-aspect-->
         <dependency>
-            <groupId>com.power.datasource</groupId>
+            <groupId>com.github.shalousun</groupId>
             <artifactId>datasource-aspect</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.1</version>
         </dependency>
     </dependencies>
     <build>
