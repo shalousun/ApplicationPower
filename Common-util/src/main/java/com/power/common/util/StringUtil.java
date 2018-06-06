@@ -4,9 +4,12 @@ package com.power.common.util;
  * @author sunyu
  */
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -502,5 +505,22 @@ public class StringUtil {
 			return str.split(regex);
 		}
 		return null;
+	}
+
+	/**
+	 * Left pad a long number with zero
+	 * @param seq sequence number
+	 * @param len max length of number
+	 * @return String
+	 */
+	public static String seqNumLeftPadZero(long seq,int len){
+		String b = String.valueOf(seq);
+		StringBuilder builder = new StringBuilder();
+		int rest = len - b.length();
+		for(int i = 0;i<rest;i++){
+			builder.append("0");
+		}
+		builder.append(b);
+		return builder.toString();
 	}
 }

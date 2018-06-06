@@ -357,3 +357,8 @@ String a = "a,b";
 String[] strArray = StringUtil.split(a,",");
 
 ```
+## 17. seqNumLeftPadZero(long seq,int len)方法
+该方法一般用于创建一个流水号，位数不够时自动用0来不为
+```
+StringUtil.seqNumLeftPadZero(1,4);//return "0001"
+```
