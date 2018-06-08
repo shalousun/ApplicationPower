@@ -53,7 +53,7 @@
             <AppenderRef ref="Console"/>
         </Root>
         <!--customer log level for this project-->
-        <Logger name="${basePackage}" level="trace" additivity="false">
+        <Logger name="${basePackage}" level="DEBUG" additivity="false">
             <AppenderRef ref="RollingFile" />
             <AppenderRef ref="Console" />
         </Logger>
