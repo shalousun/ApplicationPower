@@ -3,7 +3,7 @@ MD6Util是MD6验证的实现，MD6安全级别比MD5要高，但是目前使用�
 
 
 ## 1. md6(String content)方法
-该方法表示使用CBC模式来加密字符串
+该方法表示使用md6加密字符串
 
 参数 | 描述
 ---|---
@@ -14,7 +14,6 @@ Usage:
 ```
 String content = "hello";
 String encodeStr = MD6Util.md6(content);
-
 ```
 
 ## 2. equal(String md6Str,String content)方法
