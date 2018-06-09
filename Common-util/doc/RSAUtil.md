@@ -102,6 +102,7 @@ KeyPair kp = RSAUtil.getKeyPair("e:\\RSAKey.txt")
 
 ## 7. getPublicKey(KeyPair keyPair)方法
 该方法用于从秘钥对中获取base64转码后的公钥
+
 参数 | 描述
 ---|---
 keyPair|秘钥对
@@ -114,6 +115,7 @@ RSAUtil.getPublicKey(kp);
 ```
 ## 7. getPrivateKey(KeyPair keyPair)方法
 该方法用于从秘钥对中获取base64转码后的私钥
+
 参数 | 描述
 ---|---
 keyPair|秘钥对
