@@ -5,6 +5,7 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
         中的各种重复工作。<br/>
         技术交流群：170651381<br/>
     **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
+    [github同步地址](https://github.com/shalousun/ApplicationPower)
 ## 创建的项目技术
      ● 核心框架：Spring Boot 1.5.9 或Spring MVC 4.3.6
      ● 数据库连接池：druid-spring-boot-starter 1.1.6或druid 1.1.6
@@ -14,12 +15,10 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
      ● 日志管理：SLF4J和log4j2
 ## 结构说明
    1. api-doc是一个未来将使用原生doc注释来生成markdown api文档的项目，目前不可用
-   2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，在使用application-power前需要将它安装到你的本地。
+   2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，目前已发布到中央仓库。
    3. application-power是整个项目的核心，专门用于生成Spring Boot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
    4. datasource-aspect是spring web应用下多数据源动态切换的通用模块
    5. mybatis-template是用于重写SqlSessionTemplate来支持分布式事务环境下的动态数据源切换
-        将assembly打包的springboot启动脚本jvm参数设置提取到setenv.sh中
-ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
 ## 功能
   1. 根据连接的数据生成dao,model,service,controller,mapper,controllerTest,serviceTest代码
   2. 项目的maven web基础骨架
