@@ -1,6 +1,8 @@
 # FileUtil方法介绍
 FileUtil是一些常见的文件操作统一封装。所属的包为com.power.common.util。
 
+**注意：** 文档中@since xx表示拥有方法的起始版本
+
 ## 1. writeFile(String source, String filePath, boolean append)方法
 该方法用于字符串内容写到本地文件系统中，写文件是可选择是否追加，默认编码为utf-8
 
@@ -111,5 +113,21 @@ Usage:
 
 ```
 FileUtil.nioTransferCopy("/usr/local/hello.txt","/usr/local/hello1.txt");
+
+```
+## 9. toSuffix(String fileName)方法
+@since 0.2
+
+该方法用于获取文件名不带后缀的文件名。
+
+参数 | 描述
+---|---
+fileName| 文件名称
+
+
+Usage:
+
+```
+FileUtil.toSuffix("me.java");//return me
 
 ```

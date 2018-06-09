@@ -52,6 +52,11 @@ public class RSAUtil {
 
     }
 
+    /**
+     * map中的公钥和私钥都经过base64编码
+     * @param keySize size of key
+     * @return map
+     */
     public static Map<String, String> createKeys(int keySize) {
         try {
             KeyPair keyPair = RSAUtil.generateKeyPair(keySize);
@@ -67,6 +72,26 @@ public class RSAUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 根据秘钥对KeyPair获取公钥
+     * @param keyPair KeyPair
+     * @return String
+     */
+    public static String getPublicKey(KeyPair keyPair){
+        Key publicKey = keyPair.getPublic();
+        return Base64.encodeBase64URLSafeString(publicKey.getEncoded());
+    }
+
+    /**
+     * 根据秘钥对KeyPair获取私钥
+     * @param keyPair KeyPair
+     * @return String
+     */
+    public static String getPrivateKey(KeyPair keyPair){
+        Key privateKey = keyPair.getPrivate();
+        return Base64.encodeBase64URLSafeString(privateKey.getEncoded());
     }
 
     /**
@@ -115,7 +140,7 @@ public class RSAUtil {
 
 
     /**
-     * 根据默认公匙加密字符串
+     * 根据公匙加密字符串
      *
      * @param plaintext 待加密的字符串
      * @param publicKey 字符串公钥
@@ -179,7 +204,7 @@ public class RSAUtil {
             return Base64.encodeBase64URLSafeString(rsaSplitCodec(cipher, Cipher.ENCRYPT_MODE, plaintext.getBytes(CHARSET),
                     publicKey.getModulus().bitLength()));
         } catch (Exception e) {
-            throw new RuntimeException("加密字符串[" + plaintext + "]时遇到异常", e);
+            throw new RuntimeException("An exception occurred while encrypting the string [" + plaintext + "]", e);
         }
     }
 
@@ -198,7 +223,7 @@ public class RSAUtil {
             return new String(rsaSplitCodec(cipher, Cipher.DECRYPT_MODE, Base64.decodeBase64(plaintext),
                     privateKey.getModulus().bitLength()), CHARSET);
         } catch (Exception e) {
-            throw new RuntimeException("解密字符串[" + plaintext + "]时遇到异常", e);
+            throw new RuntimeException("An exception occurred while decrypting the string [" + plaintext + "]", e);
         }
     }
 
@@ -225,7 +250,7 @@ public class RSAUtil {
                 offSet = i * maxBlock;
             }
         } catch (Exception e) {
-            throw new RuntimeException("加解密阀值为[" + maxBlock + "]的数据时发生异常", e);
+            throw new RuntimeException("An exception occurred when the encryption and decryption threshold was [" + maxBlock + "]", e);
         }
         byte[] resultDatas = out.toByteArray();
         try {

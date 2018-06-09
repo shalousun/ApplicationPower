@@ -126,7 +126,7 @@ public class RandomUtil {
                 dataType = "BigDecimal";
                 break;
             case "Time":  //91
-                dataType = DateTimeUtil.dateToStr(new Date());
+                dataType = DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
                 break;
             case "Timestamp":  //91
                 dataType = DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
