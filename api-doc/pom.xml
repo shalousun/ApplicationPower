@@ -50,13 +50,11 @@
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>common-util</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
         </dependency>
     </dependencies>
     <build>
         <plugins>
-
-
             <!--指定maven的编译级别-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

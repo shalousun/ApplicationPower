@@ -3,6 +3,7 @@ package com.power.generator.constant;
 import com.power.common.util.DateTimeUtil;
 import com.power.generator.utils.GeneratorProperties;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class GeneratorConstant {
     static {
         COMMON_VARIABLE.put(GeneratorConstant.BASE_PACKAGE, GeneratorProperties.basePackage());
         COMMON_VARIABLE.put(GeneratorConstant.AUTHOR, System.getProperty("user.name"));
-        COMMON_VARIABLE.put(GeneratorConstant.CREATE_TIME, DateTimeUtil.getTime());
+        COMMON_VARIABLE.put(GeneratorConstant.CREATE_TIME, DateTimeUtil.dateToStr(new Date(),"yyyy/MM/dd"));
         COMMON_VARIABLE.put(GeneratorConstant.APPLICATION_NAME, GeneratorProperties.applicationName());
     }
 
