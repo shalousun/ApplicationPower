@@ -1,5 +1,7 @@
 # RSAUtil方法介绍
-RSAUtil是对常用的RSA加解密的封装。所属的包为com.power.common.util.
+RSAUtil是对常用的RSA加解密的封装。所属的包为com.power.common.util. RSAUtil除了提供生成KeyPair和常用加解密方法外，
+还提供了将KeyPair保存到秘钥文件和从秘钥文件生成KeyPair的方法，因此可以看出RSAUtil是提供了一套通用方法，
+方便使用者在项目中根据实际秘钥保存方式，在RSAUtil的基础上进行简单的二次封装。
 
 **注意：** 该工具产生的字符串秘钥都是经过base64编码的。
 
@@ -124,5 +126,5 @@ Usage:
 
 ```
 KeyPair kp = RSAUtil.getKeyPair("e:\\RSAKey.txt");
-String privateKey = RSAUtil.getPrivateKey(kp);////return base64转码后的字符串私钥
+String privateKey = RSAUtil.getPrivateKey(kp);//return base64转码后的字符串私钥
 ```
