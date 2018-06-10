@@ -16,8 +16,8 @@ ValidateUtil.isEmail("123456");//return false
 Usage:
 
 ```
-ValidateUtil.isEmail("123456@qq.com");//return false
-ValidateUtil.isEmail("123456");//return true
+ValidateUtil.isNotEmail("123456@qq.com");//return false
+ValidateUtil.isNotEmail("123456");//return true
 ```
 ## 3. isChines(String str)方法
 该方法用于验证字符串是否是中文
@@ -33,7 +33,7 @@ ValidateUtil.isChines("hello");//return false
 Usage:
 
 ```
-ValidateUtil.isChines("hello");//return true
+ValidateUtil.isNotChinese("hello");//return true
 ```
 ## 5. isNumberLetter(String str)方法
 验证字符串是否是字母或者数字或者数字+字母
@@ -52,7 +52,7 @@ Usage:
 
 ```
 ValidateUtil.isNumber("123");//return true
-ValidateUtile.isNumber("123a");//return false
+ValidateUtil.isNumber("123a");//return false
 ```
 ## 7. isNotNumber(String str)方法
 验证字符串是否不是数字
@@ -225,6 +225,7 @@ ValidateUtil.isIP("ABCD:EF01:2345:6789:ABCD:EF01:2345:6789");//return true
 ```
 ## 24. isNotIP(String ip)方法
 该方法用于检验字符串是否不是ip,检验结果和isIp方法相反。
+
 Usage:
 ```
 ValidateUtil.isNotIP("aa");//return true
@@ -332,15 +333,28 @@ ValidateUtil.isPositiveFloat("-1.0");//return false
 ## 36. isPositiveInteger(String number)
 该方法用于判断输入的字符是否是正整数。
 
+Usage:
 ```
 ValidateUtil.isPositiveInteger("1");//return true
 ValidateUtil.isPositiveInteger("-1");//return false
 ```
 ## 37. isContainsForbiddenCharacter(String str)
 该方法用于判断输入的字符是否包含非法的字符，通常用于判断xss和sql注入字符。
+
+Usage:
 ```
 ValidateUtil.isContainsForbiddenCharacter("location.href");//return true
 ValidateUtil.isContainsForbiddenCharacter("delete a");//return true
+```
+## 38. isArmyIdCard(String number)
+@since 0.3
+
+该方法用于判断中国的军官证
+
+Usage:
+```
+ValidateUtil.isArmyIdCard("北字第7682126号");//return true
+ValidateUtil.isArmyIdCard("美字第7682126号");//return false
 ```
 
 # validate内置的常用的正则表达式
@@ -396,8 +410,7 @@ public static final String INT_OR_FLOAT_PATTERN = "^\\d+\\.\\d+|\\d+$";
 public static final String FLOAT_PATTERN = "^(-?\\d+)(\\.\\d+)?$";
 //正整数
 public static final String POSITIVE_INTEGER = "[1-9]+\\d{0,10}";
-//军官证
-public static final String CERTIFICATE_CARD = "南字第(\\d{8})号|北字第(\\d{8})号|沈字第(\\d{8})号|兰字第(\\d{8})号|成字第(\\d{8})号|济字第(\\d{8})号|广字第(\\d{8})号|海字第(\\d{8})号|空字第(\\d{8})号|参字第(\\d{8})号|政字第(\\d{8})号|后字第(\\d{8})号|装字第(\\d{8})号";
-
+//军官证@since 0.3
+public static final String ARMY_ID_CARD = "南字第(\\d{6,8})号|北字第(\\d{6,8})号|沈字第(\\d{6,8})号|兰字第(\\d{6,8})号|成字第(\\d{6,8})号|济字第(\\d{6,8})号|广字第(\\d{6,8})号|海字第(\\d{6,8})号|空字第(\\d{6,8})号|参字第(\\d{6,8})号|政字第(\\d{6,8})号|后字第(\\d{6,8})号|装字第(\\d{6,8})号";
 
 ```

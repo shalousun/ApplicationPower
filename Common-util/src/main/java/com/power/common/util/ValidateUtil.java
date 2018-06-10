@@ -37,7 +37,7 @@ public class ValidateUtil {
     public static final String INT_OR_FLOAT_PATTERN = "^\\d+\\.\\d+|\\d+$";
     public static final String FLOAT_PATTERN = "^(-?\\d+)(\\.\\d+)?$";
     public static final String POSITIVE_INTEGER = "[1-9]+\\d{0,10}";
-    public static final String CERTIFICATE_CARD = "南字第(\\d{8})号|北字第(\\d{8})号|沈字第(\\d{8})号|兰字第(\\d{8})号|成字第(\\d{8})号|济字第(\\d{8})号|广字第(\\d{8})号|海字第(\\d{8})号|空字第(\\d{8})号|参字第(\\d{8})号|政字第(\\d{8})号|后字第(\\d{8})号|装字第(\\d{8})号";
+    public static final String ARMY_ID_CARD = "南字第(\\d{6,8})号|北字第(\\d{6,8})号|沈字第(\\d{6,8})号|兰字第(\\d{6,8})号|成字第(\\d{6,8})号|济字第(\\d{6,8})号|广字第(\\d{6,8})号|海字第(\\d{6,8})号|空字第(\\d{6,8})号|参字第(\\d{6,8})号|政字第(\\d{6,8})号|后字第(\\d{6,8})号|装字第(\\d{6,8})号";
 
 
     public static final String[] forbidden = {"\\bselect\\b", "\\bor\\b", "\\bdelete\\b", "\\bjoin\\b","\\btable\\b"
@@ -464,16 +464,15 @@ public class ValidateUtil {
     public static boolean isPositiveInteger(String number){
     	return validate(number,POSITIVE_INTEGER);
     }
-    
+
+
     /**
-     * 
-     * issCertificate:(判断是否军官证，是返回true)
-     * @author yolanda0608
+     * Verify whether it is Army Identity Card
      * @param number String number
      * @return boolean
      */
-    public static boolean isCertificate(String number){
-    	return validate(number,CERTIFICATE_CARD);
+    public static boolean isArmyIdCard(String number){
+    	return validate(number,ARMY_ID_CARD);
     }
 
     /**
