@@ -111,9 +111,9 @@ Usage:
 
 ```
 KeyPair kp = RSAUtil.getKeyPair("e:\\RSAKey.txt");
-RSAUtil.getPublicKey(kp);
+String publicKey = RSAUtil.getPublicKey(kp);//return base64转码后的字符串公钥
 ```
-## 7. getPrivateKey(KeyPair keyPair)方法
+## 8. getPrivateKey(KeyPair keyPair)方法
 该方法用于从秘钥对中获取base64转码后的私钥
 
 参数 | 描述
@@ -124,5 +124,5 @@ Usage:
 
 ```
 KeyPair kp = RSAUtil.getKeyPair("e:\\RSAKey.txt");
-RSAUtil.getPrivateKey(kp);
+String privateKey = RSAUtil.getPrivateKey(kp);////return base64转码后的字符串私钥
 ```
