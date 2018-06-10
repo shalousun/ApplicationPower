@@ -468,11 +468,20 @@ public class ValidateUtil {
 
     /**
      * Verify whether it is Army Identity Card
-     * @param number String number
+     * @param armyIdCard Army Identity Card
      * @return boolean
      */
-    public static boolean isArmyIdCard(String number){
-    	return validate(number,ARMY_ID_CARD);
+    public static boolean isArmyIdCard(String armyIdCard){
+    	return validate(armyIdCard,ARMY_ID_CARD);
+    }
+
+    /**
+     * Verify whether it is not Army Identity Card
+     * @param armyIdCard Army Identity Card
+     * @return boolean
+     */
+    public static boolean isNotArmyIdCard(String armyIdCard){
+        return !validate(armyIdCard,ARMY_ID_CARD);
     }
 
     /**

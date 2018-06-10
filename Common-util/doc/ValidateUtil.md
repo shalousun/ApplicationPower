@@ -321,7 +321,7 @@ Usage:
 ValidateUtil.isNotNegativeFloat("1.0");//return true
 ValidateUtil.isNotNegativeFloat("-1.1");//return false
 ```
-## 35. isPositiveFloat(String number)
+## 35. isPositiveFloat(String number)方法
 该方法用于验证字符串是否是正浮点数。
 
 Usage:
@@ -330,7 +330,7 @@ Usage:
 ValidateUtil.isPositiveFloat("1.0");//return false
 ValidateUtil.isPositiveFloat("-1.0");//return false
 ```
-## 36. isPositiveInteger(String number)
+## 36. isPositiveInteger(String number)方法
 该方法用于判断输入的字符是否是正整数。
 
 Usage:
@@ -338,7 +338,7 @@ Usage:
 ValidateUtil.isPositiveInteger("1");//return true
 ValidateUtil.isPositiveInteger("-1");//return false
 ```
-## 37. isContainsForbiddenCharacter(String str)
+## 37. isContainsForbiddenCharacter(String str)方法
 该方法用于判断输入的字符是否包含非法的字符，通常用于判断xss和sql注入字符。
 
 Usage:
@@ -346,7 +346,7 @@ Usage:
 ValidateUtil.isContainsForbiddenCharacter("location.href");//return true
 ValidateUtil.isContainsForbiddenCharacter("delete a");//return true
 ```
-## 38. isArmyIdCard(String number)
+## 38. isArmyIdCard(String armyIdCard)方法
 @since 0.3
 
 该方法用于判断中国的军官证
@@ -356,7 +356,16 @@ Usage:
 ValidateUtil.isArmyIdCard("北字第7682126号");//return true
 ValidateUtil.isArmyIdCard("美字第7682126号");//return false
 ```
+## 39. isNotArmyIdCard(String armyIdCard)方法
+@since 0.3
 
+该方法用于判断非中国的军官证
+
+Usage:
+```
+ValidateUtil.isNotArmyIdCard("北字第7682126号");//return false
+ValidateUtil.isNotArmyIdCard("美字第7682126号");//return true
+```
 # validate内置的常用的正则表达式
 ```
 //邮箱
