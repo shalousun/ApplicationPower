@@ -1,8 +1,10 @@
 package com.power.doc.builer;
 
+import com.power.common.util.JsonFormatUtil;
 import com.power.common.util.StringUtil;
 import com.power.doc.model.ApiDoc;
 import com.power.doc.model.ApiMethodDoc;
+import com.power.doc.utils.DocUtil;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.*;
 
@@ -199,7 +201,9 @@ public class SourceBuilder {
                 List<JavaField> fields = cls.getFields();
                 for (JavaField field : fields) {
                     if (!"serialVersionUID".equals(field.getName())) {
-                        data0.append("    \"").append(field.getName()).append("\":").append(" ").append(",\n");
+                        String typeSimpleName = field.getType().getSimpleName();
+                        System.out.println("typeName:"+typeSimpleName);
+                        data0.append("    \"").append(field.getName()).append("\":").append(DocUtil.jsonValueByType(typeSimpleName)).append(",\n");
                         params0.append(field.getName()).append("|")
                                 .append(field.getType().getSimpleName().toLowerCase()).append("|")
                                 .append(field.getComment()).append("\n");
@@ -254,8 +258,13 @@ public class SourceBuilder {
                 params.append("pages |integer | 成功或者失败信息\n");
                 params.append("list| array | 当前页的数据\n");
                 params.append(params0.toString());
+            }else {
+                data.append(data0.toString());
+                params.append("参数名称 | 参数类型|描述\n");
+                params.append("---|---|---\n");
+                params.append(params0.toString());
             }
-            apiMethodDoc.setResponseUsage(data.toString());
+            apiMethodDoc.setResponseUsage(JsonFormatUtil.formatJson(data.toString()));
             apiMethodDoc.setResponseParams(params.toString());
         }
         return null;
