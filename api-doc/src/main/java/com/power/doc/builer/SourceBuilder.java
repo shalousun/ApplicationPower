@@ -173,9 +173,10 @@ public class SourceBuilder {
 
     public String buildMethodReturn(JavaMethod method, ApiMethodDoc apiMethodDoc) {
         String returnType = method.getReturnType().getGenericCanonicalName();
-        System.out.println(returnType);
+        System.out.println("returnType:"+returnType);
         String typeName = method.getReturnType().getFullyQualifiedName();
-        System.out.println(buildJson(typeName));
+        System.out.println("simpleType:"+typeName);
+        System.out.println(JsonFormatUtil.formatJson(buildJson(typeName,returnType)));
         if (StringUtil.isNotEmpty(returnType)) {
             String gicName = null;
             //反射存在
@@ -198,7 +199,7 @@ public class SourceBuilder {
                                 .append(field.getComment());
                     }
                 }
-                data0.deleteCharAt(data0.lastIndexOf(","));
+//                data0.deleteCharAt(data0.lastIndexOf(","));
                 data0.append("  }");
 
             } else if (!PAGE_INFO.equals(typeName)&&!COMMON_RESULT.equals(typeName)) {
@@ -269,17 +270,19 @@ public class SourceBuilder {
                 params.append(params0.toString());
             }
             System.out.println(data.toString());
-            apiMethodDoc.setResponseUsage(JsonFormatUtil.formatJson(data.toString()));
+            apiMethodDoc.setResponseUsage(JsonFormatUtil.formatJson(buildJson(typeName,returnType)));
             apiMethodDoc.setResponseParams(params.toString());
         }
         return null;
     }
 
-    private String buildJson(String typeName){
+    private String buildJson(String typeName,String genericCanonicalName){
         StringBuilder data0 = new StringBuilder();
         JavaClass cls = builder.getClassByName(typeName);
         data0.append("{");
+        String[] globGicName = getSimpleGicName(genericCanonicalName);
         List<JavaField> fields = cls.getFields();
+        int i= 0;
         for (JavaField field : fields) {
             if (!"serialVersionUID".equals(field.getName())) {
                 String typeSimpleName = field.getType().getSimpleName();
@@ -290,22 +293,41 @@ public class SourceBuilder {
                 }else{
                     if("java.util.List".equals(subTypeName)){
                         String gNameTemp = field.getType().getGenericCanonicalName();
-                        String gicName = gNameTemp.substring(gNameTemp.indexOf("<") + 1, gNameTemp.indexOf(">"));
-                        data0.append("[").append(buildJson(gicName)).append("]").append(",");
+                        String gicName = getSimpleGicName(gNameTemp)[0];
+                        data0.append("[").append(buildJson(gicName,gNameTemp)).append("]").append(",");
                     }else if("java.util.Map".equals(subTypeName)){
                         String gNameTemp = field.getType().getGenericCanonicalName();
                         String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.indexOf(">"));
-                        data0.append("{").append("\"mapKey\":").append(buildJson(gicName)).append("},");
-                    }else {
-                        data0.append(buildJson(subTypeName)).append(",");
+                        data0.append("{").append("\"mapKey\":").append(buildJson(gicName,gNameTemp)).append("},");
+                    }else if(subTypeName.length()==1){
+                        String gicName = globGicName[i];
+                        data0.append(buildJson(gicName,genericCanonicalName)).append(",");
+                        i++;
+                    }else{
+                        data0.append(buildJson(subTypeName,genericCanonicalName)).append(",");
                     }
-
                 }
             }
         }
-        data0.deleteCharAt(data0.lastIndexOf(","));
-        data0.append("}");
-        return data0.toString();
+
+        StringBuilder data = new StringBuilder();
+        if("java.util.List".equals(typeName)){
+            data.append("[");
+            String json = buildJson(globGicName[0],globGicName[0]);
+            data.append(json).append("]");
+            return data.toString();
+        }else if("java.util.Map".equals(typeName)){
+            System.out.println("inco");
+            String gNameTemp = genericCanonicalName;
+            String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.indexOf(">"));
+            data.append("{").append("\"mapKey\":").append(buildJson(gicName,gNameTemp)).append("}");
+            return data.toString();
+        }else{
+            data0.deleteCharAt(data0.lastIndexOf(","));
+            data0.append("}");
+            System.out.println("inco");
+            return data0.toString();
+        }
     }
     private String getCommentTag(final JavaMethod javaMethod, final String tagName,final String className) {
         List<DocletTag> paramTags = javaMethod.getTagsByName(tagName);
@@ -363,5 +385,15 @@ public class SourceBuilder {
         }
     }
 
+    private String[] getSimpleGicName(String returnType){
+        System.out.println("student:"+returnType);
+        if(returnType.contains("<")){
+            String type = returnType.substring(returnType.indexOf("<") + 1, returnType.indexOf(">"));
+            return type.split(",");
+        }else{
+            return returnType.split(" ");
+        }
+
+    }
 
 }
