@@ -182,14 +182,15 @@ public class SourceBuilder {
             if (returnType.contains("<")) {
                 gicName = returnType.substring(returnType.indexOf("<") + 1, returnType.indexOf(">"));
                 JavaClass cls = builder.getClassByName(gicName);
-                data0.append("{\n");
+                data0.append("{");
                 List<JavaField> fields = cls.getFields();
                 for (JavaField field : fields) {
                     if (!"serialVersionUID".equals(field.getName())) {
-                        data0.append("    \"").append(field.getName()).append("\":").append(" ").append(",\n");
+                        String typeSimpleName = field.getType().getSimpleName();
+                        data0.append("\"").append(field.getName()).append("\":").append(DocUtil.jsonValueByType(typeSimpleName)).append(",");
                         params0.append(field.getName()).append("|")
                                 .append(field.getType().getSimpleName().toLowerCase()).append("|")
-                                .append(field.getComment()).append("\n");
+                                .append(field.getComment());
                     }
                 }
                 data0.deleteCharAt(data0.lastIndexOf(","));
@@ -197,26 +198,26 @@ public class SourceBuilder {
 
             } else if (!PAGE_INFO.equals(typeName)&&!COMMON_RESULT.equals(typeName)) {
                 JavaClass cls = builder.getClassByName(typeName);
-                data0.append("{\n");
+                data0.append("{");
                 List<JavaField> fields = cls.getFields();
                 for (JavaField field : fields) {
                     if (!"serialVersionUID".equals(field.getName())) {
                         String typeSimpleName = field.getType().getSimpleName();
                         System.out.println("typeName:"+typeSimpleName);
-                        data0.append("    \"").append(field.getName()).append("\":").append(DocUtil.jsonValueByType(typeSimpleName)).append(",\n");
+                        data0.append("\"").append(field.getName()).append("\":").append(DocUtil.jsonValueByType(typeSimpleName)).append(",");
                         params0.append(field.getName()).append("|")
                                 .append(field.getType().getSimpleName().toLowerCase()).append("|")
-                                .append(field.getComment()).append("\n");
+                                .append(field.getComment()).append("");
                     }
                 }
                 data0.deleteCharAt(data0.lastIndexOf(","));
-                data0.append("  }");
+                data0.append("}");
             }
             StringBuilder data = new StringBuilder();
             StringBuilder params = new StringBuilder();
             if ("java.util.List".equals(typeName)) {
                 data.append("[");
-                data.append(data0.toString()).append("]\n");
+                data.append(data0.toString()).append("]");
                 params.append("参数名称 | 参数类型|描述\n");
                 params.append("---|---|---\n");
                 params.append(params0.toString());
@@ -264,6 +265,7 @@ public class SourceBuilder {
                 params.append("---|---|---\n");
                 params.append(params0.toString());
             }
+            System.out.println(data.toString());
             apiMethodDoc.setResponseUsage(JsonFormatUtil.formatJson(data.toString()));
             apiMethodDoc.setResponseParams(params.toString());
         }
