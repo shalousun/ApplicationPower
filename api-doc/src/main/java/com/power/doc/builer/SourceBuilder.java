@@ -173,13 +173,18 @@ public class SourceBuilder {
 
     public String buildMethodReturn(JavaMethod method, ApiMethodDoc apiMethodDoc) {
         String returnType = method.getReturnType().getGenericCanonicalName();
+        System.out.println(returnType);
         String typeName = method.getReturnType().getFullyQualifiedName();
+        System.out.println(buildJson(typeName));
         if (StringUtil.isNotEmpty(returnType)) {
             String gicName = null;
             //反射存在
             StringBuilder params0 = new StringBuilder();
             StringBuilder data0 = new StringBuilder();
-            if (returnType.contains("<")) {
+            if("java.util.Map".equals(typeName)){
+                System.out.println("map，无法处理");
+            }else if (returnType.contains("<")) {
+                System.out.println("泛型");
                 gicName = returnType.substring(returnType.indexOf("<") + 1, returnType.indexOf(">"));
                 JavaClass cls = builder.getClassByName(gicName);
                 data0.append("{");
@@ -221,9 +226,7 @@ public class SourceBuilder {
                 params.append("参数名称 | 参数类型|描述\n");
                 params.append("---|---|---\n");
                 params.append(params0.toString());
-            } else if ("java.util.Map".equals(typeName)) {
-
-            } else if (COMMON_RESULT.equals(typeName)) {
+            }  else if (COMMON_RESULT.equals(typeName)) {
                 data.append("{\n");
                 data.append("  \"code\": 0,\n");
                 data.append("  \"message\": \"操作成功\",\n");
@@ -272,6 +275,38 @@ public class SourceBuilder {
         return null;
     }
 
+    private String buildJson(String typeName){
+        StringBuilder data0 = new StringBuilder();
+        JavaClass cls = builder.getClassByName(typeName);
+        data0.append("{");
+        List<JavaField> fields = cls.getFields();
+        for (JavaField field : fields) {
+            if (!"serialVersionUID".equals(field.getName())) {
+                String typeSimpleName = field.getType().getSimpleName();
+                String subTypeName = field.getType().getFullyQualifiedName();
+                data0.append("\"").append(field.getName()).append("\":");
+                if(isPrimitive(typeSimpleName)){
+                    data0.append(DocUtil.jsonValueByType(typeSimpleName)).append(",");
+                }else{
+                    if("java.util.List".equals(subTypeName)){
+                        String gNameTemp = field.getType().getGenericCanonicalName();
+                        String gicName = gNameTemp.substring(gNameTemp.indexOf("<") + 1, gNameTemp.indexOf(">"));
+                        data0.append("[").append(buildJson(gicName)).append("]").append(",");
+                    }else if("java.util.Map".equals(subTypeName)){
+                        String gNameTemp = field.getType().getGenericCanonicalName();
+                        String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.indexOf(">"));
+                        data0.append("{").append("\"mapKey\":").append(buildJson(gicName)).append("},");
+                    }else {
+                        data0.append(buildJson(subTypeName)).append(",");
+                    }
+
+                }
+            }
+        }
+        data0.deleteCharAt(data0.lastIndexOf(","));
+        data0.append("}");
+        return data0.toString();
+    }
     private String getCommentTag(final JavaMethod javaMethod, final String tagName,final String className) {
         List<DocletTag> paramTags = javaMethod.getTagsByName(tagName);
         Map<String, String> paramTagMap = new HashMap<>();
@@ -317,6 +352,16 @@ public class SourceBuilder {
         return null;
     }
 
+
+    public boolean isPrimitive(String type){
+        if("Integer".equals(type)||"int".equals(type)||"Long".equals(type)||"long".equals(type)
+                ||"Double".equals(type)||"double".equals(type)|| "Float".equals(type)||"float".equals(type)||
+                "BigDecimal".equals(type)||"String".equals(type)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }
