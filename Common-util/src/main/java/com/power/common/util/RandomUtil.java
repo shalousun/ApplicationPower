@@ -113,13 +113,25 @@ public class RandomUtil {
             case "Integer":    //4
                 dataType = String.valueOf(randomInt(1000));
                 break;
+            case "int" :
+                dataType = String.valueOf(randomInt(1000));
+                break;
             case "Long": //-5
+                dataType = String.valueOf(randomInt(1000));
+                break;
+            case "long":
                 dataType = String.valueOf(randomInt(1000));
                 break;
             case "Double": //8
                 dataType = String.valueOf(randomDouble());
                 break;
+            case "double":
+                dataType = String.valueOf(randomDouble());
+                break;
             case "Float": //6
+                dataType = String.valueOf(randomDouble());
+                break;
+            case "float":
                 dataType = String.valueOf(randomDouble());
                 break;
             case "BigDecimal":    //3
