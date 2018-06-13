@@ -12,14 +12,15 @@ public class DocUtil {
 
     /**
      * 随机生成json值
-     * @param type
+     * @param type0
      * @return
      */
-    public static String jsonValueByType(String type){
+    public static String jsonValueByType(String type0){
+        String type = type0.contains("java.lang")?type0.substring(type0.lastIndexOf(".")+1,type0.length()):type0;
         String value = RandomUtil.randomValueByType(type);
         if("Integer".equals(type)||"int".equals(type)||"Long".equals(type)||"long".equals(type)
                 ||"Double".equals(type)||"double".equals(type)|| "Float".equals(type)||"float".equals(type)||
-                "BigDecimal".equals(type)){
+                "BigDecimal".equals(type)||"boolean".equals(type)||"Boolean".equals(type)){
             return value;
         }else{
             StringBuilder builder = new StringBuilder();

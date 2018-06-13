@@ -1,5 +1,8 @@
 package com.power.doc.controller;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Description:
  * 学生信息
@@ -11,39 +14,78 @@ public class Student {
     /**
      * 姓名
      */
-    private String name;
+    private String stuName;
 
     /**
      * 年龄
      */
-    private int age;
+    private int stuAge;
 
     /**
      * 地址
      */
-    private String address;
+    private String stuAddress;
 
-    public String getName() {
-        return name;
+    /**
+     * 用户对象
+     */
+    private User user;
+
+    /**
+     *
+     */
+    private Map<String,User> userMap;
+
+    /**
+     * 用户对象2
+     */
+    private User user1;
+
+    public String getStuName() {
+        return stuName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStuName(String stuName) {
+        this.stuName = stuName;
     }
 
-    public int getAge() {
-        return age;
+    public int getStuAge() {
+        return stuAge;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setStuAge(int stuAge) {
+        this.stuAge = stuAge;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStuAddress() {
+        return stuAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStuAddress(String stuAddress) {
+        this.stuAddress = stuAddress;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Map<String, User> getUserMap() {
+        return userMap;
+    }
+
+    public void setUserMap(Map<String, User> userMap) {
+        this.userMap = userMap;
+    }
+
+    public User getUser1() {
+        return user1;
+    }
+
+    public void setUser1(User user1) {
+        this.user1 = user1;
     }
 }

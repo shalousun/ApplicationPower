@@ -105,3 +105,35 @@ api-doc 生成的json:
 	}
 }
 ```
+
+# Map<M,N<P,k>>复杂结构
+
+```
+{
+	"mapKey":{
+		"data":{
+			"userName":"tumrit",
+			"userAddress":"v8fvdi",
+			"userAge":465
+		},
+		"data1":{
+			"userName":"f7wbwk",
+			"userAddress":"brdh8j",
+			"userAge":345
+		},
+		"age":194
+	}
+}
+```
+# Map<String,T<List<M>,N>超复杂结构
+
+```
+/**
+ * Map<String,T<List<M>,N>超复杂结构
+ * @return
+ */
+@GetMapping(value = "/map/Primitive")
+public Map<String,Teacher<List<User>,User>> testMap() {
+    return null;
+}
+```

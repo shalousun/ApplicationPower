@@ -7,7 +7,6 @@ import com.power.doc.model.ApiMethodDoc;
 import com.power.doc.utils.DocUtil;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.*;
-import com.thoughtworks.qdox.model.impl.DefaultJavaParameter;
 
 import java.io.File;
 import java.util.*;
@@ -148,7 +147,7 @@ public class SourceBuilder {
             for (JavaAnnotation annotation : annotations) {
                 String annotationName = annotation.getType().getName();
                 if (REQUEST_MAPPING.equals(annotationName)) {
-                    if(null == annotation.getNamedParameter("value")){
+                    if (null == annotation.getNamedParameter("value")) {
                         throw new NullPointerException("Unable to find RequestMapping value for  method " + method.getName() + " from " + cls.getName());
                     }
                     url = annotation.getNamedParameter("value").toString();
@@ -159,14 +158,14 @@ public class SourceBuilder {
                     }
                     methodCounter++;
                 } else if (GET_MAPPING.equals(annotationName)) {
-                    if(null == annotation.getNamedParameter("value")){
+                    if (null == annotation.getNamedParameter("value")) {
                         throw new NullPointerException("Unable to find GetMapping value for  method " + method.getName() + " from " + cls.getName());
                     }
                     url = annotation.getNamedParameter("value").toString();
                     methodType = "GET";
                     methodCounter++;
                 } else if (POST_MAPPING.equals(annotationName)) {
-                    if(null == annotation.getNamedParameter("value")){
+                    if (null == annotation.getNamedParameter("value")) {
                         throw new NullPointerException("Unable to find PostMapping value for  method " + method.getName() + " from " + cls.getName());
                     }
                     url = annotation.getNamedParameter("value").toString();
@@ -180,8 +179,9 @@ public class SourceBuilder {
                 apiMethodDoc.setUrl((baseUrl + "/" + url).replace("//", "/"));
                 String comment = getCommentTag(method, "param", cls.getName());
                 apiMethodDoc.setRequestParams(comment);
-                String requestJson = buildReqJson(method,apiMethodDoc);
-                System.out.println("requestJson:"+requestJson);
+                String requestJson = buildReqJson(method);
+                apiMethodDoc.setRequestUsage(JsonFormatUtil.formatJson(requestJson));
+                System.out.println("requestJson:" + requestJson);
                 buildMethodReturn(method, apiMethodDoc);
                 methodDocList.add(apiMethodDoc);
             }
@@ -195,7 +195,7 @@ public class SourceBuilder {
         System.out.println("returnType:" + returnType);
         String typeName = method.getReturnType().getFullyQualifiedName();
         System.out.println("simpleType:" + typeName);
-        System.out.println("respJson:"+JsonFormatUtil.formatJson(buildJson(typeName, returnType)));
+        System.out.println("respJson:" + JsonFormatUtil.formatJson(buildJson(typeName, returnType)));
         if (StringUtil.isNotEmpty(returnType)) {
             String gicName = null;
             //反射存在
@@ -296,12 +296,13 @@ public class SourceBuilder {
     }
 
 
-
     private String buildJson(String typeName, String genericCanonicalName) {
         StringBuilder data0 = new StringBuilder();
         JavaClass cls = builder.getClassByName(typeName);
         data0.append("{");
         String[] globGicName = getSimpleGicName(genericCanonicalName);
+
+
         List<JavaField> fields = cls.getFields();
         int i = 0;
         for (JavaField field : fields) {
@@ -322,18 +323,23 @@ public class SourceBuilder {
                         String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.indexOf(">"));
                         data0.append("{").append("\"mapKey\":").append(buildJson(gicName, gNameTemp)).append("},");
                     } else if (subTypeName.length() == 1) {
-                        if(!typeName.equals(genericCanonicalName)){
+                        if (!typeName.equals(genericCanonicalName)) {
                             String gicName = globGicName[i];
-                            data0.append(buildJson(gicName, genericCanonicalName)).append(",");
-                        }else{
+                            if(gicName.contains("<")){
+                                String simple = getSimpleName(gicName);
+                                data0.append(buildJson(simple,gicName)).append(",");
+                            }else{
+                                data0.append(buildJson(gicName, genericCanonicalName)).append(",");
+                            }
+                        } else {
                             data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                         }
                         i++;
                     } else if ("java.lang.Object".equals(subTypeName)) {
                         String gicName = globGicName[i];
-                        if(!typeName.equals(genericCanonicalName)){
+                        if (!typeName.equals(genericCanonicalName)) {
                             data0.append(buildJson(gicName, genericCanonicalName)).append(",");
-                        }else{
+                        } else {
                             data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                         }
                     } else {
@@ -347,13 +353,17 @@ public class SourceBuilder {
         if ("java.util.List".equals(typeName)) {
             data.append("[");
             String gName = globGicName[0];
-            System.out.println("gName:"+gName);
-            if("java.lang.Object".equals(globGicName[0])){
+            System.out.println("gName:" + gName);
+            if ("java.lang.Object".equals(gName)) {
                 data.append("{\"waring\":\"You may use java.util.Object instead of display generics in the List\"}");
-            }else if(isPrimitive(globGicName[0])){
-                data.append(DocUtil.jsonValueByType(globGicName[0])).append(",");
-                data.append(DocUtil.jsonValueByType(globGicName[0]));
-            } else{
+            } else if (isPrimitive(gName)) {
+                data.append(DocUtil.jsonValueByType(gName)).append(",");
+                data.append(DocUtil.jsonValueByType(gName));
+            } else if(gName.contains("<")){
+                String simple = getSimpleName(gName);
+                String json = buildJson(simple, gName);
+                data.append(json);
+            }else {
                 String json = buildJson(globGicName[0], globGicName[0]);
                 data.append(json);
             }
@@ -361,22 +371,26 @@ public class SourceBuilder {
             return data.toString();
         } else if ("java.util.Map".equals(typeName)) {
             String gNameTemp = genericCanonicalName;
-            String[] getKeyValType = getSimpleGicName(gNameTemp);
-            if(!"java.lang.String".equals(getKeyValType[0])){
-                throw new RuntimeException("Map's key can only use String for json,but you use "+getKeyValType[0]);
+            String[] getKeyValType = getMapKeyValueType(gNameTemp);
+            if (!"java.lang.String".equals(getKeyValType[0])) {
+                throw new RuntimeException("Map's key can only use String for json,but you use " + getKeyValType[0]);
             }
-            String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.indexOf(">"));
-            if("java.lang.Object".equals(gicName)){
+            String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.lastIndexOf(">"));
+            if ("java.lang.Object".equals(gicName)) {
                 data.append("{").append("\"mapKey\":").append("{\"waring\":\"You may use java.util.Object for Map value; Api-doc can't be handle.\"}").append("}");
-            }else if(isPrimitive(gicName)){
+            } else if (isPrimitive(gicName)) {
                 data.append("{").append("\"mapKey1\":").append(DocUtil.jsonValueByType(gicName)).append(",");
                 data.append("\"mapKey2\":").append(DocUtil.jsonValueByType(gicName)).append("}");
-            }else{
+            } else if(gicName.contains("<")){
+                String simple = getSimpleName(gicName);
+                String json = buildJson(simple, gicName);
+                data.append("{").append("\"mapKey\":").append(json).append("}");
+            }else {
                 data.append("{").append("\"mapKey\":").append(buildJson(gicName, gNameTemp)).append("}");
             }
             return data.toString();
         } else {
-            if("java.lang.Object".equals(typeName)){
+            if ("java.lang.Object".equals(typeName)) {
                 throw new RuntimeException("Please do not return java.lang.Object directly in api interface.");
             }
             data0.deleteCharAt(data0.lastIndexOf(","));
@@ -386,30 +400,30 @@ public class SourceBuilder {
         }
     }
 
-    private String buildReqJson(JavaMethod method, ApiMethodDoc apiMethodDoc){
+    private String buildReqJson(JavaMethod method) {
         List<JavaParameter> parameterList = method.getParameters();
         for (JavaParameter parameter : parameterList) {
             JavaType javaType = parameter.getType();
             String simpleTypeName = javaType.getValue();
-            System.out.println("参数简单类型："+simpleTypeName);
+            System.out.println("参数简单类型：" + simpleTypeName);
             String gicTypeName = javaType.getGenericCanonicalName();
-            System.out.println("请求参数类型："+gicTypeName);
-            String typeName =javaType.getFullyQualifiedName();
-            System.out.println("请求参数简单类型："+typeName);
+            System.out.println("请求参数类型：" + gicTypeName);
+            String typeName = javaType.getFullyQualifiedName();
+            System.out.println("请求参数简单类型：" + typeName);
             String paraName = parameter.getName();
-            System.out.println("参数名："+paraName);
+            System.out.println("参数名：" + paraName);
             if (!MODEL.equals(typeName) && !MODEL_VIEW.equals(typeName)) {
                 List<JavaAnnotation> annotations = parameter.getAnnotations();
-                for(JavaAnnotation annotation:annotations){
+                for (JavaAnnotation annotation : annotations) {
                     String annotationName = annotation.getType().getName();
-                    if(REQUEST_BODY.equals(annotationName)){
-                        if(isPrimitive(simpleTypeName)){
+                    if (REQUEST_BODY.equals(annotationName)) {
+                        if (isPrimitive(simpleTypeName)) {
                             StringBuilder builder = new StringBuilder();
                             builder.append("{\"").append(paraName).append("\":");
                             builder.append(DocUtil.jsonValueByType(simpleTypeName)).append("}");
                             return builder.toString();
-                        }else{
-                            return buildJson(typeName,gicTypeName);
+                        } else {
+                            return buildJson(typeName, gicTypeName);
                         }
                     }
 
@@ -417,7 +431,7 @@ public class SourceBuilder {
 
             }
         }
-        return null;
+        return "Does not require any request parameters.";
     }
 
     private String getCommentTag(final JavaMethod javaMethod, final String tagName, final String className) {
@@ -467,7 +481,7 @@ public class SourceBuilder {
 
 
     public boolean isPrimitive(String type0) {
-        String type = type0.contains("java.lang")?type0.substring(type0.lastIndexOf(".")+1,type0.length()):type0;
+        String type = type0.contains("java.lang") ? type0.substring(type0.lastIndexOf(".") + 1, type0.length()) : type0;
         if ("Integer".equals(type) || "int".equals(type) || "Long".equals(type) || "long".equals(type)
                 || "Double".equals(type) || "double".equals(type) || "Float".equals(type) || "float".equals(type) ||
                 "BigDecimal".equals(type) || "String".equals(type) || "boolean".equals(type) || "Boolean".equals(type)) {
@@ -478,11 +492,37 @@ public class SourceBuilder {
     }
 
     private String[] getSimpleGicName(String returnType) {
+
         if (returnType.contains("<")) {
-            String type = returnType.substring(returnType.indexOf("<") + 1, returnType.indexOf(">"));
+            String type = returnType.substring(returnType.indexOf("<") + 1, returnType.lastIndexOf(">"));
+            String pre = returnType.substring(0,returnType.indexOf("<"));
+            if("java.util.Map".equals(pre)){
+                return getMapKeyValueType(returnType);
+            }
+            char last = type.charAt(type.length() - 1);
+            if(62 == last){
+                System.out.println("未处理："+type);
+            }
             return type.split(",");
         } else {
             return returnType.split(" ");
+        }
+    }
+
+    private String[] getMapKeyValueType(String gName){
+        String[] arr = new String[2];
+        String key = gName.substring(gName.indexOf("<")+1,gName.indexOf(","));
+        String value = gName.substring(gName.indexOf(",")+1,gName.lastIndexOf(">"));
+        arr[0] = key;
+        arr[1] = value;
+        return arr;
+    }
+
+    private String getSimpleName(String gicName){
+        if(gicName.contains("<")){
+            return gicName.substring(0,gicName.indexOf("<"));
+        }else{
+            return gicName;
         }
     }
 
