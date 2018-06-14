@@ -1,6 +1,7 @@
 package com.power.doc.utils;
 
 import com.power.common.util.RandomUtil;
+import com.power.common.util.StringUtil;
 
 /**
  * Description:
@@ -26,6 +27,24 @@ public class DocUtil {
             StringBuilder builder = new StringBuilder();
             builder.append("\"").append(value).append("\"");
             return builder.toString();
+        }
+    }
+
+    /**
+     * 是否是合法的java类名称
+     * @param className
+     * @return
+     */
+    public static boolean isClassName(String className){
+        if(StringUtil.isEmpty(className)){
+            return false;
+        }
+        if(className.contains("<")&&!className.contains(">")){
+            return false;
+        }else if(className.contains(">")&&!className.contains("<")){
+            return false;
+        }else{
+            return true;
         }
     }
 }

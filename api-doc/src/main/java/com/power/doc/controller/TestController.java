@@ -28,14 +28,23 @@ public class TestController {
      */
 
 
-   /**
-     * 测试List<Map<M,N<P,k>>>超复杂结构
-     * @return
-     */
-    @GetMapping(value = "/map/Primitive")
-    public Map<String,Teacher<List<User>,User>> testMap() {
-        return null;
-    }
+//   /**
+//     * 测试List<Map<M,N<P,k>>>超复杂结构
+//     * @return
+//     */
+//    @GetMapping(value = "/map/Primitive")
+//    public Map<String,Teacher<List<User>,List<User>,List<User>>> testMap() {
+//        return null;
+//    }
+
+//    /**
+//     * 测试超复杂结构
+//     * @return
+//     */
+//    @GetMapping(value = "/map/Primitive")
+//    public Teacher<List<User>,List<User>,List<User>> testTeacher(){
+//        return null;
+//    }
 
 //    /**
 //     * list泛型对象文档生成
@@ -106,14 +115,14 @@ public class TestController {
 //    }
 
 
-//    /**
-//     * 测试list string
-//     * @return
-//     */
-//     @GetMapping(value = "listString")
-//      public List<Double> testListString(){
-//        return null;
-//      }
+    /**
+     * 测试list string
+     * @return
+     */
+     @GetMapping(value = "listString")
+      public Teacher<List<User>,List<User>,List<User>> testListString(){
+        return null;
+      }
 
 
 }
