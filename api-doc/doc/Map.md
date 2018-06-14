@@ -137,3 +137,17 @@ public Map<String,Teacher<List<User>,User>> testMap() {
     return null;
 }
 ```
+# Map其他复杂结构
+
+对于map的key采用多泛型的情况，目前api-doc也是支持的。
+```
+/**
+ * Map<String,T<List<M>,N>超复杂结构
+ * @return
+ */
+public Map<String,Teacher<Map<String,User>,Map<String,User>,Map<String,User>>> testMap() {
+    return null;
+}
+```
+**注意：** api-doc为了传入的复杂泛型结构数据，做了许多情况的测试，目前基本能兼容系统开发中95%以上的Map返回接口，
+也提供了一些能够处理的很复杂的泛型结构，但是这种复杂的泛型结构在开发中是不被推荐的。

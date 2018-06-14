@@ -298,6 +298,9 @@ public class SourceBuilder {
 
 
     private String buildJson(String typeName, String genericCanonicalName) {
+        if(DocClassUtil.isPrimitive(typeName)){
+            return DocUtil.jsonValueByType(typeName).replace("\"","");
+        }
         StringBuilder data0 = new StringBuilder();
         JavaClass cls = builder.getClassByName(typeName);
         data0.append("{");
@@ -310,7 +313,6 @@ public class SourceBuilder {
             if (!"serialVersionUID".equals(field.getName())) {
                 String typeSimpleName = field.getType().getSimpleName();
                 String subTypeName = field.getType().getFullyQualifiedName();
-                System.out.println("subType:" + subTypeName);
                 data0.append("\"").append(field.getName()).append("\":");
                 if (DocClassUtil.isPrimitive(typeSimpleName)) {
                     data0.append(DocUtil.jsonValueByType(typeSimpleName)).append(",");
@@ -354,7 +356,6 @@ public class SourceBuilder {
         if ("java.util.List".equals(typeName)) {
             data.append("[");
             String gName = globGicName[0];
-            System.out.println("gName:" + gName);
             if ("java.lang.Object".equals(gName)) {
                 data.append("{\"waring\":\"You may use java.util.Object instead of display generics in the List\"}");
             } else if (DocClassUtil.isPrimitive(gName)) {
@@ -396,7 +397,6 @@ public class SourceBuilder {
             }
             data0.deleteCharAt(data0.lastIndexOf(","));
             data0.append("}");
-            System.out.println("inco");
             return data0.toString();
         }
     }

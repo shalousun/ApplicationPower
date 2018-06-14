@@ -116,13 +116,24 @@ public class TestController {
 
 
     /**
-     * 测试list string
+     * List<String>
+     *
      * @return
      */
-     @GetMapping(value = "listString")
-      public Teacher<List<User>,List<User>,List<User>> testListString(){
+    @GetMapping(value = "listString")
+    public String testList() {
         return null;
-      }
+    }
+
+    /**
+     * List<T<List<M>,List<M>,List<M>>>
+     *
+     * @return
+     */
+    @GetMapping(value = "listString")
+    public List<Teacher<List<User>, List<User>, List<User>>> testListString() {
+        return null;
+    }
 
 
 }

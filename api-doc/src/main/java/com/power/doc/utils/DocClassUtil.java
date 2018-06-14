@@ -1,5 +1,8 @@
 package com.power.doc.utils;
 
+import com.alibaba.fastjson.JSON;
+import org.beetl.ext.fn.Json;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,11 @@ public class DocClassUtil {
             if("java.util.Map".equals(pre)){
                 return getMapKeyValueType(returnType);
             }
+
             String type = returnType.substring(returnType.indexOf("<") + 1, returnType.lastIndexOf(">"));
+            if("java.util.List".equals(pre)){
+                return type.split(" ");
+            }
             String[] arr = type.split(",");
             return classNameFix(arr);
         } else {
