@@ -11,6 +11,7 @@ public class CollectionUtil {
 	/**
 	 * 
 	 * isNotEmpty:(检查集合是否为空，不为空返回true)
+	 * @param <T> type of param
 	 * @param c collection
 	 * @return boolean
 	 */
@@ -26,6 +27,7 @@ public class CollectionUtil {
 	/**
 	 * 
 	 * checkEmpty:(检查集合是否为空，为空返回true)
+	 * @param <T> type of param
 	 * @param c collection
 	 * @return boolean
 	 */
@@ -39,7 +41,7 @@ public class CollectionUtil {
 
 	/**
 	 * 该sublist增加了下标检测，避免报错
-	 *
+	 * @param <T> type of param
 	 * @param source List
 	 * @param from   from index
 	 * @param to     to index
@@ -59,7 +61,7 @@ public class CollectionUtil {
 
 	/**
 	 * 将数组转换为List,如果数组为空则返回一个空list
-	 *
+	 * @param <T> type of param
 	 * @param a object array
 	 * @return List
 	 */
@@ -75,9 +77,9 @@ public class CollectionUtil {
 	/**
 	 * 较差合并两个list的各项值交叉合并,合并有先后顺序，对于集合数据不为空的情况，
 	 * result1的值第一个值放最前面
-	 *
-	 * @param result1
-	 * @param result2
+	 * @param <T> type of param
+	 * @param result1 first of list
+	 * @param result2 second of list
 	 * @return List
 	 */
 	public static <T> List<T> mergeAndSwap(List<T> result1, List<T> result2) {
@@ -133,8 +135,9 @@ public class CollectionUtil {
 
 	/**
 	 * split list
-	 * @param list
-	 * @param pageSize
+	 * @param <T> type of param
+	 * @param list data of list
+	 * @param pageSize page size
 	 * @return List
 	 */
 	public static <T> List<List<T>> splitList(List<T> list, int pageSize) {
@@ -162,8 +165,8 @@ public class CollectionUtil {
 	/**
 	 *  将List集合中的无效的map数据清空，被指定为排除的字段
 	 *  即使map中这些指定字段有值,只要其他的key是无效的数据都会被被移除，但是0并不代表没有值
-	 * @param list
-	 * @param exceptKeys
+	 * @param list list of map data
+	 * @param exceptKeys except keys
 	 * @return List
 	 */
 	public static List<Map<String, Object>> filterEmpty(List<Map<String, Object>> list, String... exceptKeys) {

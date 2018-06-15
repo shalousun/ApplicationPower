@@ -1,5 +1,6 @@
 package com.power.common.filter;
 
+import com.power.common.exception.XssException;
 import com.power.common.util.StringUtil;
 import com.power.common.util.ValidateUtil;
 
@@ -34,7 +35,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         String[] encodedValues = new String[count];
         for (int i = 0; i < count; i++) {
             if(ValidateUtil.isContainsForbiddenCharacter(values[i])){
-                throw new RuntimeException("Contains illegal characters[From getParameterValues method]:"+values[i]);
+                throw new XssException("Contains illegal characters[From getParameterValues method]:"+values[i]);
             }
             encodedValues[i] = StringUtil.cleanXSS(values[i]);
 
@@ -46,7 +47,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     public String getParameter(String parameter) {
         String value = super.getParameter(parameter);
         if(ValidateUtil.isContainsForbiddenCharacter(value)){
-            throw new RuntimeException("Contains illegal characters[From getParameter method]："+value);
+            throw new XssException("Contains illegal characters[From getParameter method]："+value);
         }
         if (value == null) {
             return null;
@@ -126,7 +127,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             }
         }
         if(ValidateUtil.isContainsForbiddenCharacter(sb.toString ())){
-            throw new RuntimeException("Contains illegal characters[From getInputStream method]："+sb.toString ());
+            throw new XssException("Contains illegal characters[From getInputStream method]："+sb.toString ());
         }
         return  StringUtil.cleanXSS(sb.toString ());
     }

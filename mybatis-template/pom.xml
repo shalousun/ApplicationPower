@@ -1,12 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.shalousun</groupId>
     <artifactId>mybatis-template</artifactId>
@@ -14,13 +8,13 @@
     <packaging>jar</packaging>
 
     <name>mybatis-template</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/shalousun/ApplicationPower.git</url>
+    <description>ApplicationPower mybatis-template</description>
 
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
         </license>
     </licenses>
     <scm>
@@ -41,18 +35,6 @@
         <mybatis.version>3.4.4</mybatis.version>
         <mybatis-spring-version>1.3.1</mybatis-spring-version>
     </properties>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>oss</id>
-            <name>OSS Snapshots Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>oss</id>
-            <name>OSS Staging Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -76,9 +58,9 @@
         </dependency>
         <!--datasource-aspect-->
         <dependency>
-            <groupId>com.power.datasource</groupId>
+            <groupId>com.github.shalousun</groupId>
             <artifactId>datasource-aspect</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.1</version>
         </dependency>
     </dependencies>
     <build>

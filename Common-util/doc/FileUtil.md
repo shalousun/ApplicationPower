@@ -1,6 +1,8 @@
 # FileUtil方法介绍
 FileUtil是一些常见的文件操作统一封装。所属的包为com.power.common.util。
 
+**注意：** 文档中@since xx表示拥有方法的起始版本
+
 ## 1. writeFile(String source, String filePath, boolean append)方法
 该方法用于字符串内容写到本地文件系统中，写文件是可选择是否追加，默认编码为utf-8
 
@@ -14,7 +16,6 @@ Usage:
 
 ```
 FileUtil.writeFile("hello", "/usr/local/hello.txt",true);//return true or false
-
 ```
 
 ## 2. writeFileNotAppend(String source, String filePath)方法
@@ -29,7 +30,6 @@ Usage:
 
 ```
 FileUtil.writeFileNotAppend("hello", "/usr/local/hello.txt");//return true or false
-
 ```
 ## 3. writeFile(String source, File file,boolean append)方法
 该方法用于字符串内容写到本地文件系统中，写文件是可选择是否追加
@@ -45,7 +45,6 @@ Usage:
 
 ```
 FileUtil.writeFile("hello", new File("/usr/local/hello.txt"),true);//return true or false
-
 ```
 ## 4. getFileContent(String fileName)方法
 该方法用于获取文件内容并将内容做为字符串返回
@@ -59,7 +58,6 @@ Usage:
 
 ```
 FileUtil.getFileContent("/usr/local/hello.txt");//return "hello"
-
 ```
 ## 5. getFileContent(InputStream is)方法
 
@@ -82,7 +80,6 @@ Usage:
 
 ```
 FileUtil.nioWriteFile("/usr/local/hello.txt","hello");//return true or false
-
 ```
 ## 7. nioWriteAppendable(String filePath,String contents)方法
 该方法采用nio的方式将字符串内容写入到文件系统中，新的内容会被追加到旧的内容后面，默认编码为utf-8
@@ -96,7 +93,6 @@ Usage:
 
 ```
 FileUtil.nioWriteAppendable("/usr/local/hello.txt","hello");//return true or false
-
 ```
 
 ## 8. nioTransferCopy(File source, File target)方法
@@ -111,5 +107,19 @@ Usage:
 
 ```
 FileUtil.nioTransferCopy("/usr/local/hello.txt","/usr/local/hello1.txt");
+```
+## 9. toSuffix(String fileName)方法
+@since 0.2
 
+该方法用于获取文件名不带后缀的文件名。
+
+参数 | 描述
+---|---
+fileName| 文件名称
+
+
+Usage:
+
+```
+FileUtil.toSuffix("me.java");//return me
 ```

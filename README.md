@@ -4,7 +4,8 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
         ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower在一直不断努力地去减少项目开发
         中的各种重复工作。<br/>
         技术交流群：170651381<br/>
-    **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更佳，因此推荐选择她来创建springboot。
+    **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
+    [github同步地址](https://github.com/shalousun/ApplicationPower)
 ## 创建的项目技术
      ● 核心框架：Spring Boot 1.5.9 或Spring MVC 4.3.6
      ● 数据库连接池：druid-spring-boot-starter 1.1.6或druid 1.1.6
@@ -14,12 +15,10 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
      ● 日志管理：SLF4J和log4j2
 ## 结构说明
    1. api-doc是一个未来将使用原生doc注释来生成markdown api文档的项目，目前不可用
-   2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，在使用application-power前需要将它安装到你的本地。
+   2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，目前已发布到中央仓库。
    3. application-power是整个项目的核心，专门用于生成Spring Boot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
    4. datasource-aspect是spring web应用下多数据源动态切换的通用模块
    5. mybatis-template是用于重写SqlSessionTemplate来支持分布式事务环境下的动态数据源切换
-        将assembly打包的springboot启动脚本jvm参数设置提取到setenv.sh中
-ps: [1.6及以前的版本地址：](https://gitee.com/stana/ApplicationPower)
 ## 功能
   1. 根据连接的数据生成dao,model,service,controller,mapper,controllerTest,serviceTest代码
   2. 项目的maven web基础骨架
@@ -203,8 +202,15 @@ application-power整合的springboot打包后的结构参考
 - 更新内容：
 	1. 修改assembly打包的springboot项目的start.sh和start.bat启动脚本,支持动态加载打包后的properties配置文件.
 	2. 增加创建maven项目自动创建dockerfile和docker.sh构建脚本.
-	
-
+#### 版本号：1.7.2
+- 更新日期：2018-06-06
+- 更新内容：
+	1. 优化使用maven构建下的docker构建脚本docker.sh.
+	2. 将common-util模块的包名变更为com.power.common，完善common-util各工具类的的文档。
+	3. 修改若干模板配置bug.
+	4. 增加生成gradle项目的功能，包括SpringBoot在gradle下docker的容器化配置实现。
+	5. 将common-util、datasource-aspect、mybatis-template发布到maven中央仓库。使用是无需
+	再将这些模块安装到本地在使用
 
 
 

@@ -1,6 +1,7 @@
 package com.power.doc.utils;
 
 import com.power.common.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 
@@ -16,7 +17,7 @@ public class PathUtil {
         if (StringUtil.isEmpty(parentDir)) {
             parentDir = "java.io.tmpdir";
         }
-        if (!org.apache.commons.lang.StringUtils.endsWith(parentDir, File.separator)) {
+        if (!StringUtils.endsWith(parentDir, File.separator)) {
             parentDir += File.separator;
         }
         className = className.replaceAll("\\.", "\\" + File.separator);

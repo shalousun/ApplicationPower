@@ -14,4 +14,10 @@ public class ValidateUtilTest {
     public void testIsFloat(){
         System.out.println(ValidateUtil.isFloat("10.a"));
     }
+
+    @Test
+    public void testIsArmyIdCard(){
+
+        System.out.println(ValidateUtil.isArmyIdCard("北字第7682126号"));
+    }
 }

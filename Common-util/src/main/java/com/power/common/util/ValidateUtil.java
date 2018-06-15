@@ -7,17 +7,17 @@ package com.power.common.util;
  */
 public class ValidateUtil {
 
-    private static final String EMAIL_PATTERN = "\\w+@\\w+\\.(com\\.cn)|\\w+@\\w+\\.(com|cn)";
-    private static final String CHINESE_PATTERN = "^[\u4e00-\u9fa5]{0,}$";
-    private static final String NUMBER_ADN_LETTER = "^[A-Za-z0-9]+$";
-    private static final String QQ_PATTERN = "/[1-9][0-9]{4,}/";
-    private static final String NUMBER_PATTERN = "[0-9]+";
-    private static final String LETTER_PATTERN = "[a-zA-Z]+";
-    private static final String ZIPCODE_PATTERN = "\\p{Digit}{6}";
-    private static final String PHONE_PATTERN = "^((13[0-9])|(14[0-9])|(17[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
-    private static final String TELEPHONE_PATTERN = "^(0\\d{2,3}-)?(\\d{7,8})(-(\\d{3,}))?$";
-    private static final String TELEPHONE_400_PATTERN = "((400)(\\d{7}))|((400)-(\\d{3})-(\\d{4}))";
-    private static final String IDCARD_PATTERN = "^((11|12|13|14|15|21|22|23|31"
+    public static final String EMAIL_PATTERN = "\\w+@\\w+\\.(com\\.cn)|\\w+@\\w+\\.(com|cn)";
+    public static final String CHINESE_PATTERN = "^[\u4e00-\u9fa5]{0,}$";
+    public static final String NUMBER_ADN_LETTER = "^[A-Za-z0-9]+$";
+    public static final String QQ_PATTERN = "/[1-9][0-9]{4,}/";
+    public static final String NUMBER_PATTERN = "[0-9]+";
+    public static final String LETTER_PATTERN = "[a-zA-Z]+";
+    public static final String ZIPCODE_PATTERN = "\\p{Digit}{6}";
+    public static final String PHONE_PATTERN = "^((13[0-9])|(14[0-9])|(17[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+    public static final String TELEPHONE_PATTERN = "^(0\\d{2,3}-)?(\\d{7,8})(-(\\d{3,}))?$";
+    public static final String TELEPHONE_400_PATTERN = "((400)(\\d{7}))|((400)-(\\d{3})-(\\d{4}))";
+    public static final String IDCARD_PATTERN = "^((11|12|13|14|15|21|22|23|31"
             + "|32|33|34|35|36|37|41|42|43|44|45|46|50|51|"
             + "52|53|54|61|62|63|64|65|71|81|82|91)\\d{4})"
             + "((((19|20)(([02468][048])|([13579][26]))0229))|"
@@ -25,19 +25,19 @@ public class ValidateUtil {
             + "((0[1-9])|(1\\d)|(2[0-8])))|((((0[1,3-9])"
             + "|(1[0-2]))(29|30))|(((0[13578])|(1[02]))31))))"
             + "((\\d{3}(x|X))|(\\d{4}))$";
-    private static final String USERNAME_PATTERN = "^[A-Za-z0-9_]{3,15}$";
-    private static final String PASSWORD_PATTERN = "^(?![0-9]+$)[0-9A-Za-z]{6,20}$";
-    private static final String UUID_PATTERN = "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}";
-    private static final String DATE_PATTERN = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))";
-    private static final String TIME_STAMP_PATTERN = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\s]?((((0?[13578])|(1[02]))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\s]?((((0?[13578])|(1[02]))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\s]?((0?[1-9])|(1[0-9])|(2[0-8])))))) ([2][0-3]|[0-1][0-9]|[1-9]):[0-5][0-9]:([0-5][0-9]|[6][0])$";
-    private static final String IPV4_PATTERN = "([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])";
-    private static final String IPV6_PATTERN = "([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)";
-    private static final String URL_PATTERN = "^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/[^/][a-zA-Z0-9\\.\\,\\?\\'\\\\/\\+&%\\$#\\=~_\\-@]*)*$";
-    private static final String DOMAIN_PATTERN = "^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$";
-    private static final String INT_OR_FLOAT_PATTERN = "^\\d+\\.\\d+|\\d+$";
-    private static final String FLOAT_PATTERN = "^(-?\\d+)(\\.\\d+)?$";
-    private static final String POSITIVE_INTEGER = "[1-9]+\\d{0,10}";
-    private static final String CERTIFICATE_CARD = "南字第(\\d{8})号|北字第(\\d{8})号|沈字第(\\d{8})号|兰字第(\\d{8})号|成字第(\\d{8})号|济字第(\\d{8})号|广字第(\\d{8})号|海字第(\\d{8})号|空字第(\\d{8})号|参字第(\\d{8})号|政字第(\\d{8})号|后字第(\\d{8})号|装字第(\\d{8})号";
+    public static final String USERNAME_PATTERN = "^[A-Za-z0-9_]{3,15}$";
+    public static final String PASSWORD_PATTERN = "^(?![0-9]+$)[0-9A-Za-z]{6,20}$";
+    public static final String UUID_PATTERN = "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}";
+    public static final String DATE_PATTERN = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))";
+    public static final String TIME_STAMP_PATTERN = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\s]?((((0?[13578])|(1[02]))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\s]?((((0?[13578])|(1[02]))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\s]?((0?[1-9])|(1[0-9])|(2[0-8])))))) ([2][0-3]|[0-1][0-9]|[1-9]):[0-5][0-9]:([0-5][0-9]|[6][0])$";
+    public static final String IPV4_PATTERN = "([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])";
+    public static final String IPV6_PATTERN = "([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)\\:([0-9a-f]+)";
+    public static final String URL_PATTERN = "^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/[^/][a-zA-Z0-9\\.\\,\\?\\'\\\\/\\+&%\\$#\\=~_\\-@]*)*$";
+    public static final String DOMAIN_PATTERN = "^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$";
+    public static final String INT_OR_FLOAT_PATTERN = "^\\d+\\.\\d+|\\d+$";
+    public static final String FLOAT_PATTERN = "^(-?\\d+)(\\.\\d+)?$";
+    public static final String POSITIVE_INTEGER = "[1-9]+\\d{0,10}";
+    public static final String ARMY_ID_CARD = "南字第(\\d{6,8})号|北字第(\\d{6,8})号|沈字第(\\d{6,8})号|兰字第(\\d{6,8})号|成字第(\\d{6,8})号|济字第(\\d{6,8})号|广字第(\\d{6,8})号|海字第(\\d{6,8})号|空字第(\\d{6,8})号|参字第(\\d{6,8})号|政字第(\\d{6,8})号|后字第(\\d{6,8})号|装字第(\\d{6,8})号";
 
 
     public static final String[] forbidden = {"\\bselect\\b", "\\bor\\b", "\\bdelete\\b", "\\bjoin\\b","\\btable\\b"
@@ -85,8 +85,8 @@ public class ValidateUtil {
 
     /**
      * Verify whether is not Chinese
-     * @param chineseStr
-     * @return
+     * @param chineseStr characters
+     * @return boolean
      */
     public static boolean isNotChinese(String chineseStr){
         return !validate(chineseStr, CHINESE_PATTERN);
@@ -105,8 +105,8 @@ public class ValidateUtil {
     /**
      * Verify whether the not Numbers or letters
      *
-     * @param str
-     * @return
+     * @param str String
+     * @return boolean
      */
     public static boolean isNotNumberLetter(String str) {
         return !validate(str, NUMBER_ADN_LETTER);
@@ -190,8 +190,8 @@ public class ValidateUtil {
     /**
      * Verify whether not the fixed telephone in China
      *
-     * @param phoneNumber
-     * @return
+     * @param phoneNumber String phone number
+     * @return boolean
      */
     public static boolean isNotTelephone(String phoneNumber) {
         return !ValidateUtil.isTelephone(phoneNumber);
@@ -210,8 +210,8 @@ public class ValidateUtil {
     /**
      * validate identity card number,if is valid return false else return true
      *
-     * @param cardNumber
-     * @return
+     * @param cardNumber chinese IdCard
+     * @return boolean
      */
     public static boolean isNotIdCard(String cardNumber) {
         return !validate(cardNumber, IDCARD_PATTERN);
@@ -259,8 +259,8 @@ public class ValidateUtil {
     /**
      * Verify that it is not a valid uuid
      *
-     * @param str
-     * @return
+     * @param str uuid
+     * @return boolean
      */
     public static boolean isNotUuid(String str) {
         return !isUuid(str);
@@ -269,8 +269,8 @@ public class ValidateUtil {
     /**
      * Verification date format matches yyyy-MM-dd
      *
-     * @param date
-     * @return
+     * @param date String date
+     * @return boolean
      */
     public static boolean isDate(String date) {
         return validate(date, DATE_PATTERN);
@@ -279,8 +279,8 @@ public class ValidateUtil {
     /**
      * Verification date format not matches yyyy-MM-dd
      *
-     * @param date
-     * @return
+     * @param date String date
+     * @return boolean
      */
     public static boolean isNotDate(String date) {
         return !validate(date, DATE_PATTERN);
@@ -288,8 +288,8 @@ public class ValidateUtil {
 
     /**
      * Verification time format matches yyyy-MM-dd HH:mm:ss.
-     * @param date
-     * @return
+     * @param date String date
+     * @return boolean
      */
     public static boolean isTimestamp(String date) {
         return validate(date, TIME_STAMP_PATTERN);
@@ -298,7 +298,7 @@ public class ValidateUtil {
     /**
      * Verification time format not matches yyyy-MM-dd HH:mm:ss.
      *
-     * @param date
+     * @param date String date
      * @return boolean
      */
     public static boolean isNotTimestamp(String date) {
@@ -337,7 +337,7 @@ public class ValidateUtil {
      * https://192.168.15.96:8080/a/n?a=5
      *
      * @param url http,https,ftp url
-     * @return
+     * @return boolean
      */
     public static boolean isUrl(String url) {
         return validate(url, URL_PATTERN);
@@ -367,8 +367,8 @@ public class ValidateUtil {
     /**
      * Verify that the domain name is not valid
      *
-     * @param domain
-     * @return
+     * @param domain domain
+     * @return boolean
      */
     public static boolean isNotDomain(String domain) {
         return !validate(domain, DOMAIN_PATTERN);
@@ -377,8 +377,8 @@ public class ValidateUtil {
     /**
      * 只能是整数或者浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isIntOrFloat(String number) {
         return validate(number, INT_OR_FLOAT_PATTERN);
@@ -387,8 +387,8 @@ public class ValidateUtil {
     /**
      * 判断不是整数或者浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isNotIntOrFloat(String number) {
         return !validate(number, INT_OR_FLOAT_PATTERN);
@@ -397,8 +397,8 @@ public class ValidateUtil {
     /**
      * 判断是否是浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isFloat(String number) {
         return validate(number, FLOAT_PATTERN);
@@ -407,8 +407,8 @@ public class ValidateUtil {
     /**
      * 判断是费浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isNotFloat(String number) {
         return !validate(number, FLOAT_PATTERN);
@@ -417,8 +417,8 @@ public class ValidateUtil {
     /**
      * 判断是否是负浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isNegativeFloat(String number) {
         return validate(number, "^(-((\\d+\\.\\d*[1-9]\\d*)|(\\d*[1-9]\\d*\\.\\d+)|(\\d*[1-9]\\d*)))$");
@@ -427,8 +427,8 @@ public class ValidateUtil {
     /**
      * 判断是否不是负浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isNotNegativeFloat(String number) {
         return !isNegativeFloat(number);
@@ -437,8 +437,8 @@ public class ValidateUtil {
     /**
      * 判断是否是正浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isPositiveFloat(String number) {
         return validate(number, "^((\\d+\\.\\d*[1-9]\\d*)|(\\d*[1-9]\\d*\\.\\d+)|(\\d*[1-9]\\d*))$");
@@ -447,8 +447,8 @@ public class ValidateUtil {
     /**
      * 判断是否不是正浮点数
      *
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isNotPositiveFloat(String number) {
         return !isPositiveFloat(number);
@@ -458,27 +458,36 @@ public class ValidateUtil {
      * 
      * isPositiveInteger:(判断是否正整数)
      * @author yolanda0608
-     * @param number
-     * @return
+     * @param number String number
+     * @return boolean
      */
     public static boolean isPositiveInteger(String number){
     	return validate(number,POSITIVE_INTEGER);
     }
-    
+
+
     /**
-     * 
-     * issCertificate:(判断是否军官证，是返回true)
-     * @author yolanda0608
-     * @param number
-     * @return
+     * Verify whether it is Army Identity Card
+     * @param armyIdCard Army Identity Card
+     * @return boolean
      */
-    public static boolean isCertificate(String number){
-    	return validate(number,CERTIFICATE_CARD);
+    public static boolean isArmyIdCard(String armyIdCard){
+    	return validate(armyIdCard,ARMY_ID_CARD);
     }
 
     /**
-     * @param number
-     * @return
+     * Verify whether it is not Army Identity Card
+     * @param armyIdCard Army Identity Card
+     * @return boolean
+     */
+    public static boolean isNotArmyIdCard(String armyIdCard){
+        return !validate(armyIdCard,ARMY_ID_CARD);
+    }
+
+    /**
+     * is Contains Forbidden Character
+     * @param number String number
+     * @return boolean
      */
     public static boolean isContainsForbiddenCharacter(String number) {
         if (StringUtil.isEmpty(number)) {

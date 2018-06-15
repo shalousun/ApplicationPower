@@ -15,6 +15,8 @@ public class ApiMethodDoc implements Serializable {
 
     private String requestParams;
 
+    private String requestUsage;
+
     private String responseUsage;
 
     private String responseParams;
@@ -69,5 +71,13 @@ public class ApiMethodDoc implements Serializable {
 
     public void setResponseParams(String responseParams) {
         this.responseParams = responseParams;
+    }
+
+    public String getRequestUsage() {
+        return requestUsage;
+    }
+
+    public void setRequestUsage(String requestUsage) {
+        this.requestUsage = requestUsage;
     }
 }

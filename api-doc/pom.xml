@@ -45,18 +45,21 @@
         <dependency>
             <groupId>com.thoughtworks.qdox</groupId>
             <artifactId>qdox</artifactId>
-            <version>2.0-M6</version>
+            <version>2.0-M9</version>
         </dependency>
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>common-util</artifactId>
-            <version>0.1</version>
+            <version>0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.10.RELEASE</version>
         </dependency>
     </dependencies>
     <build>
         <plugins>
-
-
             <!--指定maven的编译级别-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -12,7 +12,8 @@ public class DubboInterfaceBuilder {
 
     /**
      * 生成dubbo提供方服务注册列表
-     * @param classes
+     * @param classes list of class
+     * @return dubbo provider interfaces
      */
     public static String generateDubboProviderInterface(List<Class> classes){
         StringBuilder builder = new StringBuilder();
@@ -25,7 +26,8 @@ public class DubboInterfaceBuilder {
 
     /**
      * 生成dubbo消费方服务注册列表
-     * @param classes
+     * @param classes list of class
+     * @return dubbo consumer references
      */
     public static String generateDubboConsumerInterface(List<Class> classes){
         StringBuilder builder = new StringBuilder();

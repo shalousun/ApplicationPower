@@ -4,9 +4,12 @@ package com.power.common.util;
  * @author sunyu
  */
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -235,8 +238,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * @param s
-	 * @return
+	 * Camel case
+	 * @param s characters
+	 * @return String after Camel case
 	 */
 	public static String toCapitalizeCamelCase(String s) {
 		if (s == null) {
@@ -288,7 +292,7 @@ public class StringUtil {
 	/**
 	 * Decoding the parameters passed by the URL
 	 * @param str pending character
-	 * @return
+	 * @return String after decode
 	 */
 	public static String urlDecode(String str) {
 		if (isEmpty(str)) {
@@ -420,9 +424,9 @@ public class StringUtil {
 	}
 
 	/**
-	 *
-	 * @param html
-	 * @return
+	 * replace special character of html
+	 * @param html html tag
+	 * @return String after replaced}
 	 */
 	public static String replaceHtml(String html) {
 		if (isEmpty(html)) {
@@ -436,9 +440,9 @@ public class StringUtil {
 	}
 
 	/**
-	 *
-	 * @param html
-	 * @return
+	 * replace special character of html
+	 * @param html html tag
+	 * @return String after replaced}
 	 */
 	public static String replaceMobileHtml(String html) {
 		if (html == null) {
@@ -447,19 +451,11 @@ public class StringUtil {
 		return html.replaceAll("<([a-z]+?)\\s+?.*?>", "<$1>");
 	}
 
-	public static boolean strToBoolean(String str) {
-		if (isEmpty(str)) {
-			return false;
-		} else {
-			str = str.trim();
-			return Boolean.valueOf(str);
-		}
-	}
 
 	/**
 	 * Extract Chinese in a string
 	 *
-	 * @param str
+	 * @param str characters
 	 * @return Chinese characters
 	 */
 	public static String getChinese(String str) {
@@ -471,7 +467,7 @@ public class StringUtil {
 	/**
 	 * Extract non-Chinese characters in a string
 	 *
-	 * @param str
+	 * @param str characters
 	 * @return non-Chinese characters
 	 */
 	public static String getNotChinese(String str) {
@@ -499,15 +495,32 @@ public class StringUtil {
 	}
 
 	/**
-	 *
-	 * @param str
-	 * @param regex
-	 * @return
+	 * split
+	 * @param str source str
+	 * @param regex regex expression
+	 * @return array of String
 	 */
 	public static String[] split(String str,String regex){
 		if(null != str){
 			return str.split(regex);
 		}
 		return null;
+	}
+
+	/**
+	 * Left pad a long number with zero
+	 * @param seq sequence number
+	 * @param len max length of number
+	 * @return String
+	 */
+	public static String seqNumLeftPadZero(long seq,int len){
+		String b = String.valueOf(seq);
+		StringBuilder builder = new StringBuilder();
+		int rest = len - b.length();
+		for(int i = 0;i<rest;i++){
+			builder.append("0");
+		}
+		builder.append(b);
+		return builder.toString();
 	}
 }

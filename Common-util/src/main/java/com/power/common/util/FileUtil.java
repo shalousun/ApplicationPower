@@ -312,4 +312,22 @@ public class FileUtil {
         }
         return false;
     }
+
+    /**
+     * To Suffix
+     *  getFileExt
+     *  @since 0.2
+     * @param fileName file name
+     * @return String
+     */
+    public static String toSuffix(String fileName) {
+        String name = null;
+        try {
+            int index = fileName.lastIndexOf(".");
+            name = fileName.substring(0, index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }

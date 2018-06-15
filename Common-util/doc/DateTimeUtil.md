@@ -19,31 +19,32 @@ public static final String DATE_FORMAT_CHINESE_SECONDE = "yyyy年MM月dd日 HH:m
 public static final String DATE_FORMAT_CHINESE_WEEK_SECONDE =  "yyyy年MM月dd日 E HH:mm:ss";
 ```
 
-## 1. parseDateToStr(Date date, String format)方法
+## 1. dateToStr(Date date, String format)方法
 该方法用于将Date转化成String格式的字符串时间
 
 Usage:
 
 ```
-DateTimeUtil.parseDateToStr(new Date(),"yyyy-MM-dd");//return 2017-07-22
+DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");//return 2017-07-22
 
 ```
-## 2. parseDate(String sDate, String format)方法
+## 2. strToDate(String sDate, String format)方法
 该方法用于将字符串时间转化成Date
 
 Usage:
 
 ```
-DateTimeUtil.parseDate("2017-07-22","yyyy-MM-dd");
+DateTimeUtil.strToDate("2017-07-22","yyyy-MM-dd");
 ```
-## 3. strToDate(String date)方法
-该方法是用于将String格式时间转化成Date,默认采用的格式化为yyyy-MM-dd
+## 3. nowTimeStamp()方法
+该方法用于获取当前时间戳,返回Timestamp
 
 Usage:
 
 ```
-DateTimeUtil.strToDate("2017-07-22");
+DateTimeUtil.nowTimeStamp();
 ```
+
 ## 4. dateToStr(Date date)方法
 该方法用于将Date转化成字符串。
 
@@ -75,7 +76,7 @@ DateTimeUtil.timestampToString(new Timestamp(System.currentTimeMillis()),"yyyy-M
 Usage:
 
 ```
-DateTimeUtil.setTimeTo0H0M0S(new Timestamp(System.currentTimeMillis()));//1500652800000
+DateTimeUtil.setTimeToNextDay0H0M0S(new Timestamp(System.currentTimeMillis()));//1500652800000
 ```
 ## 8. setTimeToNextDay0H0M0S(long millis)方法
 该方法用于将传入long时间戳重置到它的下一天的0时0分0秒,该方法重置时间后返回long型的时间戳
@@ -83,7 +84,7 @@ DateTimeUtil.setTimeTo0H0M0S(new Timestamp(System.currentTimeMillis()));//150065
 Usage:
 
 ```
-DateTimeUtil.setTimeTo0H0M0S(1500652800000L);
+DateTimeUtil.setTimeToNextDay0H0M0S(1500652800000L);
 ```
 ## 9. setToNextDay0H0M0SExceptToday(long millis)方法
 该方法用于将传入long时间戳重置到它的下一天的0时0分0秒,当传入的时间今天则不进行重置。该方法重置时间后返回long型的时间戳
@@ -108,14 +109,14 @@ Usage:
 ```
 DateTimeUtil.setTimeTo0H0M0S(new Timestamp(1500652800000L));
 ```
-12. setTimeTo0H0M0S(long millis)方法
+## 12. setTimeTo0H0M0S(long millis)方法
 该方法将long型的时间戳重置到0时0分0秒，该方法重置时间后返回long型的时间戳
 
 Usage:
 ```
 DateTimeUtil.setTimeTo0H0M0S(1500652800000L);
 ```
-13. setTimeToLastDay0H0M0S(Timestamp time)方法
+## 13. setTimeToLastDay0H0M0S(Timestamp time)方法
 该方法用于将时间戳重置到它的上一天0时0分0秒，该方法重置时间后返回long型的时间戳
 
 Usage:
@@ -157,7 +158,7 @@ DateTimeUtil.long2Str(1500652800000L);//return 2017年07月22日
 
 Usage:
 ```
-DateTimeUtil.long2Str(1500652800000L,"yyyy-MM-dd");
+DateTimeUtil.long2Str(1500652800000L,"yyyy-MM-dd");//return 2017-07-22
 ```
 ## 19. strToLong(String dateFormat, String strDate)方法
 该方法用于字符串格式的时间转化成long型的时间戳
@@ -169,20 +170,20 @@ DateTimeUtil.strToLong("yyyy-MM-dd","2017-07-22");//return 1500652800000
 ```
 
 ## 20. getCurrentMonthDays()方法
-该方法用于获取本月的天数
+该方法用于获取本月的天数,返回int类型
 
 Usage:
 
 ```
-DateTimeUtil.getCurrentMonthDays();
+DateTimeUtil.getCurrentMonthDays();//return 31
 ```
 ## 21. getCurrentMonthDays(Timestamp stamp)方法
-该方法用于获取传入时间所在月份的天数
+该方法用于获取传入时间所在月份的天数，返回int类型
 
 Usage:
 
 ```
-DateTimeUtil.getCurrentMonthDays(new Timestamp(1500652800000L));
+DateTimeUtil.getCurrentMonthDays(new Timestamp(1500652800000L));//return 31
 ```
 ## 22. getFirstDayOfCurrentWeek(Timestamp stamp)方法
 根据传入时间获取所属周的第一天(0HOMOS) 根据中国习惯将星期一当做第一天,
@@ -191,7 +192,7 @@ DateTimeUtil.getCurrentMonthDays(new Timestamp(1500652800000L));
 Usage:
 
 ```
-DateTimeUtil.getFirstDayOfCurrentWeek(new Timestamp(1500652800000L));
+DateTimeUtil.getFirstDayOfCurrentWeek(new Timestamp(1500652800000L)); //return 1500220800000
 ```
 ## 23. getFirstDayOfCurrentWeek(long ms)方法
 根据传入时间获取所属周的第一天(0HOMOS) 根据中国习惯将星期一当做第一天,
@@ -200,7 +201,7 @@ DateTimeUtil.getFirstDayOfCurrentWeek(new Timestamp(1500652800000L));
 Usage:
 
 ```
-DateTimeUtil.getFirstDayOfCurrentWeek(1500652800000L);
+DateTimeUtil.getFirstDayOfCurrentWeek(1500652800000L);//return 1500220800000
 ```
 
 ## 24. setToFirstDayOfCurrentYear(long millis)方法
@@ -209,7 +210,7 @@ DateTimeUtil.getFirstDayOfCurrentWeek(1500652800000L);
 Usage:
 
 ```
-DateTimeUtil.setToFirstDayOfCurrentYear(1500652800000L);
+DateTimeUtil.setToFirstDayOfCurrentYear(1500652800000L);//return 1483200000000
 ```
 ## 25. setToFirstDayOfNextYear(long millis)方法
 将时间设置为下一年的第一天，返回long型时间戳
@@ -217,7 +218,7 @@ DateTimeUtil.setToFirstDayOfCurrentYear(1500652800000L);
 Usage:
 
 ```
-DateTimeUtil.setToFirstDayOfNextYear(1500652800000L);
+DateTimeUtil.setToFirstDayOfNextYear(1500652800000L);//return 1514736000000
 ```
 ## 26. setToFirstDayOfLastMonth(long ms)方法
 将时间重置到上月的第一天，返回long型时间戳
@@ -229,7 +230,8 @@ DateTimeUtil.setToFirstDayOfLastMonth(1500652800000L);
 ```
 ## 27. setToLastMonthCommonDay(long ms)方法
 
-根据long型时间戳上月同期的时间戳
+根据long型时间戳上月同期的时间戳,返回long型时间戳,如果传入的时间是月末，处理后仍然是月末，
+例如：5月31号，上月同期是4月30号。
 
 Usage:
 
@@ -237,7 +239,7 @@ Usage:
 DateTimeUtil.setToLastMonthCommonDay(1500652800000L);
 ```
 ## 28. setToFirstDayOfCurrentMonth(long millis)方法
-将时间重置为时间当前月的第一天，并且将时分秒全置0
+将时间重置为传入时间当前月的第一天，并且将时分秒全置0,返回long型时间戳
 
 Usage:
 
@@ -245,14 +247,14 @@ Usage:
 DateTimeUtil.setToFirstDayOfCurrentMonth(1500652800000L);
 ```
 ## 29. setToFirstDayOfNextMonth(long millis)方法
-将时间重置为下月的第一天，并将时分秒全置0
+将时间重置为传入时间下月的第一天，并将时分秒全置0,返回long型时间戳
 
 Usage:
 ```
 DateTimeUtil.setToFirstDayOfNextMonth(1500652800000L)
 ```
 ## 30. setToNextYearCommonDay(long millis)方法
-根据时间获取下一年的同一天
+根据时间获取下一年的同一天,返回long型时间戳
 
 Usage:
 
@@ -260,7 +262,7 @@ Usage:
 DateTimeUtil.setToNextYearCommonDay(1500652800000L);
 ```
 ## 31. setToLastYearCommonDay(long millis)方法
-根据传入的时间戳获取去年同期的时间戳
+根据传入的时间戳获取去年同期的时间戳,返回long型时间戳
 
 Usage:
 ```
@@ -268,7 +270,7 @@ DateTimeUtil.setToLastYearCommonDay(1500652800000L);
 ```
 
 ## 32. getLastDayOfCurrentWeek(Timestamp stamp)方法
-根据时间获取所属周的最后一天(中国习惯)
+根据时间获取所属周的最后一天,星期天(中国习惯)，返回long型时间戳
 
 Usage:
 
@@ -276,7 +278,7 @@ Usage:
 DateTimeUtil.getLastDayOfCurrentWeek(new Timestamp(1500652800000L));
 ```
 ## 33. getFirstDayOfCurrentQuarter(long ms)方法
-根据时间的得到所对应季度的第一天(0H0M0S)
+根据时间的得到所对应季度的第一天(0H0M0S)，返回long型时间戳
 
 Usage:
 
@@ -284,7 +286,7 @@ Usage:
 DateTimeUtil.getFirstDayOfCurrentQuarter(1500652800000L);
 ```
 ## 34. getFirstDayOfNextQuarter(long ms)方法
-根据时间获取下一个季度的第一天(0H0M0S)
+根据时间获取下一个季度的第一天(0H0M0S)，返回long型时间戳
 
 Usage:
 
@@ -297,9 +299,9 @@ DateTimeUtil.getFirstDayOfNextQuarter(1500652800000L);
 Usage:
 
 ```
-DateTimeUtil.getDayOfWeek(1500652800000L);
+DateTimeUtil.getDayOfWeek(1500652800000L);//return 6
 ```
-36. isToday(long ms)方法
+## 36. isToday(long ms)方法
 判断是否是今天
 
 Usage:
@@ -351,4 +353,12 @@ DateTimeUtil.getBirthdayFormIdCard("420621198312147749");
 Usage:
 ```
 DateTimeUtil.isCurrentYear(1483200000000L);//return true
+```
+## 43. getNowTime()方法
+该方法返回当前long类型的毫秒时间戳
+
+Usage:
+
+```
+DateTimeUtil.getNowTime();//return 1528535247089
 ```

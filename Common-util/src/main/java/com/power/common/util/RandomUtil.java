@@ -101,7 +101,7 @@ public class RandomUtil {
 
     /**
      * Generate random initial values based on type
-     * @param type
+     * @param type type of object
      * @return string
      */
     public static String randomValueByType(String type) {
@@ -113,20 +113,32 @@ public class RandomUtil {
             case "Integer":    //4
                 dataType = String.valueOf(randomInt(1000));
                 break;
+            case "int" :
+                dataType = String.valueOf(randomInt(1000));
+                break;
             case "Long": //-5
+                dataType = String.valueOf(randomInt(1000));
+                break;
+            case "long":
                 dataType = String.valueOf(randomInt(1000));
                 break;
             case "Double": //8
                 dataType = String.valueOf(randomDouble());
                 break;
+            case "double":
+                dataType = String.valueOf(randomDouble());
+                break;
             case "Float": //6
+                dataType = String.valueOf(randomDouble());
+                break;
+            case "float":
                 dataType = String.valueOf(randomDouble());
                 break;
             case "BigDecimal":    //3
                 dataType = "BigDecimal";
                 break;
             case "Time":  //91
-                dataType = DateTimeUtil.dateToStr(new Date());
+                dataType = DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
                 break;
             case "Timestamp":  //91
                 dataType = DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);

@@ -8,7 +8,7 @@ public class PrettyMemoryUtil {
 
     /**
      * @param byteSize 字节
-     * @return
+     * @return  size of memory
      */
     public static String prettyByteSize(long byteSize) {
 

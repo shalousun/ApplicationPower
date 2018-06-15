@@ -1,5 +1,7 @@
 package com.power.common.filter;
 
+import com.power.common.util.StringUtil;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +15,15 @@ import java.util.Set;
  * 通用xss和sql注入拦截过滤器
  */
 public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter  {
+
+    public static final String IGNORES = "ignores";
     FilterConfig filterConfig = null;
 
     private Set<String> excluded = null;
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
-        String excludedString = filterConfig.getInitParameter("ignores");
-        if (excludedString != null) {
+        String excludedString = filterConfig.getInitParameter(IGNORES);
+        if (StringUtil.isNotEmpty(excludedString)) {
             excluded = Collections.unmodifiableSet(
                     new HashSet<>(Arrays.asList(excludedString.split(";", 0))));
         } else {
