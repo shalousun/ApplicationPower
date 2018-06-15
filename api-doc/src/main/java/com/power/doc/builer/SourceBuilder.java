@@ -183,6 +183,7 @@ public class SourceBuilder {
                 String requestJson = buildReqJson(method);
                 apiMethodDoc.setRequestUsage(JsonFormatUtil.formatJson(requestJson));
                 System.out.println("requestJson:" + requestJson);
+                apiMethodDoc.setResponseUsage(buildReturnJson(method));
                 buildMethodReturn(method, apiMethodDoc);
                 methodDocList.add(apiMethodDoc);
             }
@@ -201,64 +202,39 @@ public class SourceBuilder {
             String gicName = null;
             //反射存在
             StringBuilder params0 = new StringBuilder();
-            StringBuilder data0 = new StringBuilder();
             if ("java.util.Map".equals(typeName)) {
                 System.out.println("map，无法处理");
             } else if (returnType.contains("<")) {
-                //System.out.println("泛型");
                 gicName = returnType.substring(returnType.indexOf("<") + 1, returnType.indexOf(">"));
                 JavaClass cls = builder.getClassByName(gicName);
-                data0.append("{");
                 List<JavaField> fields = cls.getFields();
                 for (JavaField field : fields) {
                     if (!"serialVersionUID".equals(field.getName())) {
-                        String typeSimpleName = field.getType().getSimpleName();
-                        data0.append("\"").append(field.getName()).append("\":").append(DocUtil.jsonValueByType(typeSimpleName)).append(",");
                         params0.append(field.getName()).append("|")
                                 .append(field.getType().getSimpleName().toLowerCase()).append("|")
                                 .append(field.getComment());
                     }
                 }
-//                data0.deleteCharAt(data0.lastIndexOf(","));
-                data0.append("  }");
 
             } else if (!PAGE_INFO.equals(typeName) && !COMMON_RESULT.equals(typeName)) {
                 JavaClass cls = builder.getClassByName(typeName);
-                data0.append("{");
                 List<JavaField> fields = cls.getFields();
                 for (JavaField field : fields) {
                     if (!"serialVersionUID".equals(field.getName())) {
                         String typeSimpleName = field.getType().getSimpleName();
                         System.out.println("typeName:" + typeSimpleName);
-                        data0.append("\"").append(field.getName()).append("\":").append(DocUtil.jsonValueByType(typeSimpleName)).append(",");
                         params0.append(field.getName()).append("|")
                                 .append(field.getType().getSimpleName().toLowerCase()).append("|")
                                 .append(field.getComment()).append("");
                     }
                 }
-                data0.deleteCharAt(data0.lastIndexOf(","));
-                data0.append("}");
             }
-            StringBuilder data = new StringBuilder();
             StringBuilder params = new StringBuilder();
             if ("java.util.List".equals(typeName)) {
-                data.append("[");
-                data.append(data0.toString()).append("]");
                 params.append("参数名称 | 参数类型|描述\n");
                 params.append("---|---|---\n");
                 params.append(params0.toString());
             } else if (COMMON_RESULT.equals(typeName)) {
-                data.append("{\n");
-                data.append("  \"code\": 0,\n");
-                data.append("  \"message\": \"操作成功\",\n");
-                data.append("  \"success\": true,\n");
-                if (data0.length() > 0) {
-                    data.append("  \"data\":").append(data0.toString());
-                } else {
-                    data.append("  \"data\":").append("null\n");
-                }
-                data.append("\n}");
-
                 params.append("参数名称 | 参数类型|描述\n");
                 params.append("---|---|---\n");
                 params.append("code | int |错误编码，目前属于保留字段\n");
@@ -267,16 +243,6 @@ public class SourceBuilder {
                 params.append("data| object | 查询操作success为true，data才有数据\n");
                 params.append(params0.toString());
             } else if (PAGE_INFO.equals(typeName)) {
-                data.append("{\n");
-                data.append("  \"total\": 0,\n");
-                data.append("  \"pages\": 0,\n");
-                if (data0.length() > 0) {
-                    data.append("  \"list\":[").append(data0.toString()).append("]");
-                } else {
-                    data.append("  \"list\":[").append("").append("]\n");
-                }
-                data.append("\n}");
-
                 params.append("参数名称 | 参数类型|描述\n");
                 params.append("---|---|---\n");
                 params.append("total | total |总记录数\n");
@@ -284,18 +250,25 @@ public class SourceBuilder {
                 params.append("list| array | 当前页的数据\n");
                 params.append(params0.toString());
             } else {
-                data.append(data0.toString());
                 params.append("参数名称 | 参数类型|描述\n");
                 params.append("---|---|---\n");
                 params.append(params0.toString());
             }
-            // System.out.println(data.toString());
-            apiMethodDoc.setResponseUsage(JsonFormatUtil.formatJson(buildJson(typeName, returnType)));
             apiMethodDoc.setResponseParams(params.toString());
         }
         return null;
     }
 
+    /**
+     * 构建返回的json
+     * @param method
+     * @return
+     */
+    private String buildReturnJson(JavaMethod method){
+        String returnType = method.getReturnType().getGenericCanonicalName();
+        String typeName = method.getReturnType().getFullyQualifiedName();
+        return JsonFormatUtil.formatJson(buildJson(typeName, returnType));
+    }
 
     private String buildJson(String typeName, String genericCanonicalName) {
         if(DocClassUtil.isPrimitive(typeName)){
