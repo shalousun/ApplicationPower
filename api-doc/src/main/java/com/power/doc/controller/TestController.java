@@ -1,10 +1,8 @@
 package com.power.doc.controller;
 
+import com.power.common.model.CommonResult;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -101,29 +99,21 @@ public class TestController {
 //        return null;
 //    }
 //
-//
+
 //    /**
 //     * 测试CommonResult外部包中的泛型
 //     *
 //     * @return
 //     */
 //    @PostMapping(value = "testCommonResult")
-//    public CommonResult getCommonResult() {
+//    public CommonResult<User> getCommonResult() {
 //        CommonResult result = new CommonResult();
 //        result.setData("string");
 //        return null;
 //    }
 
 
-    /**
-     * List<String>
-     *
-     * @return
-     */
-    @GetMapping(value = "listString")
-    public String testList() {
-        return null;
-    }
+
 
     /**
      * List<T<List<M>,List<M>,List<M>>>
@@ -131,7 +121,7 @@ public class TestController {
      * @return
      */
     @GetMapping(value = "listString")
-    public List<Teacher<List<User>, List<User>, List<User>>> testListString() {
+    public String testListString() {
         return null;
     }
 

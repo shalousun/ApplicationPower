@@ -13,5 +13,9 @@ public class Teacher<T,M,K> {
 
     private M data2;
 
+
+    /**
+     * 年龄
+     */
     private int age;
 }

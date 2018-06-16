@@ -184,7 +184,12 @@ public class SourceBuilder {
                 apiMethodDoc.setRequestUsage(JsonFormatUtil.formatJson(requestJson));
                 System.out.println("requestJson:" + requestJson);
                 apiMethodDoc.setResponseUsage(buildReturnJson(method));
-                buildMethodReturn(method, apiMethodDoc);
+                String str = buildMethodReturn(method, apiMethodDoc);
+                StringBuilder params = new StringBuilder();
+                params.append("字段 | 类型|描述\n");
+                params.append("---|---|---\n");
+                params.append(str);
+                apiMethodDoc.setResponseParams(params.toString());
                 methodDocList.add(apiMethodDoc);
             }
         }
@@ -197,66 +202,122 @@ public class SourceBuilder {
         System.out.println("returnType:" + returnType);
         String typeName = method.getReturnType().getFullyQualifiedName();
         System.out.println("simpleType:" + typeName);
-        System.out.println("respJson:" + JsonFormatUtil.formatJson(buildJson(typeName, returnType)));
+        if(DocClassUtil.isPrimitive(typeName)){
+            return primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(typeName));
+        }
+        if("java.util.List".equals(typeName)){
+            String gicName = returnType.substring(returnType.indexOf("<") + 1, returnType.lastIndexOf(">"));
+            if(DocClassUtil.isPrimitive(gicName)){
+                return primitiveReturnRespComment("array of "+DocClassUtil.processTypeNameForParams(gicName));
+            }
+            String param = buildParams(gicName,"",0);
+            System.out.println("=======================");
+            System.out.println(param);
+            return param;
+        }
+        if("java.util.Map".equals(typeName)){
+            String[] keyValue = DocClassUtil.getMapKeyValueType(returnType);
+            if(DocClassUtil.isPrimitive(keyValue[1])){
+                return primitiveReturnRespComment("key value");
+            }
+            String param = buildParams(keyValue[1],"",0);
+            return param;
+        }
         if (StringUtil.isNotEmpty(returnType)) {
-            String gicName = null;
-            //反射存在
-            StringBuilder params0 = new StringBuilder();
-            if ("java.util.Map".equals(typeName)) {
-                System.out.println("map，无法处理");
-            } else if (returnType.contains("<")) {
-                gicName = returnType.substring(returnType.indexOf("<") + 1, returnType.indexOf(">"));
-                JavaClass cls = builder.getClassByName(gicName);
-                List<JavaField> fields = cls.getFields();
-                for (JavaField field : fields) {
-                    if (!"serialVersionUID".equals(field.getName())) {
-                        params0.append(field.getName()).append("|")
-                                .append(field.getType().getSimpleName().toLowerCase()).append("|")
-                                .append(field.getComment());
+            String param = buildParams(returnType,"",0);
+            System.out.println("=======================");
+            System.out.println(param);
+            return param;
+        }
+        return null;
+    }
+
+    public  String buildParams(String className,String pre,int i){
+        StringBuilder params0 = new StringBuilder();
+        String simpleName = DocClassUtil.getSimpleName(className);
+
+
+        String[] globGicName = DocClassUtil.getSimpleGicName(className);
+        JavaClass cls = builder.getClassByName(simpleName);
+        List<JavaField> fields = cls.getFields();
+        int n = 0;
+        for (JavaField field : fields) {
+            if (!"serialVersionUID".equals(field.getName())) {
+                String typeSimpleName = field.getType().getSimpleName();
+                String subTypeName = field.getType().getFullyQualifiedName();
+                if(DocClassUtil.isPrimitive(subTypeName)){
+                    params0.append(pre);
+                    params0.append(field.getName()).append("|")
+                            .append(DocClassUtil.processTypeNameForParams(typeSimpleName.toLowerCase())).append("|");
+                    if(StringUtil.isNotEmpty(field.getComment())){
+                         params0.append(field.getComment()).append("\n");
+                    }else{
+                        params0.append("no comment.").append("\n");
+                    }
+                }else{
+                    params0.append(pre);
+                    params0.append(field.getName()).append("|")
+                            .append(DocClassUtil.processTypeNameForParams(typeSimpleName.toLowerCase())).append("|");
+                    if(StringUtil.isNotEmpty(field.getComment())){
+                        params0.append(field.getComment()).append("\n");
+                    }else{
+                        params0.append("no comment.").append("\n");
+                    }
+                    StringBuilder preBuilder = new StringBuilder();
+                    for(int j=0;j<i;j++){
+                        preBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    }
+                    preBuilder.append("└─");
+                    if("java.util.Map".equals(subTypeName)){
+                        String gNameTemp = field.getType().getGenericCanonicalName();
+                        String keyType = DocClassUtil.getMapKeyValueType(gNameTemp)[1];
+                        params0.append(buildParams(keyType,preBuilder.toString(),i+1));
+                    }else if("java.util.List".equals(subTypeName)){
+                        String gNameTemp = field.getType().getGenericCanonicalName();
+                        String gName = DocClassUtil.getSimpleGicName(gNameTemp)[0];
+                        params0.append(buildParams(gName,preBuilder.toString(),i+1));
+                    }else if(subTypeName.length()==1||"java.lang.Object".equals(subTypeName)){
+                        if (!simpleName.equals(className)) {
+                            if(n<globGicName.length){
+                                String gicName = globGicName[n];
+                                String simple = DocClassUtil.getSimpleName(gicName);
+                                if(DocClassUtil.isPrimitive(simple)){
+                                    //do nothing
+                                }else if(gicName.contains("<")){
+                                    if("java.util.List".equals(simple)){
+                                        String gName = DocClassUtil.getSimpleGicName(gicName)[0];
+                                        params0.append(buildParams(gName,preBuilder.toString(),i+1));
+                                    }else if("java.util.Map".equals(simple)){
+                                        String keyType = DocClassUtil.getMapKeyValueType(gicName)[1];
+                                        params0.append(buildParams(keyType,preBuilder.toString(),i+1));
+                                    }else{
+                                        params0.append(buildParams(gicName,preBuilder.toString(),i+1));
+                                    }
+                                }else{
+                                    params0.append(buildParams(gicName,preBuilder.toString(),i+1));
+                                }
+                            }else{
+                                params0.append(buildParams(subTypeName,preBuilder.toString(),i+1));
+                            }
+                        }
+                        n++;
+                    }else{
+                        params0.append(buildParams(subTypeName,preBuilder.toString(),i+1));
                     }
                 }
 
-            } else if (!PAGE_INFO.equals(typeName) && !COMMON_RESULT.equals(typeName)) {
-                JavaClass cls = builder.getClassByName(typeName);
-                List<JavaField> fields = cls.getFields();
-                for (JavaField field : fields) {
-                    if (!"serialVersionUID".equals(field.getName())) {
-                        String typeSimpleName = field.getType().getSimpleName();
-                        System.out.println("typeName:" + typeSimpleName);
-                        params0.append(field.getName()).append("|")
-                                .append(field.getType().getSimpleName().toLowerCase()).append("|")
-                                .append(field.getComment()).append("");
-                    }
-                }
             }
-            StringBuilder params = new StringBuilder();
-            if ("java.util.List".equals(typeName)) {
-                params.append("参数名称 | 参数类型|描述\n");
-                params.append("---|---|---\n");
-                params.append(params0.toString());
-            } else if (COMMON_RESULT.equals(typeName)) {
-                params.append("参数名称 | 参数类型|描述\n");
-                params.append("---|---|---\n");
-                params.append("code | int |错误编码，目前属于保留字段\n");
-                params.append("message |string | 成功或者失败信息\n");
-                params.append("success| boolean | 成功返回true,错误返回false\n");
-                params.append("data| object | 查询操作success为true，data才有数据\n");
-                params.append(params0.toString());
-            } else if (PAGE_INFO.equals(typeName)) {
-                params.append("参数名称 | 参数类型|描述\n");
-                params.append("---|---|---\n");
-                params.append("total | total |总记录数\n");
-                params.append("pages |integer | 成功或者失败信息\n");
-                params.append("list| array | 当前页的数据\n");
-                params.append(params0.toString());
-            } else {
-                params.append("参数名称 | 参数类型|描述\n");
-                params.append("---|---|---\n");
-                params.append(params0.toString());
-            }
-            apiMethodDoc.setResponseParams(params.toString());
         }
-        return null;
+        return params0.toString();
+
+    }
+
+
+
+    private String primitiveReturnRespComment(String typeName){
+        StringBuilder comments = new StringBuilder();
+        comments.append("no param name|").append(typeName).append("|").append("接口直接返回").append(typeName).append("类型值");
+        return comments.toString();
     }
 
     /**
@@ -312,10 +373,14 @@ public class SourceBuilder {
                         }
                         i++;
                     } else if ("java.lang.Object".equals(subTypeName)) {
-                        String gicName = globGicName[i];
-                        if (!typeName.equals(genericCanonicalName)) {
-                            data0.append(buildJson(gicName, genericCanonicalName)).append(",");
-                        } else {
+                        if(i< globGicName.length){
+                            String gicName = globGicName[i];
+                            if (!typeName.equals(genericCanonicalName)) {
+                                data0.append(buildJson(gicName, genericCanonicalName)).append(",");
+                            } else {
+                                data0.append("{\"waring\":\"You may have used non-display generics.\"},");
+                            }
+                        }else{
                             data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                         }
                     } else {

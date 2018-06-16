@@ -19,73 +19,31 @@ public class Student {
     /**
      * 年龄
      */
-    private int stuAge;
+    private Boolean stuAge;
+//
+//    /**
+//     * 地址
+//     */
+//    private String stuAddress;
+//
+//    /**
+//     * 用户对象
+//     */
+//    private User user;
 
     /**
-     * 地址
+     * map用户信息
      */
-    private String stuAddress;
+    private Map<String, User> userMap;
 
     /**
-     * 用户对象
+     * 用户列表
      */
-    private User user;
-
-    /**
-     *
-     */
-    private Map<String,User> userMap;
-
+    private List<User> userList;
     /**
      * 用户对象2
      */
     private User user1;
-
-    public String getStuName() {
-        return stuName;
-    }
-
-    public void setStuName(String stuName) {
-        this.stuName = stuName;
-    }
-
-    public int getStuAge() {
-        return stuAge;
-    }
-
-    public void setStuAge(int stuAge) {
-        this.stuAge = stuAge;
-    }
-
-    public String getStuAddress() {
-        return stuAddress;
-    }
-
-    public void setStuAddress(String stuAddress) {
-        this.stuAddress = stuAddress;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Map<String, User> getUserMap() {
-        return userMap;
-    }
-
-    public void setUserMap(Map<String, User> userMap) {
-        this.userMap = userMap;
-    }
-
-    public User getUser1() {
-        return user1;
-    }
-
-    public void setUser1(User user1) {
-        this.user1 = user1;
-    }
 }
+
+

@@ -18,14 +18,12 @@ ${doc.requestParams}
 ```
 ${doc.requestUsage}
 ```
-**响应数据示例**：
-
-注意：本接口返回json数据
+**响应示例**：
 
 ```
 ${doc.responseUsage}
 ```
-**响应参数字段说明：**
+**响应字段说明：**
 
 ${doc.responseParams}
 

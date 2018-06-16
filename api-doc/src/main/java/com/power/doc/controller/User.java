@@ -23,6 +23,11 @@ public class User {
      */
     private int userAge;
 
+    /**
+     * 子用户对象
+     */
+    private SubUser subUser;
+
     public String getUserName() {
         return userName;
     }

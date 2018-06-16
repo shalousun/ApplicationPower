@@ -114,6 +114,23 @@ public List<Teacher<List<User>,List<User>,List<User>>> testListString(){
     return null;
 }
 ```
+# 其他复杂结构
+```
+/**
+ * List<T<List<M>,List<M>,List<M>>>
+ *
+ * @return
+ */
+@GetMapping(value = "listString")
+public List<Teacher<Teacher<User,User,User>,User,User>> testListString() {
+    return null;
+}
+
+@GetMapping(value = "listString")
+public List<Teacher<Teacher<User,User,User>,Teacher<User,User,User>,Teacher<User,User,User>>> testListString() {
+    return null;
+}
+```
 
 **注意：** api-doc为了传入的复杂泛型结构数据，做了许多情况的测试，目前基本能兼容系统开发中95%以上的List返回接口，
 也提供了一些能够处理的很复杂的泛型结构，但是这种复杂的泛型结构在开发中是不被推荐的。
