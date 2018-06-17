@@ -13,6 +13,8 @@ public class ApiMethodDoc implements Serializable {
 
     private String type;
 
+    private String contentType = "application/x-www-form-urlencoded";
+
     private String requestParams;
 
     private String requestUsage;
@@ -35,10 +37,7 @@ public class ApiMethodDoc implements Serializable {
     }
 
     public void setUrl(String url) {
-        if(null != url){
-            this.url = url;
-        }
-        this.url = url;
+        this.url = "http[s]://server/" + url;
     }
 
     public String getType() {
@@ -79,5 +78,13 @@ public class ApiMethodDoc implements Serializable {
 
     public void setRequestUsage(String requestUsage) {
         this.requestUsage = requestUsage;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }
