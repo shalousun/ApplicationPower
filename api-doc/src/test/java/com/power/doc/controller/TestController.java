@@ -1,11 +1,7 @@
 package com.power.doc.controller;
 
-import com.power.common.model.CommonResult;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Description:
@@ -17,13 +13,13 @@ import java.util.Map;
 @RequestMapping("student")
 public class TestController {
 
-    /**
-     * 测试简单对象文档生成
-     *
-     * @param name 学生信息
-     * @param user 用户
-     * @return
-     */
+//    /**
+//     * 测试简单对象文档生成
+//     *
+//     * @param name 学生信息
+//     * @param user 用户
+//     * @return
+//     */
 
 
 //   /**
@@ -113,17 +109,29 @@ public class TestController {
 //    }
 
 
+//    /**
+//     * List<T<List<M>,List<M>,List<M>>>
+//     * @param name 用户id数组
+//     * @param age http request
+//     * @return
+//     */
+//    @PostMapping(value = "test")
+//    public List<User> testListString(String age,String name)  {
+//        return null;
+//    }
+//
+//    /**
+//     * 设备控制接口
+//     * @param reqParams 请求参数
+//     * @return
+//     */
+//    @PostMapping("/ctrl")
+//    public CommonResult ctrl(@RequestBody List<User> reqParams) {
+//       return null;
+//    }
 
 
-    /**
-     * List<T<List<M>,List<M>,List<M>>>
-     *
-     * @return
-     */
-    @GetMapping(value = "listString")
-    public String testListString() {
-        return null;
-    }
+
 
 
 }

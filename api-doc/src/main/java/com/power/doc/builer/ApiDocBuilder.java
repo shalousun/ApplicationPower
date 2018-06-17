@@ -10,6 +10,8 @@ import java.util.List;
 
 public class ApiDocBuilder {
 
+
+    public static final String FILE_SEPARATOR =  System.getProperty("file.separator");
     /**
      * 生成所有controller的api文档
      * @param outPath
@@ -23,7 +25,7 @@ public class ApiDocBuilder {
             Template mapper = BeetlTemplateUtil.getByName("ApiDoc.btl");
             mapper.binding("name", doc.getName());
             mapper.binding("list", doc.getList());//类名
-            FileUtil.writeFileNotAppend(mapper.render(), outPath + "\\" + doc.getName() + "Api.md");
+            FileUtil.writeFileNotAppend(mapper.render(), outPath + FILE_SEPARATOR + doc.getName() + "Api.md");
         }
     }
 
@@ -39,6 +41,6 @@ public class ApiDocBuilder {
         Template mapper = BeetlTemplateUtil.getByName("ApiDoc.btl");
         mapper.binding("name", doc.getName());
         mapper.binding("list", doc.getList());//类名
-        FileUtil.writeFileNotAppend(mapper.render(), outPath + "\\" + doc.getName() + "Api.md");
+        FileUtil.writeFileNotAppend(mapper.render(), outPath + FILE_SEPARATOR + doc.getName() + "Api.md");
     }
 }

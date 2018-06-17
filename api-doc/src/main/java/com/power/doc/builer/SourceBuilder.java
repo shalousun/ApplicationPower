@@ -30,6 +30,8 @@ public class SourceBuilder {
 
     private static final String MODEL = "org.springframework.ui.Model";
 
+    private static final String BINDING_RESULT = "org.springframework.validation.BindingResult";
+
     private static final String  JSON_CONTENT_TYPE = "application/json";
 
     private Map<String, String> javaFilesMap = new HashMap<>();
@@ -250,7 +252,7 @@ public class SourceBuilder {
             if (!"serialVersionUID".equals(field.getName())) {
                 String typeSimpleName = field.getType().getSimpleName();
                 String subTypeName = field.getType().getFullyQualifiedName();
-
+                String fieldGicName = field.getType().getGenericCanonicalName();
                 if(DocClassUtil.isPrimitive(subTypeName)){
                     params0.append(pre);
                     params0.append(field.getName()).append("|")
@@ -320,7 +322,7 @@ public class SourceBuilder {
                         }
                         n++;
                     }else{
-                        params0.append(buildParams(subTypeName,preBuilder.toString(),i+1,isRequired));
+                        params0.append(buildParams(fieldGicName,preBuilder.toString(),i+1,isRequired));
                     }
                 }
 
@@ -365,18 +367,17 @@ public class SourceBuilder {
             if (!"serialVersionUID".equals(field.getName())) {
                 String typeSimpleName = field.getType().getSimpleName();
                 String subTypeName = field.getType().getFullyQualifiedName();
+                String fieldGicName = field.getType().getGenericCanonicalName();
                 data0.append("\"").append(field.getName()).append("\":");
                 if (DocClassUtil.isPrimitive(typeSimpleName)) {
                     data0.append(DocUtil.jsonValueByType(typeSimpleName)).append(",");
                 } else {
                     if ("java.util.List".equals(subTypeName)) {
-                        String gNameTemp = field.getType().getGenericCanonicalName();
-                        String gicName = DocClassUtil.getSimpleGicName(gNameTemp)[0];
-                        data0.append("[").append(buildJson(gicName, gNameTemp)).append("]").append(",");
+                        String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
+                        data0.append("[").append(buildJson(gicName, fieldGicName)).append("]").append(",");
                     } else if ("java.util.Map".equals(subTypeName)) {
-                        String gNameTemp = field.getType().getGenericCanonicalName();
-                        String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.indexOf(">"));
-                        data0.append("{").append("\"mapKey\":").append(buildJson(gicName, gNameTemp)).append("},");
+                        String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
+                        data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName)).append("},");
                     } else if (subTypeName.length() == 1) {
                         if (!typeName.equals(genericCanonicalName)) {
                             String gicName = globGicName[i];
@@ -402,7 +403,8 @@ public class SourceBuilder {
                             data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                         }
                     } else {
-                        data0.append(buildJson(subTypeName, genericCanonicalName)).append(",");
+                        //
+                        data0.append(buildJson(subTypeName, fieldGicName)).append(",");
                     }
                 }
             }
@@ -469,7 +471,8 @@ public class SourceBuilder {
             System.out.println("请求参数简单类型：" + typeName);
             String paraName = parameter.getName();
             System.out.println("参数名：" + paraName);
-            if (!MODEL.equals(typeName) && !MODEL_VIEW.equals(typeName)&&!SERVLET_REQUEST.equals(typeName)) {
+            if (!MODEL.equals(typeName) && !MODEL_VIEW.equals(typeName)&&
+                    !SERVLET_REQUEST.equals(typeName)&&!BINDING_RESULT.equals(typeName)) {
                 List<JavaAnnotation> annotations = parameter.getAnnotations();
                 for (JavaAnnotation annotation : annotations) {
                     String annotationName = annotation.getType().getName();
@@ -529,7 +532,8 @@ public class SourceBuilder {
                 String typeName = parameter.getType().getGenericCanonicalName();
                 String simpleName = parameter.getType().getValue().toLowerCase();
                 String fullTypeName = parameter.getType().getFullyQualifiedName();
-                if (!MODEL.equals(typeName) && !MODEL_VIEW.equals(typeName)&&!SERVLET_REQUEST.equals(typeName)) {
+                if (!MODEL.equals(typeName) && !MODEL_VIEW.equals(typeName)&&
+                        !SERVLET_REQUEST.equals(typeName)&&!BINDING_RESULT.equals(typeName)) {
                     if (!paramTagMap.containsKey(parameter.getName())) {
                         throw new RuntimeException("Unable to find javadoc @param for actual param \""
                                 + parameter.getName() + "\" in method " + javaMethod.getName() + " from " + className);
