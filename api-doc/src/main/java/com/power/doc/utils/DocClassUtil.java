@@ -1,7 +1,9 @@
 package com.power.doc.utils;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,6 @@ public class DocClassUtil {
             if ("java.util.Map".equals(pre)) {
                 return getMapKeyValueType(returnType);
             }
-            System.out.println("cusType:"+returnType);
             String type = returnType.substring(returnType.indexOf("<") + 1, returnType.lastIndexOf(">"));
             if ("java.util.List".equals(pre)) {
                 return type.split(" ");
@@ -75,13 +76,10 @@ public class DocClassUtil {
      * @return array of String
      */
     public static String[] classNameFix(String[] arr) {
-        System.out.println("arr:" + JSON.toJSONString(arr));
-        System.out.println("arrLen:" + arr.length);
         List<String> classes = new ArrayList<>();
         List<Integer> indexList = new ArrayList<>();
         int globIndex = 0;
         for (int i = 0; i < arr.length; i++) {
-            System.out.println(classes.size());
             if (classes.size() > 0) {
                 int index = classes.size() - 1;
                 if (!DocUtil.isClassName(classes.get(index))) {
@@ -92,7 +90,6 @@ public class DocClassUtil {
                         classes.set(index, className);
                     }
 
-                    System.out.println("tihuan");
                 } else {
                     globIndex = globIndex + 1;
                     if (globIndex < arr.length) {
@@ -123,7 +120,6 @@ public class DocClassUtil {
                 }
             }
         }
-        System.out.println("final:" + JSON.toJSONString(classes));
         return classes.toArray(new String[classes.size()]);
     }
 
@@ -162,11 +158,11 @@ public class DocClassUtil {
             case "list":
                 return "array";
             case "java.lang.Integer":
-                return "number";
+                return "int";
             case "integer":
-                return "number";
+                return "int";
             case "int":
-                return "number";
+                return "int";
             case "double":
                 return "number";
             case "java.lang.Long":
@@ -188,4 +184,6 @@ public class DocClassUtil {
         }
 
     }
+
+
 }
