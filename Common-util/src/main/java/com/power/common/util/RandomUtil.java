@@ -43,6 +43,25 @@ public class RandomUtil {
     }
 
     /**
+     * random long
+     * @return long value
+     */
+    public static long randomLong(){
+        return random.nextLong();
+    }
+
+    /**
+     * random long value between min and max
+     * @param min min value
+     * @param max max value
+     * @return long value
+     */
+    public static long randomLong(long min,long max){
+        long rangeLong = min + (((long) (new Random().nextDouble() * (max - min))));
+        return rangeLong;
+    }
+
+    /**
      * random string that only contains numbers and letters
      * @param length length of String
      * @return random string
@@ -134,6 +153,12 @@ public class RandomUtil {
             case "float":
                 dataType = String.valueOf(randomDouble());
                 break;
+            case "boolean":
+                dataType = "true";
+                break;
+            case "Boolean":
+                dataType = "true";
+                 break;
             case "BigDecimal":    //3
                 dataType = "BigDecimal";
                 break;
