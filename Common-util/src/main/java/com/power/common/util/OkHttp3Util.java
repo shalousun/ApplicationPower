@@ -32,6 +32,16 @@ public class OkHttp3Util {
     }
 
     /**
+     * Simple async get request.
+     *
+     * @param url      request
+     * @param callback call back
+     */
+    public static void asyncGet(String url, Callback callback) {
+        doAsyncGet(url, null, null, callback);
+    }
+
+    /**
      * Synchronous get request with parameters
      *
      * @param baseUrl request base url
@@ -40,6 +50,17 @@ public class OkHttp3Util {
      */
     public static String syncGet(String baseUrl, Map<String, String> params) {
         return doSyncGet(baseUrl, params, null);
+    }
+
+    /**
+     * Asynchronous get request with parameters
+     *
+     * @param baseUrl  request base url
+     * @param params   request params
+     * @param callback callback
+     */
+    public static void asyncGet(String baseUrl, Map<String, String> params, Callback callback) {
+        doAsyncGet(baseUrl, params, null, callback);
     }
 
     /**
@@ -55,6 +76,19 @@ public class OkHttp3Util {
     }
 
     /**
+     * Asynchronous get request with parameters and headers
+     *
+     * @param baseUrl  request base url
+     * @param params   request params
+     * @param headers  request headers
+     * @param callback call back
+     */
+    public static void asyncGet(String baseUrl, Map<String, String> params, Map<String, String> headers,
+                                Callback callback) {
+        doAsyncGet(baseUrl, params, headers, callback);
+    }
+
+    /**
      * Synchronous post request with parameters
      *
      * @param url    request url
@@ -63,6 +97,17 @@ public class OkHttp3Util {
      */
     public static String syncPost(String url, Map<String, String> params) {
         return doSyncPost(url, params, null);
+    }
+
+    /**
+     * Asynchronous post request with parameters
+     *
+     * @param url      request url
+     * @param params   request params
+     * @param callback call back
+     */
+    public static void asyncPost(String url, Map<String, String> params, Callback callback) {
+        doAsyncPost(url, params, null, callback);
     }
 
     /**
@@ -79,6 +124,19 @@ public class OkHttp3Util {
 
 
     /**
+     * Asynchronous post request with parameters and headers
+     *
+     * @param url      request url
+     * @param params   request params
+     * @param headers  request headers
+     * @param callback call back
+     */
+    public static void asyncPost(String url, Map<String, String> params, Map<String, String> headers, Callback callback) {
+        doAsyncPost(url, params, headers, callback);
+    }
+
+
+    /**
      * Synchronous post json request
      *
      * @param url  request url
@@ -88,6 +146,18 @@ public class OkHttp3Util {
     public static String syncPostJson(String url, String json) {
         RequestBody body = RequestBody.create(JSON_TYPE, json);
         return doSyncPost(url, body, null);
+    }
+
+    /**
+     * Asynchronous post json request
+     *
+     * @param url      request url
+     * @param json     json data
+     * @param callback call back
+     */
+    public static void asyncPostJson(String url, String json, Callback callback) {
+        RequestBody body = RequestBody.create(JSON_TYPE, json);
+        doAsyncPost(url, body, null, callback);
     }
 
     /**
@@ -103,12 +173,36 @@ public class OkHttp3Util {
         return doSyncPost(url, body, headersMap);
     }
 
+    /**
+     * Asynchronous post json request with headers
+     *
+     * @param url        request url
+     * @param json       json data
+     * @param headersMap request headers
+     * @param callback   call back
+     */
+    public static void asyncPostJson(String url, String json, Map<String, String> headersMap, Callback callback) {
+        RequestBody body = RequestBody.create(JSON_TYPE, json);
+        doAsyncPost(url, body, headersMap, callback);
+    }
+
+    private static void doAsyncGet(String baseUrl, Map<String, String> params, Map<String, String> headersMap,
+                                   Callback callback) {
+        OkHttpClient client = OkHttp3Util.getInstance();
+        String url = urlJoin(baseUrl, params);
+        Request request;
+        if (null == headersMap || headersMap.size() == 0) {
+            request = new Request.Builder().url(url).build();
+        } else {
+            Headers headers = setHeaders(headersMap);
+            request = new Request.Builder().url(url).headers(headers).build();
+        }
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+    }
 
     private static String doSyncGet(String baseUrl, Map<String, String> params, Map<String, String> headersMap) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                .build();
+        OkHttpClient client = OkHttp3Util.getInstance();
         String url = urlJoin(baseUrl, params);
         Request request;
         if (null == headersMap || headersMap.size() == 0) {
@@ -120,11 +214,21 @@ public class OkHttp3Util {
         Call call = client.newCall(request);
         try {
             Response response = call.execute();
+
             return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static void doAsyncPost(String url, Map<String, String> params, Map<String, String> headersMap, Callback callback) {
+        FormBody.Builder builder = new FormBody.Builder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            builder.add(entry.getKey(), entry.getValue());
+        }
+        FormBody body = builder.build();
+        doAsyncPost(url, body, headersMap, callback);
     }
 
     private static String doSyncPost(String url, Map<String, String> params, Map<String, String> headersMap) {
@@ -136,11 +240,21 @@ public class OkHttp3Util {
         return doSyncPost(url, body, headersMap);
     }
 
+    private static void doAsyncPost(String url, RequestBody body, Map<String, String> headersMap, Callback callback) {
+        OkHttpClient client = OkHttp3Util.getInstance();
+        Request request;
+        if (null == headersMap || headersMap.size() == 0) {
+            request = new Request.Builder().post(body).url(url).build();
+        } else {
+            Headers headers = setHeaders(headersMap);
+            request = new Request.Builder().post(body).url(url).headers(headers).build();
+        }
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+    }
+
     private static String doSyncPost(String url, RequestBody body, Map<String, String> headersMap) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                .build();
+        OkHttpClient client = OkHttp3Util.getInstance();
         Request request;
         if (null == headersMap || headersMap.size() == 0) {
             request = new Request.Builder().post(body).url(url).build();
@@ -192,5 +306,16 @@ public class OkHttp3Util {
             endUrl.append(entry.getValue());
         }
         return endUrl.toString();
+    }
+
+    public static OkHttpClient getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    private static class SingletonHolder {
+        private static final OkHttpClient INSTANCE = new OkHttpClient.Builder()
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                .build();
     }
 }
