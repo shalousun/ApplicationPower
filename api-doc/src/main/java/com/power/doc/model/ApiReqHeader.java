@@ -6,7 +6,7 @@ package com.power.doc.model;
  *
  * @author yu 2018/06/18.
  */
-public class ApiRequestHeader {
+public class ApiReqHeader {
 
     /**
      * 请求头的名称
@@ -20,30 +20,36 @@ public class ApiRequestHeader {
     /**
      * 请求头描述
      */
-    private String description;
+    private String desc;
 
+    public static ApiReqHeader header(){
+        return new ApiReqHeader();
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public ApiReqHeader setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public ApiReqHeader setType(String type) {
         this.type = type;
+        return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public ApiReqHeader setDesc(String desc) {
+        this.desc = desc;
+        return this;
     }
 }

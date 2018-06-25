@@ -1,4 +1,4 @@
-package com.power.generator;
+package com.power.doc;
 
 import com.power.common.model.CommonResult;
 

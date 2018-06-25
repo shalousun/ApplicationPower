@@ -1,12 +1,8 @@
-com\power\doc\model\ClassDoc.class
 com\power\doc\model\RequestParam.class
-com\power\doc\builer\SourceBuilder.class
-com\power\doc\model\AbstractComment.class
 com\power\doc\utils\PathUtil.class
-com\power\doc\model\FieldDoc.class
 com\power\doc\model\ApiMethodDoc.class
-com\power\doc\model\MethodDoc.class
 com\power\doc\model\ResponseParam.class
 com\power\doc\model\ApiDoc.class
+com\power\doc\builer\SourceBuilder.class
 com\power\doc\utils\BeetlTemplateUtil.class
 com\power\doc\builer\ApiDocBuilder.class

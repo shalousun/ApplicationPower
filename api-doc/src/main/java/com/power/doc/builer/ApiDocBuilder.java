@@ -1,7 +1,11 @@
 package com.power.doc.builer;
 
+import com.power.common.util.CollectionUtil;
 import com.power.common.util.FileUtil;
+import com.power.common.util.StringUtil;
+import com.power.doc.model.ApiConfig;
 import com.power.doc.model.ApiDoc;
+import com.power.doc.model.ApiErrorCode;
 import com.power.doc.utils.BeetlTemplateUtil;
 
 import org.beetl.core.Template;
@@ -12,21 +16,33 @@ public class ApiDocBuilder {
 
 
     public static final String FILE_SEPARATOR =  System.getProperty("file.separator");
+
     /**
      * 生成所有controller的api文档
      * @param outPath
      * @param isStrict
      */
     public static void builderControllersApi(String outPath,boolean isStrict){
-        FileUtil.mkdirs(outPath);
         SourceBuilder sourceBuilder = new SourceBuilder(isStrict);
         List<ApiDoc> apiDocList = sourceBuilder.getControllerApiData();
-        for(ApiDoc doc:apiDocList){
-            Template mapper = BeetlTemplateUtil.getByName("ApiDoc.btl");
-            mapper.binding("name", doc.getName());
-            mapper.binding("list", doc.getList());//类名
-            FileUtil.writeFileNotAppend(mapper.render(), outPath + FILE_SEPARATOR + doc.getName() + "Api.md");
+        buildApiDoc(apiDocList,outPath);
+    }
+
+    /**
+     *
+     * @param config
+     */
+    public static void builderControllersApi(ApiConfig config){
+        if(null == config){
+            throw new NullPointerException("ApiConfig can't be null");
         }
+        if(StringUtil.isEmpty(config.getOutPath())){
+            throw new RuntimeException("doc output path can't be null or empty");
+        }
+        SourceBuilder sourceBuilder = new SourceBuilder(config);
+        List<ApiDoc> apiDocList = sourceBuilder.getControllerApiData();
+        buildApiDoc(apiDocList,config.getOutPath());
+        buildErrorCodeDoc(config.getErrorCodes(),config.getOutPath());
     }
 
     /**
@@ -39,8 +55,38 @@ public class ApiDocBuilder {
         SourceBuilder sourceBuilder = new SourceBuilder(true);
         ApiDoc doc = sourceBuilder.getSingleControllerApiData(controllerName);
         Template mapper = BeetlTemplateUtil.getByName("ApiDoc.btl");
+        mapper.binding("desc",doc.getDesc());
         mapper.binding("name", doc.getName());
         mapper.binding("list", doc.getList());//类名
         FileUtil.writeFileNotAppend(mapper.render(), outPath + FILE_SEPARATOR + doc.getName() + "Api.md");
+    }
+
+    /**
+     * 公共生成controller api 文档
+     * @param apiDocList
+     * @param outPath
+     */
+    private static void buildApiDoc(List<ApiDoc> apiDocList,String outPath){
+        FileUtil.mkdirs(outPath);
+        for(ApiDoc doc:apiDocList){
+            Template mapper = BeetlTemplateUtil.getByName("ApiDoc.btl");
+            mapper.binding("desc",doc.getDesc());
+            mapper.binding("name", doc.getName());
+            mapper.binding("list", doc.getList());//类名
+            FileUtil.nioWriteFile(mapper.render(), outPath + FILE_SEPARATOR + doc.getName() + "Api.md");
+        }
+    }
+
+    /**
+     * 构建错误码列表
+     * @param errorCodeList 错误列表
+     * @param outPath
+     */
+    private static void buildErrorCodeDoc(List<ApiErrorCode> errorCodeList,String outPath){
+        if(CollectionUtil.isNotEmpty(errorCodeList)){
+            Template mapper = BeetlTemplateUtil.getByName("ErrorCodeList.btl");
+            mapper.binding("list", errorCodeList);//类名
+            FileUtil.nioWriteFile(mapper.render(), outPath + FILE_SEPARATOR + "ErrorCodeList.md");
+        }
     }
 }

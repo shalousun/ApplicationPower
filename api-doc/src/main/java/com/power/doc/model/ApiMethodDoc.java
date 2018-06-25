@@ -13,6 +13,8 @@ public class ApiMethodDoc implements Serializable {
 
     private String type;
 
+    private String headers;
+
     private String contentType = "application/x-www-form-urlencoded";
 
     private String requestParams;
@@ -87,5 +89,13 @@ public class ApiMethodDoc implements Serializable {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public String getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(String headers) {
+        this.headers = headers;
     }
 }

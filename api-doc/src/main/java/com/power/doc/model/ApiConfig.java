@@ -1,5 +1,7 @@
 package com.power.doc.model;
 
+import com.power.common.util.CollectionUtil;
+
 import java.util.List;
 
 /**
@@ -20,16 +22,28 @@ public class ApiConfig {
      */
     private String outPath;
 
+
+    /**
+     * 源代码路径
+     */
+    private String sourcePath;
+
     /**
      * 请求头
      */
-    private List<ApiRequestHeader> requestHeaders;
+    private List<ApiReqHeader> requestHeaders;
 
     /**
      * 自定义字段
      */
-    private List<CustomResponseField> customResponseFields;
+    private List<CustomRespField> customResponseFields;
 
+    /**
+     * 错误码code列表
+     * @return
+     */
+
+    private List<ApiErrorCode> errorCodes;
 
     public boolean isStrict() {
         return isStrict;
@@ -47,19 +61,35 @@ public class ApiConfig {
         this.outPath = outPath;
     }
 
-    public List<ApiRequestHeader> getRequestHeaders() {
+    public List<ApiReqHeader> getRequestHeaders() {
         return requestHeaders;
     }
 
-    public void setRequestHeaders(List<ApiRequestHeader> requestHeaders) {
-        this.requestHeaders = requestHeaders;
+    public void setRequestHeaders(ApiReqHeader... requestHeaders) {
+        this.requestHeaders = CollectionUtil.asList(requestHeaders);
     }
 
-    public List<CustomResponseField> getCustomResponseFields() {
+    public List<CustomRespField> getCustomResponseFields() {
         return customResponseFields;
     }
 
-    public void setCustomResponseFields(List<CustomResponseField> customResponseFields) {
-        this.customResponseFields = customResponseFields;
+    public void setCustomResponseFields(CustomRespField... customResponseFields) {
+        this.customResponseFields = CollectionUtil.asList(customResponseFields);
+    }
+
+    public String getSourcePath() {
+        return sourcePath;
+    }
+
+    public void setSourcePath(String sourcePath) {
+        this.sourcePath = sourcePath;
+    }
+
+    public List<ApiErrorCode> getErrorCodes() {
+        return errorCodes;
+    }
+
+    public void setErrorCodes(List<ApiErrorCode> errorCodes) {
+        this.errorCodes = errorCodes;
     }
 }

@@ -1,4 +1,4 @@
-package com.power.generator.util;
+package com.power.doc.util;
 
 import com.alibaba.fastjson.JSON;
 import com.power.doc.utils.DocClassUtil;

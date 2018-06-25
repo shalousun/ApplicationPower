@@ -1,30 +1,50 @@
 
-
+# ${desc}
 <%
 for(doc in list){
 %>
-# ${doc.desc}
-**url**:
-```
-${doc.url}
-```
-**type:** ${doc.type}
+## ${doc.desc}
+**URL:** ${doc.url}
 
-**请求参数说明**：
+**Type:** ${doc.type}
 
+**Content-Type:** ${doc.contentType}
+
+<%if(isNotEmpty(doc.headers)){%>
+**Request-headers:**
+
+Name | Type|Description
+---|---|---
+${doc.headers}
+<%}%>
+
+<%if(isNotEmpty(doc.requestParams)){%>
+**Request-parameters:**
+
+Parameter | Type|Description|Required
+---|---|---|---
 ${doc.requestParams}
+<%}%>
 
-**请求示例：**
+<%if(isNotEmpty(doc.requestUsage)){%>
+**Request-example:**
 ```
 ${doc.requestUsage}
 ```
-**响应示例**：
+<%}%>
+<%if(isNotEmpty(doc.responseParams)){%>
+**Response-fields:**
 
+Field | Type|Description
+---|---|---
+${doc.responseParams}
+<%}%>
+
+<%if(isNotEmpty(doc.responseUsage)){%>
+**Response-example:**
 ```
 ${doc.responseUsage}
 ```
-**响应字段说明：**
-
-${doc.responseParams}
+<%}%>
 
 <% } %>
