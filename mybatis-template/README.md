@@ -2,11 +2,13 @@ mybatis-template主要作用是重写了mybatis的SqlSessionTemplate，
 [代码源出处](https://github.com/igool/spring-jta-mybatis) 非常感谢源作者开放的源代码。目前网络上多数
 基于分布式事务的动态数据源切或多或少都有问题，该解决方法目前测试有效。
 ```
+<!-- https://mvnrepository.com/artifact/com.github.shalousun/mybatis-template -->
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>mybatis-template</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
 </dependency>
+
 ```
 mybatis-template模块依赖于datasource-aspect模块，因此使用过程中需要将datasource-aspect安装或上传到自己的私服
 
