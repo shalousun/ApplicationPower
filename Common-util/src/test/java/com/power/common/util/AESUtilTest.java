@@ -50,10 +50,14 @@ public class AESUtilTest {
 
         byte[] key = Base64.decodeBase64("T2+PfV1qoSpkSUI6Yu1ZsQ==");
 
-        byte[] content = Base64.decodeBase64("VMAgOo407rSCigdy6gRPkfpAMpQKyOUuJPrRBTHj1sIsRGGleTnXQqKNseOeZtDJy0E6mKxvsrrslcN5EeXiTW4oCPGjJzq93DOLFbUfRZU=");
+        byte[] content = Base64.encodeBase64("hello".getBytes());
 
-        byte[] result = AESUtil.decryptByECB(content,key);
+        //加密
+        byte[] encodeResult = AESUtil.encryptByECB(content,key);
 
-        System.out.println(new String(result));
+        //解密
+        byte[] result = AESUtil.decryptByECB(encodeResult,key);
+
+        System.out.println(new String(Base64.decodeBase64(result)));
     }
 }

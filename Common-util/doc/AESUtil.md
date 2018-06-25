@@ -51,7 +51,7 @@ Usage:
  AESUtil.decodeByCBC(encodeStr,KEY,IV);// return "hello world"
 
 ```
-## 3. encodeByEBC(String content, String key)方法
+## 3. encodeByECB(String content, String key)方法
 该方法表示使用EBC模式来加密字符串
 
 参数 | 描述
@@ -64,11 +64,11 @@ Usage:
 ```
  private static final String KEY = "aespower98765432";
 
- AESUtil.encodeByEBC("hello world",KEY);//renturn "4uw/w/ozV7rZWZvcz57ExA=="
+ AESUtil.encodeByECB("hello world",KEY);//renturn "4uw/w/ozV7rZWZvcz57ExA=="
 
 ```
 ## 4. decodeByEBC(String content, String key)方法
-该方法表示使用EBC模式来解密已加密的字符串
+该方法表示使用ECB模式来解密已加密的字符串
 
 参数 | 描述
 ---|---
@@ -81,8 +81,57 @@ Usage:
  private static final String KEY = "aespower98765432";
 
  String encodeStr = "4uw/w/ozV7rZWZvcz57ExA==";
- AESUtil.decodeByEBC(encodeStr,KEY);// return "hello world"
+ AESUtil.decodeByECB(encodeStr,KEY);// return "hello world"
 
+```
+## 5. decryptByECB(byte[] content, byte[] key)方法
+该方法使用ECB模式来解密，解密后返回二进制数组，本方法主要用于解密第三方加密的秘串，
+前面直接解密加密字符串，在解密其他人给的加密串是并不有效，因为加密实现不对等。
+但是该方法没有做任何多余实现，更够解密其他aes加密的二进制密文。
+
+
+
+参数 | 描述
+---|---
+content| 待解密字符串
+key|解密的密匙
+ 
+Usage:
+
+```
+ byte[] key = Base64.decodeBase64("T2+PfV1qoSpkSUI6Yu1ZsH==");
+ 
+ byte[] content = Base64.decodeBase64("VMAgOo407rSCigdy6gRPkfpAMpQKyOUuJPrRBTHj1sIsRGGleTnXQqKNseOeZtDJy0E6mKxvsrrslcN5EeXiTW4oCPGjJzq93DOLFbUfRZU=");
+
+ byte[] result = AESUtil.decryptByECB(content,key);
+
+ System.out.println(new String(result));
+ 
+ //仅供参考，测试时请自行修改数据
+
+```
+## 6. encryptByECB(byte[] content, byte[] key)方法
+该方法表示使用ECB模式来加密字符串
+
+参数 | 描述
+---|---
+content| 待加密字符串
+key|解密的密匙
+ 
+Usage:
+
+```
+byte[] key = Base64.decodeBase64("T2+PfV1qoSpkSUI6Yu1ZsQ==");
+
+byte[] content = Base64.encodeBase64("hello".getBytes());
+
+//加密
+byte[] encodeResult = AESUtil.encryptByECB(content,key);
+
+//解密
+byte[] result = AESUtil.decryptByECB(encodeResult,key);
+
+System.out.println(new String(Base64.decodeBase64(result)));//hello
 ```
 
 # AESUtil的使用建议

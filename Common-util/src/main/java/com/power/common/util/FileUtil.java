@@ -21,6 +21,9 @@ public class FileUtil {
      * @return boolean
      */
     public static boolean mkdir(String path) {
+        if(StringUtil.isEmpty(path)){
+            throw new NullPointerException("dir path can't null or empty");
+        }
         File file = new File(path);
         return !file.exists() && file.mkdir();
     }
@@ -32,6 +35,9 @@ public class FileUtil {
      * @return boolean
      */
     public static boolean mkdirs(String path) {
+        if(StringUtil.isEmpty(path)){
+            throw new NullPointerException("dir path can't null or empty");
+        }
         File file = new File(path);
         return !file.exists() && file.mkdirs();
     }
@@ -267,22 +273,21 @@ public class FileUtil {
     /**
      * Use nio write file
      *
-     * @param filePath file path
      * @param contents string contents
+     * @param filePath file path
      * @return boolean
      */
-    public static boolean nioWriteFile(String filePath, String contents) {
+    public static boolean nioWriteFile(String contents,String filePath) {
         return nioWriteFile(filePath, contents, null);
     }
 
     /**
      * Appending The New Data To The Existing File
-     *
-     * @param filePath file path
      * @param contents string contents
+     * @param filePath file path
      * @return boolean
      */
-    public static boolean nioWriteAppendable(String filePath, String contents) {
+    public static boolean nioWriteAppendable(String contents,String filePath) {
         return nioWriteFile(filePath, contents, StandardOpenOption.APPEND);
     }
 

@@ -67,7 +67,7 @@ FileUtil.getFileContent("/usr/local/hello.txt");//return "hello"
 ---|---
 is| 输入流
 
-## 6. nioWriteFile(String filePath,String contents)方法
+## 6. nioWriteFile(String contents,String filePath)方法
 
 该方法采用nio的方式将字符串内容写入到文件系统中，写入时旧的内容会被新的覆盖，默认编码为utf-8
 
@@ -79,9 +79,9 @@ is| 输入流
 Usage:
 
 ```
-FileUtil.nioWriteFile("/usr/local/hello.txt","hello");//return true or false
+FileUtil.nioWriteFile("hello","/usr/local/hello.txt");//return true or false
 ```
-## 7. nioWriteAppendable(String filePath,String contents)方法
+## 7. nioWriteAppendable(String contents,String filePath,)方法
 该方法采用nio的方式将字符串内容写入到文件系统中，新的内容会被追加到旧的内容后面，默认编码为utf-8
 
 参数 | 描述
@@ -92,7 +92,7 @@ FileUtil.nioWriteFile("/usr/local/hello.txt","hello");//return true or false
 Usage:
 
 ```
-FileUtil.nioWriteAppendable("/usr/local/hello.txt","hello");//return true or false
+FileUtil.nioWriteAppendable("hello","/usr/local/hello.txt");//return true or false
 ```
 
 ## 8. nioTransferCopy(File source, File target)方法
