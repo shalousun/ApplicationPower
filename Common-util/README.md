@@ -5,7 +5,7 @@ common-util是一个和任何模块都无关的模块，common-util模块中主�
 <dependency>
   <groupId>com.github.shalousun</groupId>
   <artifactId>common-util</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
 </dependency>
 ```
 common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、ValidateUtil、IpUtil等。
@@ -22,6 +22,8 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 6. MD6Util  // @since 0.2
 7. RandomUtil
 8. FileUtil
+9. RSAUtil //@since 0.3
+10 OkHttp3Util //since 0.3
 ```
 ## 仓库版本发布日志
  
@@ -34,3 +36,9 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 - 更新内容：
 	1. 添加AESUtil和MD6加密工具包括相应文档.
 	2. 修改Xss安全拦击，以便在项目中能自定义处理错误信息.
+#### 版本号：0.3  
+- 更新日期：2018-06-26 
+- 更新内容：
+	1. 添加OkHttpUtil工具类.
+	2. 修改AESUtil加密工具.
+	3. 修改FileUtil的nio写文件的参数顺序。

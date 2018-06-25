@@ -29,9 +29,9 @@ api-doc是一个基于注解的文档解释器。是现在网上公开的rest ap
 ## 1.导入api-doc工具的依赖包
 ```
 <dependency>
-    <groupId>com.power.doc</groupId>
+    <groupId>com.github.shalousun</groupId>
     <artifactId>api-doc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
     <scope>test</scope>
 </dependency>
 ```

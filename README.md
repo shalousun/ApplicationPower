@@ -14,7 +14,7 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
      ● 分布式事务管理：spring-boot-starter-jta-atomikos或atomikos 4.04
      ● 日志管理：SLF4J和log4j2
 ## 结构说明
-   1. api-doc是一个未来将使用原生doc注释来生成markdown api文档的项目，目前不可用
+   1. api-doc是一个原生doc注释来生成markdown api文档的项目，支持目前90%的使用开发场景
    2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，目前已发布到中央仓库。
    3. application-power是整个项目的核心，专门用于生成Spring Boot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
    4. datasource-aspect是spring web应用下多数据源动态切换的通用模块
@@ -211,6 +211,11 @@ application-power整合的springboot打包后的结构参考
 	4. 增加生成gradle项目的功能，包括SpringBoot在gradle下docker的容器化配置实现。
 	5. 将common-util、datasource-aspect、mybatis-template发布到maven中央仓库。使用是无需
 	再将这些模块安装到本地在使用
+#### 版本号：1.7.3
+- 更新日期：2018-06-26
+- 更新内容：
+	1. 升级common-util到03版本，增加OKHttp3Util,AESUtil增加新的ECB加解密方法
+	2. 首次发布可以使用的api-doc文档工具，提高开发中的接口文档开发效率。
 
 
 
