@@ -9,9 +9,9 @@ public class PathUtil {
 
     /**
      *  获取java类名
-     * @param parentDir
+     * @param parentDir parent dir
      * @param className 类名
-     * @return
+     * @return string
      */
     public static String javaFilePath(String parentDir, String className) {
         if (StringUtil.isEmpty(parentDir)) {

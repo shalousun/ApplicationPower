@@ -50,7 +50,7 @@ public class SourceBuilder {
     /**
      * if isStrict value is true,it while check all method
      *
-     * @param isStrict
+     * @param isStrict strict flag
      */
     public SourceBuilder(boolean isStrict) {
         loadJavaFiles(null);
@@ -134,7 +134,7 @@ public class SourceBuilder {
      * 包括包名
      *
      * @param controller controller的名称
-     * @return
+     * @return ApiDoc
      */
     public ApiDoc getSingleControllerApiData(String controller) {
         if (!javaFilesMap.containsKey(controller)) {

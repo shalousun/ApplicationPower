@@ -47,8 +47,8 @@ public class DocUtil {
     }
     /**
      * 随机生成json值
-     * @param type0
-     * @return
+     * @param type0 type name
+     * @return string
      */
     public static String jsonValueByType(String type0){
         String type = type0.contains("java.lang")?type0.substring(type0.lastIndexOf(".")+1,type0.length()):type0;
@@ -91,8 +91,8 @@ public class DocUtil {
 
     /**
      * 是否是合法的java类名称
-     * @param className
-     * @return
+     * @param className class nem
+     * @return boolean
      */
     public static boolean isClassName(String className){
         if(StringUtil.isEmpty(className)){

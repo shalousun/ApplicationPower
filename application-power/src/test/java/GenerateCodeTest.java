@@ -5,7 +5,9 @@ import com.power.generator.builder.CodeWriter;
  */
 public class GenerateCodeTest {
     public static void main(String[] args) throws Exception{
+
         long startTime = System.currentTimeMillis();
+
         new CodeWriter().executeSpringBoot();
 
         long engTime = System.currentTimeMillis();

@@ -30,9 +30,9 @@ public class BeetlTemplateUtil {
 
     /**
      *
-     * @param path
-     * @param params
-     * @return
+     * @param path path
+     * @param params  params
+     * @return map
      */
     public static Map<String, String> getTemplatesRendered(String path, Map<String, Object> params) {
         Map<String, String> templateMap = new HashMap<>();

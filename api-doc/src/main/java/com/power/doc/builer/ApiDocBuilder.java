@@ -19,8 +19,8 @@ public class ApiDocBuilder {
 
     /**
      * 生成所有controller的api文档
-     * @param outPath
-     * @param isStrict
+     * @param outPath 代码输出路径
+     * @param isStrict 是否启用严格模式
      */
     public static void builderControllersApi(String outPath,boolean isStrict){
         SourceBuilder sourceBuilder = new SourceBuilder(isStrict);
@@ -30,7 +30,7 @@ public class ApiDocBuilder {
 
     /**
      *
-     * @param config
+     * @param config 配置
      */
     public static void builderControllersApi(ApiConfig config){
         if(null == config){
@@ -47,8 +47,8 @@ public class ApiDocBuilder {
 
     /**
      * 生成单个controller的api文档
-     * @param outPath
-     * @param controllerName
+     * @param outPath 代码输出路径
+     * @param controllerName controller 名称
      */
     public static void buildSingleControllerApi(String outPath,String controllerName){
         FileUtil.mkdirs(outPath);

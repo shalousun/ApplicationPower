@@ -1,6 +1,5 @@
 package com.power.doc.util;
 
-import com.alibaba.fastjson.JSON;
 import com.power.doc.utils.DocClassUtil;
 import org.junit.Test;
 
@@ -16,6 +15,6 @@ public class DocClassUtilTest {
     public void testGetSimpleGicName(){
         String className = "com.power.doc.controller.Teacher<com.power.doc.controller.Teacher<com.power.doc.controller.User,com.power.doc.controller.User,com.power.doc.controller.User>,com.power.doc.controller.Teacher<com.power.doc.controller.User,com.power.doc.controller.User,com.power.doc.controller.User>,com.power.doc.controller.Teacher<com.power.doc.controller.User,com.power.doc.controller.User,com.power.doc.controller.User>>";
         String[] arr = DocClassUtil.getSimpleGicName(className);
-        System.out.println("arr:"+ JSON.toJSONString(arr));
+//        System.out.println("arr:"+ JSON.toJSONString(arr));
     }
 }
