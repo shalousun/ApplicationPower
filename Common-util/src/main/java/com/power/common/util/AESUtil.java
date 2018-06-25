@@ -40,7 +40,7 @@ public class AESUtil {
     /**
      * 使用cbc加密解密
      *
-     * @param content    带解密字节数组
+     * @param content    待解密字节数组
      * @param key        解密的密匙
      * @param initVector 初始向量
      * @return byte[]
@@ -62,6 +62,7 @@ public class AESUtil {
 
     /**
      * 使用cbc加密模式解密
+     *
      * @param content    待加密的内容
      * @param key        加密key
      * @param initVector 初始向量
@@ -82,54 +83,94 @@ public class AESUtil {
     }
 
     /**
+     * 使用ecb解密
+     *
+     * @param content 待解密字节数组
+     * @param key     解密的密匙
+     * @return byte[]
+     */
+    public static byte[] decryptByECB(byte[] content, byte[] key) {
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(key, KEY_ALGORITHM);
+            Cipher cipher = Cipher.getInstance(AES_ECB_PADDING);
+            cipher.init(Cipher.DECRYPT_MODE, keySpec);
+            return cipher.doFinal(content);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
+                | IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 使用ecb加密模式加密
+     *
+     * @param content 待加密的内容
+     * @param key     加密key
+     * @return byte[]
+     */
+    public static byte[] encryptByECB(byte[] content, byte[] key) {
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(key, KEY_ALGORITHM);
+            Cipher cipher = Cipher.getInstance(AES_ECB_PADDING);
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+            return cipher.doFinal(content);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
+                | IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 使用cbc模式解密字符串
+     *
      * @param content    带解密字节数组
      * @param key        解密的密匙
      * @param initVector 初始向量
      * @return String
      */
     public static String decodeByCBC(String content, String key, String initVector) {
-        AESUtil.checkParamsOfCBC(content,key,initVector);
+        AESUtil.checkParamsOfCBC(content, key, initVector);
         byte[] decryptFrom = parseHexStr2Byte(content);
         byte[] decryptResult = decryptByCBC(decryptFrom, key.getBytes(), initVector.getBytes());
         return new String(decryptResult);
     }
 
     /**
-     *
      * 使用cbc模式接啊
+     *
      * @param content    带解密字节数组
      * @param key        解密的密匙
      * @param initVector 初始向量
      * @return String
      */
     public static String encodeByCBC(String content, String key, String initVector) {
-        AESUtil.checkParamsOfCBC(content,key,initVector);
+        AESUtil.checkParamsOfCBC(content, key, initVector);
         byte[] encryptResult = null;
-        try{
+        try {
             encryptResult = encryptByCBC(content.getBytes(DEFAULT_CHARSET), key.getBytes(), initVector.getBytes());
-        }catch (UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         String encryptResultStr = parseByte2HexStr(encryptResult);
         return encryptResultStr;
     }
+
     /**
      * 使用ecb模式加密
-     * @param content    待加密的内容
-     * @param key        加密key
+     *
+     * @param content 待加密的内容
+     * @param key     加密key
      * @return 返回Base64转码后的加密数据
      */
-    public static String encodeByECB(String content, String key){
-        AESUtil.checkContentAndKey(content,key);
-        try{
-            Cipher cipher = Cipher.getInstance(AES_ECB_PADDING);
-            cipher.init(Cipher.ENCRYPT_MODE,getSecretKey(key));
-            byte[] encrypted = cipher.doFinal(content.getBytes(DEFAULT_CHARSET));
+    public static String encodeByECB(String content, String key) {
+        AESUtil.checkContentAndKey(content, key);
+        try {
+            byte[] encrypted = encryptByECB(content.getBytes(DEFAULT_CHARSET), key.getBytes(DEFAULT_CHARSET));
             //BASE64 is used here as a transcoding function, which can also play a role of 2 times encryption
             return new Base64().encodeToString(encrypted);
-        }catch (UnsupportedEncodingException|NoSuchPaddingException
-                |InvalidKeyException|NoSuchAlgorithmException|BadPaddingException|IllegalBlockSizeException e){
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return null;
@@ -138,19 +179,17 @@ public class AESUtil {
 
     /**
      * 使用ecb模式解密
-     * @param content    待加密的内容
-     * @param key        加密key
+     *
+     * @param content 待加密的内容
+     * @param key     加密key
      * @return String
      */
-    public static String decodeByECB(String content, String key){
-        AESUtil.checkContentAndKey(content,key);
+    public static String decodeByECB(String content, String key) {
+        AESUtil.checkContentAndKey(content, key);
         try {
-            Cipher cipher = Cipher.getInstance(AES_ECB_PADDING);
-            cipher.init(Cipher.DECRYPT_MODE, getSecretKey(key));
-            byte[] result = cipher.doFinal(Base64.decodeBase64(content));
-            return new String(result,DEFAULT_CHARSET);
-        } catch (NoSuchPaddingException|InvalidKeyException|BadPaddingException
-                |UnsupportedEncodingException|NoSuchAlgorithmException|IllegalBlockSizeException ex) {
+            byte[] result = decryptByECB(Base64.decodeBase64(content), key.getBytes(DEFAULT_CHARSET));
+            return new String(result, DEFAULT_CHARSET);
+        } catch (UnsupportedEncodingException ex) {
             ex.printStackTrace();
         }
         return null;
@@ -195,40 +234,42 @@ public class AESUtil {
     }
 
 
-
     /**
      * CBC加解密模式的参数检查
+     *
      * @param content    带解密字节数组
      * @param key        解密的密匙
      * @param initVector 初始向量
      */
-    private static void checkParamsOfCBC(String content, String key, String initVector){
-        AESUtil.checkContentAndKey(content,key);
-        if(StringUtil.isEmpty(initVector)){
+    private static void checkParamsOfCBC(String content, String key, String initVector) {
+        AESUtil.checkContentAndKey(content, key);
+        if (StringUtil.isEmpty(initVector)) {
             throw new NullPointerException("The init Vector can't be null or empty.");
         }
     }
 
     /**
      * 检测加解密的参数
-     * @param content    带解密字节数组
-     * @param key        解密的密匙
+     *
+     * @param content 带解密字节数组
+     * @param key     解密的密匙
      */
-    private static void checkContentAndKey(String content,String key){
+    private static void checkContentAndKey(String content, String key) {
         if (StringUtil.isEmpty(content)) {
             throw new NullPointerException("The string to be encrypted cannot be null.");
         }
-        if(StringUtil.isEmpty(key)){
+        if (StringUtil.isEmpty(key)) {
             throw new NullPointerException("The key can't be null or empty.");
         }
 
-        if(key.length()!= 16){
+        if (key.length() != 16) {
             throw new RuntimeException("The length of key must be 16 while use AES CBC mode.");
         }
     }
 
     /**
      * 生成加密秘钥
+     *
      * @param key 加密key
      * @return SecretKeySpec
      */

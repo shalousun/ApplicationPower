@@ -1,5 +1,6 @@
 package com.power.common.util;
 
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 
 /**
@@ -31,6 +32,7 @@ public class AESUtilTest {
 
     @Test
     public void testEncodeByECB(){
+
         String encodeStr = AESUtil.encodeByECB("hello world",KEY);
 
         System.out.println("After encode by EBC mode: "+encodeStr);
@@ -38,5 +40,20 @@ public class AESUtilTest {
         String decodeStr = AESUtil.decodeByECB(encodeStr,KEY);
 
         System.out.println("After decode by EBC mode: "+decodeStr);
+    }
+
+    /**
+     * 基于base64加密key的解密测试
+     */
+    @Test
+    public void testDecryptByECB(){
+
+        byte[] key = Base64.decodeBase64("T2+PfV1qoSpkSUI6Yu1ZsQ==");
+
+        byte[] content = Base64.decodeBase64("VMAgOo407rSCigdy6gRPkfpAMpQKyOUuJPrRBTHj1sIsRGGleTnXQqKNseOeZtDJy0E6mKxvsrrslcN5EeXiTW4oCPGjJzq93DOLFbUfRZU=");
+
+        byte[] result = AESUtil.decryptByECB(content,key);
+
+        System.out.println(new String(result));
     }
 }
