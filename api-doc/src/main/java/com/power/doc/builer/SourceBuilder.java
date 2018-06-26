@@ -254,7 +254,7 @@ public class SourceBuilder {
         if(DocClassUtil.isPrimitive(typeName)){
             return primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(typeName));
         }
-        if("java.util.List".equals(typeName)){
+        if(DocClassUtil.isCollection(typeName)){
             String gicName = returnType.substring(returnType.indexOf("<") + 1, returnType.lastIndexOf(">"));
             if(DocClassUtil.isPrimitive(gicName)){
                 return primitiveReturnRespComment("array of "+DocClassUtil.processTypeNameForParams(gicName));
@@ -262,7 +262,7 @@ public class SourceBuilder {
             String param = buildParams(gicName,"",0,null,fieldMap);
             return param;
         }
-        if("java.util.Map".equals(typeName)){
+        if(DocClassUtil.isMap(typeName)){
             String[] keyValue = DocClassUtil.getMapKeyValueType(returnType);
             if(DocClassUtil.isPrimitive(keyValue[1])){
                 return primitiveReturnRespComment("key value");
@@ -336,11 +336,11 @@ public class SourceBuilder {
                         preBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     }
                     preBuilder.append("└─");
-                    if("java.util.Map".equals(subTypeName)){
+                    if(DocClassUtil.isMap(subTypeName)){
                         String gNameTemp = field.getType().getGenericCanonicalName();
                         String keyType = DocClassUtil.getMapKeyValueType(gNameTemp)[1];
                         params0.append(buildParams(keyType,preBuilder.toString(),i+1,isRequired,responseFieldMap));
-                    }else if("java.util.List".equals(subTypeName)){
+                    }else if(DocClassUtil.isCollection(subTypeName)){
                         String gNameTemp = field.getType().getGenericCanonicalName();
                         String gName = DocClassUtil.getSimpleGicName(gNameTemp)[0];
                         params0.append(buildParams(gName,preBuilder.toString(),i+1,isRequired,responseFieldMap));
@@ -352,10 +352,10 @@ public class SourceBuilder {
                                 if(DocClassUtil.isPrimitive(simple)){
                                     //do nothing
                                 }else if(gicName.contains("<")){
-                                    if("java.util.List".equals(simple)){
+                                    if(DocClassUtil.isCollection(simple)){
                                         String gName = DocClassUtil.getSimpleGicName(gicName)[0];
                                         params0.append(buildParams(gName,preBuilder.toString(),i+1,isRequired,responseFieldMap));
-                                    }else if("java.util.Map".equals(simple)){
+                                    }else if(DocClassUtil.isMap(simple)){
                                         String keyType = DocClassUtil.getMapKeyValueType(gicName)[1];
                                         params0.append(buildParams(keyType,preBuilder.toString(),i+1,isRequired,responseFieldMap));
                                     }else{
@@ -396,10 +396,24 @@ public class SourceBuilder {
     private String buildReturnJson(JavaMethod method,Map<String,CustomRespField> responseFieldMap){
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
+
         return JsonFormatUtil.formatJson(buildJson(typeName, returnType,responseFieldMap));
     }
 
     private String buildJson(String typeName, String genericCanonicalName,Map<String,CustomRespField> responseFieldMap) {
+        if("java.util.TreeSet".equals(typeName)||"java.util.HashSet".equals(typeName)){
+            throw new RuntimeException("api-doc doesn't support TreeSet and HashSet used as return type or field type,please use Set interface instead.");
+        }
+
+        if("java.util.LinkedList".equals(typeName)||"java.util.ArrayList".equals(typeName)){
+            throw new RuntimeException("api-doc doesn't support ArrayList and LinkedList used as return type or field type,please use List interface instead.");
+        }
+
+        if(DocClassUtil.isMapImpl(typeName)){
+            String error = "api-doc doesn't support HashMap,LinkedHashMap,TreeMap,Hashtable,Properties and ConcurrentHashMap " +
+                    "used as return type or field type,please use Map interface instead.";
+            throw new RuntimeException(error);
+        }
         if(DocClassUtil.isPrimitive(typeName)){
             return DocUtil.jsonValueByType(typeName).replace("\"","");
         }
@@ -435,10 +449,10 @@ public class SourceBuilder {
                         data0.append(DocUtil.getValByTypeAndFieldName(typeSimpleName,field.getName())).append(",");
                     }
                 } else {
-                    if ("java.util.List".equals(subTypeName)) {
+                    if (DocClassUtil.isCollection(subTypeName)) {
                         String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
                         data0.append("[").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("]").append(",");
-                    } else if ("java.util.Map".equals(subTypeName)) {
+                    } else if (DocClassUtil.isMap(subTypeName)) {
                         String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
                         data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("},");
                     } else if (subTypeName.length() == 1) {
@@ -474,7 +488,7 @@ public class SourceBuilder {
         }
 
         StringBuilder data = new StringBuilder();
-        if ("java.util.List".equals(typeName)) {
+        if (DocClassUtil.isCollection(typeName)) {
             data.append("[");
             String gName = globGicName[0];
             if ("java.lang.Object".equals(gName)) {
@@ -492,7 +506,7 @@ public class SourceBuilder {
             }
             data.append("]");
             return data.toString();
-        } else if ("java.util.Map".equals(typeName)) {
+        } else if (DocClassUtil.isMap(typeName)) {
             String gNameTemp = genericCanonicalName;
             String[] getKeyValType = DocClassUtil.getMapKeyValueType(gNameTemp);
             if (!"java.lang.String".equals(getKeyValType[0])) {
@@ -513,6 +527,7 @@ public class SourceBuilder {
             }
             return data.toString();
         } else {
+
             if ("java.lang.Object".equals(typeName)) {
                 throw new RuntimeException("Please do not return java.lang.Object directly in api interface.");
             }
@@ -610,7 +625,7 @@ public class SourceBuilder {
                                         .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
                                         .append(paramTagMap.get(parameter.getName())).append("|true\n");
                             } else {
-                                if("java.util.List".equals(fullTypeName)){
+                                if(DocClassUtil.isCollection(fullTypeName)){
                                     String[] gicNameArr = DocClassUtil.getSimpleGicName(typeName);
                                     if(DocClassUtil.isPrimitive(gicNameArr[0])){
                                         reqBodyParams.append(parameter.getName()).append("|")
@@ -621,7 +636,7 @@ public class SourceBuilder {
                                         reqBodyParams.append(strPrams);
                                     }
 
-                                }else if("java.util.Map".equals(fullTypeName)){
+                                }else if(DocClassUtil.isMap(fullTypeName)){
                                     String[] gicNameArr = DocClassUtil.getSimpleGicName(typeName);
                                     String strPrams = buildParams(gicNameArr[1],"",0,"true",responseFieldMap);
                                     reqBodyParams.append(strPrams);
