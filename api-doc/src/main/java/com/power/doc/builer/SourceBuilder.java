@@ -401,19 +401,6 @@ public class SourceBuilder {
     }
 
     private String buildJson(String typeName, String genericCanonicalName,Map<String,CustomRespField> responseFieldMap) {
-        if("java.util.TreeSet".equals(typeName)||"java.util.HashSet".equals(typeName)){
-            throw new RuntimeException("api-doc doesn't support TreeSet and HashSet used as return type or field type,please use Set interface instead.");
-        }
-
-        if("java.util.LinkedList".equals(typeName)||"java.util.ArrayList".equals(typeName)){
-            throw new RuntimeException("api-doc doesn't support ArrayList and LinkedList used as return type or field type,please use List interface instead.");
-        }
-
-        if(DocClassUtil.isMapImpl(typeName)){
-            String error = "api-doc doesn't support HashMap,LinkedHashMap,TreeMap,Hashtable,Properties and ConcurrentHashMap " +
-                    "used as return type or field type,please use Map interface instead.";
-            throw new RuntimeException(error);
-        }
         if(DocClassUtil.isPrimitive(typeName)){
             return DocUtil.jsonValueByType(typeName).replace("\"","");
         }
@@ -421,72 +408,6 @@ public class SourceBuilder {
         JavaClass cls = builder.getClassByName(typeName);
         data0.append("{");
         String[] globGicName = DocClassUtil.getSimpleGicName(genericCanonicalName);
-
-
-        List<JavaField> fields = cls.getFields();
-        int i = 0;
-        for (JavaField field : fields) {
-            if (!"serialVersionUID".equals(field.getName())) {
-                String typeSimpleName = field.getType().getSimpleName();
-                String subTypeName = field.getType().getFullyQualifiedName();
-                String fieldGicName = field.getType().getGenericCanonicalName();
-
-                data0.append("\"").append(field.getName()).append("\":");
-                if (DocClassUtil.isPrimitive(typeSimpleName)) {
-                    CustomRespField customResponseField = responseFieldMap.get(field.getName());
-                    if(null != customResponseField){
-                        Object val = customResponseField.getValue();
-                        if(null != val){
-                            if("String".equals(typeSimpleName)){
-                                data0.append("\"").append(val).append("\",");
-                            }else{
-                                data0.append(val).append(",");
-                            }
-                        }else {
-                            data0.append(DocUtil.getValByTypeAndFieldName(typeSimpleName,field.getName())).append(",");
-                        }
-                    }else{
-                        data0.append(DocUtil.getValByTypeAndFieldName(typeSimpleName,field.getName())).append(",");
-                    }
-                } else {
-                    if (DocClassUtil.isCollection(subTypeName)) {
-                        String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
-                        data0.append("[").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("]").append(",");
-                    } else if (DocClassUtil.isMap(subTypeName)) {
-                        String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
-                        data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("},");
-                    } else if (subTypeName.length() == 1) {
-                        if (!typeName.equals(genericCanonicalName)) {
-                            String gicName = globGicName[i];
-                            if(gicName.contains("<")){
-                                String simple = DocClassUtil.getSimpleName(gicName);
-                                data0.append(buildJson(simple,gicName,responseFieldMap)).append(",");
-                            }else{
-                                data0.append(buildJson(gicName, genericCanonicalName,responseFieldMap)).append(",");
-                            }
-                        } else {
-                            data0.append("{\"waring\":\"You may have used non-display generics.\"},");
-                        }
-                        i++;
-                    } else if ("java.lang.Object".equals(subTypeName)) {
-                        if(i< globGicName.length){
-                            String gicName = globGicName[i];
-                            if (!typeName.equals(genericCanonicalName)) {
-                                data0.append(buildJson(gicName, genericCanonicalName,responseFieldMap)).append(",");
-                            } else {
-                                data0.append("{\"waring\":\"You may have used non-display generics.\"},");
-                            }
-                        }else{
-                            data0.append("{\"waring\":\"You may have used non-display generics.\"},");
-                        }
-                    } else {
-                        //
-                        data0.append(buildJson(subTypeName, fieldGicName,responseFieldMap)).append(",");
-                    }
-                }
-            }
-        }
-
         StringBuilder data = new StringBuilder();
         if (DocClassUtil.isCollection(typeName)) {
             data.append("[");
@@ -526,15 +447,78 @@ public class SourceBuilder {
                 data.append("{").append("\"mapKey\":").append(buildJson(gicName, gNameTemp,responseFieldMap)).append("}");
             }
             return data.toString();
-        } else {
-
+        } else if("java.lang.Object".equals(typeName)) {
             if ("java.lang.Object".equals(typeName)) {
                 throw new RuntimeException("Please do not return java.lang.Object directly in api interface.");
             }
-            data0.deleteCharAt(data0.lastIndexOf(","));
-            data0.append("}");
-            return data0.toString();
+        }else{
+            List<JavaField> fields = cls.getFields();
+            int i = 0;
+            for (JavaField field : fields) {
+                if (!"serialVersionUID".equals(field.getName())) {
+                    String typeSimpleName = field.getType().getSimpleName();
+                    String subTypeName = field.getType().getFullyQualifiedName();
+                    String fieldGicName = field.getType().getGenericCanonicalName();
+
+                    data0.append("\"").append(field.getName()).append("\":");
+                    if (DocClassUtil.isPrimitive(typeSimpleName)) {
+                        CustomRespField customResponseField = responseFieldMap.get(field.getName());
+                        if(null != customResponseField){
+                            Object val = customResponseField.getValue();
+                            if(null != val){
+                                if("String".equals(typeSimpleName)){
+                                    data0.append("\"").append(val).append("\",");
+                                }else{
+                                    data0.append(val).append(",");
+                                }
+                            }else {
+                                data0.append(DocUtil.getValByTypeAndFieldName(typeSimpleName,field.getName())).append(",");
+                            }
+                        }else{
+                            data0.append(DocUtil.getValByTypeAndFieldName(typeSimpleName,field.getName())).append(",");
+                        }
+                    } else {
+                        if (DocClassUtil.isCollection(subTypeName)) {
+                            String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
+                            data0.append("[").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("]").append(",");
+                        } else if (DocClassUtil.isMap(subTypeName)) {
+                            String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
+                            data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("},");
+                        } else if (subTypeName.length() == 1) {
+                            if (!typeName.equals(genericCanonicalName)) {
+                                String gicName = globGicName[i];
+                                if(gicName.contains("<")){
+                                    String simple = DocClassUtil.getSimpleName(gicName);
+                                    data0.append(buildJson(simple,gicName,responseFieldMap)).append(",");
+                                }else{
+                                    data0.append(buildJson(gicName, genericCanonicalName,responseFieldMap)).append(",");
+                                }
+                            } else {
+                                data0.append("{\"waring\":\"You may have used non-display generics.\"},");
+                            }
+                            i++;
+                        } else if ("java.lang.Object".equals(subTypeName)) {
+                            if(i< globGicName.length){
+                                String gicName = globGicName[i];
+                                if (!typeName.equals(genericCanonicalName)) {
+                                    data0.append(buildJson(gicName, genericCanonicalName,responseFieldMap)).append(",");
+                                } else {
+                                    data0.append("{\"waring\":\"You may have used non-display generics.\"},");
+                                }
+                            }else{
+                                data0.append("{\"waring\":\"You may have used non-display generics.\"},");
+                            }
+                        } else {
+                            //
+                            data0.append(buildJson(subTypeName, fieldGicName,responseFieldMap)).append(",");
+                        }
+                    }
+                }
+            }
         }
+        data0.deleteCharAt(data0.lastIndexOf(","));
+        data0.append("}");
+        return data0.toString();
     }
 
     private String buildReqJson(JavaMethod method,ApiMethodDoc apiMethodDoc) {

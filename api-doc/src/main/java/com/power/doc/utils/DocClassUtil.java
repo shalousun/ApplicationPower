@@ -181,5 +181,87 @@ public class DocClassUtil {
 
     }
 
+    /**
+     * validate java collection
+     *
+     * @param type java typeName
+     * @return boolean
+     */
+    public static boolean isCollection(String type) {
+        switch (type) {
+            case "java.util.List":
+                return true;
+            case "java.util.LinkedList":
+                return true;
+            case "java.util.ArrayList":
+                return true;
+            case "java.util.Set":
+                return true;
+            case "java.util.TreeSet":
+                return true;
+            case "java.util.HashSet":
+                return true;
+            case "java.util.SortedSet":
+                return true;
+            case "java.util.Collection":
+                return true;
+            case "java.util.ArrayDeque":
+                return true;
+            default:
+                return false;
+        }
+    }
 
+    /**
+     * Check if it is an map
+     * @param type java type
+     * @return boolean
+     */
+    public static boolean isMap(String type) {
+        switch (type) {
+            case "java.util.Map":
+                return true;
+            case "java.util.SortedMap":
+                return true;
+            case "java.util.TreeMap":
+                return true;
+            case "java.util.LinkedHashMap":
+                return true;
+            case "java.util.HashMap":
+                return true;
+            case "java.util.concurrent.ConcurrentHashMap":
+                return true;
+            case "java.util.Properties":
+                return true;
+            case "java.util.Hashtable":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Check if it is an implementation class of map interface
+     *
+     * @param type type name
+     * @return boolean
+     */
+    public static boolean isMapImpl(String type) {
+        switch (type) {
+            case "java.util.TreeMap":
+                return true;
+            case "java.util.LinkedHashMap":
+                return true;
+            case "java.util.HashMap":
+                return true;
+            case "java.util.concurrent.ConcurrentHashMap":
+                return true;
+            case "java.util.Properties":
+                return true;
+            case "java.util.Hashtable":
+                return true;
+            default:
+                return false;
+        }
+    }
 }
