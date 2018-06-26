@@ -14,7 +14,7 @@ public class ValidateUtil {
     public static final String NUMBER_PATTERN = "[0-9]+";
     public static final String LETTER_PATTERN = "[a-zA-Z]+";
     public static final String ZIPCODE_PATTERN = "\\p{Digit}{6}";
-    public static final String PHONE_PATTERN = "^((13[0-9])|(14[0-9])|(17[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+    public static final String PHONE_PATTERN = "^(13[0-9]|14[579]|15[^4,\\D]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
     public static final String TELEPHONE_PATTERN = "^(0\\d{2,3}-)?(\\d{7,8})(-(\\d{3,}))?$";
     public static final String TELEPHONE_400_PATTERN = "((400)(\\d{7}))|((400)-(\\d{3})-(\\d{4}))";
     public static final String IDCARD_PATTERN = "^((11|12|13|14|15|21|22|23|31"
