@@ -211,7 +211,11 @@ public class SourceBuilder {
                 }
                 url = url.replaceAll("\"", "").trim();
                 apiMethodDoc.setType(methodType);
-                apiMethodDoc.setUrl((baseUrl + "/" + url).replace("//", "/"));
+                if(StringUtil.isNotEmpty(baseUrl)){
+                    apiMethodDoc.setUrl((baseUrl + "/" + url).replace("//", "/"));
+                }else{
+                    apiMethodDoc.setUrl((url).replace("//", "/"));
+                }
                 String comment = getCommentTag(method, "param", cls.getName());
                 apiMethodDoc.setRequestParams(comment);
                 String requestJson = buildReqJson(method,apiMethodDoc);
