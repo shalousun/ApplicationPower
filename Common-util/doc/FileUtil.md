@@ -4,7 +4,7 @@ FileUtil是一些常见的文件操作统一封装。所属的包为com.power.co
 **注意：** 文档中@since xx表示拥有方法的起始版本
 
 ## 1. writeFile(String source, String filePath, boolean append)方法
-该方法用于字符串内容写到本地文件系统中，写文件是可选择是否追加，默认编码为utf-8
+该方法用于将字符串内容写到本地文件中，写文件时可选择是否追加，默认编码为utf-8
 
 参数 | 描述
 ---|---
@@ -19,7 +19,7 @@ FileUtil.writeFile("hello", "/usr/local/hello.txt",true);//return true or false
 ```
 
 ## 2. writeFileNotAppend(String source, String filePath)方法
-该方法用于字符串内容写到本地文件系统中，每次写入都会覆盖文件中旧的内容,默认编码为utf-8
+该方法用于字符串内容写到本地文件系统中，每次写入都会覆盖文件中旧的内容，默认编码为utf-8
 
 参数 | 描述
 ---|---
@@ -32,7 +32,7 @@ Usage:
 FileUtil.writeFileNotAppend("hello", "/usr/local/hello.txt");//return true or false
 ```
 ## 3. writeFile(String source, File file,boolean append)方法
-该方法用于字符串内容写到本地文件系统中，写文件是可选择是否追加
+该方法用于字符串内容写到本地文件系统中，写文件时可选择是否追加
 
 
 参数 | 描述

@@ -82,7 +82,7 @@ ValidateUtil.isZipCode("430056");//return true
 ValidateUtil.isZipCode("12345678");//return false
 ```
 ## 10. isPhone(String str)方法
-验证字符串是否是中国的手机号。涵盖13、14、15、17、18开头的手机号
+验证字符串是否是中国的手机号。涵盖13、14、15、16、17、18、19开头的手机号
 
 
 Usage:
@@ -383,7 +383,7 @@ public static final String LETTER_PATTERN = "[a-zA-Z]+";
 //邮编
 public static final String ZIPCODE_PATTERN = "\\p{Digit}{6}";
 //手机
-public static final String PHONE_PATTERN = "^((13[0-9])|(14[0-9])|(17[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+public static final String PHONE_PATTERN = "^(13[0-9]|14[579]|15[^4,\\D]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
 //固定电话
 public static final String TELEPHONE_PATTERN = "^(0\\d{2,3}-)?(\\d{7,8})(-(\\d{3,}))?$";
 //400固话

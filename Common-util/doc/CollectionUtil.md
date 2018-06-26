@@ -24,7 +24,7 @@ list.add("test");
 CollectionUtil.isNotEmpty(list);//return true
 ```
 ## 3. subList(List<T> source, int from, int to)方法
-该方法相比使用List直接的subList，增加和下标检测，避免输入的下标超出list的长度而报错
+该方法相比使用List直接的subList，增加下标检测，避免输入的下标超出list的长度而报错
 ```
 List<String> list = new ArrayList<>(5);
 List listA = CollectionUtil.subList(list,0,3);

@@ -1,5 +1,5 @@
 # OkHttp3Util介绍
-OkHttp3Util是针对okhttp3的网络请求框架的封装，目前介于okhttp3封装了同步异步的http post或者是get
+OkHttp3Util是针对okhttp3的网络请求框架的封装，目前基于okhttp3封装了同步异步的http post或者是get
 的网络调用。
 
 **注意：** 该工具基于okhttp3的异步回调目前测试中还存在问题。

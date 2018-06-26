@@ -71,7 +71,7 @@ Usage:
 DateTimeUtil.timestampToString(new Timestamp(System.currentTimeMillis()),"yyyy-MM-dd");//return 2017-07-22
 ```
 ## 7. setTimeToNextDay0H0M0S(Timestamp time)方法
-该方法用于将传入时间戳重置到它的下一天的0时0分0秒，使用场景为需要精确根据时间范围来查找数据，在高并发昼夜高频使用的系统，如果将时间重置到23:59:59来查询并不是有效的方法，每一秒个毫秒都可能有数据写入。该方法重置时间返回long型的时间戳
+该方法用于将传入时间戳重置到它的下一天的0时0分0秒，使用场景为需要精确根据时间范围来查找数据，在高并发昼夜高频使用的系统，如果将时间重置到23:59:59来查询并不是可行方法，每一毫秒都可能有数据写入。该方法重置时间返回long型的时间戳
 
 Usage:
 
