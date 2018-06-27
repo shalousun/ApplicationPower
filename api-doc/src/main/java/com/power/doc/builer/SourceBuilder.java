@@ -597,6 +597,12 @@ public class SourceBuilder {
                                 + parameter.getName() + "\" in method " + javaMethod.getName() + " from " + className);
                     }
                     List<JavaAnnotation> annotations = parameter.getAnnotations();
+                    if(annotations.size()==0){
+                        //default set required is true
+                        reqParam.append(parameter.getName()).append("|")
+                                .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
+                                .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                    }
                     for(JavaAnnotation annotation:annotations){
                         String annotationName = annotation.getType().getName();
                         if (REQUEST_BODY.equals(annotationName)) {
@@ -630,16 +636,17 @@ public class SourceBuilder {
                             }
                             requestBodyCounter++;
                         }else{
+                            String required = "true";
+                            if(null != annotation.getProperty("required")){
+                                required = annotation.getProperty("required").toString();
+                            }
                             reqParam.append(parameter.getName()).append("|")
                                     .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
-                                    .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                                    .append(paramTagMap.get(parameter.getName())).append("|")
+                                    .append(required).append("\n");
                         }
                     }
-                    if(annotations.size()==0){
-                        reqParam.append(parameter.getName()).append("|")
-                                .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
-                                .append(paramTagMap.get(parameter.getName())).append("|true\n");
-                    }
+
                 }
             }
             if(requestBodyCounter>0){
