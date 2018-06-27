@@ -19,12 +19,26 @@ public class DocClassUtil {
      */
     public static boolean isPrimitive(String type0) {
         String type = type0.contains("java.lang") ? type0.substring(type0.lastIndexOf(".") + 1, type0.length()) : type0;
-        if ("Integer".equals(type) || "int".equals(type) || "Long".equals(type) || "long".equals(type)
-                || "Double".equals(type) || "double".equals(type) || "Float".equals(type) || "float".equals(type) ||
-                "BigDecimal".equals(type) || "String".equals(type) || "boolean".equals(type) || "Boolean".equals(type)) {
-            return true;
-        } else {
-            return false;
+        type = type.toLowerCase();
+        switch (type) {
+            case "integer":
+                return true;
+            case "int":
+                return true;
+            case "long":
+                return true;
+            case "double":
+                return true;
+            case "float":
+                return true;
+            case "bigdecimal":
+                return true;
+            case "string":
+                return true;
+            case "boolean":
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -37,11 +51,11 @@ public class DocClassUtil {
     public static String[] getSimpleGicName(String returnType) {
         if (returnType.contains("<")) {
             String pre = returnType.substring(0, returnType.indexOf("<"));
-            if ("java.util.Map".equals(pre)) {
+            if (DocClassUtil.isMap(pre)) {
                 return getMapKeyValueType(returnType);
             }
             String type = returnType.substring(returnType.indexOf("<") + 1, returnType.lastIndexOf(">"));
-            if ("java.util.List".equals(pre)) {
+            if (DocClassUtil.isCollection(pre)) {
                 return type.split(" ");
             }
             String[] arr = type.split(",");
@@ -71,7 +85,7 @@ public class DocClassUtil {
      * @param arr arr of class name
      * @return array of String
      */
-    public static String[] classNameFix(String[] arr) {
+    private static String[] classNameFix(String[] arr) {
         List<String> classes = new ArrayList<>();
         List<Integer> indexList = new ArrayList<>();
         int globIndex = 0;
@@ -207,6 +221,8 @@ public class DocClassUtil {
                 return true;
             case "java.util.ArrayDeque":
                 return true;
+            case "java.util.PriorityQueue":
+                return true;
             default:
                 return false;
         }
@@ -214,6 +230,7 @@ public class DocClassUtil {
 
     /**
      * Check if it is an map
+     *
      * @param type java type
      * @return boolean
      */
@@ -223,31 +240,6 @@ public class DocClassUtil {
                 return true;
             case "java.util.SortedMap":
                 return true;
-            case "java.util.TreeMap":
-                return true;
-            case "java.util.LinkedHashMap":
-                return true;
-            case "java.util.HashMap":
-                return true;
-            case "java.util.concurrent.ConcurrentHashMap":
-                return true;
-            case "java.util.Properties":
-                return true;
-            case "java.util.Hashtable":
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    /**
-     * Check if it is an implementation class of map interface
-     *
-     * @param type type name
-     * @return boolean
-     */
-    public static boolean isMapImpl(String type) {
-        switch (type) {
             case "java.util.TreeMap":
                 return true;
             case "java.util.LinkedHashMap":

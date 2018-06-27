@@ -4,10 +4,7 @@ import com.github.javafaker.Faker;
 import com.power.common.util.RandomUtil;
 import com.power.common.util.StringUtil;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Description:
@@ -19,29 +16,30 @@ public class DocUtil {
 
     private static Faker faker = new Faker(new Locale("zh-CN"));
 
-    private static Map<String,String> fieldValue = new HashMap<>();
+    private static Faker enFaker = new Faker(new Locale("en-US"));
+
+    private static Map<String,String> fieldValue = new LinkedHashMap<>();
 
     static {
         fieldValue.put("uuid-string", UUID.randomUUID().toString());
         fieldValue.put("uid",UUID.randomUUID().toString());
+        fieldValue.put("nickname-string",enFaker.name().username());
         fieldValue.put("name-string",faker.name().username());
-        fieldValue.put("teacherName-string",faker.name().username());
-        fieldValue.put("studentName-string",faker.name().username());
-        fieldValue.put("userName-string",faker.name().username());
+        fieldValue.put("username-string",faker.name().username());
         fieldValue.put("age-int",String.valueOf(RandomUtil.randomInt(0,70)));
-        fieldValue.put("userAge-int",String.valueOf(RandomUtil.randomInt(0,70)));
         fieldValue.put("age-integer",String.valueOf(RandomUtil.randomInt(0,70)));
-        fieldValue.put("userAge-integer",String.valueOf(RandomUtil.randomInt(0,70)));
         fieldValue.put("email-string",faker.internet().emailAddress());
         fieldValue.put("domain-string",faker.internet().domainName());
         fieldValue.put("phone-string",faker.phoneNumber().cellPhone());
         fieldValue.put("mobile-string",faker.phoneNumber().cellPhone());
+        fieldValue.put("telephone-string",faker.phoneNumber().phoneNumber());
+        fieldValue.put("address-string",faker.address().fullAddress().replace(",","，"));
         fieldValue.put("ip-string",faker.internet().ipV4Address());
         fieldValue.put("ipv4-string",faker.internet().ipV4Address());
         fieldValue.put("ipv6-string",faker.internet().ipV6Address());
         fieldValue.put("company-string",faker.company().name());
-        fieldValue.put("createTime-long",String.valueOf(System.currentTimeMillis()));
-        fieldValue.put("insertTime-long",String.valueOf(System.currentTimeMillis()));
+        fieldValue.put("createtime-long",String.valueOf(System.currentTimeMillis()));
+        fieldValue.put("inserttime-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("code-string",String.valueOf(RandomUtil.randomInt(100,99999)));
         fieldValue.put("message-string","success,fail".split(",")[RandomUtil.randomInt(0,1)]);
     }
@@ -72,8 +70,14 @@ public class DocUtil {
      */
     public static String getValByTypeAndFieldName(String type0,String filedName){
         String type = type0.contains("java.lang")?type0.substring(type0.lastIndexOf(".")+1,type0.length()):type0;
-        String key = filedName+"-"+type.toLowerCase();
-        String value = fieldValue.get(key);
+        String key = filedName.toLowerCase()+"-"+type.toLowerCase();
+        String value = null;
+        for(Map.Entry<String,String> entry:fieldValue.entrySet()){
+            if(key.contains(entry.getKey())){
+                value = entry.getValue();
+                break;
+            }
+        }
         if(null == value){
             return jsonValueByType(type0);
         }else{
