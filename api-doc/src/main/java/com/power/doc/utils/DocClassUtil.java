@@ -256,4 +256,33 @@ public class DocClassUtil {
                 return false;
         }
     }
+
+    /**
+     * @param annotationSimpleName
+     * @return
+     */
+    public static boolean isJSR303Required(String annotationSimpleName) {
+        switch (annotationSimpleName) {
+            case "NotNull":
+                return true;
+            case "NotEmpty":
+                return true;
+            case "NotBlank":
+                return true;
+            case "Max":
+                return true;
+            case "Min":
+                return true;
+            case "Size":
+                return true;
+            case "Pattern":
+                return true;
+            case "Future":
+                return true;
+            case "DecimalMax":
+                return true;
+            default:
+                return false;
+        }
+    }
 }

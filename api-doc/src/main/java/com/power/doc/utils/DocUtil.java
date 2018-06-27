@@ -38,6 +38,7 @@ public class DocUtil {
         fieldValue.put("ipv4-string",faker.internet().ipV4Address());
         fieldValue.put("ipv6-string",faker.internet().ipV6Address());
         fieldValue.put("company-string",faker.company().name());
+        fieldValue.put("timestamp-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("createtime-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("inserttime-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("code-string",String.valueOf(RandomUtil.randomInt(100,99999)));
