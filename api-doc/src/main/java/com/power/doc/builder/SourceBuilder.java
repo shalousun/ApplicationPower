@@ -34,7 +34,7 @@ public class SourceBuilder {
 
     private static final String  JSON_CONTENT_TYPE = "application/json";
 
-    private Map<String, String> javaFilesMap = new HashMap<>();
+    public Map<String, String> javaFilesMap = new HashMap<>();
 
     private JavaProjectBuilder builder;
 
@@ -46,7 +46,7 @@ public class SourceBuilder {
 
 
 
-    private Map<String,CustomRespField> fieldMap = new HashMap<>();
+    public Map<String,CustomRespField> fieldMap = new HashMap<>();
     /**
      * if isStrict value is true,it while check all method
      *
@@ -400,7 +400,9 @@ public class SourceBuilder {
         return JsonFormatUtil.formatJson(buildJson(typeName, returnType,responseFieldMap));
     }
 
-    private String buildJson(String typeName, String genericCanonicalName,Map<String,CustomRespField> responseFieldMap) {
+    public String buildJson(String typeName, String genericCanonicalName,Map<String,CustomRespField> responseFieldMap) {
+        System.out.println("typeName:"+typeName);
+        System.out.println("genericCanonicalName:"+genericCanonicalName);
         if(DocClassUtil.isPrimitive(typeName)){
             return DocUtil.jsonValueByType(typeName).replace("\"","");
         }
@@ -480,7 +482,12 @@ public class SourceBuilder {
                     } else {
                         if (DocClassUtil.isCollection(subTypeName)) {
                             String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
-                            data0.append("[").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("]").append(",");
+
+                            if("java.lang.String".equals(gicName)){
+                                data0.append("[").append("\"").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("\"]").append(",");
+                            }else{
+                                data0.append("[").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("]").append(",");
+                            }
                         } else if (DocClassUtil.isMap(subTypeName)) {
                             String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
                             data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName,responseFieldMap)).append("},");
@@ -657,5 +664,23 @@ public class SourceBuilder {
             return params.toString();
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        SourceBuilder sourceBuilder = new SourceBuilder(true);
+        String me = sourceBuilder.buildJson("java.lang.String","java.util.List<java.lang.String>",sourceBuilder.fieldMap);
+        System.out.println(me);
+//        else if(DocClassUtil.isArray(typeSimpleName)){
+//                            typeSimpleName = typeSimpleName.substring(0,typeSimpleName.indexOf("["));
+//                            subTypeName = subTypeName.substring(0,subTypeName.indexOf("["));
+//                            fieldGicName = fieldGicName.substring(0,fieldGicName.indexOf("["));
+//                            String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
+//                            System.out.println("simpleTypeName:"+typeSimpleName);
+//                            System.out.println("subTypeName:"+subTypeName);
+//                            System.out.println("fieldGicName:"+fieldGicName);
+//                            System.out.println("gicName:"+fieldGicName);
+//                            data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap)).append("]").append(",");
+
+//        }
     }
 }
