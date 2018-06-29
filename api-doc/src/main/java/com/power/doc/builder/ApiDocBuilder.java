@@ -1,4 +1,4 @@
-package com.power.doc.builer;
+package com.power.doc.builder;
 
 import com.power.common.util.CollectionUtil;
 import com.power.common.util.FileUtil;

@@ -1,6 +1,7 @@
 package com.power.doc.utils;
 
 import com.github.javafaker.Faker;
+import com.power.common.util.DateTimeUtil;
 import com.power.common.util.RandomUtil;
 import com.power.common.util.StringUtil;
 
@@ -39,6 +40,8 @@ public class DocUtil {
         fieldValue.put("ipv6-string",faker.internet().ipV6Address());
         fieldValue.put("company-string",faker.company().name());
         fieldValue.put("timestamp-long",String.valueOf(System.currentTimeMillis()));
+        fieldValue.put("birthday-string", DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
+        fieldValue.put("birthday-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("createtime-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("inserttime-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("code-string",String.valueOf(RandomUtil.randomInt(100,99999)));

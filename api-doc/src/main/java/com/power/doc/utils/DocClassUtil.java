@@ -258,6 +258,15 @@ public class DocClassUtil {
     }
 
     /**
+     *
+     * @param type
+     * @return
+     */
+    public static boolean isArray(String type){
+        return type.contains("[]");
+    }
+
+    /**
      * @param annotationSimpleName
      * @return
      */
@@ -269,17 +278,21 @@ public class DocClassUtil {
                 return true;
             case "NotBlank":
                 return true;
-            case "Max":
+            case "Required":
                 return true;
-            case "Min":
-                return true;
-            case "Size":
-                return true;
-            case "Pattern":
-                return true;
-            case "Future":
-                return true;
-            case "DecimalMax":
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * custom tag
+     * @param tagName custom field tag
+     * @return boolean
+     */
+    public static boolean isRequiredTag(String tagName){
+        switch (tagName) {
+            case "required":
                 return true;
             default:
                 return false;
