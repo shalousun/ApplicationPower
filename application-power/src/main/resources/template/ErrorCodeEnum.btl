@@ -1,0 +1,35 @@
+package ${basePackage}.enums;
+
+/**
+ * Error code enum
+ * @author ${authorName} on ${createTime}.
+ */
+public enum ErrorCodeEnum {
+
+    SUCCESS("200","success"),
+
+    UNKNOWN_ERROR("500","系统繁忙，请稍后再试....");
+
+    private String code;
+
+    private String desc;
+
+    ErrorCodeEnum(String code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    public String getCode() {
+        return this.code;
+    }
+
+
+    public String getDesc() {
+        return desc;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + this.code + "]" + this.desc;
+    }
+}

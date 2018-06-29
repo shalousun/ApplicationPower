@@ -1,0 +1,66 @@
+package ${basePackage}.doc;
+
+import com.power.common.util.DateTimeUtil;
+import com.power.doc.builder.ApiDocBuilder;
+import com.power.doc.enums.ErrorCodeEnum;
+import com.power.doc.model.ApiConfig;
+import com.power.doc.model.ApiErrorCode;
+import com.power.doc.model.ApiReqHeader;
+import com.power.doc.model.CustomRespField;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Description:
+ * API文档生成测试
+ * @see https://github.com/shalousun/ApplicationPower/tree/master/api-doc
+ * @author ${authorName} on ${createTime}.
+ */
+public class DocCreatorTest {
+
+    /**
+     * 简单型接口，不需要指定请求头，并且项目是maven的.
+     *
+     */
+    @Test
+    public void testBuilderControllersApiSimple(){
+        ApiDocBuilder.builderControllersApi("d:\\md",true);
+    }
+
+    /**
+     * 包括设置请求头，缺失注释的字段批量在文档生成期使用定义好的注释
+     */
+    @Test
+    public void testBuilderControllersApi() {
+        ApiConfig config = new ApiConfig();
+        config.setStrict(true);
+        config.setOutPath("d:\\md");
+
+        config.setRequestHeaders(
+                ApiReqHeader.header().setName("access_token").setType("string").setDesc("Basic auth credentials"),
+                ApiReqHeader.header().setName("user_uuid").setType("string").setDesc("User Uuid key")
+        );
+        config.setCustomResponseFields(
+                CustomRespField.field().setName("success").setDesc("成功返回true,失败返回false"),
+                CustomRespField.field().setName("message").setDesc("接口响应信息"),
+                CustomRespField.field().setName("data").setDesc("接口响应数据"),
+                CustomRespField.field().setName("code").setValue("200").setDesc("响应代码")
+        );
+
+        List<ApiErrorCode> errorCodeList = new ArrayList<>();
+        for(ErrorCodeEnum codeEnum: ErrorCodeEnum.values()){
+            ApiErrorCode errorCode = new ApiErrorCode();
+            errorCode.setValue(codeEnum.getCode()).setDesc(codeEnum.getDesc());
+            errorCodeList.add(errorCode);
+        }
+        config.setErrorCodes(errorCodeList);
+
+        long start = System.currentTimeMillis();
+        ApiDocBuilder.builderControllersApi(config);
+        long end = System.currentTimeMillis();
+        DateTimeUtil.printRunTime(end,start);
+    }
+}

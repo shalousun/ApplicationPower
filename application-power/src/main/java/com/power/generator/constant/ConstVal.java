@@ -30,6 +30,9 @@ public class ConstVal {
     public static final String STRING_BOOT_STATIC_DIR = RESOURCE_DIR + "\\static";
     public static final String STRING_BOOT_EORRO_DIR = STRING_BOOT_STATIC_DIR + "\\errors";
 
+    public static final String ENUM_PACKAGE = "enums";
+    public static final String UTIL_PACKAGE = "util";
+    public static final String ANNOTATION_PACKAGE = "annotation";
     public static final String ENTITY = "model";
     public static final String SERVICE = "service";
     public static final String SERVICE_SUBFIX = "Service.java";

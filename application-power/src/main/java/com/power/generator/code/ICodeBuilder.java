@@ -4,9 +4,6 @@ package com.power.generator.code;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.utils.GeneratorProperties;
 
-import java.io.File;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Map;
 
 /**
@@ -64,6 +61,14 @@ public interface ICodeBuilder {
         String basePath = getBasePath();
         String javaPath = basePath + ConstVal.FILE_SEPARATOR + ConstVal.JAVA_PATH;
         return javaPath;
+    }
+
+    /**
+     * base package
+     * @return
+     */
+    default String basePackage(){
+        return GeneratorProperties.basePackage();
     }
 
 

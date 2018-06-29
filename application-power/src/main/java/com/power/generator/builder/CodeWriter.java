@@ -2,10 +2,7 @@ package com.power.generator.builder;
 
 import com.power.common.util.FileUtil;
 import com.power.common.util.StringUtil;
-import com.power.generator.code.impl.AssemblyCodeBuilder;
-import com.power.generator.code.impl.DockerCodeBuilder;
-import com.power.generator.code.impl.GradleCodeBuilder;
-import com.power.generator.code.impl.PomCodeBuilder;
+import com.power.generator.code.impl.*;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.constant.SpringBootProjectConfig;
@@ -62,6 +59,7 @@ public class CodeWriter extends AbstractCodeWriter {
         writeCode(config);
         //创建项目所需基础类
         writeSpringBootBaseCode(config);
+
         //创建assembly配置
         writeAssemblyConfig();
 
@@ -72,6 +70,8 @@ public class CodeWriter extends AbstractCodeWriter {
         new PomCodeBuilder();
 
         new GradleCodeBuilder();
+
+        new BaseCodeBuilder();
 
     }
 

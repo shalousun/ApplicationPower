@@ -1,0 +1,42 @@
+package ${basePackage}.controller;
+
+import com.power.common.model.CommonResult;
+import ${basePackage}.annotation.ErrorCode;
+import ${basePackage}.enums.ErrorCodeEnum;
+import ${basePackage}.util.ResultUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+/**
+ * BaseController
+ *
+ * @author ${authorName} on ${createTime}.
+ */
+public abstract class BaseController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+
+    /**
+     * validate params
+     * @param bindingResult
+     * @return
+     */
+    protected CommonResult validParams(BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            FieldError fieldError = bindingResult.getFieldError();
+            Class clazz = bindingResult.getTarget().getClass();
+            ErrorCode errorCode;
+            try{
+                errorCode = clazz.getDeclaredField(fieldError.getField()).getAnnotation(ErrorCode.class);
+            }catch (NoSuchFieldException e){
+                LOGGER.error(":{}",e);
+                return ResultUtil.returnError(ErrorCodeEnum.UNKNOWN_ERROR);
+            }
+            LOGGER.error("errorCode:{}",errorCode.value());
+            return ResultUtil.returnError(errorCode.value().getCode(),fieldError.getDefaultMessage());
+        }
+        return ResultUtil.returnSuccess("");
+    }
+}
