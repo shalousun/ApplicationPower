@@ -537,7 +537,11 @@ public class SourceBuilder {
                             } else {
                                 data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                             }
-                        } else {
+                        }  else if(DocClassUtil.isArray(typeSimpleName)){
+                            fieldGicName = fieldGicName.substring(0,fieldGicName.indexOf("["));
+                            String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
+                            data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap,0)).append("]").append(",");
+                        }else {
                             //
                             data0.append(buildJson(subTypeName, fieldGicName, responseFieldMap, 0)).append(",");
                         }
@@ -700,7 +704,7 @@ public class SourceBuilder {
 //                            System.out.println("fieldGicName:"+fieldGicName);
 //                            System.out.println("gicName:"+fieldGicName);
 //                            data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap)).append("]").append(",");
-
+//
 //        }
     }
 }
