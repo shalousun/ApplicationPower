@@ -380,11 +380,13 @@ public class SourceBuilder {
                             }
                         }
                         n++;
+                    } else if (DocClassUtil.isArray(subTypeName)) {
+                        fieldGicName = fieldGicName.substring(0, fieldGicName.indexOf("["));
+                        params0.append(buildParams(fieldGicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
                     } else {
                         params0.append(buildParams(fieldGicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
                     }
                 }
-
             }
         }
         return params0.toString();
@@ -526,9 +528,9 @@ public class SourceBuilder {
                             if (i < globGicName.length) {
                                 String gicName = globGicName[i];
                                 if (!typeName.equals(genericCanonicalName)) {
-                                    if(DocClassUtil.isPrimitive(gicName)){
+                                    if (DocClassUtil.isPrimitive(gicName)) {
                                         data0.append("\"").append(buildJson(gicName, genericCanonicalName, responseFieldMap, 0)).append("\",");
-                                    }else{
+                                    } else {
                                         data0.append(buildJson(gicName, gicName, responseFieldMap, 0)).append(",");
                                     }
                                 } else {
@@ -537,11 +539,11 @@ public class SourceBuilder {
                             } else {
                                 data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                             }
-                        }  else if(DocClassUtil.isArray(typeSimpleName)){
-                            fieldGicName = fieldGicName.substring(0,fieldGicName.indexOf("["));
+                        } else if (DocClassUtil.isArray(typeSimpleName)) {
+                            fieldGicName = fieldGicName.substring(0, fieldGicName.indexOf("["));
                             String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
-                            data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap,0)).append("]").append(",");
-                        }else {
+                            data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap, 0)).append("]").append(",");
+                        } else {
                             //
                             data0.append(buildJson(subTypeName, fieldGicName, responseFieldMap, 0)).append(",");
                         }
