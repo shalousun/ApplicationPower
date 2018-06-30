@@ -349,7 +349,16 @@ public class SourceBuilder {
                         String gNameTemp = field.getType().getGenericCanonicalName();
                         String gName = DocClassUtil.getSimpleGicName(gNameTemp)[0];
                         if (!DocClassUtil.isPrimitive(gName)) {
-                            params0.append(buildParams(gName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
+                            if(!simpleName.equals(gName)){
+                                if(gName.length() == 1){
+                                    String gicName = globGicName[n];
+                                    if(!DocClassUtil.isPrimitive(gicName)&&!simpleName.equals(gicName)){
+                                        params0.append(buildParams(gicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
+                                    }
+                                }else {
+                                    params0.append(buildParams(gName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
+                                }
+                            }
                         }
                     } else if (subTypeName.length() == 1 || "java.lang.Object".equals(subTypeName)) {
                         if (!simpleName.equals(className)) {
@@ -383,6 +392,8 @@ public class SourceBuilder {
                     } else if (DocClassUtil.isArray(subTypeName)) {
                         fieldGicName = fieldGicName.substring(0, fieldGicName.indexOf("["));
                         params0.append(buildParams(fieldGicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
+                    }else if(simpleName.equals(subTypeName)){
+                        //do nothing
                     } else {
                         params0.append(buildParams(fieldGicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
                     }
@@ -409,10 +420,11 @@ public class SourceBuilder {
     private String buildReturnJson(JavaMethod method, Map<String, CustomRespField> responseFieldMap) {
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
-        return JsonFormatUtil.formatJson(buildJson(typeName, returnType, responseFieldMap));
+        int circularRef = 0;
+        return JsonFormatUtil.formatJson(buildJson(typeName, returnType, responseFieldMap, 0));
     }
 
-    public String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap) {
+    public String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap, int circularRef) {
         System.out.println("typeName:" + typeName);
         System.out.println("genericCanonicalName:" + genericCanonicalName);
         if (DocClassUtil.isPrimitive(typeName)) {
@@ -434,10 +446,12 @@ public class SourceBuilder {
                 data.append(DocUtil.jsonValueByType(gName));
             } else if (gName.contains("<")) {
                 String simple = DocClassUtil.getSimpleName(gName);
-                String json = buildJson(simple, gName, responseFieldMap);
+                String json = buildJson(simple, gName, responseFieldMap,circularRef);
                 data.append(json);
+            }else if(DocClassUtil.isCollection(typeName)){
+                data.append("{\"waring\":\"You may use java.util.Object instead of display generics in the List\"}");
             } else {
-                String json = buildJson(gName, gName, responseFieldMap);
+                String json = buildJson(gName, gName, responseFieldMap,circularRef);
                 data.append(json);
             }
             data.append("]");
@@ -456,10 +470,10 @@ public class SourceBuilder {
                 data.append("\"mapKey2\":").append(DocUtil.jsonValueByType(gicName)).append("}");
             } else if (gicName.contains("<")) {
                 String simple = DocClassUtil.getSimpleName(gicName);
-                String json = buildJson(simple, gicName, responseFieldMap);
+                String json = buildJson(simple, gicName, responseFieldMap,circularRef);
                 data.append("{").append("\"mapKey\":").append(json).append("}");
             } else {
-                data.append("{").append("\"mapKey\":").append(buildJson(gicName, gNameTemp, responseFieldMap)).append("}");
+                data.append("{").append("\"mapKey\":").append(buildJson(gicName, gNameTemp, responseFieldMap,circularRef)).append("}");
             }
             return data.toString();
         } else if ("java.lang.Object".equals(typeName)) {
@@ -497,41 +511,54 @@ public class SourceBuilder {
                             fieldGicName = DocClassUtil.isArray(subTypeName)?fieldGicName.substring(0, fieldGicName.indexOf("[")):fieldGicName;
                             String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
                             if ("java.lang.String".equals(gicName)) {
-                                data0.append("[").append("\"").append(buildJson(gicName, fieldGicName, responseFieldMap)).append("\"]").append(",");
+                                data0.append("[").append("\"").append(buildJson(gicName, fieldGicName, responseFieldMap,circularRef)).append("\"]").append(",");
+                            }else if(gicName.length() == 1){
+                                String gicName1 = globGicName[i];
+                                if("java.lang.String".equals(gicName1)){
+                                    data0.append("[").append("\"").append(buildJson(gicName1, gicName1, responseFieldMap,circularRef)).append("\"]").append(",");
+                                }else{
+                                    if(!typeName.equals(gicName1)){
+                                        data0.append("[").append(buildJson(gicName1, gicName1, responseFieldMap,circularRef)).append("]").append(",");
+                                    }else{
+                                        data0.append("[{\"$ref\":\"..\"}]").append(",");
+                                    }
+
+                                }
                             } else {
-                                data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap)).append("]").append(",");
+                                if(!typeName.equals(gicName)){
+                                    data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap,circularRef)).append("]").append(",");
+                                }else{
+                                    data0.append("[{\"$ref\":\"..\"}]").append(",");
+                                }
                             }
                         } else if (DocClassUtil.isMap(subTypeName)) {
                             String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
-                            data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName, responseFieldMap)).append("},");
+                            data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName, responseFieldMap,circularRef)).append("},");
                         } else if (subTypeName.length() == 1) {
                             if (!typeName.equals(genericCanonicalName)) {
                                 String gicName = globGicName[i];
                                 if (gicName.contains("<")) {
                                     String simple = DocClassUtil.getSimpleName(gicName);
-                                    data0.append(buildJson(simple, gicName, responseFieldMap)).append(",");
+                                    data0.append(buildJson(simple, gicName, responseFieldMap,circularRef)).append(",");
                                 } else {
                                     if (DocClassUtil.isPrimitive(gicName)) {
                                         data0.append(DocUtil.jsonValueByType(gicName)).append(",");
                                     } else {
-                                        data0.append(buildJson(gicName, gicName, responseFieldMap)).append(",");
+                                        data0.append(buildJson(gicName, gicName, responseFieldMap,circularRef)).append(",");
                                     }
-
                                 }
-
                             } else {
                                 data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                             }
-
                             i++;
                         } else if ("java.lang.Object".equals(subTypeName)) {
                             if (i < globGicName.length) {
                                 String gicName = globGicName[i];
                                 if (!typeName.equals(genericCanonicalName)) {
                                     if (DocClassUtil.isPrimitive(gicName)) {
-                                        data0.append("\"").append(buildJson(gicName, genericCanonicalName, responseFieldMap)).append("\",");
+                                        data0.append("\"").append(buildJson(gicName, genericCanonicalName, responseFieldMap,circularRef)).append("\",");
                                     } else {
-                                        data0.append(buildJson(gicName, gicName, responseFieldMap)).append(",");
+                                        data0.append(buildJson(gicName, gicName, responseFieldMap,circularRef)).append(",");
                                     }
                                 } else {
                                     data0.append("{\"waring\":\"You may have used non-display generics.\"},");
@@ -539,9 +566,11 @@ public class SourceBuilder {
                             } else {
                                 data0.append("{\"waring\":\"You may have used non-display generics.\"},");
                             }
+                        }else if(typeName.equals(subTypeName)){
+                            data0.append("{\"$ref\":\"...\"}").append(",");
                         } else {
                             //
-                            data0.append(buildJson(subTypeName, fieldGicName, responseFieldMap)).append(",");
+                            data0.append(buildJson(subTypeName, fieldGicName, responseFieldMap,circularRef)).append(",");
                         }
                     }
                 }
@@ -573,7 +602,7 @@ public class SourceBuilder {
                             builder.append(DocUtil.jsonValueByType(simpleTypeName)).append("}");
                             return builder.toString();
                         } else {
-                            return buildJson(typeName, gicTypeName, this.fieldMap);
+                            return buildJson(typeName, gicTypeName, this.fieldMap,0);
                         }
                     } else {
                         //非json请求，当前不做处理
