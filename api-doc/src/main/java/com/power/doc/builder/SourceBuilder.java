@@ -251,7 +251,7 @@ public class SourceBuilder {
         return builder.toString();
     }
 
-    public String buildMethodReturn(JavaMethod method, ApiMethodDoc apiMethodDoc) {
+    private String buildMethodReturn(JavaMethod method, ApiMethodDoc apiMethodDoc) {
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
         if (DocClassUtil.isPrimitive(typeName)) {
@@ -288,7 +288,7 @@ public class SourceBuilder {
      * @param responseFieldMap
      * @return
      */
-    public String buildParams(String className, String pre, int i, String isRequired,
+    private String buildParams(String className, String pre, int i, String isRequired,
                               Map<String, CustomRespField> responseFieldMap) {
         StringBuilder params0 = new StringBuilder();
         String simpleName = DocClassUtil.getSimpleName(className);
@@ -377,7 +377,14 @@ public class SourceBuilder {
                         String gNameTemp = field.getType().getGenericCanonicalName();
                         String valType = DocClassUtil.getMapKeyValueType(gNameTemp)[1];
                         if (!DocClassUtil.isPrimitive(valType)) {
-                            params0.append(buildParams(valType, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
+                            if(valType.length()==1){
+                                String gicName = (n < globGicName.length) ? globGicName[n] : globGicName[globGicName.length- 1];
+                                if (!DocClassUtil.isPrimitive(gicName) && !simpleName.equals(gicName)) {
+                                    params0.append(buildParams(gicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
+                                }
+                            }else{
+                                params0.append(buildParams(valType, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
+                            }
                         }
                     } else if (DocClassUtil.isCollection(subTypeName)) {
                         String gNameTemp = field.getType().getGenericCanonicalName();
@@ -459,9 +466,7 @@ public class SourceBuilder {
         return JsonFormatUtil.formatJson(buildJson(typeName, returnType, responseFieldMap, 0));
     }
 
-    public String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap, int circularRef) {
-        System.out.println("typeName:" + typeName);
-        System.out.println("genericCanonicalName:" + genericCanonicalName);
+    private String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap, int circularRef) {
         if (DocClassUtil.isPrimitive(typeName)) {
             return DocUtil.jsonValueByType(typeName).replace("\"", "");
         }
