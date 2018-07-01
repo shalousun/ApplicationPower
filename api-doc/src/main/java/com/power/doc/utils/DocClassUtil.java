@@ -158,6 +158,9 @@ public class DocClassUtil {
         if (javaTypeName.length() == 1) {
             return "object";
         }
+        if(javaTypeName.contains("[]")){
+            return "array";
+        }
         switch (javaTypeName) {
             case "java.lang.String":
                 return "string";

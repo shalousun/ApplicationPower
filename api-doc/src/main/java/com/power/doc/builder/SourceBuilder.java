@@ -222,8 +222,8 @@ public class SourceBuilder {
                 String requestJson = buildReqJson(method, apiMethodDoc);
                 apiMethodDoc.setRequestUsage(JsonFormatUtil.formatJson(requestJson));
                 apiMethodDoc.setResponseUsage(buildReturnJson(method, this.fieldMap));
-                String str = buildMethodReturn(method, apiMethodDoc);
-                apiMethodDoc.setResponseParams(str);
+//                String str = buildMethodReturn(method, apiMethodDoc);
+//                apiMethodDoc.setResponseParams(str);
                 apiMethodDoc.setHeaders(createHeaders(this.headers));
                 methodDocList.add(apiMethodDoc);
             }
@@ -280,6 +280,15 @@ public class SourceBuilder {
         return null;
     }
 
+    /**
+     *
+     * @param className
+     * @param pre
+     * @param i 缩进计数器
+     * @param isRequired
+     * @param responseFieldMap
+     * @return
+     */
     public String buildParams(String className, String pre, int i, String isRequired,
                               Map<String, CustomRespField> responseFieldMap) {
         StringBuilder params0 = new StringBuilder();
@@ -351,7 +360,8 @@ public class SourceBuilder {
                         if (!DocClassUtil.isPrimitive(gName)) {
                             if(!simpleName.equals(gName)){
                                 if(gName.length() == 1){
-                                    String gicName = globGicName[n];
+                                    int len = globGicName.length;
+                                    String gicName = (n<len)?globGicName[n]:globGicName[len-1];
                                     if(!DocClassUtil.isPrimitive(gicName)&&!simpleName.equals(gicName)){
                                         params0.append(buildParams(gicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
                                     }
@@ -488,7 +498,6 @@ public class SourceBuilder {
                     String typeSimpleName = field.getType().getSimpleName();
                     String subTypeName = field.getType().getFullyQualifiedName();
                     String fieldGicName = field.getType().getGenericCanonicalName();
-
                     data0.append("\"").append(field.getName()).append("\":");
                     if (DocClassUtil.isPrimitive(typeSimpleName)) {
                         CustomRespField customResponseField = responseFieldMap.get(field.getName());
@@ -513,12 +522,12 @@ public class SourceBuilder {
                             if ("java.lang.String".equals(gicName)) {
                                 data0.append("[").append("\"").append(buildJson(gicName, fieldGicName, responseFieldMap,circularRef)).append("\"]").append(",");
                             }else if(gicName.length() == 1){
-                                String gicName1 = globGicName[i];
+                                String gicName1 = (i<globGicName.length)? globGicName[i]:globGicName[globGicName.length-1];
                                 if("java.lang.String".equals(gicName1)){
                                     data0.append("[").append("\"").append(buildJson(gicName1, gicName1, responseFieldMap,circularRef)).append("\"]").append(",");
                                 }else{
                                     if(!typeName.equals(gicName1)){
-                                        data0.append("[").append(buildJson(gicName1, gicName1, responseFieldMap,circularRef)).append("]").append(",");
+                                        data0.append("[").append(buildJson(DocClassUtil.getSimpleName(gicName1), gicName1, responseFieldMap,circularRef)).append("]").append(",");
                                     }else{
                                         data0.append("[{\"$ref\":\"..\"}]").append(",");
                                     }
@@ -533,7 +542,21 @@ public class SourceBuilder {
                             }
                         } else if (DocClassUtil.isMap(subTypeName)) {
                             String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
-                            data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName, responseFieldMap,circularRef)).append("},");
+                            if(gicName.length() == 1){
+                                String gicName1 = (i<globGicName.length)? globGicName[i]:globGicName[globGicName.length-1];
+                                if("java.lang.String".equals(gicName1)){
+                                    data0.append("{").append("\"mapKey\":\"").append(buildJson(gicName1, gicName1, responseFieldMap,circularRef)).append("\"},");
+                                }else{
+                                    if(!typeName.equals(gicName1)){
+                                        data0.append("{").append("\"mapKey\":").append(buildJson(DocClassUtil.getSimpleName(gicName1), gicName1, responseFieldMap,circularRef)).append("},");
+                                    }else{
+                                        data0.append("{\"mapKey\":{}},");
+                                    }
+                                }
+                            }else {
+                                data0.append("{").append("\"mapKey\":").append(buildJson(gicName, fieldGicName, responseFieldMap,circularRef)).append("},");
+
+                            }
                         } else if (subTypeName.length() == 1) {
                             if (!typeName.equals(genericCanonicalName)) {
                                 String gicName = globGicName[i];
@@ -576,7 +599,10 @@ public class SourceBuilder {
                 }
             }
         }
-        data0.deleteCharAt(data0.lastIndexOf(","));
+        if(data0.toString().contains(",")){
+            data0.deleteCharAt(data0.lastIndexOf(","));
+        }
+
         data0.append("}");
         return data0.toString();
     }
@@ -659,9 +685,31 @@ public class SourceBuilder {
                     List<JavaAnnotation> annotations = parameter.getAnnotations();
                     if (annotations.size() == 0) {
                         //default set required is true
-                        reqParam.append(parameter.getName()).append("|")
-                                .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
-                                .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                        if(DocClassUtil.isCollection(fullTypeName)){
+                            String[] gicNameArr = DocClassUtil.getSimpleGicName(typeName);
+                            String gicName = gicNameArr[0];
+                            String typeTemp = "";
+                            if(DocClassUtil.isPrimitive(gicName)){
+                                typeTemp = " of "+ DocClassUtil.processTypeNameForParams(gicName);
+                                reqParam.append(parameter.getName()).append("|")
+                                        .append(DocClassUtil.processTypeNameForParams(simpleName)).append(typeTemp).append("|")
+                                        .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                            }else{
+                                reqParam.append(parameter.getName()).append("|")
+                                        .append(DocClassUtil.processTypeNameForParams(simpleName)).append(typeTemp).append("|")
+                                        .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                                String strPrams = buildParams(gicNameArr[0], "└─", 1, "true", responseFieldMap);
+                                reqParam.append(strPrams);
+                            }
+
+                        }else if(DocClassUtil.isPrimitive(simpleName)){
+                            reqParam.append(parameter.getName()).append("|")
+                                    .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
+                                    .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                        }else{
+                            reqParam.append(buildParams(fullTypeName, "", 0, "true", responseFieldMap));
+                        }
+
                     }
                     for (JavaAnnotation annotation : annotations) {
                         String annotationName = annotation.getType().getName();
@@ -717,21 +765,5 @@ public class SourceBuilder {
             return params.toString();
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        SourceBuilder sourceBuilder = new SourceBuilder(true);
-//        else if(DocClassUtil.isArray(typeSimpleName)){
-//                            typeSimpleName = typeSimpleName.substring(0,typeSimpleName.indexOf("["));
-//                            subTypeName = subTypeName.substring(0,subTypeName.indexOf("["));
-//                            fieldGicName = fieldGicName.substring(0,fieldGicName.indexOf("["));
-//                            String gicName = DocClassUtil.getSimpleGicName(fieldGicName)[0];
-//                            System.out.println("simpleTypeName:"+typeSimpleName);
-//                            System.out.println("subTypeName:"+subTypeName);
-//                            System.out.println("fieldGicName:"+fieldGicName);
-//                            System.out.println("gicName:"+fieldGicName);
-//                            data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap)).append("]").append(",");
-//
-//        }
     }
 }

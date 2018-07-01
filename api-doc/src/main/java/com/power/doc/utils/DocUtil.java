@@ -95,8 +95,6 @@ public class DocUtil {
         }
     }
 
-
-
     /**
      * 是否是合法的java类名称
      * @param className class nem
