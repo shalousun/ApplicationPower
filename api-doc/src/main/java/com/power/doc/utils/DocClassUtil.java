@@ -261,17 +261,18 @@ public class DocClassUtil {
     }
 
     /**
-     *
-     * @param type
-     * @return
+     * check array
+     * @param type type name
+     * @return boolean
      */
     public static boolean isArray(String type){
         return type.contains("[]");
     }
 
     /**
-     * @param annotationSimpleName
-     * @return
+     * check JSR303
+     * @param annotationSimpleName annotation name
+     * @return boolean
      */
     public static boolean isJSR303Required(String annotationSimpleName) {
         switch (annotationSimpleName) {

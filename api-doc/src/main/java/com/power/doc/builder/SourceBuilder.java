@@ -662,6 +662,7 @@ public class SourceBuilder {
                         }
                     } else {
                         //非json请求，当前不做处理
+                        return "Api-doc cannot currently provide examples of parameters for the RequestParam request mode";
                     }
 
                 }
