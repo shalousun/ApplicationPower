@@ -54,7 +54,7 @@ public class ModelBuilder implements IBuilder {
                 builder.append("	/** ").append(column.getRemarks()).append(" */").append("\n");
             }
             if ("Timestamp".equals(column.getColumnType())) {
-                builder.append("	@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\",timezone = \"GMT+8\")\n");
+                builder.append("	@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")\n");
             }
             builder.append("	private ").append(column.getColumnType()).append(" ");
             builder.append(StringUtil.underlineToCamel(column.getColumnName()));

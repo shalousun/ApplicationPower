@@ -23,7 +23,7 @@ import java.util.List;
 public class RestExceptionHandler {
 
     /**
-     * 日志
+     * log
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
 
@@ -63,7 +63,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public CommonResult methodNotSupportedException(HttpRequestMethodNotSupportedException ex){
-        LOGGER.error("405",ex);
+        LOGGER.error("405",ex.getMessage());
         return new CommonResult("405", ex.getMessage());
     }
 

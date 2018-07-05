@@ -15,6 +15,9 @@ export JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true"
 # set encoding
 export JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=utf-8"
 
+# OOM
+export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError"
+
 # set garbage collector
 # export java_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
 
