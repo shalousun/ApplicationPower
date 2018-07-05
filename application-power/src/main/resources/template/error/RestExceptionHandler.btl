@@ -30,6 +30,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public CommonResult illegalParamsExceptionHandler(MethodArgumentNotValidException ex) {
+        LOGGER.error("request params invalid",ex.getMessage());
         return new CommonResult("400", "request params invalid");
     }
 
