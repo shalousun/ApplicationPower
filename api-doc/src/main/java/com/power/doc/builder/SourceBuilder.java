@@ -289,7 +289,7 @@ public class SourceBuilder {
      * @return
      */
     private String buildParams(String className, String pre, int i, String isRequired,
-                              Map<String, CustomRespField> responseFieldMap) {
+                               Map<String, CustomRespField> responseFieldMap) {
         StringBuilder params0 = new StringBuilder();
         String simpleName = DocClassUtil.getSimpleName(className);
 
@@ -361,9 +361,9 @@ public class SourceBuilder {
                             params0.append(comment).append("|").append(strRequired).append("\n");
                         }
                     } else {
-                        if(StringUtil.isEmpty(isRequired)){
+                        if (StringUtil.isEmpty(isRequired)) {
                             params0.append("no comment.").append("\n");
-                        }else{
+                        } else {
                             params0.append("no comment|").append(strRequired).append("\n");
                         }
 
@@ -377,12 +377,12 @@ public class SourceBuilder {
                         String gNameTemp = field.getType().getGenericCanonicalName();
                         String valType = DocClassUtil.getMapKeyValueType(gNameTemp)[1];
                         if (!DocClassUtil.isPrimitive(valType)) {
-                            if(valType.length()==1){
-                                String gicName = (n < globGicName.length) ? globGicName[n] : globGicName[globGicName.length- 1];
+                            if (valType.length() == 1) {
+                                String gicName = (n < globGicName.length) ? globGicName[n] : globGicName[globGicName.length - 1];
                                 if (!DocClassUtil.isPrimitive(gicName) && !simpleName.equals(gicName)) {
                                     params0.append(buildParams(gicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
                                 }
-                            }else{
+                            } else {
                                 params0.append(buildParams(valType, preBuilder.toString(), i + 1, isRequired, responseFieldMap));
                             }
                         }
@@ -648,9 +648,11 @@ public class SourceBuilder {
             if (!MODEL.equals(typeName) && !MODEL_VIEW.equals(typeName) &&
                     !SERVLET_REQUEST.equals(typeName) && !BINDING_RESULT.equals(typeName)) {
                 List<JavaAnnotation> annotations = parameter.getAnnotations();
+                int requestBodyCounter = 0;
                 for (JavaAnnotation annotation : annotations) {
                     String annotationName = annotation.getType().getName();
                     if (REQUEST_BODY.equals(annotationName)) {
+                        requestBodyCounter++;
                         apiMethodDoc.setContentType(JSON_CONTENT_TYPE);
                         if (DocClassUtil.isPrimitive(simpleTypeName)) {
                             StringBuilder builder = new StringBuilder();
@@ -660,10 +662,13 @@ public class SourceBuilder {
                         } else {
                             return buildJson(typeName, gicTypeName, this.fieldMap, 0);
                         }
-                    } else {
-                        //非json请求，当前不做处理
-                        return "Api-doc cannot currently provide examples of parameters for the RequestParam request mode";
+
                     }
+
+                }
+                if (requestBodyCounter < 1) {
+                    //非json
+                    return "Api-doc cannot currently provide examples of parameters for the RequestParam request mode";
 
                 }
 
