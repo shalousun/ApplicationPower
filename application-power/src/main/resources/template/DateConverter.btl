@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * spring 时间自动转换器
+ *
  * @author ${authorName} on ${createTime}.
  *
  */
@@ -33,6 +34,7 @@ public class DateConverter implements Converter<String, Timestamp> {
 
     /**
      * 时间自动转换
+     *
      * @param source
      * @return
      */
@@ -58,10 +60,8 @@ public class DateConverter implements Converter<String, Timestamp> {
     /**
      * 功能描述：格式化成时间戳
      *
-     * @param date
-     *          String 字符型日期
-     * @param format
-     *          String 时间格式
+     * @param date   String 字符型日期
+     * @param format String 时间格式
      * @return
      */
     public Timestamp parseTimestamp(String date, String format) {

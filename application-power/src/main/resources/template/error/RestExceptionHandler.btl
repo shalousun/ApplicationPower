@@ -30,31 +30,31 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public CommonResult illegalParamsExceptionHandler(MethodArgumentNotValidException ex) {
-        LOGGER.error("request params invalid",ex.getMessage());
+        LOGGER.error("request params invalid: {}", ex.getMessage());
         return new CommonResult("400", "request params invalid");
     }
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public CommonResult methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
+    public CommonResult methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         String error = String.format("The parameter '%s' should be of type '%s'", ex.getName(), ex.getRequiredType().getSimpleName());
         return new CommonResult("400", error);
     }
 
-    @ExceptionHandler(value = { NoHandlerFoundException.class })
+    @ExceptionHandler(value = {NoHandlerFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public CommonResult noHandlerFoundException(Exception ex) {
         return new CommonResult("404", "Resource Not Found");
     }
 
-    @ExceptionHandler(value ={HttpMediaTypeNotSupportedException.class})
+    @ExceptionHandler(value = {HttpMediaTypeNotSupportedException.class})
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-    public CommonResult handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex){
+    public CommonResult handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
         StringBuilder builder = new StringBuilder();
         builder.append(ex.getContentType());
         builder.append(" media type is not supported. Supported media types are ");
         List<MediaType> typeList = ex.getSupportedMediaTypes();
-        for(MediaType type:typeList){
+        for (MediaType type : typeList) {
             builder.append(type + ", ");
         }
         return new CommonResult("415", builder.toString());
@@ -62,15 +62,15 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public CommonResult methodNotSupportedException(HttpRequestMethodNotSupportedException ex){
-        LOGGER.error("405",ex.getMessage());
+    public CommonResult methodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+        LOGGER.error("Error code 405: {}", ex.getMessage());
         return new CommonResult("405", ex.getMessage());
     }
 
-    @ExceptionHandler(value = { Exception.class })
+    @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult unknownException(Exception ex) {
-        LOGGER.error("500",ex);
+        LOGGER.error("Error code 500：{}", ex);
         return new CommonResult("500", ex.getMessage());
     }
 }
