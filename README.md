@@ -4,7 +4,7 @@ ApplicationPower 是一个快速的项目生成脚手架，只需要连接数据
         ApplicationPower是基于beetl模板来生成源代码的，因此可以灵活的修改模板来生成代码定义自己的开发接口规范。ApplicationPower在一直不断努力地去减少项目开发
         中的各种重复工作。<br/>
         技术交流群：170651381<br/>
-    **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更加，因此推荐选择她来创建springboot。
+    **重点：** ApplicationPower目前对于Springboot+Mybatis框架的项目创建能力更佳，因此推荐选择她来创建springboot。
     [github同步地址](https://github.com/shalousun/ApplicationPower)
 ## 创建的项目技术
      ● 核心框架：Spring Boot 1.5.9 或Spring MVC 4.3.6
@@ -215,7 +215,12 @@ application-power整合的springboot打包后的结构参考
 - 更新日期：2018-06-26
 - 更新内容：
 	1. 升级common-util到03版本，增加OKHttp3Util,AESUtil增加新的ECB加解密方法
-	2. 首次发布可以使用的api-doc文档工具，提高开发中的接口文档开发效率。
+	2. 首次发布可以使用的api-doc文档工具，提高开发中的接口文档开发效率(不)。
+#### 版本号：1.7.4
+- 更新日期：2018-07-07
+- 更新内容：
+	1. 升级common-util到1.0版本，该版本解决了更新最新的手机号码验证。
+	2. 发布api-doc v0.2,该版本增强的接口返回类型的推导能力，解决众多bug。
 
 
 

@@ -18,6 +18,6 @@ public class ValidateUtilTest {
     @Test
     public void testIsArmyIdCard(){
 
-        System.out.println(ValidateUtil.isArmyIdCard("北字第7682126号"));
+        System.out.println(ValidateUtil.isPhone("15n41678167"));
     }
 }
