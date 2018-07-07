@@ -1,18 +1,11 @@
 package com.power.doc;
 
-import com.alibaba.fastjson.JSON;
 import com.power.common.util.DateTimeUtil;
 import com.power.doc.builder.ApiDocBuilder;
-import com.power.doc.controller.ErrorCodeEnum;
-import com.power.doc.controller.Staff;
-import com.power.doc.controller.User;
 import com.power.doc.model.ApiConfig;
-import com.power.doc.model.ApiErrorCode;
 import com.power.doc.model.ApiReqHeader;
 import com.power.doc.model.CustomRespField;
 import org.junit.Test;
-
-import java.util.*;
 
 /**
  * Description:
@@ -29,12 +22,6 @@ public class ApiDocTest {
     @Test
     public void testBuilderControllersApiSimple(){
         //将生成的文档输出到d:\md目录下，严格模式下api-doc会检测Controller的接口注释
-      //  ApiDocBuilder.builderControllersApi("d:\\md",true);
-        Staff staff = new Staff();
-        Map<String,Staff> map = new HashMap<>();
-        map.put("me",new Staff());
-        staff.setMapData(map);
-        System.out.println(JSON.toJSONString(staff));
     }
 
     /**
@@ -61,15 +48,15 @@ public class ApiDocTest {
                 CustomRespField.field().setName("data").setDesc("接口响应数据"),
                 CustomRespField.field().setName("code").setValue("00000").setDesc("响应代码")
         );
-        //设置项目错误码列表，设置自动生成错误列表
-        List<ApiErrorCode> errorCodeList = new ArrayList<>();
-        for(ErrorCodeEnum codeEnum: ErrorCodeEnum.values()){
-            ApiErrorCode errorCode = new ApiErrorCode();
-            errorCode.setValue(codeEnum.getValue()).setDesc(codeEnum.getDesc());
-            errorCodeList.add(errorCode);
-        }
+//        //设置项目错误码列表，设置自动生成错误列表
+//        List<ApiErrorCode> errorCodeList = new ArrayList<>();
+//        for(ErrorCodeEnum codeEnum: ErrorCodeEnum.values()){
+//            ApiErrorCode errorCode = new ApiErrorCode();
+//            errorCode.setValue(codeEnum.getValue()).setDesc(codeEnum.getDesc());
+//            errorCodeList.add(errorCode);
+//        }
         //不是必须
-        config.setErrorCodes(errorCodeList);
+//        config.setErrorCodes(errorCodeList);
         long start = System.currentTimeMillis();
         ApiDocBuilder.builderControllersApi(config);
         long end = System.currentTimeMillis();
