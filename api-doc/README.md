@@ -11,7 +11,7 @@
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>api-doc</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -146,4 +146,5 @@ https://github.com/shalousun/api-doc-test
 
 
 # 问题反馈
-由于api-doc属于第一次公开发行，目前测试的接口场景还比较少，对于一些接口的推导支持可能不全或者是api-doc直接报错了，在这里真诚的希望您能反馈出问题，以便更好的推动api-doc的完成和更加的智能化。
+由于api-doc属于第二次公开发行，目前已经能够支持许多复杂和返回类型和类结构推导，但是由于目前做采用的底层工具处理能力不是很好，所以有些功能做的不够彻底。
+当然基于目前的版如果在使用中发现问题欢迎及时的提出反馈的建议。
