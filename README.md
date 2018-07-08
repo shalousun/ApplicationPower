@@ -221,6 +221,7 @@ application-power整合的springboot打包后的结构参考
 - 更新内容：
 	1. 升级common-util到1.0版本，该版本解决了更新最新的手机号码验证。
 	2. 发布api-doc v0.2,该版本增强的接口返回类型的推导能力，解决众多bug。
+	3. application-power模块增加参数验证的restful错误码返回处理。
 
 
 
