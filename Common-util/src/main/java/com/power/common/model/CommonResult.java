@@ -8,7 +8,7 @@ import java.io.Serializable;
  *
  */
 public class CommonResult<T> implements Serializable {
-	
+
 	/**
 	 * serialVersionUID:.
 	 */
@@ -37,48 +37,41 @@ public class CommonResult<T> implements Serializable {
 	/**
 	 * 默认构造器
 	 */
-	public CommonResult(){
-		
+	public CommonResult() {
+
 	}
+
 	/**
-	 * 
-	 * @param success
-	 * 			是否成功
-	 * @param message
-	 * 			返回的消息
+	 * @param success 是否成功
+	 * @param message 返回的消息
 	 */
-	public CommonResult(boolean success, String message){
+	public CommonResult(boolean success, String message) {
 		this.success = success;
 		this.message = message;
 	}
+
 	/**
-	 * 
-	 * @param success
-	 * 			是否成功
+	 * @param success 是否成功
 	 */
-	public CommonResult(boolean success){
+	public CommonResult(boolean success) {
 		this.success = success;
 	}
 
 	/**
-	 *
-	 * @param code error code
+	 * @param code    error code
 	 * @param message success or error messages
 	 */
-	public CommonResult(String code,String message){
+	public CommonResult(String code, String message) {
 		this.code = code;
 		this.message = message;
 	}
+
 	/**
-	 * 
-	 * @param success
-	 * 			是否成功
-	 * @param message
-	 * 			消息
-	 * @param data
-	 * 			数据
+	 * @param success 是否成功
+	 * @param message 消息
+	 * @param data    数据
 	 */
-	public CommonResult(boolean success, String message, T data){
+	public CommonResult(boolean success, String message, T data) {
 		this.success = success;
 		this.message = message;
 		this.data = data;
