@@ -40,6 +40,7 @@ public class DocUtil {
         fieldValue.put("ipv6-string",faker.internet().ipV6Address());
         fieldValue.put("company-string",faker.company().name());
         fieldValue.put("timestamp-long",String.valueOf(System.currentTimeMillis()));
+        fieldValue.put("time-string",DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
         fieldValue.put("birthday-string", DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
         fieldValue.put("birthday-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("createtime-long",String.valueOf(System.currentTimeMillis()));
