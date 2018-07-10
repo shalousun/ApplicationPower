@@ -813,22 +813,26 @@ public class SourceBuilder {
      */
     private List<JavaField> getFields(JavaClass cls1,int i){
         List<JavaField> fieldList = new ArrayList<>();
-        JavaClass pcls = cls1.getSuperJavaClass();
         if(null == cls1){
             return fieldList;
-        }else if("Object".equals(cls1.getSimpleName())){
+        }else if("Object".equals(cls1.getSimpleName())||"Timestamp".equals(cls1.getSimpleName())||
+                "Date".equals(cls1.getSimpleName())){
             return fieldList;
         }else if(i<1){
             i++;
+            JavaClass pcls = cls1.getSuperJavaClass();
             fieldList.addAll(getFields(pcls,i));
             fieldList.addAll(cls1.getFields());
         }else{
             i++;
+            JavaClass pcls = cls1.getSuperJavaClass();
             fieldList.addAll(getFields(pcls,i));
             List<JavaField> fieldsTemp = new ArrayList<>();
             for(JavaField field:cls1.getFields()){
-                if(!"private".equals(field.getModifiers().get(0))){
-                    fieldsTemp.add(field);
+                if(CollectionUtil.isNotEmpty(field.getModifiers())){
+                    if(!"private".equals(field.getModifiers().get(0))){
+                        fieldsTemp.add(field);
+                    }
                 }
             }
             fieldList.addAll(fieldsTemp);
