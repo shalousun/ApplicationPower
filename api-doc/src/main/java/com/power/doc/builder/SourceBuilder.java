@@ -10,6 +10,7 @@ import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.*;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class SourceBuilder {
@@ -296,10 +297,11 @@ public class SourceBuilder {
 
         String[] globGicName = DocClassUtil.getSimpleGicName(className);
         JavaClass cls = builder.getClassByName(simpleName);
-        List<JavaField> fields = cls.getFields();
+        List<JavaField> fields = getFields(cls,0);
         int n = 0;
         for (JavaField field : fields) {
             if (!"serialVersionUID".equals(field.getName())) {
+
                 String typeSimpleName = field.getType().getSimpleName();
                 String subTypeName = field.getType().getFullyQualifiedName();
                 String fieldGicName = field.getType().getGenericCanonicalName();
@@ -521,7 +523,7 @@ public class SourceBuilder {
                 throw new RuntimeException("Please do not return java.lang.Object directly in api interface.");
             }
         } else {
-            List<JavaField> fields = cls.getFields();
+            List<JavaField> fields = getFields(cls,0);
             int i = 0;
             for (JavaField field : fields) {
                 if (!"serialVersionUID".equals(field.getName())) {
@@ -801,5 +803,36 @@ public class SourceBuilder {
             return params.toString();
         }
         return null;
+    }
+
+    /**
+     *
+     * @param cls1
+     * @param i 递归计数器
+     * @return
+     */
+    private List<JavaField> getFields(JavaClass cls1,int i){
+        List<JavaField> fieldList = new ArrayList<>();
+        JavaClass pcls = cls1.getSuperJavaClass();
+        if(null == cls1){
+            return fieldList;
+        }else if("Object".equals(cls1.getSimpleName())){
+            return fieldList;
+        }else if(i<1){
+            i++;
+            fieldList.addAll(getFields(pcls,i));
+            fieldList.addAll(cls1.getFields());
+        }else{
+            i++;
+            fieldList.addAll(getFields(pcls,i));
+            List<JavaField> fieldsTemp = new ArrayList<>();
+            for(JavaField field:cls1.getFields()){
+                if(!"private".equals(field.getModifiers().get(0))){
+                    fieldsTemp.add(field);
+                }
+            }
+            fieldList.addAll(fieldsTemp);
+        }
+        return fieldList;
     }
 }
