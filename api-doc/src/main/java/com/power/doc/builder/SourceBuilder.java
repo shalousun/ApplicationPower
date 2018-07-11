@@ -860,24 +860,10 @@ public class SourceBuilder {
         } else if ("Object".equals(cls1.getSimpleName()) || "Timestamp".equals(cls1.getSimpleName()) ||
                 "Date".equals(cls1.getSimpleName())) {
             return fieldList;
-        } else if (i < 1) {
-            i++;
+        } else {
             JavaClass pcls = cls1.getSuperJavaClass();
             fieldList.addAll(getFields(pcls, i));
             fieldList.addAll(cls1.getFields());
-        } else {
-            i++;
-            JavaClass pcls = cls1.getSuperJavaClass();
-            fieldList.addAll(getFields(pcls, i));
-            List<JavaField> fieldsTemp = new ArrayList<>();
-            for (JavaField field : cls1.getFields()) {
-                if (CollectionUtil.isNotEmpty(field.getModifiers())) {
-                    if (!"private".equals(field.getModifiers().get(0))) {
-                        fieldsTemp.add(field);
-                    }
-                }
-            }
-            fieldList.addAll(fieldsTemp);
         }
         return fieldList;
     }
