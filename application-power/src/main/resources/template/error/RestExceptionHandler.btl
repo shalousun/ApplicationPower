@@ -1,10 +1,14 @@
 package ${basePackage}.error;
 
 import com.power.common.model.CommonResult;
+import ${basePackage}.enums.ErrorCodeEnum;
+import ${basePackage}.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,8 +34,10 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public CommonResult illegalParamsExceptionHandler(MethodArgumentNotValidException ex) {
-        LOGGER.error("request params invalid: {}", ex.getMessage());
-        return new CommonResult("400", "request params invalid");
+        BindingResult bindingResult = ex.getBindingResult();
+        FieldError fieldError = bindingResult.getFieldError();
+        LOGGER.error("request params invalid: {}", fieldError.getDefaultMessage());
+        return processBindingError(fieldError);
     }
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
@@ -72,5 +78,51 @@ public class RestExceptionHandler {
     public CommonResult unknownException(Exception ex) {
         LOGGER.error("Error code 500：{}", ex);
         return new CommonResult("500", ex.getMessage());
+    }
+
+
+    /**
+     * spring binding error
+     *
+     * @param fieldError
+     * @return
+     */
+    private CommonResult processBindingError(FieldError fieldError) {
+        String code = fieldError.getCode();
+        LOGGER.debug("validator error code: {}", code);
+        switch (code) {
+            case "NotEmpty":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
+            case "NotBlank":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
+            case "NotNull":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
+            case "Pattern":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Min":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Max":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Length":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Range":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Email":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "DecimalMin":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "DecimalMax":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Size":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Digits":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Past":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            case "Future":
+                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+            default:
+                return ResultUtil.returnError(ErrorCodeEnum.UNKNOWN_ERROR);
+        }
     }
 }
