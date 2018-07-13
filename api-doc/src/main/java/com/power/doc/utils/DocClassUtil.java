@@ -37,6 +37,10 @@ public class DocClassUtil {
                 return true;
             case "boolean":
                 return true;
+            case "java.sql.timestamp":
+                return true;
+            case "java.util.date":
+                return true;
             default:
                 return false;
         }
@@ -297,6 +301,28 @@ public class DocClassUtil {
     public static boolean isRequiredTag(String tagName){
         switch (tagName) {
             case "required":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * ignore param of spring mvc
+     * @param paramType param type name
+     * @return boolean
+     */
+    public static boolean isMvcIgnoreParams(String paramType){
+        switch (paramType){
+            case "org.springframework.ui.Model":
+                return true;
+            case "org.springframework.web.servlet.ModelAndView":
+                return true;
+            case "org.springframework.validation.BindingResult" :
+                return true;
+            case "javax.servlet.http.HttpServletRequest":
+                return true;
+            case "javax.servlet.http.HttpServletResponse":
                 return true;
             default:
                 return false;

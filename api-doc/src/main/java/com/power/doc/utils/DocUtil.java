@@ -54,7 +54,7 @@ public class DocUtil {
      * @return string
      */
     public static String jsonValueByType(String type0){
-        String type = type0.contains("java.lang")?type0.substring(type0.lastIndexOf(".")+1,type0.length()):type0;
+        String type = type0.contains(".")?type0.substring(type0.lastIndexOf(".")+1,type0.length()):type0;
         String value = RandomUtil.randomValueByType(type);
         if("Integer".equals(type)||"int".equals(type)||"Long".equals(type)||"long".equals(type)
                 ||"Double".equals(type)||"double".equals(type)|| "Float".equals(type)||"float".equals(type)||
