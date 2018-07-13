@@ -1,5 +1,6 @@
 package com.power.common.util;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -7,6 +8,9 @@ import java.util.Random;
  * @author yu 2018/06/03.
  */
 public class RandomUtil {
+
+    private static String FORMAT = "0.00";
+
     private static Random random = new Random();
 
     /** random selected numbers */
@@ -119,58 +123,53 @@ public class RandomUtil {
     }
 
     /**
+     * random double value between 0 and 100
+     * @param format number format
+     * @return String
+     */
+    public static String randomDouble(String format){
+        return new DecimalFormat(format).format(randomDouble());
+    }
+
+    /**
      * Generate random initial values based on type
      * @param type type of object
      * @return string
      */
     public static String randomValueByType(String type) {
-        String dataType = "";
         switch (type) {
             case "String":  //12
-                dataType = randomString(6);
-                break;
+                return randomString(6);
             case "Integer":    //4
-                dataType = String.valueOf(randomInt(1000));
-                break;
+                return String.valueOf(randomInt(1000));
             case "int" :
-                dataType = String.valueOf(randomInt(1000));
-                break;
+                return String.valueOf(randomInt(1000));
             case "Long": //-5
-                dataType = String.valueOf(randomInt(1000));
-                break;
+                return String.valueOf(randomInt(1000));
             case "long":
-                dataType = String.valueOf(randomInt(1000));
-                break;
+               return String.valueOf(randomInt(1000));
             case "Double": //8
-                dataType = String.valueOf(randomDouble());
-                break;
+                return  String.valueOf(randomDouble(FORMAT));
             case "double":
-                dataType = String.valueOf(randomDouble());
-                break;
+                return String.valueOf(randomDouble(FORMAT));
             case "Float": //6
-                dataType = String.valueOf(randomDouble());
-                break;
+                return String.valueOf(randomDouble(FORMAT));
             case "float":
-                dataType = String.valueOf(randomDouble());
-                break;
+                return String.valueOf(randomDouble(FORMAT));
             case "boolean":
-                dataType = "true";
-                break;
+                return  "true";
             case "Boolean":
-                dataType = "true";
-                 break;
+                return  "true";
             case "BigDecimal":    //3
-                dataType = "BigDecimal";
-                break;
+                return  String.valueOf(randomInt(1000));
             case "Time":  //91
-                dataType = DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
-                break;
+                return DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
+            case "Date":
+               return DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
             case "Timestamp":  //91
-                dataType = DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
-                break;
+                return DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
             default:
-                dataType = randomString(6);
+                return randomString(6);
         }
-        return dataType;
     }
 }
