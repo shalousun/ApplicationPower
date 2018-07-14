@@ -42,3 +42,11 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 	1. 添加OkHttpUtil工具类.
 	2. 修改AESUtil加密工具.
 	3. 修改FileUtil的nio写文件的参数顺序。
+#### 版本号：1.0  
+- 更新日期：2018-07-07
+- 更新内容：
+	1. 更新validateUtil中的手机验证码.
+#### 版本号：1.1 
+- 更新日期：2018-07-14
+- 更新内容：
+	1. 更新RandomUtil中随机数生成.
