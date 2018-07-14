@@ -26,6 +26,7 @@ public class DocUtil {
         fieldValue.put("uid",UUID.randomUUID().toString());
         fieldValue.put("nickname-string",enFaker.name().username());
         fieldValue.put("name-string",faker.name().username());
+        fieldValue.put("url-string",faker.internet().url());
         fieldValue.put("username-string",faker.name().username());
         fieldValue.put("age-int",String.valueOf(RandomUtil.randomInt(0,70)));
         fieldValue.put("age-integer",String.valueOf(RandomUtil.randomInt(0,70)));
@@ -39,12 +40,10 @@ public class DocUtil {
         fieldValue.put("ipv4-string",faker.internet().ipV4Address());
         fieldValue.put("ipv6-string",faker.internet().ipV6Address());
         fieldValue.put("company-string",faker.company().name());
-        fieldValue.put("timestamp-long",String.valueOf(System.currentTimeMillis()));
+        fieldValue.put("time-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("time-string",DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
         fieldValue.put("birthday-string", DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
         fieldValue.put("birthday-long",String.valueOf(System.currentTimeMillis()));
-        fieldValue.put("createtime-long",String.valueOf(System.currentTimeMillis()));
-        fieldValue.put("inserttime-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("code-string",String.valueOf(RandomUtil.randomInt(100,99999)));
         fieldValue.put("message-string","success,fail".split(",")[RandomUtil.randomInt(0,1)]);
     }

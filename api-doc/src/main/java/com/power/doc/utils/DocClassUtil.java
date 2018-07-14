@@ -65,7 +65,7 @@ public class DocClassUtil {
             String[] arr = type.split(",");
             return classNameFix(arr);
         } else {
-            return returnType.split(" ");
+            return new String[0];
         }
     }
 

@@ -24,9 +24,9 @@ public class ApiConfig {
 
 
     /**
-     * 源代码路径
+     * source path
      */
-    private String sourcePath;
+    private List<SourcePath> sourcePaths;
 
     /**
      * 请求头
@@ -77,13 +77,6 @@ public class ApiConfig {
         this.customResponseFields = CollectionUtil.asList(customResponseFields);
     }
 
-    public String getSourcePath() {
-        return sourcePath;
-    }
-
-    public void setSourcePath(String sourcePath) {
-        this.sourcePath = sourcePath;
-    }
 
     public List<ApiErrorCode> getErrorCodes() {
         return errorCodes;
@@ -91,5 +84,13 @@ public class ApiConfig {
 
     public void setErrorCodes(List<ApiErrorCode> errorCodes) {
         this.errorCodes = errorCodes;
+    }
+
+    public List<SourcePath> getSourcePaths() {
+        return sourcePaths;
+    }
+
+    public void setSourcePaths(SourcePath... sourcePaths) {
+        this.sourcePaths = CollectionUtil.asList(sourcePaths);
     }
 }
