@@ -65,7 +65,7 @@ public class DocClassUtil {
             String[] arr = type.split(",");
             return classNameFix(arr);
         } else {
-            return new String[0];
+            return returnType.split(" ");
         }
     }
 
@@ -144,12 +144,17 @@ public class DocClassUtil {
      * @return array of string
      */
     public static String[] getMapKeyValueType(String gName) {
-        String[] arr = new String[2];
-        String key = gName.substring(gName.indexOf("<") + 1, gName.indexOf(","));
-        String value = gName.substring(gName.indexOf(",") + 1, gName.lastIndexOf(">"));
-        arr[0] = key;
-        arr[1] = value;
-        return arr;
+        if(gName.contains("<")){
+            String[] arr = new String[2];
+            String key = gName.substring(gName.indexOf("<") + 1, gName.indexOf(","));
+            String value = gName.substring(gName.indexOf(",") + 1, gName.lastIndexOf(">"));
+            arr[0] = key;
+            arr[1] = value;
+            return arr;
+        }else {
+            return new String[0];
+        }
+
     }
 
     /**

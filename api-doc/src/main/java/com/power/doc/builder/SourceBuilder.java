@@ -14,6 +14,8 @@ import java.util.*;
 
 public class SourceBuilder {
 
+    private static final String IGNORE_TAG = "ignore";
+
     private static final String GET_MAPPING = "GetMapping";
 
     private static final String POST_MAPPING = "PostMapping";
@@ -58,6 +60,7 @@ public class SourceBuilder {
         if (null == config) {
             throw new NullPointerException("ApiConfig can't be null.");
         }
+        this.isStrict = config.isStrict();
         loadJavaFiles(config.getSourcePaths());
         this.headers = config.getRequestHeaders();
         if (CollectionUtil.isNotEmpty(config.getCustomResponseFields())) {
@@ -74,16 +77,16 @@ public class SourceBuilder {
      */
     private void loadJavaFiles(List<SourcePath> paths) {
         JavaProjectBuilder builder = new JavaProjectBuilder();
-        if(CollectionUtil.isEmpty(paths)){
+        if (CollectionUtil.isEmpty(paths)) {
             builder.addSourceTree(new File("src/main/java"));
-        }else{
-            for(SourcePath path:paths){
-                if(null == path){
+        } else {
+            for (SourcePath path : paths) {
+                if (null == path) {
                     continue;
                 }
                 String strPath = path.getPath();
-                if(StringUtil.isNotEmpty(strPath)){
-                    strPath = strPath.replace("\\","/");
+                if (StringUtil.isNotEmpty(strPath)) {
+                    strPath = strPath.replace("\\", "/");
                     builder.addSourceTree(new File(strPath));
                 }
             }
@@ -216,6 +219,9 @@ public class SourceBuilder {
                 if ("void".equals(method.getReturnType().getFullyQualifiedName())) {
                     throw new RuntimeException(method.getName() + " method in " + cls.getName() + " can't be  return type 'void'");
                 }
+                if (null != method.getTagByName(IGNORE_TAG)) {
+                    continue;
+                }
                 url = url.replaceAll("\"", "").trim();
                 apiMethodDoc.setType(methodType);
                 if (StringUtil.isNotEmpty(baseUrl)) {
@@ -228,7 +234,7 @@ public class SourceBuilder {
                 String requestJson = buildReqJson(method, apiMethodDoc);
                 apiMethodDoc.setRequestUsage(JsonFormatUtil.formatJson(requestJson));
                 apiMethodDoc.setResponseUsage(buildReturnJson(method, this.fieldMap));
-                String str = buildMethodReturn(method, apiMethodDoc);
+                String str = buildMethodReturn(method, cls.getGenericFullyQualifiedName());
                 apiMethodDoc.setResponseParams(str);
                 apiMethodDoc.setHeaders(createHeaders(this.headers));
                 methodDocList.add(apiMethodDoc);
@@ -257,9 +263,12 @@ public class SourceBuilder {
         return builder.toString();
     }
 
-    private String buildMethodReturn(JavaMethod method, ApiMethodDoc apiMethodDoc) {
+    private String buildMethodReturn(JavaMethod method, String controllerName) {
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
+        if (DocClassUtil.isMvcIgnoreParams(typeName)) {
+            throw new RuntimeException("Api-doc can't support " + typeName + " as method return in " + controllerName);
+        }
         if (DocClassUtil.isPrimitive(typeName)) {
             return primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(typeName));
         }
@@ -277,6 +286,9 @@ public class SourceBuilder {
         }
         if (DocClassUtil.isMap(typeName)) {
             String[] keyValue = DocClassUtil.getMapKeyValueType(returnType);
+            if (keyValue.length == 0) {
+                return null;
+            }
             if (DocClassUtil.isPrimitive(keyValue[1])) {
                 return primitiveReturnRespComment("key value");
             }
@@ -312,7 +324,7 @@ public class SourceBuilder {
         if (DocClassUtil.isPrimitive(simpleName)) {
             params0.append(primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(simpleName)));
         } else if (DocClassUtil.isCollection(simpleName) || DocClassUtil.isArray(simpleName)) {
-            if (!"java.util.List".equals(globGicName[0])) {
+            if (!DocClassUtil.isCollection(globGicName[0])) {
                 params0.append(buildParams(globGicName[0], "", i + 1, isRequired, responseFieldMap, isResp));
             }
         } else if (DocClassUtil.isMap(simpleName)) {
@@ -389,9 +401,9 @@ public class SourceBuilder {
                             }
                         } else {
                             if (StringUtil.isEmpty(isRequired)) {
-                                params0.append("no comment.").append("\n");
+                                params0.append("No comments found.").append("\n");
                             } else {
-                                params0.append("no comment.").append("|").append(strRequired).append("\n");
+                                params0.append("No comments found.").append("|").append(strRequired).append("\n");
                             }
                         }
                     } else {
@@ -406,9 +418,9 @@ public class SourceBuilder {
                             }
                         } else {
                             if (StringUtil.isEmpty(isRequired)) {
-                                params0.append("no comment.").append("\n");
+                                params0.append("No comments found.").append("\n");
                             } else {
-                                params0.append("no comment|").append(strRequired).append("\n");
+                                params0.append("No comments found|").append(strRequired).append("\n");
                             }
 
                         }
@@ -483,7 +495,11 @@ public class SourceBuilder {
                             n++;
                         } else if (DocClassUtil.isArray(subTypeName)) {
                             fieldGicName = fieldGicName.substring(0, fieldGicName.indexOf("["));
-                            params0.append(buildParams(fieldGicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap, isResp));
+                            if (className.equals(fieldGicName)) {
+                                //do nothing
+                            } else if (!DocClassUtil.isPrimitive(fieldGicName)) {
+                                params0.append(buildParams(fieldGicName, preBuilder.toString(), i + 1, isRequired, responseFieldMap, isResp));
+                            }
                         } else if (simpleName.equals(subTypeName)) {
                             //do nothing
                         } else {
@@ -501,7 +517,8 @@ public class SourceBuilder {
 
     private String primitiveReturnRespComment(String typeName) {
         StringBuilder comments = new StringBuilder();
-        comments.append("no param name|").append(typeName).append("|").append("接口直接返回").append(typeName).append("类型值\n");
+        comments.append("no param name|").append(typeName).append("|").append("The interface directly returns the ");
+        comments.append(typeName).append(" type value.\n");
         return comments.toString();
     }
 
@@ -525,6 +542,9 @@ public class SourceBuilder {
      * @return
      */
     private String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap, boolean isResp) {
+        if (DocClassUtil.isMvcIgnoreParams(typeName)) {
+            return "error restful return";
+        }
         if (DocClassUtil.isPrimitive(typeName)) {
             return DocUtil.jsonValueByType(typeName);
         }
@@ -552,7 +572,7 @@ public class SourceBuilder {
                 String json = buildJson(simple, gName, responseFieldMap, isResp);
                 data.append(json);
             } else if (DocClassUtil.isCollection(gName)) {
-                data.append("list of");
+                data.append("\"any object\"");
             } else {
                 String json = buildJson(gName, gName, responseFieldMap, isResp);
                 data.append(json);
@@ -562,6 +582,10 @@ public class SourceBuilder {
         } else if (DocClassUtil.isMap(typeName)) {
             String gNameTemp = genericCanonicalName;
             String[] getKeyValType = DocClassUtil.getMapKeyValueType(gNameTemp);
+            if (getKeyValType.length == 0) {
+                data.append("{\"mapKey\":{}}");
+                return data.toString();
+            }
             if (!"java.lang.String".equals(getKeyValType[0])) {
                 throw new RuntimeException("Map's key can only use String for json,but you use " + getKeyValType[0]);
             }
@@ -790,7 +814,7 @@ public class SourceBuilder {
                 pValue = value.substring(idx + 1);
             } else {
                 pName = (value.indexOf(" ") > -1) ? value.substring(0, value.indexOf(" ")) : value;
-                pValue = value.indexOf(" ") > -1 ? value.substring(value.indexOf(' ') + 1) : "No Comment";
+                pValue = value.indexOf(" ") > -1 ? value.substring(value.indexOf(' ') + 1) : "No comments found.";
             }
             paramTagMap.put(pName, pValue);
         }
@@ -802,14 +826,19 @@ public class SourceBuilder {
             StringBuilder reqBodyParams = new StringBuilder();
             StringBuilder reqParam = new StringBuilder();
             for (JavaParameter parameter : parameterList) {
+                String paramName = parameter.getName();
                 String typeName = parameter.getType().getGenericCanonicalName();
                 String simpleName = parameter.getType().getValue().toLowerCase();
                 String fullTypeName = parameter.getType().getFullyQualifiedName();
                 if (!DocClassUtil.isMvcIgnoreParams(typeName)) {
-//                    if (!paramTagMap.containsKey(parameter.getName())) {
-//                        throw new RuntimeException("Unable to find javadoc @param for actual param \""
-//                                + parameter.getName() + "\" in method " + javaMethod.getName() + " from " + className);
-//                    }
+                    if (!paramTagMap.containsKey(paramName) && DocClassUtil.isPrimitive(fullTypeName) && isStrict) {
+                        throw new RuntimeException("ERROR: Unable to find javadoc @param for actual param \""
+                                + paramName + "\" in method " + javaMethod.getName() + " from " + className);
+                    }
+                    String comment = paramTagMap.get(paramName);
+                    if (StringUtil.isEmpty(comment)) {
+                        comment = "No comments found.";
+                    }
                     List<JavaAnnotation> annotations = parameter.getAnnotations();
                     if (annotations.size() == 0) {
                         //default set required is true
@@ -819,21 +848,21 @@ public class SourceBuilder {
                             String typeTemp = "";
                             if (DocClassUtil.isPrimitive(gicName)) {
                                 typeTemp = " of " + DocClassUtil.processTypeNameForParams(gicName);
-                                reqParam.append(parameter.getName()).append("|")
+                                reqParam.append(paramName).append("|")
                                         .append(DocClassUtil.processTypeNameForParams(simpleName)).append(typeTemp).append("|")
-                                        .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                                        .append(comment).append("|true\n");
                             } else {
-                                reqParam.append(parameter.getName()).append("|")
+                                reqParam.append(paramName).append("|")
                                         .append(DocClassUtil.processTypeNameForParams(simpleName)).append(typeTemp).append("|")
-                                        .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                                        .append(comment).append("|true\n");
                                 String strPrams = buildParams(gicNameArr[0], "└─", 1, "true", responseFieldMap, false);
                                 reqParam.append(strPrams);
                             }
 
                         } else if (DocClassUtil.isPrimitive(simpleName)) {
-                            reqParam.append(parameter.getName()).append("|")
+                            reqParam.append(paramName).append("|")
                                     .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
-                                    .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                                    .append(comment).append("|true\n");
                         } else {
                             reqParam.append(buildParams(fullTypeName, "", 0, "true", responseFieldMap, false));
                         }
@@ -847,16 +876,16 @@ public class SourceBuilder {
                                         + javaMethod.getName() + " in " + className + ",@RequestBody annotation could only bind one variables.");
                             }
                             if (DocClassUtil.isPrimitive(fullTypeName)) {
-                                reqBodyParams.append(parameter.getName()).append("|")
+                                reqBodyParams.append(paramName).append("|")
                                         .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
-                                        .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                                        .append(comment).append("|true\n");
                             } else {
                                 if (DocClassUtil.isCollection(fullTypeName)) {
                                     String[] gicNameArr = DocClassUtil.getSimpleGicName(typeName);
                                     if (DocClassUtil.isPrimitive(gicNameArr[0])) {
-                                        reqBodyParams.append(parameter.getName()).append("|")
+                                        reqBodyParams.append(paramName).append("|")
                                                 .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
-                                                .append(paramTagMap.get(parameter.getName())).append("|true\n");
+                                                .append(comment).append("|true\n");
                                     } else {
                                         String strPrams = buildParams(gicNameArr[0], "", 0, "true", responseFieldMap, false);
                                         reqBodyParams.append(strPrams);
@@ -876,9 +905,9 @@ public class SourceBuilder {
                             if (null != annotation.getProperty("required")) {
                                 required = annotation.getProperty("required").toString();
                             }
-                            reqParam.append(parameter.getName()).append("|")
+                            reqParam.append(paramName).append("|")
                                     .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
-                                    .append(paramTagMap.get(parameter.getName())).append("|")
+                                    .append(comment).append("|")
                                     .append(required).append("\n");
                         }
                     }
