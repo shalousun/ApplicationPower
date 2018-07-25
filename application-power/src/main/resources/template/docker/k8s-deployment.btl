@@ -16,7 +16,7 @@
 #
 # Example usage: kubectl create -f <this_file>
 # ------------------- SpringBoot Application Deployment ------------------- #
-apiVersion: apps/v1beta2
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: ${applicationName}-service
@@ -35,6 +35,7 @@ spec:
       containers:
         - name: ${applicationName}-service
           image: harbor-registry/test/${basePackage}/${applicationName}:1.0-SNAPSHOT
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
       imagePullSecrets:
