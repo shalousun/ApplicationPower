@@ -14,7 +14,21 @@ DOCKER_REGISTRY=192.168.248.128:8086
 RESOURCES_DIR=$CUR_PATH/src/main/resources
 
 APPLICATION_FILE=$RESOURCES_DIR/application.yml
+# =======================use env ======================================
+INIT_ENV=""
+if [ "$1" = "--env" ]; then
+    INIT_ENV="$2"
+    if [ -n "$INIT_ENV" ]; then
+       echo "INFO: $RESOURCES_DIR/$INIT_ENV/* $RESOURCES_DIR"
+       cp $RESOURCES_DIR/$INIT_ENV/* $RESOURCES_DIR
+    fi
+fi
 
+if [ -z "$INIT_ENV" ]; then
+    echo "INFO: The environment is default"
+else
+    echo "INFO: The environment is $INIT_ENV"
+fi
 # ======================FIND SERVER PORT ==============================
 SERVER_PORT="8080"
 if [ -f "$APPLICATION_FILE" ]

@@ -18,8 +18,13 @@
 ```
 第二种方式【推荐】：使用docker.sh
 ```
+//直接用sh执行
+# sh docker.sh
+//赋予权限再执行
 # chmod 0755 docker.sh
-# ./docker.sh
+# ./docker.sh 或 
+// 构建时使用--env指定部署环境配置，如构建开发环境dev的镜像
+# sh docker.sh --env dev
 ```
 **注意：**  以上命令都是在需要构建的项目根目录运行
 
