@@ -92,37 +92,37 @@ public class RestExceptionHandler {
         LOGGER.debug("validator error code: {}", code);
         switch (code) {
             case "NotEmpty":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
             case "NotBlank":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
             case "NotNull":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_EMPTY.getCode(), fieldError.getDefaultMessage());
             case "Pattern":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Min":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Max":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Length":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Range":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Email":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "DecimalMin":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "DecimalMax":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Size":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Digits":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Past":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             case "Future":
-                return ResultUtil.returnError(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
+                return ResultUtil.error(ErrorCodeEnum.PARAM_ERROR.getCode(), fieldError.getDefaultMessage());
             default:
-                return ResultUtil.returnError(ErrorCodeEnum.UNKNOWN_ERROR);
+                return ResultUtil.error(ErrorCodeEnum.UNKNOWN_ERROR);
         }
     }
 }
