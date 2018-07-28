@@ -6,6 +6,7 @@
 # include yaml_parse function
 . "$(dirname "$0")"/yaml.sh
 
+# the name of the project
 SERVER_NAME='${appName}'
 JAR_NAME='${appName}.jar'
 cd $(dirname $0)
@@ -16,7 +17,14 @@ CONF_DIR=$DEPLOY_DIR/config
 # log file
 LOG_IMPL_FILE=${logConfig}
 APPLICATION_FILE=application.yml
-
+# ====================================use env ===========================================================
+INIT_ENV=""
+if [ "$1" = "--env" ]; then
+    INIT_ENV="$2"
+    if [ -n "$INIT_ENV" ]; then
+       cp $CONF_DIR/$INIT_ENV/* $CONF_DIR
+    fi
+fi
 # ====================================FIND SERVER PORT===================================================
 SERVER_PORT=""
 if [ "$APPLICATION_FILE" = "application.yml" ]
@@ -87,7 +95,8 @@ function getFilesUderDir(){
   	        arr=${arr_file}
         fi
     else
-        getFilesUderDir $file
+        echo "INFO: getFilesUderDir"
+        # getFilesUderDir $file
     fi
     done
 }
@@ -99,7 +108,7 @@ LOGS_DIR=$DEPLOY_DIR/logs
 if [ ! -d "$LOGS_DIR" ]; then
     mkdir $LOGS_DIR
 fi
-STDOUT_FILE=$LOGS_DIR/stdout.log
+STDOUT_FILE=$LOGS_DIR/catalina.out
 
 LOGGING_CONFIG=""
 if [ -f "$CONF_DIR/$LOG_IMPL_FILE" ]
@@ -146,7 +155,7 @@ else
     JAVA_OPTS_TEMP="$JAVA_DEFAULT_OPTS $JAVA_MEM_OPTS"
 fi
 echo -e "Starting the $SERVER_NAME ..."
-nohup java $JAVA_OPTS_TEMP $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS $CONFIG_FILES -jar $DEPLOY_DIR/lib/$JAR_NAME > $STDOUT_FILE 2>&1 &
+nohup java $JAVA_OPTS_TEMP $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS $CONFIG_FILES -jar $DEPLOY_DIR/lib/$JAR_NAME >> $STDOUT_FILE 2>&1 &
 
 COUNT=0
 while [ "$COUNT" -lt 1 ]; do

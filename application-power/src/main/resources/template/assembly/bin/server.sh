@@ -13,6 +13,10 @@ start(){
     ./start.sh
 }
 
+env(){
+    ./start.sh --env $1
+}
+
 stop(){
     ./stop.sh
 }
@@ -39,6 +43,9 @@ case "$1" in
     start)
         start
         ;;
+    --env)
+        env $2
+        ;;
     stop)
         stop
         ;;
@@ -55,6 +62,6 @@ case "$1" in
         dump
         ;;
     *)
-        echo $"Usage: $0 {start|stop|restart|status|debug|dump}"
+        echo $"Usage: $0 {start|env|stop|restart|status|debug|dump}"
         exit 1
 esac

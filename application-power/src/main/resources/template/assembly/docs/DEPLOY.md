@@ -39,10 +39,12 @@ tar -zxvf ${appName}-1.0.tar.gz
 
 第一种通过start.sh来启动
 ```
-# 启动应用
-
+# 简单启动应用
 ./start.sh
 
+# 使用目录隔离的多配置环境，可以用--env启动时指定环境，如用开发环境启动。
+# 开发中可能会有其他配置文件，因此可以采用文件夹来隔离多环境，
+./start.sh --env dev
 # 以debug方式启动，此处debug为jvm环境的debug
 ./start.sh debug
 
@@ -59,6 +61,8 @@ tar -zxvf ${appName}-1.0.tar.gz
 
 ./server.sh
 
+# 启动时指定环境，如用开发环境启动
+./start.sh --env dev
 # 以debug方式启动，此处debug为jvm环境的debug
 ./server.sh debug
 
