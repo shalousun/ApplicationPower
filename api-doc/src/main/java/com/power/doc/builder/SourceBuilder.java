@@ -28,6 +28,8 @@ public class SourceBuilder {
 
     private static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
 
+    private static final String MAP_CLASS = "java.util.Map";
+
     public Map<String, JavaClass> javaFilesMap = new HashMap<>();
 
     private JavaProjectBuilder builder;
@@ -343,10 +345,12 @@ public class SourceBuilder {
             params0.append(primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(simpleName)));
         } else if (DocClassUtil.isCollection(simpleName) || DocClassUtil.isArray(simpleName)) {
             if (!DocClassUtil.isCollection(globGicName[0])) {
-                params0.append(buildParams(globGicName[0], "", i + 1, isRequired, responseFieldMap, isResp));
+                params0.append(buildParams(globGicName[0], pre, i + 1, isRequired, responseFieldMap, isResp));
             }
         } else if (DocClassUtil.isMap(simpleName)) {
-            params0.append(buildParams(globGicName[1], "", i + 1, isRequired, responseFieldMap, isResp));
+            if(globGicName.length==2){
+                params0.append(buildParams(globGicName[1], pre, i + 1, isRequired, responseFieldMap, isResp));
+            }
         } else if ("java.lang.Object".equals(className)) {
             params0.append(pre + "any object|object|");
             if (StringUtil.isEmpty(isRequired)) {
@@ -706,6 +710,10 @@ public class SourceBuilder {
                                 }
                             } else {
                                 if (!typeName.equals(gicName)) {
+                                    if(MAP_CLASS.equals(gicName)){
+                                        data0.append("[{\"mapKey\":{}}],");
+                                        continue out;
+                                    }
                                     data0.append("[").append(buildJson(gicName, fieldGicName, responseFieldMap, isResp)).append("]").append(",");
                                 } else {
                                     data0.append("[{\"$ref\":\"..\"}]").append(",");
