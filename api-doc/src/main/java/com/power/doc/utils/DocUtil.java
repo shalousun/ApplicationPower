@@ -57,7 +57,8 @@ public class DocUtil {
         String value = RandomUtil.randomValueByType(type);
         if("Integer".equals(type)||"int".equals(type)||"Long".equals(type)||"long".equals(type)
                 ||"Double".equals(type)||"double".equals(type)|| "Float".equals(type)||"float".equals(type)||
-                "BigDecimal".equals(type)||"boolean".equals(type)||"Boolean".equals(type)){
+                "BigDecimal".equals(type)||"boolean".equals(type)||"Boolean".equals(type)||
+                "Short".equals(type)){
             return value;
         }else{
             StringBuilder builder = new StringBuilder();

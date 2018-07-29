@@ -31,11 +31,17 @@ public class DocClassUtil {
                 return true;
             case "float":
                 return true;
+            case "short":
+                return true;
             case "bigdecimal":
+                return true;
+            case "char":
                 return true;
             case "string":
                 return true;
             case "boolean":
+                return true;
+            case "byte":
                 return true;
             case "java.sql.timestamp":
                 return true;
@@ -175,6 +181,8 @@ public class DocClassUtil {
                 return "string";
             case "string":
                 return "string";
+            case "char":
+                return "char";
             case "java.util.List":
                 return "array";
             case "list":
@@ -184,6 +192,10 @@ public class DocClassUtil {
             case "integer":
                 return "int";
             case "int":
+                return "int";
+            case "short":
+                return "int";
+            case "java.lang.Short":
                 return "int";
             case "double":
                 return "number";
@@ -199,6 +211,10 @@ public class DocClassUtil {
                 return "boolean";
             case "boolean":
                 return "boolean";
+            case "java.util.Byte":
+                return "string";
+            case "byte":
+                return "string";
             case "map":
                 return "map";
             default:
