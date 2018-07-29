@@ -140,6 +140,8 @@ public class RandomUtil {
         switch (type) {
             case "String":  //12
                 return randomString(6);
+            case "char":
+                return randomString(1);
             case "Integer":    //4
                 return String.valueOf(randomInt(1000));
             case "int" :
@@ -156,6 +158,10 @@ public class RandomUtil {
                 return String.valueOf(randomDouble(FORMAT));
             case "float":
                 return String.valueOf(randomDouble(FORMAT));
+            case "short":
+                return String.valueOf(randomInt(0,32767));
+            case "Short":
+                return String.valueOf(randomInt(0,32767));
             case "boolean":
                 return  "true";
             case "Boolean":
