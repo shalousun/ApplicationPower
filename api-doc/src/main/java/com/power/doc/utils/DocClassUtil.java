@@ -321,6 +321,8 @@ public class DocClassUtil {
         switch (paramType){
             case "org.springframework.ui.Model":
                 return true;
+            case "org.springframework.ui.ModelMap":
+                return true;
             case "org.springframework.web.servlet.ModelAndView":
                 return true;
             case "org.springframework.validation.BindingResult" :
