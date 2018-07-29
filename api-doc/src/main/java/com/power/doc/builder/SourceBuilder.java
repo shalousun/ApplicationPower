@@ -236,9 +236,9 @@ public class SourceBuilder {
                 }
             }
             if (methodCounter > 0) {
-                if ("void".equals(method.getReturnType().getFullyQualifiedName())) {
-                    throw new RuntimeException(method.getName() + " method in " + cls.getCanonicalName() + " can't be  return type 'void'");
-                }
+//                if ("void".equals(method.getReturnType().getFullyQualifiedName())) {
+//                    throw new RuntimeException(method.getName() + " method in " + cls.getCanonicalName() + " can't be  return type 'void'");
+//                }
                 if (null != method.getTagByName(IGNORE_TAG)) {
                     continue;
                 }
@@ -253,7 +253,9 @@ public class SourceBuilder {
                 apiMethodDoc.setRequestParams(comment);
                 String requestJson = buildReqJson(method, apiMethodDoc);
                 apiMethodDoc.setRequestUsage(JsonFormatUtil.formatJson(requestJson));
+
                 apiMethodDoc.setResponseUsage(buildReturnJson(method, this.fieldMap));
+
                 String str = buildMethodReturn(method, cls.getGenericFullyQualifiedName());
                 apiMethodDoc.setResponseParams(str);
                 apiMethodDoc.setHeaders(createHeaders(this.headers));
@@ -287,7 +289,11 @@ public class SourceBuilder {
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
         if (DocClassUtil.isMvcIgnoreParams(typeName)) {
-            throw new RuntimeException("Api-doc can't support " + typeName + " as method return in " + controllerName);
+            if("org.springframework.web.servlet.ModelAndView".equals(typeName)){
+                return null;
+            }else{
+                throw new RuntimeException("smart-doc can't support " + typeName + " as method return in " + controllerName);
+            }
         }
         if (DocClassUtil.isPrimitive(typeName)) {
             return primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(typeName));
@@ -555,6 +561,9 @@ public class SourceBuilder {
      * @return
      */
     private String buildReturnJson(JavaMethod method, Map<String, CustomRespField> responseFieldMap) {
+        if("void".equals(method.getReturnType().getFullyQualifiedName())){
+            return "this api return nothing";
+        }
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
         return JsonFormatUtil.formatJson(buildJson(typeName, returnType, responseFieldMap, true));
@@ -569,7 +578,11 @@ public class SourceBuilder {
      */
     private String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap, boolean isResp) {
         if (DocClassUtil.isMvcIgnoreParams(typeName)) {
-            return "error restful return";
+            if("org.springframework.web.servlet.ModelAndView".equals(typeName)){
+                return "forward or redirect to a page view";
+            }else{
+                return "error restful return";
+            }
         }
         if (DocClassUtil.isPrimitive(typeName)) {
             return DocUtil.jsonValueByType(typeName);
@@ -617,7 +630,7 @@ public class SourceBuilder {
             }
             String gicName = gNameTemp.substring(gNameTemp.indexOf(",") + 1, gNameTemp.lastIndexOf(">"));
             if ("java.lang.Object".equals(gicName)) {
-                data.append("{").append("\"mapKey\":").append("{\"waring\":\"You may use java.util.Object for Map value; Api-doc can't be handle.\"}").append("}");
+                data.append("{").append("\"mapKey\":").append("{\"waring\":\"You may use java.util.Object for Map value; smart-doc can't be handle.\"}").append("}");
             } else if (DocClassUtil.isPrimitive(gicName)) {
                 data.append("{").append("\"mapKey1\":").append(DocUtil.jsonValueByType(gicName)).append(",");
                 data.append("\"mapKey2\":").append(DocUtil.jsonValueByType(gicName)).append("}");
@@ -820,13 +833,13 @@ public class SourceBuilder {
                 }
                 if (requestBodyCounter < 1) {
                     //非json
-                    return "Api-doc currently cannot provide examples of parameters for the RequestParam request mode";
+                    return "smart-doc currently cannot provide examples of parameters for the RequestParam request mode";
 
                 }
 
             }
         }
-        return "Does not require any request parameters.";
+        return "No request parameters are required.";
     }
 
     private String getCommentTag(final JavaMethod javaMethod, final String tagName, final String className) {
