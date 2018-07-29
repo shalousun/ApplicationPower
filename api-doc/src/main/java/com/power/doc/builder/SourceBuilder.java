@@ -116,6 +116,22 @@ public class SourceBuilder {
         return counter;
     }
 
+    /**
+     * 检查是否是rest controller
+     * @param cls
+     * @return
+     */
+    private boolean isRestController(JavaClass cls){
+        List<JavaAnnotation> classAnnotations = cls.getAnnotations();
+        for (JavaAnnotation annotation : classAnnotations) {
+            String annotationName = annotation.getType().getName();
+            if ("RestController".equals(annotationName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<ApiDoc> getControllerApiData() {
         List<ApiDoc> apiDocList = new ArrayList<>();
         for (JavaClass cls : javaClasses) {
@@ -267,7 +283,7 @@ public class SourceBuilder {
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
         if (DocClassUtil.isMvcIgnoreParams(typeName)) {
-            throw new RuntimeException("Api-doc can't support " + typeName + " as method return in " + controllerName);
+                throw new RuntimeException("Api-doc can't support " + typeName + " as method return in " + controllerName);
         }
         if (DocClassUtil.isPrimitive(typeName)) {
             return primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(typeName));
@@ -330,7 +346,7 @@ public class SourceBuilder {
         } else if (DocClassUtil.isMap(simpleName)) {
             params0.append(buildParams(globGicName[1], "", i + 1, isRequired, responseFieldMap, isResp));
         } else if ("java.lang.Object".equals(className)) {
-            params0.append("any object|object|");
+            params0.append(pre+"any object|object|");
             if (StringUtil.isEmpty(isRequired)) {
                 params0.append("any object.").append("\n");
             } else {
@@ -431,6 +447,10 @@ public class SourceBuilder {
                         preBuilder.append("└─");
                         if (DocClassUtil.isMap(subTypeName)) {
                             String gNameTemp = field.getType().getGenericCanonicalName();
+                            if("java.util.Map".equals(gNameTemp)){
+                                params0.append(preBuilder+"any object|object|any object\n");
+                                continue ;
+                            }
                             String valType = DocClassUtil.getMapKeyValueType(gNameTemp)[1];
                             if (!DocClassUtil.isPrimitive(valType)) {
                                 if (valType.length() == 1) {
@@ -605,7 +625,8 @@ public class SourceBuilder {
             return data.toString();
         } else if ("java.lang.Object".equals(typeName)) {
             if ("java.lang.Object".equals(typeName)) {
-                throw new RuntimeException("Please do not return java.lang.Object directly in api interface.");
+                data.append("{\"object\":\" any object\"},");
+               // throw new RuntimeException("Please do not return java.lang.Object directly in api interface.");
             }
         } else {
             List<JavaField> fields = getFields(cls, 0);
@@ -689,6 +710,10 @@ public class SourceBuilder {
                                 }
                             }
                         } else if (DocClassUtil.isMap(subTypeName)) {
+                            if("java.util.Map".equals(subTypeName)){
+                                data0.append("{").append("\"mapKey\":{}},");
+                                continue out;
+                            }
                             String gicName = fieldGicName.substring(fieldGicName.indexOf(",") + 1, fieldGicName.indexOf(">"));
                             if (gicName.length() == 1) {
                                 String gicName1 = (i < globGicName.length) ? globGicName[i] : globGicName[globGicName.length - 1];
