@@ -249,7 +249,7 @@ public class SourceBuilder {
                 } else {
                     apiMethodDoc.setUrl((url).replace("//", "/"));
                 }
-                String comment = getCommentTag(method, "param", cls.getName());
+                String comment = getCommentTag(method, "param", cls.getCanonicalName());
                 apiMethodDoc.setRequestParams(comment);
                 String requestJson = buildReqJson(method, apiMethodDoc);
                 apiMethodDoc.setRequestUsage(JsonFormatUtil.formatJson(requestJson));
@@ -351,7 +351,11 @@ public class SourceBuilder {
             params0.append(primitiveReturnRespComment(DocClassUtil.processTypeNameForParams(simpleName)));
         } else if (DocClassUtil.isCollection(simpleName) || DocClassUtil.isArray(simpleName)) {
             if (!DocClassUtil.isCollection(globGicName[0])) {
-                params0.append(buildParams(globGicName[0], pre, i + 1, isRequired, responseFieldMap, isResp));
+                String gicName = globGicName[0];
+                if(DocClassUtil.isArray(gicName)){
+                    gicName = gicName.substring(0, gicName.indexOf("["));
+                }
+                params0.append(buildParams(gicName, pre, i + 1, isRequired, responseFieldMap, isResp));
             }
         } else if (DocClassUtil.isMap(simpleName)) {
             if(globGicName.length==2){
@@ -890,9 +894,12 @@ public class SourceBuilder {
                     List<JavaAnnotation> annotations = parameter.getAnnotations();
                     if (annotations.size() == 0) {
                         //default set required is true
-                        if (DocClassUtil.isCollection(fullTypeName)) {
+                        if (DocClassUtil.isCollection(fullTypeName)||DocClassUtil.isArray(fullTypeName)) {
                             String[] gicNameArr = DocClassUtil.getSimpleGicName(typeName);
                             String gicName = gicNameArr[0];
+                            if(DocClassUtil.isArray(gicName)){
+                                gicName = gicName.substring(0, gicName.indexOf("["));
+                            }
                             String typeTemp = "";
                             if (DocClassUtil.isPrimitive(gicName)) {
                                 typeTemp = " of " + DocClassUtil.processTypeNameForParams(gicName);
@@ -936,9 +943,13 @@ public class SourceBuilder {
                                         .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
                                         .append(comment).append("|").append(required).append("\n");
                             } else {
-                                if (DocClassUtil.isCollection(fullTypeName)) {
+                                if (DocClassUtil.isCollection(fullTypeName)||DocClassUtil.isArray(fullTypeName)) {
                                     String[] gicNameArr = DocClassUtil.getSimpleGicName(typeName);
-                                    if (DocClassUtil.isPrimitive(gicNameArr[0])) {
+                                    String gicName = gicNameArr[0];
+                                    if(DocClassUtil.isArray(gicName)){
+                                        gicName = gicName.substring(0, gicName.indexOf("["));
+                                    }
+                                    if (DocClassUtil.isPrimitive(gicName)) {
                                         reqBodyParams.append(paramName).append("|")
                                                 .append(DocClassUtil.processTypeNameForParams(simpleName)).append("|")
                                                 .append(comment).append("|").append(required).append("\n");
@@ -992,7 +1003,7 @@ public class SourceBuilder {
         if (null == cls1) {
             return fieldList;
         } else if ("Object".equals(cls1.getSimpleName()) || "Timestamp".equals(cls1.getSimpleName()) ||
-                "Date".equals(cls1.getSimpleName())) {
+                "Date".equals(cls1.getSimpleName())||"Locale".equals(cls1.getSimpleName())) {
             return fieldList;
         } else {
             JavaClass pcls = cls1.getSuperJavaClass();
