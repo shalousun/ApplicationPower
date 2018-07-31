@@ -47,6 +47,8 @@ public class DocClassUtil {
                 return true;
             case "java.util.date":
                 return true;
+            case "java.math.bigdecimal":
+                return true;
             default:
                 return false;
         }
@@ -205,6 +207,8 @@ public class DocClassUtil {
                 return "number";
             case "java.lang.Float":
                 return "number";
+            case "bigdecimal":
+                return "number";
             case "float":
                 return "number";
             case "java.lang.Boolean":
@@ -217,6 +221,8 @@ public class DocClassUtil {
                 return "string";
             case "map":
                 return "map";
+            case "date":
+                return "string";
             default:
                 return "object";
         }
