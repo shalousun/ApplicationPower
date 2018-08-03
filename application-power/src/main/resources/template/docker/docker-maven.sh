@@ -16,6 +16,8 @@ HARBOR_PROJECT=library
 RESOURCES_DIR=$CUR_PATH/src/main/resources
 
 APPLICATION_FILE=$RESOURCES_DIR/application.yml
+
+POM=$CUR_PATH/pom.xml
 # =======================use env ======================================
 INIT_ENV=""
 if [ "$1" = "--env" ]; then
@@ -59,22 +61,22 @@ PROJECT_NAME="${applicationName}"
 if [ "$(xmllint 2>&1 | grep xpath | wc -l)" = "1" ]
 then
     echo "INFO: xmllint has installed,we will use it to process pom.xml faster."
-    APP_VERSION_TEMP=$(sed < pom.xml '2 s/xmlns=".*"//g' | xmllint --xpath '/project/version/text()' - 2>/dev/null)
+    APP_VERSION_TEMP=$(sed < $POM '2 s/xmlns=".*"//g' | xmllint --xpath '/project/version/text()' - 2>/dev/null)
     if [ -n "$APP_VERSION_TEMP" ]; then
         APP_VERSION=$APP_VERSION_TEMP
     fi
 
-    GROUP_TEMP=$(sed < pom.xml '2 s/xmlns=".*"//g' | xmllint --xpath '/project/groupId/text()' - 2>/dev/null)
+    GROUP_TEMP=$(sed < $POM '2 s/xmlns=".*"//g' | xmllint --xpath '/project/groupId/text()' - 2>/dev/null)
     if [ -n "$GROUP_TEMP" ]; then
         GROUP=$GROUP_TEMP
     fi
 
-    ARTIFACT_ID_TEMP=$(sed < pom.xml '2 s/xmlns=".*"//g' | xmllint --xpath '/project/artifactId/text()' - 2>/dev/null)
+    ARTIFACT_ID_TEMP=$(sed < $POM '2 s/xmlns=".*"//g' | xmllint --xpath '/project/artifactId/text()' - 2>/dev/null)
     if [ -n "$ARTIFACT_ID_TEMP" ]; then
         ARTIFACT_ID=$ARTIFACT_ID_TEMP
     fi
 
-    FINAL_NAME=$(sed < pom.xml '2 s/xmlns=".*"//g' | xmllint --xpath '/project/build/finalName/text()' - 2>/dev/null)
+    FINAL_NAME=$(sed < $POM '2 s/xmlns=".*"//g' | xmllint --xpath '/project/build/finalName/text()' - 2>/dev/null)
     if [ -n "$FINAL_NAME" ]; then
         PROJECT_NAME=$FINAL_NAME
     else
@@ -137,6 +139,7 @@ then
     echo "INFO: The build jar name is $JAR_NAME"
 fi
 # =========================build docker image=============================
+cd $CUR_PATH
 echo "INFO: use maven build docker image"
 mvn clean package docker:build -DskipTests
 
