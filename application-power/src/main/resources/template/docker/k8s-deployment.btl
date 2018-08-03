@@ -32,10 +32,12 @@ spec:
         app: ${applicationName}-service
         tier: backend
     spec:
+      nodeSelector:
+        demopoo: test
       containers:
         - name: ${applicationName}-service
           image: harbor-registry/test/${basePackage}/${applicationName}:1.0-SNAPSHOT
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: always
           ports:
             - containerPort: 8080
       imagePullSecrets:
