@@ -11,6 +11,8 @@ CUR_PATH=$(cd `dirname $0`;pwd)
 
 DOCKER_REGISTRY=192.168.248.128:8086
 
+HARBOR_PROJECT=library
+
 RESOURCES_DIR=$CUR_PATH/src/main/resources
 
 APPLICATION_FILE=$RESOURCES_DIR/application.yml
@@ -127,5 +129,5 @@ docker run -dp $SERVER_PORT:$SERVER_PORT -t ${MYIMAGE}
 # uncomment if you need push
 # docker login ${DOCKER_REGISTRY} -u admin -p admin123
 echo "INFO：Starting push image of ${MYIMAGE} to docker registry ${DOCKER_REGISTRY}"
-# docker tag ${MYIMAGE}  ${DOCKER_REGISTRY}/${MYIMAGE}
-# docker push ${DOCKER_REGISTRY}/${MYIMAGE}
+# docker tag ${MYIMAGE}  ${DOCKER_REGISTRY}/$HARBOR_PROJECT/${MYIMAGE}
+# docker push ${DOCKER_REGISTRY}/$HARBOR_PROJECT/${MYIMAGE}
