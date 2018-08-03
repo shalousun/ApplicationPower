@@ -39,8 +39,7 @@ public class ApiMethodDoc implements Serializable {
     }
 
     public void setUrl(String url) {
-        url = ("{server}/" + url).replace("//","/");
-        this.url = "http[s]://" + url;
+        this.url = url;
     }
 
     public String getType() {

@@ -8,6 +8,7 @@ import com.power.doc.utils.DocClassUtil;
 import com.power.doc.utils.DocUtil;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.*;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.*;
@@ -40,6 +41,8 @@ public class SourceBuilder {
 
     private List<ApiReqHeader> headers;
 
+    private String appUrl;
+
 
     public Map<String, CustomRespField> fieldMap = new HashMap<>();
 
@@ -62,6 +65,13 @@ public class SourceBuilder {
         if (null == config) {
             throw new NullPointerException("ApiConfig can't be null.");
         }
+
+        if(StringUtil.isEmpty(config.getServerUrl())){
+            this.appUrl = "http://{server}";
+        }else{
+            this.appUrl = config.getServerUrl();
+        }
+
         this.isStrict = config.isStrict();
         loadJavaFiles(config.getSourcePaths());
         this.headers = config.getRequestHeaders();
@@ -245,9 +255,11 @@ public class SourceBuilder {
                 url = url.replaceAll("\"", "").trim();
                 apiMethodDoc.setType(methodType);
                 if (StringUtil.isNotEmpty(baseUrl)) {
-                    apiMethodDoc.setUrl((baseUrl + "/" + url).replace("//", "/"));
+                    baseUrl = StringUtils.equals("/",baseUrl.subSequence(0,1))?baseUrl:"/"+baseUrl;
+                    apiMethodDoc.setUrl(this.appUrl+(baseUrl + "/" + url).replace("//", "/"));
                 } else {
-                    apiMethodDoc.setUrl((url).replace("//", "/"));
+                    url = StringUtils.equals("/",url.subSequence(0,1))?url:"/"+url;
+                    apiMethodDoc.setUrl(this.appUrl+(url).replace("//", "/"));
                 }
                 String comment = getCommentTag(method, "param", cls.getCanonicalName());
                 apiMethodDoc.setRequestParams(comment);

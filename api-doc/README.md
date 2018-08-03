@@ -11,7 +11,7 @@
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>api-doc</artifactId>
-    <version>0.2</version>
+    <version>0.5</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -47,7 +47,11 @@ public class ApiDocTest {
         config.setStrict(true);
         config.setOutPath("d:\\md");
         //默认是src/main/java,maven项目可以不写
-        config.setSourcePath("src/test/java");
+        config.setSourcePaths(
+                SourcePath.path().setDesc("本项目代码").setPath("src/test/java"),
+                SourcePath.path().setPath("E:\\Test\\Mybatis-PageHelper-master\\src\\main\\java"),
+                SourcePath.path().setDesc("加载项目外代码").setPath("E:\\ApplicationPower\\ApplicationPower\\Common-util\\src\\main\\java")
+         );
 
         //设置请求头，如果没有请求头，可以不用设置
         config.setRequestHeaders(

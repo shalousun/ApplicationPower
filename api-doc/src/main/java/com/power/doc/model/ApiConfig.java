@@ -13,6 +13,11 @@ import java.util.List;
 public class ApiConfig {
 
     /**
+     * 应用请求base路径
+     */
+    private String serverUrl;
+
+    /**
      * 是否采用严格模式
      */
     private boolean isStrict;
@@ -44,6 +49,14 @@ public class ApiConfig {
      */
 
     private List<ApiErrorCode> errorCodes;
+
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
 
     public boolean isStrict() {
         return isStrict;

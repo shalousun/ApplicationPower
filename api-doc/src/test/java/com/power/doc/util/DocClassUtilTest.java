@@ -13,6 +13,7 @@ public class DocClassUtilTest {
 
     @Test
     public void testGetSimpleGicName(){
+        char me = 'k';
         String className = "com.power.doc.controller.Teacher<com.power.doc.controller.Teacher<com.power.doc.controller.User,com.power.doc.controller.User,com.power.doc.controller.User>,com.power.doc.controller.Teacher<com.power.doc.controller.User,com.power.doc.controller.User,com.power.doc.controller.User>,com.power.doc.controller.Teacher<com.power.doc.controller.User,com.power.doc.controller.User,com.power.doc.controller.User>>";
         String[] arr = DocClassUtil.getSimpleGicName(className);
 //        System.out.println("arr:"+ JSON.toJSONString(arr));
