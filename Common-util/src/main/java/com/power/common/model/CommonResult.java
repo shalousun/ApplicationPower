@@ -35,6 +35,11 @@ public class CommonResult<T> implements Serializable {
     private String code;
 
     /**
+     * 响应时间
+     */
+    private String timestamp;
+
+    /**
      * 默认构造器
      */
     public CommonResult() {
@@ -107,5 +112,13 @@ public class CommonResult<T> implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }
