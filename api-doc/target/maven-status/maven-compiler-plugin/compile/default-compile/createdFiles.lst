@@ -1,6 +1,0 @@
-com\power\doc\builer\SourceBuilder.class
-com\power\doc\utils\PathUtil.class
-com\power\doc\model\ApiMethodDoc.class
-com\power\doc\model\ApiDoc.class
-com\power\doc\utils\BeetlTemplateUtil.class
-com\power\doc\builer\ApiDocBuilder.class
