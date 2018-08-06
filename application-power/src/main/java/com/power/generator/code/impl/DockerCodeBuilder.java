@@ -118,7 +118,7 @@ public class DockerCodeBuilder implements ICodeBuilder {
 
         Template dockerDoc = BeetlTemplateUtil.getByName(dockerDocTpl);
         String docPath = PathUtil.connectPath(getBasePath(),"docs/DOCKER.md");
-        dockerDoc.binding("deployment_cfg",applicationName+"-deployment.yaml");
+        dockerDoc.binding("deployment_cfg","deployment.yaml");
         templates.put(docPath,dockerDoc.render());
 
 

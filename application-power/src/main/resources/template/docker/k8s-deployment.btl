@@ -57,3 +57,19 @@ spec:
  selector:
   app: ${applicationName}-service
   tier: backend
+---
+# ------------------- SpringBoot Application ingress ---------------------- #
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ${applicationName}-ingress
+  namespace: default
+spec:
+  rules:
+  - host: test.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ${applicationName}-service
+          servicePort: 8080
