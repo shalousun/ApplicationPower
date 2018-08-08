@@ -67,6 +67,8 @@ public class CodeWriter extends AbstractCodeWriter {
 
         new DockerCodeBuilder();
 
+        new KubeYmlCodeBuilder();
+
         new PomCodeBuilder();
 
         new GradleCodeBuilder();

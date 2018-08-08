@@ -1,10 +1,9 @@
-FROM frolvlad/alpine-oraclejdk8
+# This image has been added to the time zone setting. The default is Shanghai.
+FROM registry.cn-shanghai.aliyuncs.com/shalousun/alpine-oraclejdk8:1.0
 
 MAINTAINER shalousun
 EXPOSE 8080
 
-# set timezone
-RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 #install Spring Boot artifact
 VOLUME /tmp
 ADD ${applicationName}.jar app.jar

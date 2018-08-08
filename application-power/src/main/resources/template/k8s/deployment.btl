@@ -19,26 +19,24 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: ${applicationName}-service
+  name: ${applicationName}-rc
   namespace: default
 spec:
   selector:
       matchLabels:
-        app: ${applicationName}-service
+        app: ${applicationName}
         tier: backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: ${applicationName}-service
+        app: ${applicationName}
         tier: backend
     spec:
-      nodeSelector:
-        demopoo: test
       containers:
-        - name: ${applicationName}-service
+        - name: ${applicationName}
           image: harbor-registry/test/${basePackage}/${applicationName}:1.0-SNAPSHOT
-          imagePullPolicy: always
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
       imagePullSecrets:
@@ -48,14 +46,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
- name: ${applicationName}-service
+ name: ${applicationName}-svc
+ namespace: default
 spec:
  type: NodePort
  ports:
  - port: 8080
    nodePort: 30011
  selector:
-  app: ${applicationName}-service
+  app: ${applicationName}
   tier: backend
 ---
 # ------------------- SpringBoot Application ingress ---------------------- #
@@ -71,5 +70,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: ${applicationName}-service
+          serviceName: ${applicationName}-svc
           servicePort: 8080

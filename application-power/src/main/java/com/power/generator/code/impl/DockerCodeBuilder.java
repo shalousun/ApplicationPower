@@ -1,6 +1,5 @@
 package com.power.generator.code.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.power.generator.code.ICodeBuilder;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
@@ -48,7 +47,6 @@ public class DockerCodeBuilder implements ICodeBuilder {
 
     private final String DOCKER_DOC_GRADLE_TPL = "docker/DOCKER-GRADLE.md";
 
-    private final String K8S_DEPLOYMENT = "docker/k8s-deployment.btl";
 
     public DockerCodeBuilder(){
         if(GeneratorProperties.useDocker()){
@@ -100,10 +98,7 @@ public class DockerCodeBuilder implements ICodeBuilder {
         String dockerFileOutPath = paths.get(DOCKER_DIR)+ConstVal.FILE_SEPARATOR+"Dockerfile";
         templates.put(dockerFileOutPath,dockerFile.render());
 
-        Template k8sDeployment = BeetlTemplateUtil.getByName(K8S_DEPLOYMENT);
-        k8sDeployment.binding(GeneratorConstant.COMMON_VARIABLE);
-        String k8sDeployConfigPath = paths.get(DOCKER_DIR)+ConstVal.FILE_SEPARATOR+applicationName+"-deployment.yaml";
-        templates.put(k8sDeployConfigPath,k8sDeployment.render());
+
 
         Template dockerSh = BeetlTemplateUtil.getByName(dockerShTplPath);
         dockerSh.binding(GeneratorConstant.COMMON_VARIABLE);
@@ -120,9 +115,6 @@ public class DockerCodeBuilder implements ICodeBuilder {
         String docPath = PathUtil.connectPath(getBasePath(),"docs/DOCKER.md");
         dockerDoc.binding("deployment_cfg","deployment.yaml");
         templates.put(docPath,dockerDoc.render());
-
-
-
 
         return templates;
     }
