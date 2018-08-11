@@ -125,13 +125,13 @@
         <dependency>
            <groupId>com.github.shalousun</groupId>
            <artifactId>common-util</artifactId>
-           <version>1.0</version>
+           <version>1.2</version>
          </dependency>
         <!--https://gitee.com/sunyurepository/ApplicationPower-->
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>api-doc</artifactId>
-            <version>0.3</version>
+            <version>0.5</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

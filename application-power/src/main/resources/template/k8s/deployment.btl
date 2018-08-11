@@ -67,7 +67,7 @@ spec:
   rules:
   - host: test.com
     http:
-      port: '80'
+      port: 80
       paths:
       - path: /
         backend:
