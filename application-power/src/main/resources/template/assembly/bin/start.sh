@@ -48,7 +48,7 @@ case "$unameOut" in
 esac
 echo "INFO: $machine platform"
 # ===================================FIND SERVER PORT END================================================
-PIDS=$(ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}')
+PIDS=$(ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}')
 if [ "$1" = "status" ]; then
     if [ -n "$PIDS" ]; then
         echo "The $SERVER_NAME is running...!"
@@ -164,7 +164,7 @@ while [ "$COUNT" -lt 1 ]; do
     if [ -n "$SERVER_PORT" ]; then
         COUNT=$(netstat -an | grep "$SERVER_PORT" | wc -l)
     else
-    	COUNT=$(ps -f | grep java | grep "$DEPLOY_DIR" | awk '{print $2}' | wc -l)
+    	COUNT=$(ps -ef | grep java | grep "$DEPLOY_DIR" | awk '{print $2}' | wc -l)
     fi
     if [ "$COUNT" -gt 0 ]; then
         break
@@ -173,7 +173,7 @@ done
 
 # ====================print finish info=================================================================================
 echo "OK!"
-PIDS=$(ps -f | grep java | grep "$DEPLOY_DIR" | awk '{print $2}')
+PIDS=$(ps -ef | grep java | grep "$DEPLOY_DIR" | awk '{print $2}')
 echo "Command line argument: $JAVA_OPTS_TEMP"
 echo "PID: $PIDS"
 echo "PORT: $SERVER_PORT"
