@@ -49,10 +49,11 @@ metadata:
  name: ${applicationName}-svc
  namespace: default
 spec:
- type: NodePort
+ #type: NodePort
  ports:
  - port: 8080
-   nodePort: 30011
+   targetPort: 8080
+   #nodePort: 30011
  selector:
   app: ${applicationName}
   tier: backend
@@ -67,7 +68,7 @@ spec:
   rules:
   - host: test.com
     http:
-      port: 80
+      #port: 80
       paths:
       - path: /
         backend:
