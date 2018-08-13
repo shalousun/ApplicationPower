@@ -37,6 +37,13 @@ spec:
         - name: ${applicationName}
           image: harbor-registry/test/${basePackage}/${applicationName}:1.0-SNAPSHOT
           imagePullPolicy: Always
+#          resources:
+#            requests:
+#              cpu: 100m
+#              memory: 100Mi
+#            limits:
+#              cpu: 100m
+#              memory: 100Mi
           ports:
             - containerPort: 8080
       imagePullSecrets:
