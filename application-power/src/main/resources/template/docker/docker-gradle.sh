@@ -119,7 +119,7 @@ fi
 
 # use gradle build jar and images
 
-gradle build buildDocker
+gradle build buildDocker -x test
 
 # running container
 docker run -dp $SERVER_PORT:$SERVER_PORT -t ${MYIMAGE}
