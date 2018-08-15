@@ -75,13 +75,14 @@ kubectl create -f ${deployment_cfg}
 ```
 ├─docs
 │      DOCKER.md
+├─k8s
+│      deployment.yaml
 ├─gradle
 │   └─wrapper
 └─src
 │   ├─main
 │   │  ├─docker
 │   │  │      Dockerfile
-│   │  │      k8s-deployment.yaml
 │   │  ├─java
 │   │  │  └─com.company.script
 │   │  └─resources

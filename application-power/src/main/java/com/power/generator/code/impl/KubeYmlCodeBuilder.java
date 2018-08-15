@@ -1,5 +1,6 @@
 package com.power.generator.code.impl;
 
+import com.power.common.util.StringUtil;
 import com.power.generator.code.ICodeBuilder;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
@@ -7,6 +8,7 @@ import com.power.generator.utils.BeetlTemplateUtil;
 import com.power.generator.utils.CodeWriteUtil;
 import com.power.generator.utils.GeneratorProperties;
 import com.power.generator.utils.PathUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.beetl.core.Template;
 
 import java.util.HashMap;
@@ -63,10 +65,27 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
     @Override
     public Map<String,String> handleTemplates() {
         Map<String,String> templates = new HashMap<>(2);
+        String applicationName = GeneratorProperties.applicationName();
         Template k8sDeployment = BeetlTemplateUtil.getByName(K8S_DEPLOYMENT_TPL);
         k8sDeployment.binding(GeneratorConstant.COMMON_VARIABLE);
+        k8sDeployment.binding("domain",getDomain(applicationName));
         String k8sDeployConfigPath = paths.get(K8S_DIR)+ConstVal.FILE_SEPARATOR+"deployment.yaml";
         templates.put(k8sDeployConfigPath,k8sDeployment.render());
         return templates;
+    }
+
+    /**
+     * get domain by application name
+     * @param applicationName
+     * @return
+     */
+    private String getDomain(String applicationName){
+        if(StringUtil.isNotEmpty(applicationName)){
+            applicationName = StringUtil.camelToUnderline(applicationName);
+            applicationName = applicationName.replaceAll("-",".");
+            applicationName = applicationName.replaceAll("_",".");
+            return applicationName;
+        }
+        return null;
     }
 }

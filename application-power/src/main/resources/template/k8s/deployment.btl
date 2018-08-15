@@ -73,7 +73,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: test.com
+  - host: ${domain}.com
     http:
       #port: 80
       paths:
