@@ -6,7 +6,7 @@ import java.util.Map;
 <%}%>
 
 <%if(page){ %>
-import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageSerializable;
 <%}%>
 <%if(add||query||delete||update){ %>
 import com.power.common.model.CommonResult;
@@ -62,7 +62,7 @@ public interface ${entitySimpleName}Service {
      * @param limit 每页大小
      * @return
      */
-    PageInfo queryPage(int offset, int limit);
+    PageSerializable queryPage(int offset, int limit);
     <%}%>
     <%if(queryToListMap){ %>
 

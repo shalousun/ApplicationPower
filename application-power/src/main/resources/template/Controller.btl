@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 <%if(page){ %>
-import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageSerializable;
 <%}%>
 <%if(add||query||delete||update){ %>
 import com.power.common.model.CommonResult;
@@ -103,7 +103,7 @@ public class ${entitySimpleName}Controller {
 	 * @return
 	 */
     @GetMapping(value = "/page/{offset}/{limit}")
-    public PageInfo<${entitySimpleName}> queryPage(@PathVariable int offset,@PathVariable int limit) {
+    public PageSerializable<${entitySimpleName}> queryPage(@PathVariable int offset,@PathVariable int limit) {
         return ${firstLowerName}Service.queryPage(offset,limit);
     }
     <%}%>

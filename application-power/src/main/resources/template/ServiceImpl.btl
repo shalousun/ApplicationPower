@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 <%if(page){ %>
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageSerializable;
 <%}%>
 <%if(add||query||delete||update){ %>
 import com.power.common.model.CommonResult;
@@ -102,10 +102,10 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
     <%if(page){ %>
 
 	@Override
-    public PageInfo queryPage(int offset, int limit) {
+    public PageSerializable queryPage(int offset, int limit) {
         PageHelper.offsetPage(offset,limit);
         List<${entitySimpleName}> list = ${firstLowerName}Dao.queryPage();
-        return new PageInfo(list);
+        return new PageSerializable(list);
     }
     <%}%>
     <%if(queryToListMap){ %>

@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.9.RELEASE</version>
+        <version>1.5.14.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -45,13 +45,13 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.5</version>
         </dependency>
         <!-- ali druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.6</version>
+            <version>1.1.10</version>
         </dependency>
         <!-- mysql driver-->
         <dependency>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>3.3.6</version>
+            <version>3.4.2</version>
         </dependency>
 
          <%if(useJTA){ %>
@@ -153,7 +153,7 @@
             <%if(useAssembly){ %>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.0</version>
                 <configuration>
                     <descriptors>
                         <descriptor>src/main/assembly/assembly.xml</descriptor>
@@ -174,7 +174,7 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
+                <version>1.1.0</version>
                 <configuration>
                     <!--<dockerHost>http://192.168.248.135:2376</dockerHost>-->
                     <imageName>${project_groupId}/${project_build_finalName}:${project_version}</imageName>

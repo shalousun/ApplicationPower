@@ -30,7 +30,7 @@ for /R "%conf_dir%" %%s in (*.properties) do (
     set config_location=!config_location!,%%s
   )
 )
-
+:: replace \ to /
 set final_config_location=!config_location:\=/!
 echo INFO: loaded config files %final_config_location%
 set CONFIG= -Dlogging.path=%log_dir% -Dlogging.config=%conf_dir%/%LOG_IMPL% -Dspring.config.location=%SPRING_CONFIG_LOCATION%,"%final_config_location%"
