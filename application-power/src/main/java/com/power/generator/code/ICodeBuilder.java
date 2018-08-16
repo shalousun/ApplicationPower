@@ -71,5 +71,13 @@ public interface ICodeBuilder {
         return GeneratorProperties.basePackage();
     }
 
+    /**
+     * 获取
+     * @return
+     */
+    default String getTestSrcPath(){
+        String testDir = getBasePath() + ConstVal.FILE_SEPARATOR + ConstVal.TEST_JAVA_PATH;
+        return testDir;
+    }
 
 }

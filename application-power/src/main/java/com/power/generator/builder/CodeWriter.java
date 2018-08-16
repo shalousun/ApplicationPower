@@ -75,6 +75,8 @@ public class CodeWriter extends AbstractCodeWriter {
 
         new BaseCodeBuilder();
 
+        new ApiDocTestCodeBuilder();
+
     }
 
     /**
