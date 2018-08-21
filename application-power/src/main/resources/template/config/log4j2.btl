@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="WARN" monitorInterval="120">
     <properties>
         <!--if packaged by assembly change the value of  LOG_HOME to ${LOG_PATH}-->
         <property name="LOG_HOME">logs</property>
@@ -8,7 +8,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level %logger{36}@%method:%line - %msg%n"/>
         </Console>
-        <RollingRandomAccessFile name="infoLog" fileName="${LOG_HOME}/app.log"
+        <RollingRandomAccessFile name="RollingFileInfo" fileName="${LOG_HOME}/catalina.out"
                                  filePattern="${LOG_HOME}/app.%d{yyyy-MM-dd}-%i.log.gz" append="true">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level %logger{36}@%method:%line - %msg%n"/>
             <Filters>
@@ -17,7 +17,9 @@
             <Policies>
                 <!-- 对应 filePattern维度，此处为天数-->
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="15MB"/>
             </Policies>
+            <!--max packages-->
             <DefaultRolloverStrategy max="30"/>
         </RollingRandomAccessFile>
     </Appenders>
@@ -25,27 +27,27 @@
         <!--mybatis debug log-->
         <AsyncLogger name="log4j.logger.org.mybatis" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
-            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="RollingFileInfo"/>
         </AsyncLogger>
         <AsyncLogger name="log4j.logger.java.sql" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
-            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="RollingFileInfo"/>
         </AsyncLogger>
         <AsyncLogger name="log4j.logger.java.sql.Connection" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
-            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="RollingFileInfo"/>
         </AsyncLogger>
         <AsyncLogger name="log4j.logger.java.sql.Statement" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
-            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="RollingFileInfo"/>
         </AsyncLogger>
         <AsyncLogger name="log4j.logger.java.sql.PreparedStatement" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
-            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="RollingFileInfo"/>
         </AsyncLogger>
         <AsyncLogger name="log4j.logger.java.sql.ResultSet" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
-            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="RollingFileInfo"/>
         </AsyncLogger>
         <!--global log level-->
         <!--TRACE、DEBUG、INFO、WARN、ERROR、FATAL-->
@@ -54,8 +56,8 @@
         </Root>
         <!--customer log level for this project-->
         <Logger name="${basePackage}" level="DEBUG" additivity="false">
-            <AppenderRef ref="RollingFile" />
             <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFileInfo"/>
         </Logger>
     </Loggers>
 </Configuration>
