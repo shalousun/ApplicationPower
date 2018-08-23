@@ -16,8 +16,8 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
    1. smart-doc完全基于源代码和原生注释来推导的restful api文档，无需在代码添加任何注解或者引入新的写法，完全零侵入。
    2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，目前已发布到中央仓库。
    3. application-power是整个项目的核心，专门用于生成Spring Boot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
-   4. datasource-aspect是spring web应用下多数据源动态切换的通用模块
-   5. mybatis-template是用于重写SqlSessionTemplate来支持分布式事务环境下的动态数据源切换
+   4. datasource-aspect是spring web应用下多数据源动态切换的通用模块【未经过可靠测试，使用请谨慎】
+   5. mybatis-template是用于重写SqlSessionTemplate来支持分布式事务环境下的动态数据源切换【未经过可靠测试，使用请谨慎】
 ## 功能
   1. 一键创建maven或者gradle构建的springboot项目
   2. 支持基于mybatis的dao、model、service、controller的代码生成
