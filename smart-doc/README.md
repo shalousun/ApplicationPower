@@ -10,7 +10,7 @@
 ```
 <dependency>
     <groupId>com.github.shalousun</groupId>
-    <artifactId>api-doc</artifactId>
+    <artifactId>smart-doc</artifactId>
     <version>0.5</version>
     <scope>test</scope>
 </dependency>

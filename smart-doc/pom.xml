@@ -3,13 +3,13 @@
 
     <groupId>com.github.shalousun</groupId>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>api-doc</artifactId>
+    <artifactId>smart-doc</artifactId>
     <packaging>jar</packaging>
     <version>0.5</version>
 
-    <name>api-doc</name>
+    <name>smart-doc</name>
     <url>https://github.com/shalousun/ApplicationPower.git</url>
-    <description>ApplicationPower api-doc</description>
+    <description>ApplicationPower smart-doc</description>
 
     <licenses>
         <license>
@@ -103,7 +103,7 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>api-doc</finalName>
+        <finalName>smart-doc</finalName>
     </build>
     <profiles>
         <profile>

@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>application-power</module>
-        <module>api-doc</module>
+        <module>smart-doc</module>
         <module>Common-util</module>
         <module>datasource-aspect</module>
         <module>mybatis-template</module>
