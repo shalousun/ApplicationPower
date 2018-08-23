@@ -1,4 +1,8 @@
-ApplicationPower是一个快速的项目生成脚手架，ApplicationPower也是面向SpringBoot微服务工程化做的最好的项目脚手架。旧的版本也支持SpringMVC项目的生成。<br/>
+ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直秉承着简洁和做工程标准化，简洁主要体现在生成的代码简单可控，
+不引入复杂的框架，只创建你需要的。但是在工程化上面的功能却相当完善，包括springboot项目整体框架初始化生成、基于mybatis的代码生成、
+项目的简单部署打包一体化服务脚本生成、docker容器化配置生成、kubernates容器部署yaml模板自动生成【当前支持deployment、service、ingress】，
+当然ApplicationPower还提供smart-doc这样颠覆swagger类似传统文档工具，做到无注解、无侵入和更加智能化的api文档自动生成工具。
+<br/>
         技术交流群：170651381<br/>
     [github同步地址](https://github.com/shalousun/ApplicationPower)
 ## 创建的项目技术
@@ -231,6 +235,14 @@ application-power整合的springboot打包后的结构参考
 	2. 发布api-doc v0.5,处理很多字段处理的报错的问题。
 	3. 优化application-power代码生成中dockerfile、docker.sh和assembly打包的启动脚本。
 	4. 增加springboot项目使用validate参数验证的错误拦截模板。	
+#### 版本号：1.7.6
+- 更新日期：2018-08-23
+- 更新内容：
+	1. 升级application-power生成springboot项目的springboot-start到1.5.14.RELEASE。
+	2. 升级application-power生成springboot项目druid到1.1.10
+	3. 修改log4j2.xml模板，优化dockerfile模板注释
+	4. application-power代码生成中增加k8s部署文件模板生成。
+	5. 修改原api-doc为smart-doc。
 
 
 
