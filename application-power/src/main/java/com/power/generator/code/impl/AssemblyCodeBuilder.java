@@ -17,6 +17,7 @@ import java.util.Map;
 
 /**
  * SpringBoot Assembly 打包方案
+ *
  * @author yu 2018/05/27.
  */
 public class AssemblyCodeBuilder implements ICodeBuilder {
@@ -24,10 +25,10 @@ public class AssemblyCodeBuilder implements ICodeBuilder {
     /**
      * Assembly相关代码输出目录
      */
-    private Map<String,String> paths;
+    private Map<String, String> paths;
 
-    public AssemblyCodeBuilder(){
-        if(GeneratorProperties.getAssembly()&&GeneratorProperties.useMaven()){
+    public AssemblyCodeBuilder() {
+        if (GeneratorProperties.getAssembly() && GeneratorProperties.useMaven()) {
             buildPath();
             buildCode();
         }
@@ -44,7 +45,7 @@ public class AssemblyCodeBuilder implements ICodeBuilder {
 
         //使用assembly打包自动创建部署文档
         String docsDir = basePath + ConstVal.FILE_SEPARATOR + ConstVal.DOCS_PATH;
-        paths.put(ConstVal.DOCS_PATH,docsDir);
+        paths.put(ConstVal.DOCS_PATH, docsDir);
 
         PathUtil.mkdirs(paths);
     }
@@ -53,30 +54,30 @@ public class AssemblyCodeBuilder implements ICodeBuilder {
     public void buildCode() {
         //创建脚本
         String binPath = paths.get(ConstVal.ASSEMBLY_BIN);
-        Map<String,String> scripts = new ScriptBuilder().generateScripts();
-        for(Map.Entry<String,String> entry:scripts.entrySet()){
-            FileUtil.writeFileNotAppend(entry.getValue(),binPath+"\\"+entry.getKey());
+        Map<String, String> scripts = new ScriptBuilder().generateScripts();
+        for (Map.Entry<String, String> entry : scripts.entrySet()) {
+            FileUtil.writeFileNotAppend(entry.getValue(), binPath + ConstVal.FILE_SEPARATOR + entry.getKey());
         }
         //复制assembly.xml
         String assemblyRoot = paths.get(ConstVal.ASSEMBLY_DIR);
         String assemblyXml = Thread.currentThread().getContextClassLoader().getResource(ConstVal.TPL_ASSEMBLY_XML).getPath();
-        FileUtil.nioTransferCopy(new File(assemblyXml), new File(assemblyRoot+"\\assembly.xml"));
+        FileUtil.nioTransferCopy(new File(assemblyXml), new File(assemblyRoot +  ConstVal.FILE_SEPARATOR +"assembly.xml"));
 
-        Map<String,String> templatesMap = handleTemplates();
+        Map<String, String> templatesMap = handleTemplates();
         CodeWriteUtil.writeFileNotAppend(templatesMap);
     }
 
     @Override
     public Map<String, String> handleTemplates() {
-        Map<String,String> templatesMap = new HashMap<>(1);
+        Map<String, String> templatesMap = new HashMap<>(1);
 
         //处理部署文档模板
         String deployDoc = paths.get(ConstVal.DOCS_PATH);
         Template deployTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_DEPLOY_MD);
         deployTemplate.binding("appName", GeneratorProperties.applicationName());
-        deployTemplate.binding("application_name","${application.name}");
-        String docOutPath = PathUtil.connectPath(deployDoc,"DEPLOY.md");
-        templatesMap.put(docOutPath,deployTemplate.render());
+        deployTemplate.binding("application_name", "${application.name}");
+        String docOutPath = PathUtil.connectPath(deployDoc, "DEPLOY.md");
+        templatesMap.put(docOutPath, deployTemplate.render());
 
         return templatesMap;
     }

@@ -9,11 +9,11 @@
     </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <PatternLayout pattern="\${LOG_PATTERN}"/>
         </Console>
         <RollingRandomAccessFile name="RollingFileInfo" fileName="${LOG_HOME}/catalina.out"
                                  filePattern="${LOG_HOME}/app.%d{yyyy-MM-dd}-%i.log.gz" append="true">
-            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <PatternLayout pattern="\${LOG_PATTERN}"/>
             <Filters>
                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
             </Filters>

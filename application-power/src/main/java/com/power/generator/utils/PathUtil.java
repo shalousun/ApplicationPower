@@ -24,7 +24,7 @@ public class PathUtil {
         if (!org.apache.commons.lang.StringUtils.endsWith(parentDir, File.separator)) {
             parentDir += File.separator;
         }
-        packageName = packageName.replaceAll("\\.", "\\" + File.separator);
+        packageName = packageName.replaceAll("\\.", ConstVal.FILE_SEPARATOR + File.separator);
         return parentDir + packageName;
     }
 

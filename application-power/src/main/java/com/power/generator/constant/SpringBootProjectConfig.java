@@ -6,21 +6,21 @@ package com.power.generator.constant;
  */
 public class SpringBootProjectConfig {
 
-    private String resource = "src\\main\\resources";
-    private String mybatisConfig = resource + "\\mybatis-config.xml";
-    private String errorPath = resource + "\\static\\errors";
-    private String html400 = errorPath + "\\400.html";
-    private String html404 = errorPath + "\\404.html";
-    private String html500 = errorPath + "\\500.html";
+    private String resource = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "resources";
+    private String mybatisConfig = resource + ConstVal.FILE_SEPARATOR + "mybatis-config.xml";
+    private String errorPath = resource + ConstVal.FILE_SEPARATOR + "static" + ConstVal.FILE_SEPARATOR + "errors";
+    private String html400 = errorPath + ConstVal.FILE_SEPARATOR + "400.html";
+    private String html404 = errorPath + ConstVal.FILE_SEPARATOR + "404.html";
+    private String html500 = errorPath + ConstVal.FILE_SEPARATOR + "500.html";
     private String pom = "pom.xml";
-    private String log4j2 = resource + "\\log4j2.xml";
-    private String applicationYml = resource + "\\application.yml";
+    private String log4j2 = resource + ConstVal.FILE_SEPARATOR + "log4j2.xml";
+    private String applicationYml = resource + ConstVal.FILE_SEPARATOR + "application.yml";
 
-    private String assemblyRoot = "src\\main\\assembly";
-    private String assemblyBin = "src\\main\\assembly\\bin";
-    private String assemblyCfg = "src\\main\\assembly\\config";
-    private String log4j2Assembly = assemblyCfg + "\\log4j2.xml";
-    private String applicationYmlAssembly = assemblyCfg + "\\application.yml";
+    private String assemblyRoot = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "assembly";
+    private String assemblyBin = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "assembly" + ConstVal.FILE_SEPARATOR + "bin";
+    private String assemblyCfg = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "assembly" + ConstVal.FILE_SEPARATOR + "config";
+    private String log4j2Assembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "log4j2.xml";
+    private String applicationYmlAssembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "application.yml";
 
     private static final String jpaPath = "config";
 

@@ -1,6 +1,7 @@
 package com.power.generator.builder;
 
 import com.power.common.util.StringUtil;
+import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.utils.BeetlTemplateUtil;
 import org.beetl.core.Template;
@@ -9,7 +10,7 @@ import org.beetl.core.Template;
  * @author sunyu on 2017/11/09
  */
 public class JqueryPluginBuilder {
-    private static final String TPL_PLUGIN = "front\\jquery-plugin.btl";
+    private static final String TPL_PLUGIN = "front"+ ConstVal.FILE_SEPARATOR+"jquery-plugin.btl";
     private static final String PLUGIN_NAME = "pluginName";
     private static final String PLUGIN_NAME_UPER = "pluginObject";
 

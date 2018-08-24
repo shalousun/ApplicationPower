@@ -186,7 +186,7 @@ public class CodeWriter extends AbstractCodeWriter {
                 }
                 Template template = BeetlTemplateUtil.getByName(templateName);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value + "\\ServiceBaseTest.java");
+                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR+"ServiceBaseTest.java");
             }
             if (ConstVal.CONTROLLER_TEST_PATH.equals(key)) {
                 String templateName = ConstVal.TPL_CONTROLLER_BASE_TEST;
@@ -195,17 +195,17 @@ public class CodeWriter extends AbstractCodeWriter {
                 }
                 Template template = BeetlTemplateUtil.getByName(templateName);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value + "\\ControllerBaseTest.java");
+                FileUtil.writeFileNotAppend(template.render(), value+ ConstVal.FILE_SEPARATOR+"ControllerBaseTest.java");
             }
             if (ConstVal.DATE_CONVERTER_PATH.equals(key)) {
                 Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_DATE_CONVERTER);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value + "\\DateConverter.java");
+                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR+"DateConverter.java");
             }
             if(ConstVal.REST_ERROR_PATH.contains(key)){
                 Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_REST_ERROR);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value + "\\RestExceptionHandler.java");
+                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR+ "RestExceptionHandler.java");
             }
         }
     }
@@ -222,7 +222,7 @@ public class CodeWriter extends AbstractCodeWriter {
         Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_SPRING_BOOT_MAIN);
         template.binding(GeneratorConstant.COMMON_VARIABLE);
         String basePackagePath = PathUtil.joinPath(config.getProjectPath().getJavaSrcPath(), basePackage);
-        FileUtil.writeFileNotAppend(template.render(), basePackagePath + "\\SpringBootMainApplication.java");
+        FileUtil.writeFileNotAppend(template.render(), basePackagePath + ConstVal.FILE_SEPARATOR+ "SpringBootMainApplication.java");
     }
 
     private void writeDbSourceAndJTACode(ConfigBuilder config, SpringBootProjectConfig projectConfig){
@@ -238,19 +238,19 @@ public class CodeWriter extends AbstractCodeWriter {
             String configPath = dirMap.get(ConstVal.DATA_SOURCE_FIG);
             Template aspectTpl = BeetlTemplateUtil.getByName(ConstVal.TPL_DATASOURCE_ASPECT);
             aspectTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(aspectTpl.render(),dirMap.get(ConstVal.ASPECT)+"\\DbAspect.java");
+            FileUtil.writeFileNotAppend(aspectTpl.render(),dirMap.get(ConstVal.ASPECT)+ ConstVal.FILE_SEPARATOR+ "DbAspect.java");
 
             DataSourceKeyBuilder sourceKeyBuilder = new DataSourceKeyBuilder();
             String  dataSourceTpl = sourceKeyBuilder.builderDataSourceKey(dataSources);
-            FileUtil.writeFileNotAppend(dataSourceTpl,dirMap.get(ConstVal.CONSTANTS)+"\\DataSourceKey.java");
+            FileUtil.writeFileNotAppend(dataSourceTpl,dirMap.get(ConstVal.CONSTANTS)+ ConstVal.FILE_SEPARATOR+ "DataSourceKey.java");
 
             Template abstractCfg = BeetlTemplateUtil.getByName(ConstVal.TPL_DATASOURCE_CFG);
             abstractCfg.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(abstractCfg.render(),configPath+"\\AbstractDataSourceConfig.java");
+            FileUtil.writeFileNotAppend(abstractCfg.render(),configPath+ ConstVal.FILE_SEPARATOR+ "AbstractDataSourceConfig.java");
 
             SpringBootMybatisCfgBuilder builder = new SpringBootMybatisCfgBuilder();
             String mybatisCfgTpl = builder.createMybatisCfg(dataSources);
-            FileUtil.writeFileNotAppend(mybatisCfgTpl,configPath+"\\MyBatisConfig.java");
+            FileUtil.writeFileNotAppend(mybatisCfgTpl,configPath+ ConstVal.FILE_SEPARATOR+ "MyBatisConfig.java");
         }
     }
 
@@ -298,11 +298,11 @@ public class CodeWriter extends AbstractCodeWriter {
             String configPath = dirMap.get(ConstVal.DATA_SOURCE_FIG);
             Template aspectTpl = BeetlTemplateUtil.getByName(ConstVal.TPL_DATASOURCE_ASPECT);
             aspectTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(aspectTpl.render(),dirMap.get(ConstVal.ASPECT)+"\\DbAspect.java");
+            FileUtil.writeFileNotAppend(aspectTpl.render(),dirMap.get(ConstVal.ASPECT)+ ConstVal.FILE_SEPARATOR+ "DbAspect.java");
 
             DataSourceKeyBuilder sourceKeyBuilder = new DataSourceKeyBuilder();
             String  dataSourceTpl = sourceKeyBuilder.builderDataSourceKey(dataSources);
-            FileUtil.writeFileNotAppend(dataSourceTpl,dirMap.get(ConstVal.CONSTANTS)+"\\DataSourceKey.java");
+            FileUtil.writeFileNotAppend(dataSourceTpl,dirMap.get(ConstVal.CONSTANTS)+ ConstVal.FILE_SEPARATOR+ "DataSourceKey.java");
         }
     }
 }
