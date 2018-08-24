@@ -23,6 +23,11 @@ public class ApiConfig {
     private boolean isStrict;
 
     /**
+     * 是否将markdown全输出合并到一个文件
+     */
+    private boolean allInOne;
+
+    /**
      * 输出路径
      */
     private String outPath;
@@ -105,5 +110,13 @@ public class ApiConfig {
 
     public void setSourcePaths(SourcePath... sourcePaths) {
         this.sourcePaths = CollectionUtil.asList(sourcePaths);
+    }
+
+    public boolean isAllInOne() {
+        return allInOne;
+    }
+
+    public void setAllInOne(boolean allInOne) {
+        this.allInOne = allInOne;
     }
 }

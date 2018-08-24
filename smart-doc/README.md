@@ -49,6 +49,7 @@ public class ApiDocTest {
     public void testBuilderControllersApi() {
         ApiConfig config = new ApiConfig();
         config.setStrict(true);
+        config.setAllInOne(true);//true则将所有接口合并到一个AllInOne中markdown中，错误码合并到最后
         config.setOutPath("d:\\md");
         //默认是src/main/java,maven项目可以不写
         config.setSourcePaths(

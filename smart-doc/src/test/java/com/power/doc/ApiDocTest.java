@@ -33,6 +33,7 @@ public class ApiDocTest {
         ApiConfig config = new ApiConfig();
         config.setServerUrl("http://localhost:8080");
         config.setStrict(true);
+        config.setAllInOne(true);
         config.setOutPath("d:\\md");
         //不指定SourcePaths默认加载代码为项目src/main/java下的
         config.setSourcePaths(
@@ -54,6 +55,7 @@ public class ApiDocTest {
                 CustomRespField.field().setName("code").setValue("00000")
                 //.setDesc("响应代码")
         );
+
         long start = System.currentTimeMillis();
         ApiDocBuilder.builderControllersApi(config);
         long end = System.currentTimeMillis();
