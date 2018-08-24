@@ -321,11 +321,11 @@ public class ConfigBuilder {
      */
     private String joinJavaFilePath(String packageName, String postfix) {
         String javaDir = projectPath.getJavaSrcPath();
-        return PathUtil.joinPath(javaDir, packageName) + "\\%s" + postfix;
+        return PathUtil.joinPath(javaDir, packageName) + ConstVal.FILE_SEPARATOR + "%s" + postfix;
     }
 
     private String joinFinalPath(String parentDir, String packageName, String postfix) {
-        return PathUtil.joinPath(parentDir, packageName) + "\\%s" + postfix;
+        return PathUtil.joinPath(parentDir, packageName) + ConstVal.FILE_SEPARATOR + "%s" + postfix;
     }
 
     /**
