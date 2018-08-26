@@ -243,6 +243,12 @@ application-power整合的springboot打包后的结构参考
 	3. 修改log4j2.xml模板，优化dockerfile模板注释
 	4. application-power代码生成中增加k8s部署文件模板生成。
 	5. 修改原api-doc为smart-doc。
+#### 版本号：1.7.7
+- 更新日期：2018-08-25
+- 更新内容：
+	1. smart-doc模块升级到1.0，添加文档合并导出功能。
+	2. 修复application-power在mac上生成代码路径错误的bug。
+	
 
 
 
