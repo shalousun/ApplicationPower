@@ -77,7 +77,10 @@ if [ -n "$SERVER_PORT" ]; then
     else
         SERVER_PORT_COUNT=$(netstat -tln | grep $SERVER_PORT | wc -l)
     fi
-    if [ "$SERVER_PORT_COUNT" -gt 0 ]; then
+
+    if [ "$SERVER_PORT_COUNT" == "" ]; then
+    	echo "starting"
+    elif [ $SERVER_PORT_COUNT -gt 0 ]; then
         echo "ERROR: The $SERVER_NAME port $SERVER_PORT already used!"
         exit 1
     fi
