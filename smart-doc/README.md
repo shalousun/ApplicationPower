@@ -15,7 +15,7 @@ smart-doc完全基于接口源码分析来生成接口文档，完全做到零�
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>smart-doc</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -181,6 +181,12 @@ https://github.com/shalousun/api-doc-test
 - 更新内容：
 	1. smart-doc增加将所有文档导出归档到一个markdown中件的功能
 	2. 参考阿里开发手册将直接提升到1.0，之前的版本主要是个人内部测试
+#### 版本号：1.1
+- 更新日期：2018-08-30
+- 更新内容：
+	1. 修改PostMapping和GetMapping value为空报错的bug
+	2. 增强时间字段的mock数据创建
+	3. 修改smart-doc解析自引用对象出错的bug	
 # 问题反馈
 目前已经能够支持许多复杂和返回类型和类结构推导，但是由于目前做采用的底层工具处理能力不是很好，所以有些功能做的不够彻底。
 当然基于目前的版如果在使用中发现问题欢迎及时的提出反馈的建议。
