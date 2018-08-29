@@ -500,7 +500,7 @@ public class SourceBuilder {
                             }
                             String gName = DocClassUtil.getSimpleGicName(gNameTemp)[0];
                             if (!DocClassUtil.isPrimitive(gName)) {
-                                if (!simpleName.equals(gName)) {
+                                if (!simpleName.equals(gName)&&!gName.contains(simpleName)) {
                                     if (gName.length() == 1) {
                                         int len = globGicName.length;
                                         if (len > 0) {
@@ -740,7 +740,7 @@ public class SourceBuilder {
 
                                 }
                             } else {
-                                if (!typeName.equals(gicName)) {
+                                if (!typeName.equals(gicName)&&!gicName.contains(typeName)) {
                                     if(MAP_CLASS.equals(gicName)){
                                         data0.append("[{\"mapKey\":{}}],");
                                         continue out;
