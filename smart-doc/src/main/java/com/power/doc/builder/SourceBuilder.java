@@ -580,7 +580,7 @@ public class SourceBuilder {
      */
     private String buildReturnJson(JavaMethod method, Map<String, CustomRespField> responseFieldMap) {
         if("void".equals(method.getReturnType().getFullyQualifiedName())){
-            return "this api return nothing";
+            return "this api return nothing.";
         }
         String returnType = method.getReturnType().getGenericCanonicalName();
         String typeName = method.getReturnType().getFullyQualifiedName();
@@ -597,9 +597,9 @@ public class SourceBuilder {
     private String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap, boolean isResp) {
         if (DocClassUtil.isMvcIgnoreParams(typeName)) {
             if("org.springframework.web.servlet.ModelAndView".equals(typeName)){
-                return "forward or redirect to a page view";
+                return "forward or redirect to a page view.";
             }else{
-                return "error restful return";
+                return "error restful return.";
             }
         }
         if (DocClassUtil.isPrimitive(typeName)) {
@@ -850,8 +850,8 @@ public class SourceBuilder {
 
                 }
                 if (requestBodyCounter < 1) {
-                    //非json
-                    return "smart-doc currently cannot provide examples of parameters for the RequestParam request mode";
+                    //not json
+                    return "smart-doc currently cannot provide examples of parameters for the RequestParam request mode.";
 
                 }
 
@@ -861,7 +861,7 @@ public class SourceBuilder {
     }
 
     private String getCommentTag(final JavaMethod javaMethod, final String tagName, final String className) {
-        //对请求参数的注释目前不做任何修复
+        //
         Map<String, CustomRespField> responseFieldMap = new HashMap<>();
         List<DocletTag> paramTags = javaMethod.getTagsByName(tagName);
         Map<String, String> paramTagMap = new HashMap<>();
