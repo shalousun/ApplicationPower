@@ -3,8 +3,10 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
 项目的简单部署打包一体化服务脚本生成、docker容器化配置生成、kubernates容器部署yaml模板自动生成【当前支持deployment、service、ingress】，
 当然ApplicationPower还提供smart-doc这样颠覆swagger类似传统文档工具，做到无注解、无侵入和更加智能化的api文档自动生成工具。
 <br/>
-        技术交流群：170651381<br/>
-    [github同步地址](https://github.com/shalousun/ApplicationPower)
+ 喜欢的同学欢迎star，帮助ApplicationPower进入GVP.
+        
+ 技术交流群：170651381<br/>
+ [github同步地址](https://github.com/shalousun/ApplicationPower)
 ## 创建的项目技术
      ● 核心框架：Spring Boot 1.5.14.RELEASE
      ● 数据库连接池：druid-spring-boot-starter 1.1.10
@@ -19,7 +21,7 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
    4. datasource-aspect是spring web应用下多数据源动态切换的通用模块【未经过可靠测试，使用请谨慎】
    5. mybatis-template是用于重写SqlSessionTemplate来支持分布式事务环境下的动态数据源切换【未经过可靠测试，使用请谨慎】
 ## 功能
-  1. 一键创建maven或者gradle构建的springboot项目
+  1. 一键创建maven或者gradle构建的springboot项目，开箱即运行
   2. 支持基于mybatis的dao、model、service、controller的代码生成
   3. 支持service层和controller层的mock单元测试生成
   4. 自主化创建.gitignore
@@ -34,6 +36,12 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
   
 ApplicationPower提供的每一个功能都是走心的！不添油加醋，坚持简单不引入新的学习成本，只给你需要的！
 
+## ApplicationPower发展和宗旨
+
+ApplicationPower从诞生到现在，一直专注于去做项目前期标准化和减少各种重复的劳动。由于Application做的是业务无关性的东西，
+因此已经在一些知名企业中应用。
+
+ApplicationPower只做有态度的开源，坚决不做伪开源!
 
 
 ## 使用说明
