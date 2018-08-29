@@ -214,9 +214,10 @@ public class SourceBuilder {
                 String annotationName = annotation.getType().getName();
                 if (REQUEST_MAPPING.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
-                        throw new NullPointerException("Unable to find RequestMapping value for  method " + method.getName() + " in " + cls.getCanonicalName());
+                        url = "/";
+                    }else{
+                        url = annotation.getNamedParameter("value").toString();
                     }
-                    url = annotation.getNamedParameter("value").toString();
                     if (null != annotation.getNamedParameter("method")) {
                         methodType = annotation.getNamedParameter("method").toString();
                         if (methodType.contains("POST")) {
@@ -238,9 +239,10 @@ public class SourceBuilder {
                     methodCounter++;
                 } else if (POST_MAPPING.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
-                        throw new NullPointerException("Unable to find PostMapping value for method " + method.getName() + " in " + cls.getCanonicalName());
+                        url = "/";
+                    }else {
+                        url = annotation.getNamedParameter("value").toString();
                     }
-                    url = annotation.getNamedParameter("value").toString();
                     methodType = "post";
                     methodCounter++;
                 }
