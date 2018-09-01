@@ -259,6 +259,13 @@ application-power整合的springboot打包后的结构参考
 - 更新内容：
 	1. smart-doc模块升级到1.0，添加文档合并导出功能。
 	2. 修复application-power在mac上生成代码路径错误的bug。
+#### 版本号：1.7.8
+- 更新日期：2018-09-01
+- 更新内容：
+	1. 创建springboot1.x分支，使用springboot 1.x版本拉取该分支。
+	2. 添加lombok支持，生成代码时可自由选择。
+	3. 升级springboot到2.0.3版本
+	4. 内置容器暂时切换到tomcat，增加graceful shutdown
 	
 
 
