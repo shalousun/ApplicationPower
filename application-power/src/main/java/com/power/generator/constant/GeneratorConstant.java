@@ -114,4 +114,9 @@ public class GeneratorConstant {
      *
      */
     public static final String IS_MULTIPLE_DATA_SOURCE = "isMultipleDataSource";
+
+    /**
+     * lombok
+     */
+    public static final String LOMBOK = "lombok";
 }

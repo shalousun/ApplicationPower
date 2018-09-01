@@ -203,4 +203,12 @@ public class GeneratorProperties {
     public static String getLogConfig() {
         return props.getProperty("generator.application.logConfig");
     }
+
+    /**
+     * 获取lombok配置
+     * @return
+     */
+    public static Boolean useLombok(){
+        return Boolean.valueOf(props.getProperty("generator.lombok"));
+    }
 }

@@ -147,6 +147,7 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding("isMultipleDataSource",GeneratorProperties.isMultipleDataSource());
                 template.binding("jdkVersion","${java.version}");
                 template.binding("isUseDocker",GeneratorProperties.useDocker());
+                template.binding(GeneratorConstant.LOMBOK,GeneratorProperties.useLombok());
                 //log4j2
                 template.binding("LOG_HOME", "${LOG_HOME}");
                 template.binding("LOG_PATH","${sys:logging.path}");

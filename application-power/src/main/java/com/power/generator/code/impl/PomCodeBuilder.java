@@ -52,6 +52,7 @@ public class PomCodeBuilder implements ICodeBuilder {
         Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_SPRING_BOOT_POM);
         template.binding(GeneratorConstant.BASE_PACKAGE, basePackage);
         template.binding(GeneratorConstant.APPLICATION_NAME, GeneratorProperties.applicationName());
+        template.binding(GeneratorConstant.LOMBOK,GeneratorProperties.useLombok());
         template.binding("projectVersion", "${project.version}");
         template.binding("springVersion", "${spring.version}");
         template.binding("mybatisVersion", "${mybatis.version}");
@@ -69,6 +70,7 @@ public class PomCodeBuilder implements ICodeBuilder {
         template.binding("isMultipleDataSource",GeneratorProperties.isMultipleDataSource());
         template.binding("jdkVersion","${java.version}");
         template.binding("isUseDocker",GeneratorProperties.useDocker());
+
         Map<String,String> map = new HashMap<>(1);
         String path = PathUtil.connectPath(getBasePath(),pom);
         map.put(path,template.render());

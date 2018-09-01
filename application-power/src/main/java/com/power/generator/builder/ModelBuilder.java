@@ -33,6 +33,7 @@ public class ModelBuilder implements IBuilder {
         template.binding(GeneratorConstant.GETTERS_AND_SETTERS, gettersAndSetters);//get和set方法
         template.binding(GeneratorConstant.TABLE_COMMENT, tableInfo.getRemarks());//表注释
         template.binding(GeneratorConstant.TO_STRING, toString);
+        template.binding(GeneratorConstant.LOMBOK,GeneratorProperties.useLombok());
         template.binding("SerialVersionUID", String.valueOf(UUID.randomUUID().getLeastSignificantBits()));
         template.binding("modelImports", imports);
         return template.render();
@@ -51,14 +52,16 @@ public class ModelBuilder implements IBuilder {
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             Column column = entry.getValue();
             if (StringUtil.isNotEmpty(column.getRemarks())) {
-                builder.append("	/** ").append(column.getRemarks()).append(" */").append("\n");
+                builder.append("	/** \n");
+                builder.append("	 * ").append(column.getRemarks()).append("\n");
+                builder.append("	 */\n ");
             }
             if ("Timestamp".equals(column.getColumnType())) {
                 builder.append("	@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")\n");
             }
             builder.append("	private ").append(column.getColumnType()).append(" ");
             builder.append(StringUtil.underlineToCamel(column.getColumnName()));
-            builder.append(";\n");
+            builder.append(";\n\n");
         }
         return builder.toString();
     }
