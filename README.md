@@ -120,6 +120,9 @@ generator.docker=true
 # generator.build.tool=gradle //use gradle
 generator.build.tool=
 
+# @since 1.7.8
+# 是否使用lombok来精简代码
+generator.lombok=false
 ```
   3.修改数据库配置jdbc.properties
 ```
