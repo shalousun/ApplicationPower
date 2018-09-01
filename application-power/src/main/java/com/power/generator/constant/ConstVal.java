@@ -28,7 +28,7 @@ public class ConstVal {
 
 
     public static final String STRING_BOOT_STATIC_DIR = RESOURCE_DIR + FILE_SEPARATOR + "static";
-    public static final String STRING_BOOT_EORRO_DIR = STRING_BOOT_STATIC_DIR + FILE_SEPARATOR + "errors";
+    public static final String STRING_BOOT_EORRO_DIR = STRING_BOOT_STATIC_DIR + FILE_SEPARATOR + "error";
 
     public static final String ENUM_PACKAGE = "enums";
     public static final String UTIL_PACKAGE = "util";

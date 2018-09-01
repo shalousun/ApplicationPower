@@ -8,7 +8,7 @@ public class SpringBootProjectConfig {
 
     private String resource = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "resources";
     private String mybatisConfig = resource + ConstVal.FILE_SEPARATOR + "mybatis-config.xml";
-    private String errorPath = resource + ConstVal.FILE_SEPARATOR + "static" + ConstVal.FILE_SEPARATOR + "errors";
+    private String errorPath = resource + ConstVal.FILE_SEPARATOR + "static" + ConstVal.FILE_SEPARATOR + "error";
     private String html400 = errorPath + ConstVal.FILE_SEPARATOR + "400.html";
     private String html404 = errorPath + ConstVal.FILE_SEPARATOR + "404.html";
     private String html500 = errorPath + ConstVal.FILE_SEPARATOR + "500.html";
