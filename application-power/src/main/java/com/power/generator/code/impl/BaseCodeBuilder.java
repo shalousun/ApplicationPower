@@ -27,6 +27,8 @@ public class BaseCodeBuilder implements ICodeBuilder {
 
     private static final String ERROR_CODE = "ErrorCode";
 
+    private static final String GRACE_FUL_SHUTDOWN = "ShutdownConfig";
+
     /**
      *
      */
@@ -46,10 +48,12 @@ public class BaseCodeBuilder implements ICodeBuilder {
         String controllerPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.CONTROLLER);
         String utilPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.UTIL_PACKAGE);
         String annotationPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.ANNOTATION_PACKAGE);
+        String config = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.CONFIG_PACKAGE);
         paths.put(ERROR_CODE_ENUM,enumPath);
         paths.put(BASE_CONTROLLER,controllerPath);
         paths.put(RESULT_UTIL,utilPath);
         paths.put(ConstVal.ANNOTATION_PACKAGE,annotationPath);
+        paths.put(GRACE_FUL_SHUTDOWN,config);
         PathUtil.mkdirs(paths);
 
     }
@@ -85,6 +89,10 @@ public class BaseCodeBuilder implements ICodeBuilder {
         String resultUtilOut = paths.get(RESULT_UTIL)+ConstVal.FILE_SEPARATOR+"ResultUtil.java";
         templates.put(resultUtilOut,resultUtilTpl.render());
 
+        Template gracefulTpl = BeetlTemplateUtil.getByName("ShutdownConfig.btl");
+        gracefulTpl.binding(GeneratorConstant.COMMON_VARIABLE);
+        String gracefulOut = paths.get(GRACE_FUL_SHUTDOWN)+ConstVal.FILE_SEPARATOR+"ShutdownConfig.java";
+        templates.put(gracefulOut,gracefulTpl.render());
         return templates;
     }
 }

@@ -40,7 +40,10 @@ mybatis:
   mapper-locations: classpath*:${mappingDir}/mapping/*.xml
 server:
   port: 8080
-  undertow:
-     accesslog:
+  tomcat:
+    accesslog:
       enabled: true
-      dir: ../logs
+      directory: ../logs
+  error:
+    whitelabel:
+      enabled: false
