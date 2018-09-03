@@ -55,6 +55,11 @@ public class ApiConfig {
 
     private List<ApiErrorCode> errorCodes;
 
+    /**
+     * controller包过滤
+     */
+    private String packageFilters;
+
     public String getServerUrl() {
         return serverUrl;
     }
@@ -118,5 +123,13 @@ public class ApiConfig {
 
     public void setAllInOne(boolean allInOne) {
         this.allInOne = allInOne;
+    }
+
+    public String getPackageFilters() {
+        return packageFilters;
+    }
+
+    public void setPackageFilters(String packageFilters) {
+        this.packageFilters = packageFilters;
     }
 }
