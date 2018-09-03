@@ -84,7 +84,7 @@ public class ApiDocBuilder {
     }
 
     /**
-     * 合并错有接口文档到一个文档中
+     * 合并所有接口文档到一个文档中
      * @param apiDocList
      * @param errorCodeList
      * @param outPath
