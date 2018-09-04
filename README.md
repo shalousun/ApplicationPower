@@ -97,9 +97,10 @@ generator.resultMap=false
 # 如果采用则将生成一系列的相关配置和一系列的部署脚本
 generator.package.assembly=true
 
-#@since 1.6
-# 多数据源多个数据数据源用逗号隔开，不需要多数据源环境则空出来
+# @since 1.6
+# 多数据源多个数据数据源用逗号隔开[就是给不同的数据源一个别名]，不需要多数据源环境则空出来
 # 对于多数据源会集成分布式事务
+# uage:generator.multiple.datasource=oracle,mysql
 generator.multiple.datasource=
 
 # @since 1.6
