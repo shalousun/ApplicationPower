@@ -6,6 +6,7 @@ import com.power.common.util.RandomUtil;
 import com.power.common.util.StringUtil;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Description:
@@ -114,5 +115,30 @@ public class DocUtil {
         }else{
             return true;
         }
+    }
+
+    /**
+     * match controller package
+     * @param packageFilters
+     * @param controllerName
+     * @return
+     */
+    public static boolean isMatch(String packageFilters,String controllerName){
+        if(StringUtil.isNotEmpty(packageFilters)){
+            String[] patterns = packageFilters.split(",");
+            for (String str : patterns) {
+                if (str.endsWith("*")) {
+                    String name = str.substring(0, str.length() - 2);
+                    if (controllerName.contains(name)) {
+                        return true;
+                    }
+                } else {
+                   if(controllerName.contains(str)){
+                       return true;
+                   }
+                }
+            }
+        }
+        return false;
     }
 }
