@@ -15,7 +15,7 @@ smart-doc完全基于接口源码分析来生成接口文档，完全做到零�
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>smart-doc</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -51,6 +51,9 @@ public class ApiDocTest {
         config.setStrict(true);
         config.setAllInOne(true);//true则将所有接口合并到一个AllInOne中markdown中，错误码合并到最后
         config.setOutPath("d:\\md");
+        // @since 1.2,如果不配置该选项，则默认匹配全部的controller,
+        // 如果需要配置有多个controller可以使用逗号隔开
+        config.setPackageFilters("com.power.doc.controller.app");
         //默认是src/main/java,maven项目可以不写
         config.setSourcePaths(
                 SourcePath.path().setDesc("本项目代码").setPath("src/test/java"),
