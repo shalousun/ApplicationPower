@@ -152,6 +152,15 @@ public class Teacher<T,M,K> {
 ## api-doc 测试demo
 
 https://github.com/shalousun/api-doc-test
+## 效果图[markdown截图]
+### 接口头部效果图
+![输入图片说明](https://images.gitee.com/uploads/images/2018/0905/173104_abcf4345_144669.png "1.png")
+### 请求参数示例效果图
+![请求参数示例](https://images.gitee.com/uploads/images/2018/0905/172510_853735b9_144669.png "2.png")
+### 响应参数示例效果图
+![响应参数示例](https://images.gitee.com/uploads/images/2018/0905/172538_1918820c_144669.png "3.png")
+
+
 
 ## smart-doc版本
 版本小于1.0都属于使用版，正式1.0起始发布将会等到文中提到的问题解决后才发布。
