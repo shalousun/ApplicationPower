@@ -266,7 +266,7 @@ application-power整合的springboot打包后的结构参考
 	1. 创建springboot1.x分支，使用springboot 1.x版本拉取该分支。
 	2. 添加lombok支持，生成代码时可自由选择。
 	3. 升级springboot到2.0.3版本
-	4. 内置容器暂时切换到tomcat，增加graceful shutdown
+	4. 内置容器暂时切换到tomcat，增加graceful shutdown【已测试】
 	
 
 
