@@ -29,6 +29,7 @@ public class BaseCodeBuilder implements ICodeBuilder {
 
     private static final String GRACE_FUL_SHUTDOWN = "ShutdownConfig";
 
+
     /**
      *
      */
@@ -93,6 +94,12 @@ public class BaseCodeBuilder implements ICodeBuilder {
         gracefulTpl.binding(GeneratorConstant.COMMON_VARIABLE);
         String gracefulOut = paths.get(GRACE_FUL_SHUTDOWN)+ConstVal.FILE_SEPARATOR+"ShutdownConfig.java";
         templates.put(gracefulOut,gracefulTpl.render());
+
+        Template druidCfgTpl = BeetlTemplateUtil.getByName("DruidConfig.btl");
+        druidCfgTpl.binding(GeneratorConstant.COMMON_VARIABLE);
+        String druidCfgOut = paths.get(GRACE_FUL_SHUTDOWN)+ConstVal.FILE_SEPARATOR+"DruidConfig.java";
+        templates.put(druidCfgOut,druidCfgTpl.render());
+
         return templates;
     }
 }
