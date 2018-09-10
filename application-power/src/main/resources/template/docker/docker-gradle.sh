@@ -13,6 +13,10 @@ DOCKER_REGISTRY=192.168.248.128:8086
 
 HARBOR_PROJECT=library
 
+HARBOR_PASSWORD=admin123
+
+HARBOR_USER=admin
+
 RESOURCES_DIR=$CUR_PATH/src/main/resources
 
 APPLICATION_FILE=$RESOURCES_DIR/application.yml
@@ -127,7 +131,7 @@ docker run -dp $SERVER_PORT:$SERVER_PORT -t ${MYIMAGE}
 
 # ==========================push image to registry========================
 # uncomment if you need push
-# docker login ${DOCKER_REGISTRY} -u admin -p admin123
+# docker login ${DOCKER_REGISTRY} -u $HARBOR_USER -p $HARBOR_PASSWORD
 echo "INFO：Starting push image of ${MYIMAGE} to docker registry ${DOCKER_REGISTRY}"
 # docker tag ${MYIMAGE}  ${DOCKER_REGISTRY}/$HARBOR_PROJECT/${MYIMAGE}
 # docker push ${DOCKER_REGISTRY}/$HARBOR_PROJECT/${MYIMAGE}
