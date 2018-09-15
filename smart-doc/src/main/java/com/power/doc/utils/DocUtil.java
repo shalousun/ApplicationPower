@@ -49,6 +49,8 @@ public class DocUtil {
         fieldValue.put("birthday-long",String.valueOf(System.currentTimeMillis()));
         fieldValue.put("code-string",String.valueOf(RandomUtil.randomInt(100,99999)));
         fieldValue.put("message-string","success,fail".split(",")[RandomUtil.randomInt(0,1)]);
+        fieldValue.put("date-string",DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
+        fieldValue.put("date-date",DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
     }
     /**
      * 随机生成json值

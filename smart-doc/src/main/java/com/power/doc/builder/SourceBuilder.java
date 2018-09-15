@@ -21,6 +21,10 @@ public class SourceBuilder {
 
     private static final String POST_MAPPING = "PostMapping";
 
+    private static final String PUT_MAPPING = "PutMapping";
+
+    private static final String DELETE_MAPPING = "DeleteMapping";
+
     private static final String REQUEST_MAPPING = "RequestMapping";
 
     private static final String REQUEST_BODY = "RequestBody";
@@ -155,7 +159,7 @@ public class SourceBuilder {
             if (counter > 0) {
                 String controllerName = cls.getName();
                 if (StringUtil.isNotEmpty(packageMatch)) {
-                    if(DocUtil.isMatch(packageMatch, cls.getCanonicalName())){
+                    if (DocUtil.isMatch(packageMatch, cls.getCanonicalName())) {
                         List<ApiMethodDoc> apiMethodDocs = buildControllerMethod(cls);
                         ApiDoc apiDoc = new ApiDoc();
                         apiDoc.setDesc(cls.getComment());
@@ -233,13 +237,19 @@ public class SourceBuilder {
                     }
                     if (null != annotation.getNamedParameter("method")) {
                         methodType = annotation.getNamedParameter("method").toString();
-                        if (methodType.contains("POST")) {
-                            methodType = "post";
+                        if ("RequestMethod.POST".equals(methodType)) {
+                            methodType = "POST";
+                        } else if ("RequestMethod.GET".equals(methodType)){
+                            methodType = "GET";
+                        } else if("RequestMethod.PUT".equals(methodType)){
+                            methodType = "PUT";
+                        } else if("RequestMethod.DELETE".equals(methodType)){
+                            methodType = "DELETE";
                         } else {
-                            methodType = "get";
+                            methodType = "GET";
                         }
                     } else {
-                        methodType = "get";
+                        methodType = "GET";
                     }
                     methodCounter++;
                 } else if (GET_MAPPING.equals(annotationName)) {
@@ -248,7 +258,7 @@ public class SourceBuilder {
                     } else {
                         url = annotation.getNamedParameter("value").toString();
                     }
-                    methodType = "get";
+                    methodType = "GET";
                     methodCounter++;
                 } else if (POST_MAPPING.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
@@ -256,7 +266,23 @@ public class SourceBuilder {
                     } else {
                         url = annotation.getNamedParameter("value").toString();
                     }
-                    methodType = "post";
+                    methodType = "POST";
+                    methodCounter++;
+                } else if (PUT_MAPPING.equals(annotationName)) {
+                    if (null == annotation.getNamedParameter("value")) {
+                        url = "/";
+                    } else {
+                        url = annotation.getNamedParameter("value").toString();
+                    }
+                    methodType = "PUT";
+                    methodCounter++;
+                } else if (DELETE_MAPPING.equals(annotationName)){
+                    if (null == annotation.getNamedParameter("value")) {
+                        url = "/";
+                    } else {
+                        url = annotation.getNamedParameter("value").toString();
+                    }
+                    methodType = "DELETE";
                     methodCounter++;
                 }
             }
