@@ -3,7 +3,6 @@
 
 export JAVA_OPTS="$JAVA_OPTS -Xms512m"
 export JAVA_OPTS="$JAVA_OPTS -Xmx512m"
-export JAVA_OPTS="$JAVA_OPTS -Xss256K"
 
 # The hotspot server JVM has specific code-path optimizations
 # which yield an approximate 10% gain over the client version.
@@ -19,7 +18,10 @@ export JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=utf-8"
 export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError"
 
 # set garbage collector
-# export java_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled"
+
+# print gc log
+# export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:./gclogs  "
 
 # only for jdk 1.7
 #export JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize="256m
