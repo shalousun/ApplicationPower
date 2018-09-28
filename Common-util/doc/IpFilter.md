@@ -1,6 +1,5 @@
 # IpFilter过滤器
 IpFilter用于过滤ip白名单和黑名单
-来重写前端的路由。
 ## Springboot中配置实例：
 ```
 /**
