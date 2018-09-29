@@ -1,6 +1,7 @@
 package com.power.doc.builder;
 
 import com.power.common.util.CollectionUtil;
+import com.power.common.util.DateTimeUtil;
 import com.power.common.util.FileUtil;
 import com.power.common.util.StringUtil;
 import com.power.doc.model.ApiConfig;
@@ -94,7 +95,8 @@ public class ApiDocBuilder {
         Template tpl = BeetlTemplateUtil.getByName("AllInOne.btl");
         tpl.binding("apiDocList", apiDocList);
         tpl.binding("errorCodeList", errorCodeList);
-        FileUtil.nioWriteFile(tpl.render(), outPath + FILE_SEPARATOR +  "AllInOne.md");
+        String version = DateTimeUtil.long2Str(System.currentTimeMillis(),"yyyyMMddHHmm");
+        FileUtil.nioWriteFile(tpl.render(), outPath + FILE_SEPARATOR +  "AllInOne-V"+version+".md");
     }
 
     /**

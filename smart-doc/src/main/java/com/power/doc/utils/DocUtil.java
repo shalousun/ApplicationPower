@@ -51,6 +51,13 @@ public class DocUtil {
         fieldValue.put("message-string","success,fail".split(",")[RandomUtil.randomInt(0,1)]);
         fieldValue.put("date-string",DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
         fieldValue.put("date-date",DateTimeUtil.dateToStr(new Date(),DateTimeUtil.DATE_FORMAT_DAY));
+        fieldValue.put("state-int",String.valueOf(RandomUtil.randomInt(0,10)));
+        fieldValue.put("state-integer",String.valueOf(RandomUtil.randomInt(0,10)));
+        fieldValue.put("flag-int",String.valueOf(RandomUtil.randomInt(0,10)));
+        fieldValue.put("flag-integer",String.valueOf(RandomUtil.randomInt(0,10)));
+        fieldValue.put("flag-boolean","true");
+        fieldValue.put("flag-Boolean","false");
+
     }
     /**
      * 随机生成json值
@@ -121,9 +128,9 @@ public class DocUtil {
 
     /**
      * match controller package
-     * @param packageFilters
-     * @param controllerName
-     * @return
+     * @param packageFilters package filter
+     * @param controllerName controller name
+     * @return boolean
      */
     public static boolean isMatch(String packageFilters,String controllerName){
         if(StringUtil.isNotEmpty(packageFilters)){
