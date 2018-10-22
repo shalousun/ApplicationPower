@@ -339,6 +339,20 @@ public class DocClassUtil {
     }
 
     /**
+     * ignore tag request field
+     * @param tagName custom field tag
+     * @return boolean
+     */
+    public static boolean isIgnoreTag(String tagName){
+        switch (tagName) {
+            case "ignore":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
      * ignore param of spring mvc
      * @param paramType param type name
      * @return boolean

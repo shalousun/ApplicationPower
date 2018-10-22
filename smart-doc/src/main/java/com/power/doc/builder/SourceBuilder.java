@@ -431,6 +431,16 @@ public class SourceBuilder {
                     String subTypeName = field.getType().getFullyQualifiedName();
                     String fieldGicName = field.getType().getGenericCanonicalName();
                     List<JavaAnnotation> javaAnnotations = field.getAnnotations();
+
+                    List<DocletTag> paramTags = field.getTags();
+                    if(!isResp){
+                        pre:
+                        for (DocletTag docletTag : paramTags) {
+                            if (DocClassUtil.isIgnoreTag(docletTag.getName())) {
+                                continue out;
+                            }
+                        }
+                    }
                     String strRequired = "false";
                     int annotationCounter = 0;
                     an:
@@ -456,7 +466,6 @@ public class SourceBuilder {
                         }
                     }
                     if (annotationCounter < 1) {
-                        List<DocletTag> paramTags = field.getTags();
                         doc:
                         for (DocletTag docletTag : paramTags) {
                             if (DocClassUtil.isRequiredTag(docletTag.getName())) {
@@ -711,6 +720,15 @@ public class SourceBuilder {
             for (JavaField field : fields) {
                 String fieldName = field.getName();
                 if (!"serialVersionUID".equals(fieldName)) {
+                    List<DocletTag> paramTags = field.getTags();
+                    if(!isResp){
+                        pre:
+                        for (DocletTag docletTag : paramTags) {
+                            if (DocClassUtil.isIgnoreTag(docletTag.getName())) {
+                                continue out;
+                            }
+                        }
+                    }
                     List<JavaAnnotation> annotations = field.getAnnotations();
                     for (JavaAnnotation annotation : annotations) {
                         if ("JsonIgnore".equals(annotation.getType().getSimpleName()) && isResp) {
