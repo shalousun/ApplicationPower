@@ -49,6 +49,8 @@ public class DocClassUtil {
                 return true;
             case "java.math.bigdecimal":
                 return true;
+            case "java.math.biginteger":
+                return true;
             default:
                 return false;
         }
@@ -208,6 +210,8 @@ public class DocClassUtil {
             case "java.lang.Float":
                 return "number";
             case "bigdecimal":
+                return "number";
+            case "biginteger":
                 return "number";
             case "float":
                 return "number";
