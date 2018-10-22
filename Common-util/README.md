@@ -5,7 +5,7 @@ common-util是一个和任何模块都无关的模块，common-util模块中主�
 <dependency>
   <groupId>com.github.shalousun</groupId>
   <artifactId>common-util</artifactId>
-  <version>1.3</version>
+  <version>1.4</version>
 </dependency>
 ```
 common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、ValidateUtil、IpUtil等。
@@ -62,3 +62,9 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 - 更新日期：2018-09-29
 - 更新内容：
 	1. 升级common-util到1.3版本，添加ip白名单和黑名单拦截。
+#### 版本号：1.4
+- 更新日期：2018-09-29
+- 更新内容：
+	1. 更新RandomUtil中随机数生成 。
+	2. 添加UUIDUtil工具类。
+	3. ValidateUtil中增加HH:mm:ss格式验证。
