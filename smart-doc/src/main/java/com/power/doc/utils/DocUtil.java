@@ -2,6 +2,7 @@ package com.power.doc.utils;
 
 import com.github.javafaker.Faker;
 import com.power.common.util.DateTimeUtil;
+import com.power.common.util.IDCardUtil;
 import com.power.common.util.RandomUtil;
 import com.power.common.util.StringUtil;
 
@@ -57,6 +58,11 @@ public class DocUtil {
         fieldValue.put("flag-integer",String.valueOf(RandomUtil.randomInt(0,10)));
         fieldValue.put("flag-boolean","true");
         fieldValue.put("flag-Boolean","false");
+        fieldValue.put("idcard-string", IDCardUtil.getIdCard());
+        fieldValue.put("sex-int",String.valueOf(RandomUtil.randomInt(0,1)));
+        fieldValue.put("sex-integer",String.valueOf(RandomUtil.randomInt(0,1)));
+        fieldValue.put("gender-int",String.valueOf(RandomUtil.randomInt(0,1)));
+        fieldValue.put("gender-integer",String.valueOf(RandomUtil.randomInt(0,1)));
 
     }
     /**
