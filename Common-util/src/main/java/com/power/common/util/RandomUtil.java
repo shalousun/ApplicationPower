@@ -168,6 +168,8 @@ public class RandomUtil {
                 return  "true";
             case "BigDecimal":    //3
                 return  String.valueOf(randomInt(1000));
+            case "BigInteger":
+                return  String.valueOf(randomInt(1000));
             case "Time":  //91
                 return DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
             case "Date":
