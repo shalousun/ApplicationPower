@@ -366,6 +366,26 @@ Usage:
 ValidateUtil.isNotArmyIdCard("北字第7682126号");//return false
 ValidateUtil.isNotArmyIdCard("美字第7682126号");//return true
 ```
+## 40. isTime(String time)方法
+@since 1.4
+
+该方法用于判断时间格式是否正确
+
+Usage:
+```
+ValidateUtil.isTime("12:56:60");//return false
+ValidateUtil.isTime("12:56:60");//return true
+```
+## 41. isNotTime(String time)方法
+
+该方法判断逻辑和isTime方法相反
+
+Usage:
+```
+ValidateUtil.isNotTime("12:56:60");//return true
+ValidateUtil.isNotTime("12:56:60");//return false
+```
+
 # validate内置的常用的正则表达式
 ```
 //邮箱
