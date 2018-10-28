@@ -29,6 +29,8 @@ public class SourceBuilder {
 
     private static final String REQUEST_BODY = "RequestBody";
 
+    private static final String REQUEST_BODY_FULLY = "org.springframework.web.bind.annotation.RequestBody";
+
     private static final String REQUEST_PARAM = "RequestParam";
 
     private static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
@@ -445,9 +447,10 @@ public class SourceBuilder {
                     int annotationCounter = 0;
                     an:
                     for (JavaAnnotation annotation : javaAnnotations) {
-                        if ("JsonIgnore".equals(annotation.getType().getSimpleName()) && isResp) {
+                        String annotionName = annotation.getType().getSimpleName();
+                        if ("JsonIgnore".equals(annotionName) && isResp) {
                             continue out;
-                        } else if ("JSONField".equals(annotation.getType().getSimpleName()) && isResp) {
+                        } else if ("JSONField".equals(annotionName) && isResp) {
                             if (null != annotation.getProperty("serialize")) {
                                 if ("false".equals(annotation.getProperty("serialize").toString())) {
                                     continue out;
@@ -455,11 +458,11 @@ public class SourceBuilder {
                             } else if (null != annotation.getProperty("name")) {
                                 fieldName = annotation.getProperty("name").toString().replace("\"", "");
                             }
-                        } else if ("JsonProperty".equals(annotation.getType().getSimpleName()) && isResp) {
+                        } else if ("JsonProperty".equals(annotionName) && isResp) {
                             if (null != annotation.getProperty("value")) {
                                 fieldName = annotation.getProperty("value").toString().replace("\"", "");
                             }
-                        } else if (DocClassUtil.isJSR303Required(annotation.getType().getSimpleName())) {
+                        } else if (DocClassUtil.isJSR303Required(annotionName)) {
                             strRequired = "true";
                             annotationCounter++;
                             break an;
@@ -731,9 +734,10 @@ public class SourceBuilder {
                     }
                     List<JavaAnnotation> annotations = field.getAnnotations();
                     for (JavaAnnotation annotation : annotations) {
-                        if ("JsonIgnore".equals(annotation.getType().getSimpleName()) && isResp) {
+                        String annotationName = annotation.getType().getSimpleName();
+                        if ("JsonIgnore".equals(annotationName) && isResp) {
                             continue out;
-                        } else if ("JSONField".equals(annotation.getType().getSimpleName()) && isResp) {
+                        } else if ("JSONField".equals(annotationName) && isResp) {
                             if (null != annotation.getProperty("serialize")) {
                                 if ("false".equals(annotation.getProperty("serialize").toString())) {
                                     continue out;
@@ -741,7 +745,7 @@ public class SourceBuilder {
                             } else if (null != annotation.getProperty("name")) {
                                 fieldName = annotation.getProperty("name").toString().replace("\"", "");
                             }
-                        } else if ("JsonProperty".equals(annotation.getType().getSimpleName()) && isResp) {
+                        } else if ("JsonProperty".equals(annotationName) && isResp) {
                             if (null != annotation.getProperty("value")) {
                                 fieldName = annotation.getProperty("value").toString().replace("\"", "");
                             }
@@ -890,8 +894,8 @@ public class SourceBuilder {
                 List<JavaAnnotation> annotations = parameter.getAnnotations();
                 int requestBodyCounter = 0;
                 for (JavaAnnotation annotation : annotations) {
-                    String annotationName = annotation.getType().getName();
-                    if (REQUEST_BODY.equals(annotationName)) {
+                    String annotationName = annotation.getType().getSimpleName();
+                    if (REQUEST_BODY.equals(annotationName)||REQUEST_BODY_FULLY.equals(annotationName)) {
                         requestBodyCounter++;
                         apiMethodDoc.setContentType(JSON_CONTENT_TYPE);
                         if (DocClassUtil.isPrimitive(simpleTypeName)) {
