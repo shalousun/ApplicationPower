@@ -115,13 +115,13 @@
         <dependency>
            <groupId>com.github.shalousun</groupId>
            <artifactId>common-util</artifactId>
-           <version>1.3</version>
+           <version>1.4</version>
          </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.shalousun/smart-doc -->
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>smart-doc</artifactId>
-            <version>1.3</version>
+            <version>1.5</version>
             <scope>test</scope>
         </dependency>
        <% if(lombok){%>
@@ -139,6 +139,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
                 <dependencies>
                     <!-- hot deploy in idea-->
                     <dependency>
@@ -189,7 +192,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>${jdkVersion}</source>
                     <target>${jdkVersion}</target>
