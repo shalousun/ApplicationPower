@@ -23,7 +23,7 @@ export JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabl
 # print gc log
 # export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDetails"
 # export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCTimeStamps"
-# export JAVA_OPTS="$JAVA_OPTS -Xloggc:${LOGS_DIR}/gc.log"
+# export JAVA_OPTS="$JAVA_OPTS -Xloggc:\${LOGS_DIR}/gc.log"
 
 # only for jdk 1.7
 #export JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize="256m
