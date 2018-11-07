@@ -18,13 +18,14 @@ import java.util.Map;
 public class MySqlProvider implements DbProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MySqlProvider.class);
+
     /**
-     *
      * @param tableName
      * @return
      */
     @Override
     public Map<String, Column> getColumnsInfo(String tableName) {
+        String primaryKey = getPrimaryKeysInfo(tableName);
         Map<String, Column> colMap = new LinkedHashMap<>();
         Connection connection = null;
         try {
@@ -46,6 +47,9 @@ public class MySqlProvider implements DbProvider {
                 if ("YES".equals(isAutoIncrement)) {
                     column.setAutoIncrement(true);
                 }
+                if (columnName.equals(primaryKey)) {
+                    column.setPrimaryKey(true);
+                }
                 colMap.put(columnName, column);
             }
         } catch (Exception e) {
@@ -56,17 +60,54 @@ public class MySqlProvider implements DbProvider {
         return colMap;
     }
 
+    /**
+     * 获取主键字段
+     *
+     * @param tName
+     * @return
+     */
+    public String getPrimaryKeysInfo(String tName) {
+        String columnName = "";
+        Connection conn = DbUtil.getConnection();
+        ResultSet rs = null;
+        try {
+            DatabaseMetaData dbmd = conn.getMetaData();
+            /**
+             * 获取对给定表的主键列的描述
+             * 方法原型:ResultSet getPrimaryKeys(String catalog,String schema,String table);
+             * catalog - 表所在的类别名称;""表示获取没有类别的列,null表示获取所有类别的列。
+             * schema - 表所在的模式名称(oracle中对应于Tablespace);""表示获取没有模式的列,null标识获取所有模式的列; 可包含单字符通配符("_"),或多字符通配符("%");
+             * table - 表名称;可包含单字符通配符("_"),或多字符通配符("%");
+             */
+            rs = dbmd.getPrimaryKeys(conn.getCatalog(), null, tName);
+
+            while (rs.next()) {
+                String tableCat = rs.getString("TABLE_CAT"); //表类别(可为null)
+                String tableSchemaName = rs.getString("TABLE_SCHEM");//表模式（可能为空）,在oracle中获取的是命名空间,其它数据库未知
+                String tableName = rs.getString("TABLE_NAME"); //表名
+                columnName = rs.getString("COLUMN_NAME");//列名
+                short keySeq = rs.getShort("KEY_SEQ");//序列号(主键内值1表示第一列的主键，值2代表主键内的第二列)
+                String pkName = rs.getString("PK_NAME"); //主键名称
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbUtil.close(conn);
+        }
+        return columnName;
+    }
+
     @Override
-    public List<TableInfo> getTablesInfo(String tableName,String filter) {
+    public List<TableInfo> getTablesInfo(String tableName, String filter) {
         List<TableInfo> tableList;
         StringBuilder sql = new StringBuilder();
         sql.append("show table status where ENGINE IS NOT NULL ");
         if (StringUtil.isNotEmpty(tableName)) {
             sql.append(" and NAME LIKE '%").append(tableName).append("%'");
-        } else if(StringUtil.isNotEmpty(filter)){
+        } else if (StringUtil.isNotEmpty(filter)) {
             sql.append(" and NAME LIKE '").append(filter).append("%'");
         }
-        LOGGER.debug("MySQL provider sql: {}",sql.toString());
+        LOGGER.debug("MySQL provider sql: {}", sql.toString());
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;

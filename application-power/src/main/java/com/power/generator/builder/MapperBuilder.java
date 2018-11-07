@@ -160,7 +160,7 @@ public class MapperBuilder implements IBuilder {
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             column = entry.getValue();
             String camelKey = StringUtil.underlineToCamel(entry.getKey());
-            if (!column.isAutoIncrement()) {
+            if (!column.isPrimaryKey()) {
                 updateSql.append("			").append("<if test=\"").append(camelKey).append("!=null\">");
                 updateSql.append(entry.getKey()).append(" = #{");
                 updateSql.append(StringUtil.underlineToCamel(entry.getKey())).append("},</if>\n");
