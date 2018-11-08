@@ -82,8 +82,8 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
      */
     private String getDomain(String applicationName) {
         if (StringUtil.isNotEmpty(applicationName)) {
-            applicationName = StringUtil.camelToUnderline(applicationName);
-            applicationName = applicationName.replaceAll("-", ".");
+            applicationName = applicationName.replaceAll("-", "");
+            applicationName = StringUtil.camelToUnderline(StringUtil.firstToLowerCase(applicationName));
             applicationName = applicationName.replaceAll("_", ".");
             return applicationName;
         }
