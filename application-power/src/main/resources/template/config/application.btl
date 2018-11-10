@@ -37,7 +37,6 @@ spring:
 
 mybatis:
   type-aliases-package: ${basePackage}
-  config-location: classpath:/mybatis-config.xml
   mapper-locations: classpath*:${mappingDir}/mapping/*.xml
   configuration:
      log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
