@@ -13,7 +13,7 @@ jdk版本：jdk 1.8
 打包后的项目部署比较简单，开箱即可启动
 ```
 //解压tar.gz包
-tar -zxvf ${appName}-1.0.tar.gz
+tar -zxvf ${applicationNameLowerCase}-1.0.tar.gz
 //解压后启动脚本在项目的bin目录中，项目配置文件在config中，日志文件在logs目录中
 ```
 解压后的项目大致结构
@@ -31,7 +31,7 @@ tar -zxvf ${appName}-1.0.tar.gz
 ├─docs
 │      DEPLOY.md
 ├─lib
-│      ${appName}.jar  
+│      ${applicationNameLowerCase}.jar  
 └─logs
 ```
 
@@ -135,7 +135,7 @@ Usage:
 ```
 @PropertySource(value = {"config.properties"})
 public class Config{
-   @Value("${application_name}")
+   @Value("\${application_name}")
    private String name;//tps
 
 }

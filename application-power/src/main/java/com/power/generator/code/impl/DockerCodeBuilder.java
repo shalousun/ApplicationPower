@@ -94,7 +94,7 @@ public class DockerCodeBuilder implements ICodeBuilder {
         }
 
         Template dockerFile = BeetlTemplateUtil.getByName(DOCKER_FILE_TPL);
-        dockerFile.binding(GeneratorConstant.APPLICATION_NAME,applicationName);
+        dockerFile.binding(GeneratorConstant.APPLICATION_NAME_LOWER,applicationName.toLowerCase());
         String dockerFileOutPath = paths.get(DOCKER_DIR)+ConstVal.FILE_SEPARATOR+"Dockerfile";
         templates.put(dockerFileOutPath,dockerFile.render());
 
@@ -113,6 +113,7 @@ public class DockerCodeBuilder implements ICodeBuilder {
 
         Template dockerDoc = BeetlTemplateUtil.getByName(dockerDocTpl);
         String docPath = PathUtil.connectPath(getBasePath(),"docs/DOCKER.md");
+        dockerDoc.binding(GeneratorConstant.COMMON_VARIABLE);
         dockerDoc.binding("deployment_cfg","deployment.yaml");
         templates.put(docPath,dockerDoc.render());
 

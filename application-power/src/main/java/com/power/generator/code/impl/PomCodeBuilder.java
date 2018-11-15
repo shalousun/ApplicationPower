@@ -48,10 +48,8 @@ public class PomCodeBuilder implements ICodeBuilder {
 
     @Override
     public Map<String, String> handleTemplates() {
-        String basePackage = GeneratorProperties.basePackage();
         Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_SPRING_BOOT_POM);
-        template.binding(GeneratorConstant.BASE_PACKAGE, basePackage);
-        template.binding(GeneratorConstant.APPLICATION_NAME, GeneratorProperties.applicationName());
+        template.binding(GeneratorConstant.COMMON_VARIABLE);
         template.binding(GeneratorConstant.LOMBOK,GeneratorProperties.useLombok());
         template.binding("projectVersion", "${project.version}");
         template.binding("springVersion", "${spring.version}");

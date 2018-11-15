@@ -57,7 +57,7 @@ ApplicationPower已经在项目中自动为创建了一个yaml的k8s部署配置
 
 First:修改yaml的images为自己的images，可以从harbor上直接获取。
 ```
-image: harbor-registry/test/com.power.doc/api-doc-test1:1.0-SNAPSHOT
+image: harbor-registry/test/${basePackage}/${applicationNameLowerCase}:1.0
 ```
 Second:修改端口
 ```

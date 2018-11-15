@@ -110,8 +110,7 @@ public class CodeWriter extends AbstractCodeWriter {
                 FileUtil.nioTransferCopy(new File(currentPath), new File(entry.getValue()));
             } else {
                 template = BeetlTemplateUtil.getByName(key);
-                template.binding(GeneratorConstant.BASE_PACKAGE, basePackage);
-                template.binding(GeneratorConstant.APPLICATION_NAME, GeneratorProperties.applicationName());
+                template.binding(GeneratorConstant.COMMON_VARIABLE);
                 //spring mybatis config
                 template.binding("mappingDir", basePackage.replaceAll("[.]", "/"));
                 template.binding("jdbcDriver","${jdbc.driver}");

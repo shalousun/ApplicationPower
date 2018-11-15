@@ -11,7 +11,7 @@ EXPOSE 8080
 VOLUME /tmp
 
 # Add the application's jar to the container
-ADD ${applicationName}.jar app.jar
+ADD ${applicationNameLowerCase}.jar app.jar
 
 RUN sh -c 'touch /app.jar'
 # Set jvm

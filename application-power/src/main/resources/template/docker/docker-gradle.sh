@@ -56,7 +56,7 @@ echo "INFO: Server PORT $SERVER_PORT"
 # ======================FIND GROUP AND APP VERSION======================
 GRADLE_FILE=$CUR_PATH/build.gradle
 APP_VERSION="1.0-SNAPSHOT"
-GROUP="com.iflytek.docker"
+GROUP="com.test.docker"
 if [ -f "$GRADLE_FILE" ]
 then
     GROUP=$(sed -n "s/^group '\(.*\)'/\1/p" $GRADLE_FILE)

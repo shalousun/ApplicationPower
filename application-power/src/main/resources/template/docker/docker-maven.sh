@@ -60,7 +60,7 @@ APP_VERSION="0.0.1-SNAPSHOT"
 GROUP="${basePackage}"
 ARTIFACT_ID="${applicationName}"
 # ======================FIND PROJECT NAME================================
-PROJECT_NAME="${applicationName}"
+PROJECT_NAME="${applicationNameLowerCase}"
 # ======================Dynamically process project config===============
 if [ "$(xmllint 2>&1 | grep xpath | wc -l)" = "1" ]
 then

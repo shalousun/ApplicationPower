@@ -25,7 +25,7 @@ public class ScriptBuilder {
         placeholders.put("arr_file","(${arr[*]} $file)");
         placeholders.put("arr","${arr[*]}");
         placeholders.put("extension","${filename##*.}");
-        placeholders.put("appName", GeneratorProperties.applicationName());
+        placeholders.put("appName", GeneratorProperties.applicationName().toLowerCase());
         placeholders.put("logConfig",GeneratorProperties.getLogConfig());
         return BeetlTemplateUtil.getTemplatesRendered("template/assembly/bin",placeholders);
     }

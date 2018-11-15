@@ -85,7 +85,7 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
             applicationName = applicationName.replaceAll("-", "");
             applicationName = StringUtil.camelToUnderline(StringUtil.firstToLowerCase(applicationName));
             applicationName = applicationName.replaceAll("_", ".");
-            return applicationName;
+            return applicationName.toLowerCase();
         }
         return null;
     }

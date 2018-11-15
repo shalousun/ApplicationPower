@@ -4,6 +4,7 @@ import com.power.common.util.FileUtil;
 import com.power.generator.builder.ScriptBuilder;
 import com.power.generator.code.ICodeBuilder;
 import com.power.generator.constant.ConstVal;
+import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.constant.SpringBootProjectConfig;
 import com.power.generator.utils.BeetlTemplateUtil;
 import com.power.generator.utils.CodeWriteUtil;
@@ -74,8 +75,7 @@ public class AssemblyCodeBuilder implements ICodeBuilder {
         //处理部署文档模板
         String deployDoc = paths.get(ConstVal.DOCS_PATH);
         Template deployTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_DEPLOY_MD);
-        deployTemplate.binding("appName", GeneratorProperties.applicationName());
-        deployTemplate.binding("application_name", "${application.name}");
+        deployTemplate.binding(GeneratorConstant.COMMON_VARIABLE);
         String docOutPath = PathUtil.connectPath(deployDoc, "DEPLOY.md");
         templatesMap.put(docOutPath, deployTemplate.render());
 
