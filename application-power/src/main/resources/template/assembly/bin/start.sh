@@ -27,7 +27,7 @@ if [ "$1" = "--env" ]; then
 fi
 # ====================================FIND SERVER PORT===================================================
 SERVER_PORT=""
-if [ "$APPLICATION_FILE" = "application.yml" ]
+if [ -f "config/application.yml" ]
 then
     # remove ^M in file
     sed -i "s/$(echo -e '\015')/\n/g" config/application.yml
@@ -71,11 +71,11 @@ fi
 if [ -n "$SERVER_PORT" ]; then
     SERVER_PORT_COUNT=""
     if [ "$machine" == "Linux" ]; then
-        SERVER_PORT_COUNT=$(netstat -tln | grep $SERVER_PORT | wc -l)
+        SERVER_PORT_COUNT=$(netstat -tln | grep "\b$SERVER_PORT\b" | wc -l)
     elif [ "$machine" == "Mac" ]; then
         SERVER_PORT_COUNT=$(lsof -t -i :$SERVER_PORT)
     else
-        SERVER_PORT_COUNT=$(netstat -tln | grep $SERVER_PORT | wc -l)
+        SERVER_PORT_COUNT=$(netstat -tln | grep "\b$SERVER_PORT\b" | wc -l)
     fi
 
     if [ "$SERVER_PORT_COUNT" == "" ]; then
