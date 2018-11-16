@@ -26,7 +26,7 @@
     <!--更新数据-->
     <update id="update" parameterType="${entitySimpleName}">
     	${updateSql}
-    	where id = #{id}
+    	where ${primaryKey} = #{id}
     </update>
     <%}%>
     <%if(delete){ %>
@@ -41,7 +41,7 @@
     <!--根据id返回一条记录-->
 	<select id="queryById" parameterType="int" resultType="${entitySimpleName}">
 	    ${selectSql}
-		where id=#{id}
+		where ${primaryKey} = #{id}
 	</select>
     <%}%>
     <%if(query){ %>

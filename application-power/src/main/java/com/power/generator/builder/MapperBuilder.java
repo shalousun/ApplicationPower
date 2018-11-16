@@ -29,6 +29,7 @@ public class MapperBuilder implements IBuilder {
         String updateSql = generateConditionUpdateSql(columnMap, tableName);
         String selectSql = generateSelectSql(columnMap, tableName);
         String results = generateResultMap(columnMap);
+        String primaryKey = getPrimaryKey(columnMap);
         Template mapper = BeetlTemplateUtil.getByName(ConstVal.TPL_MAPPER);
         mapper.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         mapper.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
@@ -40,8 +41,28 @@ public class MapperBuilder implements IBuilder {
         mapper.binding(GeneratorConstant.RESULT_MAP, results);
         mapper.binding(GeneratorConstant.IS_RESULT_MAP, GeneratorProperties.getResultMap());
         mapper.binding(GeneratorConstant.TABLE_NAME, tableName);
+        mapper.binding(GeneratorConstant.PRIMARY_KEY, primaryKey);
         mapper.binding(GeneratorProperties.getGenerateMethods());//过滤方法
         return mapper.render();
+    }
+
+    /**
+     * 获取主键
+     *
+     * @param columnMap
+     * @return
+     */
+    private String getPrimaryKey(Map<String, Column> columnMap) {
+        String primaryKey = null;
+        Column column;
+        for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
+            column = entry.getValue();
+            if (column.isPrimaryKey()) {
+                primaryKey = entry.getKey();
+                break;
+            }
+        }
+        return primaryKey;
     }
 
     /**
@@ -54,7 +75,6 @@ public class MapperBuilder implements IBuilder {
     private String generateInsertSql(Map<String, Column> columnMap, String tableName) {
         StringBuilder insertSql = new StringBuilder();
         insertSql.append("insert into ").append(tableName).append("(\n");
-
         StringBuilder insertValues = new StringBuilder();
         int i = 0;
         int size = columnMap.size();

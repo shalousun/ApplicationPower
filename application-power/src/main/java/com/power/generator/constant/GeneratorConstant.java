@@ -113,6 +113,11 @@ public class GeneratorConstant {
     public static final String UNDERSCORE_TO_CAMEL_CASE = "underscoreToCamelCase";
 
     /**
+     * 数据库主键
+     */
+    public static final String PRIMARY_KEY = "primaryKey";
+
+    /**
      * toString方法
      */
     public static final String TO_STRING = "toString";
