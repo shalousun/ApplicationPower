@@ -31,7 +31,7 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
     /**
      * kubernates template
      */
-    private final String K8S_DEPLOYMENT_TPL = "k8s/deployment.btl";
+    private final String K8S_DEPLOYMENT_TPL = "k8s/deployment.yml";
 
 
     public KubeYmlCodeBuilder() {

@@ -15,40 +15,6 @@
 # Kubernetes 1.8.
 #
 # Example usage: kubectl create -f <this_file>
-# ------------------- SpringBoot Application Deployment ------------------- #
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: ${applicationNameLowerCase}-rc
-  namespace: default
-spec:
-  selector:
-      matchLabels:
-        app: ${applicationNameLowerCase}
-        tier: backend
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ${applicationNameLowerCase}
-        tier: backend
-    spec:
-      containers:
-        - name: ${applicationNameLowerCase}
-          image: harbor-registry/test/${basePackage}/${applicationNameLowerCase}:1.0
-          imagePullPolicy: Always
-#          resources:
-#            requests:
-#              cpu: 100m
-#              memory: 100Mi
-#            limits:
-#              cpu: 100m
-#              memory: 100Mi
-          ports:
-            - containerPort: 8080
-      imagePullSecrets:
-      - name: harbor-key
----
 # ------------------- SpringBoot Application Service ---------------------- #
 apiVersion: v1
 kind: Service
@@ -64,6 +30,43 @@ spec:
  selector:
   app: ${applicationNameLowerCase}
   tier: backend
+---
+# ------------------- SpringBoot Application Deployment ------------------- #
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ${applicationNameLowerCase}-deployment
+  namespace: default
+spec:
+  selector:
+      matchLabels:
+        app: ${applicationNameLowerCase}
+        tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ${applicationNameLowerCase}
+        tier: backend
+    spec:
+      containers:
+        - name: ${applicationNameLowerCase}
+          image: your-registry/your-registry-project/${basePackage}/${applicationNameLowerCase}:1.0
+          imagePullPolicy: Always
+#          resources:
+#            requests:
+#              cpu: 100m
+#              memory: 100Mi
+#            limits:
+#              cpu: 100m
+#              memory: 100Mi
+#          env:
+#              - name:  your key
+#                value: "your value"
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+      - name: harbor-key
 ---
 # ------------------- SpringBoot Application ingress ---------------------- #
 apiVersion: extensions/v1beta1
