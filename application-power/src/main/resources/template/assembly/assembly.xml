@@ -9,6 +9,7 @@
             <directory>src/main/assembly/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
         </fileSet>
         <!--collecting config files-->
         <fileSet>
@@ -24,6 +25,7 @@
                 <include>test/*</include>
             </includes>
             <fileMode>0644</fileMode>
+            <lineEnding>unix</lineEnding>
         </fileSet>
         <fileSet>
             <directory>target</directory>
