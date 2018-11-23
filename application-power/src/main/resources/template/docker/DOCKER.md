@@ -38,7 +38,14 @@ docker.sh目前针对maven环境下的构建处理已经比较完善，能够自
 ApplicationPower生成项目时指定的项目名；$APP_VERSION目前使用的版本都是项目初期的0.0.1-SNAPSHOT。
 
 docker.sh目前已经默认内置了将镜像推送到自建仓库的功能，需要则将脚本中的命令去注释打开即可。
-
+# docker部署
+```
+docker run -dp $SERVER_PORT:$SERVER_PORT -t ${basePackage}/${applicationNameLowerCase}:1.0
+```
+## 查看docker部署日志
+```
+docker exec -it [containerId] /bin/sh
+```
 # 使用kubernates部署
 - 在使用k8s部署时在构建前可将docker.sh脚本中的docker run注释掉
 ```
@@ -70,7 +77,7 @@ nodePort: 30011 //暴露给外部访问的端口，默认范围30000-32767
 ```
 Third:创建pod和service
 ```
-kubectl create -f ${deployment_cfg}
+kubectl apply -f ${deployment_cfg}
 ```
 # 项目结构
 
