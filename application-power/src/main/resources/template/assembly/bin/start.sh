@@ -11,6 +11,7 @@ SERVER_NAME='${appName}'
 JAR_NAME='${jarName}'
 cd $(dirname $0)
 BIN_DIR=$(pwd)
+chmod 0755 *.sh
 cd ..
 DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
