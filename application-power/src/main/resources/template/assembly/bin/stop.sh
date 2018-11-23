@@ -11,7 +11,7 @@ CONF_DIR=$DEPLOY_DIR/config
 
 SERVER_NAME=$DEPLOY_DIR
 
-PIDS=$(ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}')
+PIDS=$(ps -ef | grep java | grep "$DEPLOY_DIR" |awk '{print $2}')
 if [ -z "$PIDS" ]; then
     echo "ERROR: The $SERVER_NAME does not started!"
     exit 1
