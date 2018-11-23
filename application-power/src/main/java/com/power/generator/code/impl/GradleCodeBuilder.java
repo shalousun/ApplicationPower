@@ -1,5 +1,7 @@
 package com.power.generator.code.impl;
 
+import com.power.common.util.FileUtil;
+import com.power.generator.builder.ScriptBuilder;
 import com.power.generator.code.ICodeBuilder;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
@@ -39,15 +41,22 @@ public class GradleCodeBuilder implements ICodeBuilder {
     public void buildPath() {
         // init path
         paths = new HashMap<>();
+        String basePath = getBasePath();
         String wrapperPath = getBasePath() + ConstVal.FILE_SEPARATOR +ConstVal.GRADLE_WRAPPER;
         paths.put(WRAPPER_PATH,wrapperPath);
-        paths.put("basePath",getBasePath());
+        paths.put("basePath",basePath);
+        paths.put(ConstVal.GRADLE_BIN, PathUtil.connectPath(basePath, ConstVal.GRADLE_BIN));
         PathUtil.mkdirs(paths);
 
     }
 
     @Override
     public void buildCode() {
+        String binPath = paths.get(ConstVal.GRADLE_BIN);
+        Map<String, String> scripts = new ScriptBuilder().generateScripts();
+        for (Map.Entry<String, String> entry : scripts.entrySet()) {
+            FileUtil.writeFileNotAppend(entry.getValue(), binPath + ConstVal.FILE_SEPARATOR + entry.getKey());
+        }
         CodeWriteUtil.writeFileNotAppend(handleTemplates());
         String basePath = getBasePath();
         //copy gradlew
@@ -55,7 +64,7 @@ public class GradleCodeBuilder implements ICodeBuilder {
         //copy gradlew.bat
         CodeWriteUtil.nioCopy("template/gradle/gradlew.bat",PathUtil.connectPath(basePath,"gradlew.bat"));
         //copy wrapper
-        CodeWriteUtil.nioCopyDir("template/gradle/wrapper/",paths.get(WRAPPER_PATH));
+       CodeWriteUtil.nioCopyDir("template/gradle/wrapper/",paths.get(WRAPPER_PATH));
 
     }
 

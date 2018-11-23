@@ -8,7 +8,7 @@
 
 # the name of the project
 SERVER_NAME='${appName}'
-JAR_NAME='${appName}.jar'
+JAR_NAME='${jarName}'
 cd $(dirname $0)
 BIN_DIR=$(pwd)
 cd ..

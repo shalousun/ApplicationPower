@@ -26,6 +26,11 @@ public class ScriptBuilder {
         placeholders.put("arr","${arr[*]}");
         placeholders.put("extension","${filename##*.}");
         placeholders.put("appName", GeneratorProperties.applicationName().toLowerCase());
+        if(GeneratorProperties.useGradle()){
+            placeholders.put("jarName", GeneratorProperties.applicationName().toLowerCase()+"-1.0.jar");
+        }else{
+            placeholders.put("jarName", GeneratorProperties.applicationName().toLowerCase()+".jar");
+        }
         placeholders.put("logConfig",GeneratorProperties.getLogConfig());
         return BeetlTemplateUtil.getTemplatesRendered("template/assembly/bin",placeholders);
     }

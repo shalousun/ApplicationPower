@@ -25,6 +25,8 @@ public class ConstVal {
 
     //gradle wrapper
     public static final String GRADLE_WRAPPER = "gradle" + FILE_SEPARATOR + "wrapper";
+    //gradle package bin
+    public static final String GRADLE_BIN = "src" + FILE_SEPARATOR +"main" + FILE_SEPARATOR +"scripts";
 
 
     public static final String STRING_BOOT_STATIC_DIR = RESOURCE_DIR + FILE_SEPARATOR + "static";

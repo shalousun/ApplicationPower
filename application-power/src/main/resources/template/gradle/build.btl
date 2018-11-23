@@ -16,7 +16,7 @@ buildscript {
     }
 }
 group '${basePackage}'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -81,7 +81,7 @@ task('copyJar', type: Copy) {
 }
 
 task('copyBin', type: Copy) {
-    from 'src/main/script'
+    from 'src/main/scripts'
     into "build/package/\${project.name}/bin"
     fileMode 0755
 }
