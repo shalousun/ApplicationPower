@@ -267,6 +267,24 @@ application-power整合的springboot打包后的结构参考
 	2. 添加lombok支持，生成代码时可自由选择。
 	3. 升级springboot到2.0.3版本
 	4. 内置容器暂时切换到tomcat，增加graceful shutdown【已测试】
+#### 版本号：1.7.9
+- 更新日期：2018-11-15
+- 更新内容：
+	1. 优化SpringBoot快速部署包中setenv.sh脚本中jvm参数设置
+	2. 新增UUIDUtil工具。
+	3. 升级springboot到2.1.0版本
+	4. 修改代码生成中主键更新语句bug
+	5. 修改start.sh启动脚本中端口检测的bug
+	6. 优化k8s部署yml模板
+#### 版本号：1.8.0
+- 更新日期：2018-11-24
+- 更新内容：
+	1. 介于gradle构建的代码生成新增快速部署打包功能，类似于maven项目的assembly
+	2. 优化stop.sh脚本提高兼容性。
+	3. 优化mybatis mapper.xml文件中sql生成，自动识别表主键字段
+	4. 升级gradle项目构建模板中的jar包依赖版本
+	5. 优化项目采用驼峰书写是docker镜像tag错误无法构建镜像的bug[自动作小写转换]
+
 	
 
 
