@@ -78,7 +78,7 @@ public class DateTimeUtil {
      * @return java.sql.Timestamp
      */
     public static Timestamp nowTimeStamp() {
-        return new Timestamp(getNowTime());
+        return new Timestamp(System.currentTimeMillis());
     }
 
     /**

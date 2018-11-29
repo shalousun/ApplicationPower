@@ -4,12 +4,9 @@ package com.power.common.util;
  * @author sunyu
  */
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -523,4 +520,23 @@ public class StringUtil {
 		builder.append(b);
 		return builder.toString();
 	}
+
+	/**
+	 * convert unicode to string
+	 * @param unicode
+	 * @return String
+	 */
+	public static String unicode2String(String unicode) {
+		if (StringUtil.isEmpty(unicode)) {
+			return "";
+		}
+		StringBuilder string = new StringBuilder();
+		String[] hex = unicode.split("\\\\u");
+		for (int i = 1; i < hex.length; i++) {
+			int data = Integer.parseInt(hex[i], 16);
+			string.append((char) data);
+		}
+		return string.toString();
+	}
+
 }
