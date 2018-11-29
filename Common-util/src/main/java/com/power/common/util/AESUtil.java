@@ -3,13 +3,14 @@ package com.power.common.util;
 import com.power.common.constants.AesPaddings;
 import com.power.common.constants.Charset;
 import org.apache.commons.codec.binary.Base64;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-
+import java.security.Security;
 
 
 /**
@@ -26,7 +27,9 @@ public class AESUtil {
      */
     private static final String KEY_ALGORITHM = "AES";
 
-
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     /**
      * 使用cbc加密解密(default use AES/CBC/PKCS5Padding)
@@ -156,54 +159,77 @@ public class AESUtil {
      * @return String
      */
     public static String decodeByCBC(String content, String key, String initVector) {
-        return decodeByCBC(content,key,initVector,AesPaddings.AES_CBC_PKCS5);
+        return decodeByCBC(content, key, initVector, AesPaddings.AES_CBC_PKCS5);
     }
 
     /**
+     * 使用CBC解密
      *
-     * @param content
-     * @param key
-     * @param initVector
-     * @param padding
-     * @return
+     * @param content    待解密的字符串
+     * @param key        解密的密匙
+     * @param initVector 初始向量
+     * @param padding    填充模式
+     * @return String
      */
-    public static String decodeByCBC(String content, String key, String initVector,String padding) {
+    public static String decodeByCBC(String content, String key, String initVector, String padding) {
         AESUtil.checkParamsOfCBC(content, key, initVector);
         byte[] decryptFrom = parseHexStr2Byte(content);
-        byte[] decryptResult = decryptByCBC(decryptFrom, key.getBytes(), initVector.getBytes(),padding);
+        byte[] decryptResult = decryptByCBC(decryptFrom, key.getBytes(), initVector.getBytes(), padding);
+        return new String(decryptResult);
+    }
+
+    /**
+     * 解密使用CBC和base64双重加密的字符串
+     *
+     * @param content    经过base64和CBC的字串
+     * @param key        解密的密匙
+     * @param initVector 初始向量
+     * @param padding    填充模式
+     * @return String
+     */
+    public static String decodeByCBCBase64(String content, String key, String initVector, String padding) {
+        AESUtil.checkParamsOfCBC(content, key, initVector);
+        byte[] decryptFrom = Base64.decodeBase64(content);
+        byte[] decryptResult = decryptByCBC(decryptFrom, key.getBytes(), initVector.getBytes(), padding);
         return new String(decryptResult);
     }
 
     /**
      * 使用cbc模式加密
      *
-     * @param content    带解密字节数组
-     * @param key        解密的密匙
+     * @param content    待加密字节数组
+     * @param key        密匙
      * @param initVector 初始向量
      * @return String
      */
     public static String encodeByCBC(String content, String key, String initVector) {
-        return encodeByCBC(content,key,initVector,AesPaddings.AES_CBC_PKCS5);
+        return encodeByCBC(content, key, initVector, AesPaddings.AES_CBC_PKCS5);
     }
 
     /**
      * 使用cbc模式加密
-     * @param content
-     * @param key
-     * @param initVector
-     * @param padding
+     *
+     * @param content    待加密字符串
+     * @param key        密匙
+     * @param initVector 初始向量
+     * @param padding    填充模式
      * @return
      */
-    public static String encodeByCBC(String content, String key, String initVector,String padding){
-        AESUtil.checkParamsOfCBC(content, key, initVector);
-        byte[] encryptResult = null;
-        try {
-            encryptResult = encryptByCBC(content.getBytes(Charset.DEFAULT_CHARSET), key.getBytes(), initVector.getBytes(),padding);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        String encryptResultStr = parseByte2HexStr(encryptResult);
-        return encryptResultStr;
+    public static String encodeByCBC(String content, String key, String initVector, String padding) {
+        return encodeByCBC(content, key, initVector, padding, false);
+    }
+
+    /**
+     * 使用cbc模式加密(增加base64加密)
+     *
+     * @param content    待加密字符串
+     * @param key        密匙
+     * @param initVector 初始向量
+     * @param padding    填充模式
+     * @return
+     */
+    public static String encodeByCBCBase64(String content, String key, String initVector, String padding) {
+        return encodeByCBC(content, key, initVector, padding, true);
     }
 
     /**
@@ -342,6 +368,17 @@ public class AESUtil {
         if (StringUtil.isEmpty(initVector)) {
             throw new NullPointerException("The init Vector can't be null or empty.");
         }
+    }
+
+    private static String encodeByCBC(String content, String key, String initVector, String padding, boolean base64) {
+        AESUtil.checkParamsOfCBC(content, key, initVector);
+        byte[] encryptResult = null;
+        try {
+            encryptResult = encryptByCBC(content.getBytes(Charset.DEFAULT_CHARSET), key.getBytes(), initVector.getBytes(), padding);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return base64 ? new String(Base64.encodeBase64(encryptResult)) : parseByte2HexStr(encryptResult);
     }
 
     /**
