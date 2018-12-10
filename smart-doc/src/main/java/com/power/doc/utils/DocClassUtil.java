@@ -47,6 +47,14 @@ public class DocClassUtil {
                 return true;
             case "java.util.date":
                 return true;
+            case "java.time.localdatetime":
+                return true;
+            case "localdatetime":
+                return true;
+            case "localdate":
+                return true;
+            case "java.time.localdate":
+                return true;
             case "java.math.bigdecimal":
                 return true;
             case "java.math.biginteger":
@@ -226,6 +234,10 @@ public class DocClassUtil {
             case "map":
                 return "map";
             case "date":
+                return "string";
+            case "localdatetime":
+                return "string";
+            case "localdate":
                 return "string";
             default:
                 return "object";

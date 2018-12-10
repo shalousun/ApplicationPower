@@ -18,4 +18,10 @@ public class DocClassUtilTest {
         String[] arr = DocClassUtil.getSimpleGicName(className);
 //        System.out.println("arr:"+ JSON.toJSONString(arr));
     }
+
+    @Test
+    public void testIsPrimitive(){
+        String typeName = "java.time.LocalDateTime";
+        System.out.println(DocClassUtil.isPrimitive(typeName));
+    }
 }

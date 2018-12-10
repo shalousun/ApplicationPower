@@ -15,7 +15,7 @@ smart-doc完全基于接口源码分析来生成接口文档，完全做到零�
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>smart-doc</artifactId>
-    <version>1.2</version>
+    <version>1.6</version>
     <scope>test</scope>
 </dependency>
 ```
