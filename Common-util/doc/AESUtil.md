@@ -1,6 +1,8 @@
 # AESUtil方法介绍
 AESUtil是对常用的AES加解密的封装。所属的包为com.power.common.util。目前该工具类封装了
-两种加解密的模式，分别是AES的ECB和CBC模式，这两种模式基本可以满足平常的开发要求。
+两种加解密的模式，分别是AES的ECB和CBC模式，这两种模式基本可以满足平常的开发要求。1.5开始common-util中的
+AESUtil增加了对AES/CBC/PKCS7Padding的支持，常用的填充常量在AesPaddings中，对于不需要传递填充模式的方法
+默认都是用CBC或者ECB的PKCS5Padding。
 
 **注意：** 平时开发和别人协商一些接口签名验证时需要协商好双方所采用的AES加解密模式，是ECB还是CBC。
 AES加密模式中除了ECB模式外，都需要提供初始化加密向量，在使用该工具是也需要注意加解密的模式必须是相同的。

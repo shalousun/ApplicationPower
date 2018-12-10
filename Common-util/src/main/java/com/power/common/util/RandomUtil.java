@@ -174,7 +174,11 @@ public class RandomUtil {
                 return DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
             case "Date":
                return DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
+            case "LocalDate":
+                return DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_DAY);
             case "Timestamp":  //91
+                return DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
+            case "LocalDateTime":
                 return DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
             default:
                 return randomString(6);

@@ -38,7 +38,23 @@ public class DateTimeUtil {
      * @return String
      */
     public static String dateToStr(Date date, String format) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateToStr(date,format,null);
+    }
+
+    /**
+     *
+     * @param date
+     * @param format
+     * @param locale
+     * @return
+     */
+    public static String dateToStr(Date date,String format,Locale locale){
+        SimpleDateFormat dateFormat = null;
+        if(null != locale){
+            dateFormat = new SimpleDateFormat(format,locale);
+        } else{
+            dateFormat = new SimpleDateFormat(format);
+        }
         return dateFormat.format(date);
     }
 
@@ -370,9 +386,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String long2Str(Long millSec) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_CHINESE);
-        Date date = new Date(millSec);
-        return sdf.format(date);
+        return long2Str(millSec,DATE_FORMAT_CHINESE);
     }
 
     /**
@@ -383,9 +397,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String long2Str(long millSec, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINESE);
-        Date date = new Date(millSec);
-        return sdf.format(date);
+        return long2Str(millSec,format,Locale.CHINESE);
     }
 
     /**

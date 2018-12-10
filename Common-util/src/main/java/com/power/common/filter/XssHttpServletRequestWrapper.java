@@ -18,36 +18,37 @@ import java.nio.charset.Charset;
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     boolean isUpData = false;//判断是否是上传 上传忽略
+
     public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
-        String contentType = servletRequest.getContentType ();
+        String contentType = servletRequest.getContentType();
         if (null != contentType)
-            isUpData =contentType.startsWith ("multipart");
+            isUpData = contentType.startsWith("multipart");
     }
 
     @Override
     public String[] getParameterValues(String parameter) {
         String[] values = super.getParameterValues(parameter);
-        if (values==null)  {
+        if (values == null) {
             return null;
         }
         int count = values.length;
         String[] encodedValues = new String[count];
         for (int i = 0; i < count; i++) {
-            if(ValidateUtil.isContainsForbiddenCharacter(values[i])){
-                throw new XssException("Contains illegal characters[From getParameterValues method]:"+values[i]);
+            if (ValidateUtil.isContainsForbiddenCharacter(values[i])) {
+                throw new XssException("Contains illegal characters[From getParameterValues method]:" + values[i]);
             }
             encodedValues[i] = StringUtil.cleanXSS(values[i]);
 
         }
         return encodedValues;
     }
-    
+
     @Override
     public String getParameter(String parameter) {
         String value = super.getParameter(parameter);
-        if(ValidateUtil.isContainsForbiddenCharacter(value)){
-            throw new XssException("Contains illegal characters[From getParameter method]："+value);
+        if (ValidateUtil.isContainsForbiddenCharacter(value)) {
+            throw new XssException("Contains illegal characters[From getParameter method]：" + value);
         }
         if (value == null) {
             return null;
@@ -78,16 +79,15 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             return null;
         return cleanXSS(value);
     }
-   
 
 
     @Override
-    public ServletInputStream getInputStream () throws IOException {
-        if (isUpData){
-            return super.getInputStream ();
-        }else{
+    public ServletInputStream getInputStream() throws IOException {
+        if (isUpData) {
+            return super.getInputStream();
+        } else {
 
-            final ByteArrayInputStream bais = new ByteArrayInputStream(inputHandlers(super.getInputStream ()).getBytes ("utf-8"));
+            final ByteArrayInputStream bais = new ByteArrayInputStream(inputHandlers(super.getInputStream()).getBytes("utf-8"));
 
             return new ServletInputStream() {
 
@@ -99,11 +99,12 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         }
 
     }
-    public   String inputHandlers(ServletInputStream servletInputStream){
+
+    public String inputHandlers(ServletInputStream servletInputStream) {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader (servletInputStream, Charset.forName("UTF-8")));
+            reader = new BufferedReader(new InputStreamReader(servletInputStream, Charset.forName("UTF-8")));
             String line = "";
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
@@ -126,19 +127,19 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
                 }
             }
         }
-        if(ValidateUtil.isContainsForbiddenCharacter(sb.toString ())){
-            throw new XssException("Contains illegal characters[From getInputStream method]："+sb.toString ());
+        if (ValidateUtil.isContainsForbiddenCharacter(sb.toString())) {
+            throw new XssException("Contains illegal characters[From getInputStream method]：" + sb.toString());
         }
-        return  StringUtil.cleanXSS(sb.toString ());
+        return StringUtil.cleanXSS(sb.toString());
     }
 
-    private  String cleanXSS(String value) {
+    private String cleanXSS(String value) {
         if (null == value) {
             return value;
         } else {
-            value = value.replaceAll("\\+","&#43;");
-            value = value.replaceAll("&","&amp;");
-            value = value.replaceAll("%","&#37;");
+            value = value.replaceAll("\\+", "&#43;");
+            value = value.replaceAll("&", "&amp;");
+            value = value.replaceAll("%", "&#37;");
             // value = value.replaceAll("\"","&quot;");
             value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
             value = value.replaceAll("%3C", "&lt;").replaceAll("%3E", "&gt;");
