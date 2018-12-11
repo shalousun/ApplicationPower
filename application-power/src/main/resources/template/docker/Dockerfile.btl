@@ -1,5 +1,5 @@
 # Start with a base image containing Java runtime. The default timezone is Shanghai.
-FROM registry.cn-shanghai.aliyuncs.com/shalousun/alpine-oraclejdk8:1.0
+FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-oraclejre8:1.0
 
 # Add Maintainer Info
 MAINTAINER shalousun
