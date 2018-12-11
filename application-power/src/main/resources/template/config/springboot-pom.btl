@@ -115,13 +115,13 @@
         <dependency>
            <groupId>com.github.shalousun</groupId>
            <artifactId>common-util</artifactId>
-           <version>1.4</version>
+           <version>1.6</version>
          </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.shalousun/smart-doc -->
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>smart-doc</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <scope>test</scope>
         </dependency>
        <% if(lombok){%>
