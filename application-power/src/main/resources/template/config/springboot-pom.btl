@@ -115,7 +115,7 @@
         <dependency>
            <groupId>com.github.shalousun</groupId>
            <artifactId>common-util</artifactId>
-           <version>1.6</version>
+           <version>1.7</version>
          </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.shalousun/smart-doc -->
         <dependency>

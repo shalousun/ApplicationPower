@@ -23,10 +23,6 @@ public class BaseCodeBuilder implements ICodeBuilder {
 
     private static final String BASE_CONTROLLER = "BaseController";
 
-    private static final String RESULT_UTIL = "ResultUtil";
-
-    private static final String ERROR_CODE = "ErrorCode";
-
     private static final String GRACE_FUL_SHUTDOWN = "ShutdownConfig";
 
 
@@ -47,12 +43,10 @@ public class BaseCodeBuilder implements ICodeBuilder {
         paths = new HashMap<>();
         String enumPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.ENUM_PACKAGE);
         String controllerPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.CONTROLLER);
-        String utilPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.UTIL_PACKAGE);
         String annotationPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.ANNOTATION_PACKAGE);
         String config = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.CONFIG_PACKAGE);
         paths.put(ERROR_CODE_ENUM,enumPath);
         paths.put(BASE_CONTROLLER,controllerPath);
-        paths.put(RESULT_UTIL,utilPath);
         paths.put(ConstVal.ANNOTATION_PACKAGE,annotationPath);
         paths.put(GRACE_FUL_SHUTDOWN,config);
         PathUtil.mkdirs(paths);
@@ -75,20 +69,11 @@ public class BaseCodeBuilder implements ICodeBuilder {
         String baseControllerOut = paths.get(BASE_CONTROLLER)+ConstVal.FILE_SEPARATOR+"BaseController.java";
         templates.put(baseControllerOut,baseControllerTpl.render());
 
-        Template errorCodeTpl = BeetlTemplateUtil.getByName("ErrorCode.btl");
-        String errorCodeOut = paths.get(ConstVal.ANNOTATION_PACKAGE)+ConstVal.FILE_SEPARATOR+"ErrorCode.java";
-        errorCodeTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        templates.put(errorCodeOut,errorCodeTpl.render());
-
-        Template errorCodeEnumTpl = BeetlTemplateUtil.getByName("ErrorCodeEnum.btl");
+        Template errorCodeEnumTpl = BeetlTemplateUtil.getByName("ErrorCode.btl");
         errorCodeEnumTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String errorCodeEnumOut = paths.get(ERROR_CODE_ENUM)+ConstVal.FILE_SEPARATOR+"ErrorCodeEnum.java";
+        String errorCodeEnumOut = paths.get(ERROR_CODE_ENUM)+ConstVal.FILE_SEPARATOR+"ErrorCode.java";
         templates.put(errorCodeEnumOut,errorCodeEnumTpl.render());
 
-        Template resultUtilTpl = BeetlTemplateUtil.getByName("ResultUtil.btl");
-        resultUtilTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String resultUtilOut = paths.get(RESULT_UTIL)+ConstVal.FILE_SEPARATOR+"ResultUtil.java";
-        templates.put(resultUtilOut,resultUtilTpl.render());
 
         Template gracefulTpl = BeetlTemplateUtil.getByName("ShutdownConfig.btl");
         gracefulTpl.binding(GeneratorConstant.COMMON_VARIABLE);

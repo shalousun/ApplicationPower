@@ -2,7 +2,7 @@ package ${basePackage};
 
 import com.power.common.util.DateTimeUtil;
 import com.power.doc.builder.ApiDocBuilder;
-import ${basePackage}.enums.ErrorCodeEnum;
+import ${basePackage}.enums.ErrorCode;
 import com.power.doc.model.ApiConfig;
 import com.power.doc.model.ApiErrorCode;
 import com.power.doc.model.CustomRespField;
@@ -39,9 +39,9 @@ public class DocCreatorTest {
 
        // set error code list
        List<ApiErrorCode> errorCodeList = new ArrayList<>();
-       for(ErrorCodeEnum codeEnum: ErrorCodeEnum.values()){
+       for(ErrorCode codeEnum: ErrorCode.values()){
            ApiErrorCode errorCode = new ApiErrorCode();
-           errorCode.setValue(codeEnum.getCode()).setDesc(codeEnum.getDesc());
+           errorCode.setValue(codeEnum.getCode()).setDesc(codeEnum.getMessage());
            errorCodeList.add(errorCode);
        }
        config.setErrorCodes(errorCodeList);

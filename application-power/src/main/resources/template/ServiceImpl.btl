@@ -19,6 +19,7 @@ import com.github.pagehelper.PageSerializable;
 <%if(add||query||delete||update){ %>
 import com.power.common.model.CommonResult;
 <%}%>
+import ${basePackage}.enums.ErrorCode;
 import ${basePackage}.model.${entitySimpleName};
 import ${basePackage}.dao.${entitySimpleName}Dao;
 import ${basePackage}.service.${entitySimpleName}Service;
@@ -40,70 +41,61 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
 
 	@Override
 	public CommonResult save(${entitySimpleName} entity) {
-		CommonResult result = new CommonResult();
         try {
         	${firstLowerName}Dao.save(entity);
-        	result.setSuccess(true);
         } catch (Exception e) {
-        	logger.error("${entitySimpleName}Service添加数据异常：",e);
+        	logger.error("${entitySimpleName}Service添加数据异常：", e);
         	//抛出异常方便事务管理，并且会被RestExceptionHandler自动处理
         	throw new RuntimeException("添加数据失败");
         }
-        return result;
+        return CommonResult.ok(ErrorCode.SUCCESS);
 	}
     <%}%>
     <%if(update){ %>
 
 	@Override
 	public CommonResult update(${entitySimpleName} entity) {
-		CommonResult result = new CommonResult();
         try {
             ${firstLowerName}Dao.update(entity);
-            result.setSuccess(true);
         } catch (Exception e) {
-            logger.error("${entitySimpleName}Service修改数据异常：",e);
+            logger.error("${entitySimpleName}Service修改数据异常：", e);
             throw new RuntimeException("修改数据失败");
         }
-        return result;
+        return CommonResult.ok(ErrorCode.SUCCESS);
 	}
 	<%}%>
     <%if(delete){ %>
 
 	@Override
 	public CommonResult delete(int id) {
-		CommonResult result = new CommonResult();
         try {
             ${firstLowerName}Dao.delete(id);
-            result.setSuccess(true);
         } catch (Exception e) {
-            logger.error("${entitySimpleName}Service删除数据异常：",e);
+            logger.error("${entitySimpleName}Service删除数据异常：", e);
             throw new RuntimeException("删除数据异常");
         }
-        return result;
+        return CommonResult.ok(ErrorCode.SUCCESS);
 	}
 	<%}%>
     <%if(query){ %>
 
 	@Override
 	public CommonResult queryById(int id) {
-	    CommonResult result = new CommonResult();
 	    ${entitySimpleName} entity = ${firstLowerName}Dao.queryById(id);
 	    if (null != entity) {
 	        //成功返回数据
-        	result.setData(entity);
-        	result.setSuccess(true);
+        	return CommonResult.ok(ErrorCode.SUCCESS).setResult(entity);
         } else {
-        	result.setMessage("没有找到匹配数据");
-        	logger.info("${entitySimpleName}Service未查询到数据，编号：{}",id);
+        	logger.info("${entitySimpleName}Service未查询到数据，编号：{}", id);
+        	return CommonResult.fail(ErrorCode.UNKNOWN_ERROR);
         }
-        return result;
 	}
 	<%}%>
     <%if(page){ %>
 
 	@Override
     public PageSerializable queryPage(int offset, int limit) {
-        PageHelper.offsetPage(offset,limit);
+        PageHelper.offsetPage(offset, limit);
         List<${entitySimpleName}> list = ${firstLowerName}Dao.queryPage();
         return new PageSerializable(list);
     }
