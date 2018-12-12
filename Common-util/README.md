@@ -68,3 +68,13 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 	1. 更新RandomUtil中随机数生成 。
 	2. 添加UUIDUtil工具类。
 	3. ValidateUtil中增加HH:mm:ss格式验证。
+#### 版本号：1.5
+- 更新日期：2018-11-29
+- 更新内容：
+	1. 优化AES加密工具 。
+#### 版本号：1.6
+- 更新日期：2018-12-11
+- 更新内容：
+	1. 更新RandomUtil随机生成字符串的localDate和localDateTime来支持smart-doc。
+
+	

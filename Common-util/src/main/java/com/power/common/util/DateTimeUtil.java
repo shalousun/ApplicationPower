@@ -42,6 +42,15 @@ public class DateTimeUtil {
     }
 
     /**
+     * now timestamp
+     *
+     * @return
+     */
+    public static String nowStrTime() {
+        return long2Str(System.currentTimeMillis(), DATE_FORMAT_SECOND);
+    }
+
+    /**
      *
      * @param date
      * @param format

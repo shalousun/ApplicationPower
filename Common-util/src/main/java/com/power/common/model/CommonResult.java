@@ -1,5 +1,9 @@
 package com.power.common.model;
 
+import com.power.common.constants.BaseErrorCode;
+import com.power.common.inferfaces.IMessage;
+import com.power.common.util.DateTimeUtil;
+
 import java.io.Serializable;
 
 /**
@@ -7,37 +11,13 @@ import java.io.Serializable;
  *
  * @author sunyu
  */
-public class CommonResult<T> implements Serializable {
+public class CommonResult<T> extends BaseResult implements Serializable {
 
     /**
      * serialVersionUID:.
      */
     private static final long serialVersionUID = -7268040542410707954L;
 
-    /**
-     * 是否成功
-     */
-    private boolean success = false;
-
-    /**
-     * 响应信息
-     */
-    private String message;
-
-    /**
-     * 响应数据
-     */
-    private T data;
-
-    /**
-     * 错误代码
-     */
-    private String code;
-
-    /**
-     * 响应时间
-     */
-    private String timestamp;
 
     /**
      * 默认构造器
@@ -51,15 +31,15 @@ public class CommonResult<T> implements Serializable {
      * @param message 返回的消息
      */
     public CommonResult(boolean success, String message) {
-        this.success = success;
-        this.message = message;
+        this.setSuccess(success);
+        this.setMessage(message);
     }
 
     /**
      * @param success 是否成功
      */
     public CommonResult(boolean success) {
-        this.success = success;
+        this.setSuccess(success);
     }
 
     /**
@@ -67,8 +47,8 @@ public class CommonResult<T> implements Serializable {
      * @param message success or error messages
      */
     public CommonResult(String code, String message) {
-        this.code = code;
-        this.message = message;
+        this.setCode(code);
+        this.setMessage(message);
     }
 
     /**
@@ -77,48 +57,81 @@ public class CommonResult<T> implements Serializable {
      * @param data    数据
      */
     public CommonResult(boolean success, String message, T data) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
+        this.setSuccess(success);
+        this.setMessage(message);
+        this.setData(data);
     }
 
-    public boolean isSuccess() {
-        return success;
+    /**
+     * Usage:
+     * Result.ok().setResult("hello")
+     * 返回结果时携带数据
+     * @param data
+     * @return
+     */
+    public CommonResult<T> setResult(T data) {
+        this.setData(data);
+        return this;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    /**
+     * 通用成功响应(默认响应码为0000)
+     *
+     * @return
+     */
+    public static CommonResult ok() {
+        return ok(BaseErrorCode.common.SUCCESS);
     }
 
-    public String getMessage() {
-        return message;
+    /**
+     * 自动义成功响应，一般定义枚举实现IMessage
+     * @param msg
+     * @param <T>
+     * @return
+     */
+    public static <T> CommonResult<T> ok(IMessage msg) {
+        return baseCreate(msg.getCode(), msg.getMessage(), true);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    /**
+     * 通用服务器未知异常(默认响应码9999)
+     *
+     * @return
+     */
+    public static CommonResult fail() {
+        return fail(BaseErrorCode.common.UNKNOWN_ERROR);
     }
 
-    public T getData() {
-        return data;
+    /**
+     * 失败响应
+     *
+     * @param message IMessage
+     * @return
+     */
+    public static CommonResult fail(IMessage message) {
+        return fail(message.getCode(), message.getMessage());
     }
 
-    public void setData(T data) {
-        this.data = data;
+    /**
+     * 失败或失败响应
+     *
+     * @param code 错误响应码
+     * @param msg  错误信息
+     * @return
+     */
+    public static CommonResult fail(String code, String msg) {
+        return baseCreate(code, msg, false);
     }
 
-    public String getCode() {
-        return code;
+
+    private static <T> CommonResult<T> baseCreate(String code, String msg, boolean success) {
+        CommonResult result = new CommonResult();
+        result.setCode(code);
+        result.setSuccess(success);
+        result.setMessage(msg);
+        result.setTimestamp(DateTimeUtil.nowStrTime());
+        return result;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
 }
