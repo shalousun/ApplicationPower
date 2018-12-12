@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Description:
+ *
  * Http请求工具类
  *
  * @author yu 2018/06/19.
@@ -267,9 +267,8 @@ public class OkHttp3Util {
             Response response = call.execute();
             return response.body().string();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Can't connect server",e);
         }
-        return null;
     }
 
     private static Headers setHeaders(Map<String, String> headersParams) {

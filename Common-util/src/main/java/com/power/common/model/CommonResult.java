@@ -80,7 +80,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @return
      */
     public static CommonResult ok() {
-        return ok(BaseErrorCode.common.SUCCESS);
+        return ok(BaseErrorCode.Common.SUCCESS);
     }
 
     /**
@@ -99,7 +99,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @return
      */
     public static CommonResult fail() {
-        return fail(BaseErrorCode.common.UNKNOWN_ERROR);
+        return fail(BaseErrorCode.Common.UNKNOWN_ERROR);
     }
 
     /**

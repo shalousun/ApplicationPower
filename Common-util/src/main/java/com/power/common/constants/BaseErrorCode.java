@@ -7,7 +7,7 @@ import com.power.common.inferfaces.IMessage;
  */
 public interface BaseErrorCode {
 
-    enum common implements IMessage {
+    enum Common implements IMessage {
 
         SUCCESS("0000", "succeed"),
 
@@ -21,7 +21,7 @@ public interface BaseErrorCode {
         private String message;
 
 
-        common(String errCode, String errMsg) {
+        Common(String errCode, String errMsg) {
             this.code = errCode;
             this.message = errMsg;
         }
