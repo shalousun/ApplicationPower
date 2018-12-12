@@ -1,6 +1,6 @@
 package com.power.common.constants;
 
-import com.power.common.inferfaces.IMessage;
+import com.power.common.interfaces.IMessage;
 
 /**
  * @author yu 2018/11/30.

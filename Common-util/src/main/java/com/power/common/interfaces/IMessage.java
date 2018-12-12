@@ -1,4 +1,4 @@
-package com.power.common.inferfaces;
+package com.power.common.interfaces;
 
 /**
  * @author yu 2018/12/12.

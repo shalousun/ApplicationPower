@@ -1,7 +1,7 @@
 package com.power.common.model;
 
 import com.power.common.constants.BaseErrorCode;
-import com.power.common.inferfaces.IMessage;
+import com.power.common.interfaces.IMessage;
 import com.power.common.util.DateTimeUtil;
 
 import java.io.Serializable;

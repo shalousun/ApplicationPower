@@ -76,5 +76,8 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 - 更新日期：2018-12-11
 - 更新内容：
 	1. 更新RandomUtil随机生成字符串的localDate和localDateTime来支持smart-doc。
-
+#### 版本号：1.7
+- 更新日期：2018-12-13
+- 更新内容：
+	1. 改common-util模块CommonResult【兼容旧版本】，增加常用静态方法方便快速编码
 	

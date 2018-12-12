@@ -279,11 +279,17 @@ application-power整合的springboot打包后的结构参考
 #### 版本号：1.8.0
 - 更新日期：2018-11-24
 - 更新内容：
-	1. 介于gradle构建的代码生成新增快速部署打包功能，类似于maven项目的assembly
+	1. 基于gradle构建的代码生成新增快速部署打包功能，类似于maven项目的assembly
 	2. 优化stop.sh脚本提高兼容性。
 	3. 优化mybatis mapper.xml文件中sql生成，自动识别表主键字段
 	4. 升级gradle项目构建模板中的jar包依赖版本
 	5. 优化项目采用驼峰书写是docker镜像tag错误无法构建镜像的bug[自动作小写转换]
+#### 版本号：1.8.1
+- 更新日期：2018-12-13
+- 更新内容：
+	1. 修改common-util模块CommonResult【兼容旧版本】，增加常用静态方法方便快速编码
+	2. 优化代码生成的service模板，减少重复代码，该优化依赖common-util 1.7版本
+	3. 代码生成删除ResultUtil,目前由CommonResult接管
 
 	
 
