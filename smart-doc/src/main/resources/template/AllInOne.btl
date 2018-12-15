@@ -1,3 +1,10 @@
+
+<%
+for(revisionLog in revisionLogList){
+%>
+${revisionLog.version}|${revisionLog.revisionTime}|${revisionLog.status}|${revisionLog.author}|${revisionLog.remarks}
+<%}%>
+
 <%
 for(api in apiDocList){
 %>

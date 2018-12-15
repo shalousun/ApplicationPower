@@ -43,7 +43,7 @@ public class ApiDocBuilder {
         SourceBuilder sourceBuilder = new SourceBuilder(config);
         List<ApiDoc> apiDocList = sourceBuilder.getControllerApiData();
         if(config.isAllInOne()){
-            buildAllInOne(apiDocList,config.getErrorCodes(),config.getOutPath());
+            buildAllInOne(apiDocList,config);
         }else{
             buildApiDoc(apiDocList, config.getOutPath());
             buildErrorCodeDoc(config.getErrorCodes(), config.getOutPath());
@@ -87,14 +87,14 @@ public class ApiDocBuilder {
     /**
      * 合并所有接口文档到一个文档中
      * @param apiDocList
-     * @param errorCodeList
-     * @param outPath
      */
-    private static void buildAllInOne(List<ApiDoc> apiDocList, List<ApiErrorCode> errorCodeList, String outPath) {
+    private static void buildAllInOne(List<ApiDoc> apiDocList,ApiConfig config) {
+        String outPath = config.getOutPath();
         FileUtil.mkdirs(outPath);
         Template tpl = BeetlTemplateUtil.getByName("AllInOne.btl");
         tpl.binding("apiDocList", apiDocList);
-        tpl.binding("errorCodeList", errorCodeList);
+        tpl.binding("errorCodeList", config.getErrorCodes());
+        tpl.binding("revisionLogList", config.getRevisionLogs());
         String version = DateTimeUtil.long2Str(System.currentTimeMillis(),"yyyyMMddHHmm");
         FileUtil.nioWriteFile(tpl.render(), outPath + FILE_SEPARATOR +  "AllInOne-V"+version+".md");
     }

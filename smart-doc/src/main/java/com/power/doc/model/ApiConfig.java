@@ -60,6 +60,11 @@ public class ApiConfig {
      */
     private String packageFilters;
 
+    /**
+     * 接口变更日志
+     */
+    private List<RevisionLog> revisionLogs;
+
     public String getServerUrl() {
         return serverUrl;
     }
@@ -132,4 +137,13 @@ public class ApiConfig {
     public void setPackageFilters(String packageFilters) {
         this.packageFilters = packageFilters;
     }
+
+    public void setRevisionLogs(RevisionLog... revisionLogs){
+        this.revisionLogs = CollectionUtil.asList(revisionLogs);
+    }
+
+    public List<RevisionLog> getRevisionLogs() {
+        return revisionLogs;
+    }
+
 }
