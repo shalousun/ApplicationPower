@@ -33,11 +33,11 @@ public class ApiDocTest {
         config.setServerUrl("http://localhost:8080");
         //config.setStrict(true);
 
-     //   config.setAllInOne(true);
+        config.setAllInOne(true);
         config.setOutPath("d:\\md2");
         //不指定SourcePaths默认加载代码为项目src/main/java下的
         config.setSourcePaths(
-                //SourcePath.path().setDesc("本项目代码").setPath("src/test/java"),
+                //SourcePath.path().setDesc("本项目代码").setPath("src/test/java")
                 SourcePath.path().setPath("F:\\Personal\\project\\smart\\src\\main\\java")
                 //SourcePath.path().setDesc("加载项目外代码").setPath("E:\\ApplicationPower\\ApplicationPower\\Common-util\\src\\main\\java")
         );
@@ -56,8 +56,11 @@ public class ApiDocTest {
                 //.setDesc("响应代码")
         );*/
 
-        config.setRevisionLogs(RevisionLog.getLog().setRevisionTime("2018/12/15").setAuthor("chen").setRemarks("测试").setStatus("创建").setVersion("V1.0"),
-                RevisionLog.getLog().setRevisionTime("2018/12/16").setAuthor("chen2").setRemarks("测试2").setStatus("修改").setVersion("V2.0"));
+        //非必须只有当setAllInOne设置为true时文档变更记录才生效，https://gitee.com/sunyurepository/ApplicationPower/issues/IPS4O
+        config.setRevisionLogs(
+                RevisionLog.getLog().setRevisionTime("2018/12/15").setAuthor("chen").setRemarks("测试").setStatus("创建").setVersion("V1.0"),
+                RevisionLog.getLog().setRevisionTime("2018/12/16").setAuthor("chen2").setRemarks("测试2").setStatus("修改").setVersion("V2.0")
+        );
 
         long start = System.currentTimeMillis();
         ApiDocBuilder.builderControllersApi(config);
