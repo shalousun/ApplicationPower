@@ -3,6 +3,7 @@ package com.power.doc.builder;
 import com.power.common.util.CollectionUtil;
 import com.power.common.util.JsonFormatUtil;
 import com.power.common.util.StringUtil;
+import com.power.doc.constants.GlobalConstants;
 import com.power.doc.model.*;
 import com.power.doc.utils.DocClassUtil;
 import com.power.doc.utils.DocUtil;
@@ -46,7 +47,6 @@ public class SourceBuilder {
     private static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
 
     private static final String MAP_CLASS = "java.util.Map";
-
 
 
     public Map<String, JavaClass> javaFilesMap = new HashMap<>();
@@ -137,19 +137,18 @@ public class SourceBuilder {
      * @param cls
      * @return
      */
-    private int checkController(JavaClass cls) {
-        int counter = 0;
+    private boolean checkController(JavaClass cls) {
         List<JavaAnnotation> classAnnotations = cls.getAnnotations();
         for (JavaAnnotation annotation : classAnnotations) {
             String annotationName = annotation.getType().getName();
-            if ("Controller".equals(annotationName)  || "RestController".equals(annotationName)
-                    || "org.springframework.web.bind.annotation.RestController".equals(annotationName)
-                    || "org.springframework.stereotype.Controller".equals(annotationName)
-            ) {
-                counter++;
+            if ("Controller".equals(annotationName) || "RestController".equals(annotationName)
+                    || GlobalConstants.REST_CONTROLLER_FULLY.equals(annotationName)
+                    || GlobalConstants.CONTROLLER_FULLY.equals(annotationName)
+                    ) {
+                return true;
             }
         }
-        return counter;
+        return false;
     }
 
     /**
@@ -172,8 +171,7 @@ public class SourceBuilder {
     public List<ApiDoc> getControllerApiData() {
         List<ApiDoc> apiDocList = new ArrayList<>();
         for (JavaClass cls : javaClasses) {
-            int counter = checkController(cls);
-            if (counter > 0) {
+            if (checkController(cls)) {
                 String controllerName = cls.getName();
                 if (StringUtil.isNotEmpty(packageMatch)) {
                     if (DocUtil.isMatch(packageMatch, cls.getCanonicalName())) {
@@ -209,8 +207,7 @@ public class SourceBuilder {
             throw new RuntimeException("Unable to find " + controller + " in your project");
         }
         JavaClass cls = builder.getClassByName(controller);
-        int counter = checkController(cls);
-        if (counter > 0) {
+        if (checkController(cls)) {
             String controllerName = cls.getName();
             List<ApiMethodDoc> apiMethodDocs = buildControllerMethod(cls);
             ApiDoc apiDoc = new ApiDoc();
@@ -256,11 +253,11 @@ public class SourceBuilder {
                         methodType = annotation.getNamedParameter("method").toString();
                         if ("RequestMethod.POST".equals(methodType)) {
                             methodType = "POST";
-                        } else if ("RequestMethod.GET".equals(methodType)){
+                        } else if ("RequestMethod.GET".equals(methodType)) {
                             methodType = "GET";
-                        } else if("RequestMethod.PUT".equals(methodType)){
+                        } else if ("RequestMethod.PUT".equals(methodType)) {
                             methodType = "PUT";
-                        } else if("RequestMethod.DELETE".equals(methodType)){
+                        } else if ("RequestMethod.DELETE".equals(methodType)) {
                             methodType = "DELETE";
                         } else {
                             methodType = "GET";
@@ -293,7 +290,7 @@ public class SourceBuilder {
                     }
                     methodType = "PUT";
                     methodCounter++;
-                } else if (DELETE_MAPPING.equals(annotationName) ||DELETE_MAPPING_FULLY.equals(annotationName)){
+                } else if (DELETE_MAPPING.equals(annotationName) || DELETE_MAPPING_FULLY.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
                         url = "/";
                     } else {
@@ -450,7 +447,7 @@ public class SourceBuilder {
                     List<JavaAnnotation> javaAnnotations = field.getAnnotations();
 
                     List<DocletTag> paramTags = field.getTags();
-                    if(!isResp){
+                    if (!isResp) {
                         pre:
                         for (DocletTag docletTag : paramTags) {
                             if (DocClassUtil.isIgnoreTag(docletTag.getName())) {
@@ -739,7 +736,7 @@ public class SourceBuilder {
                 String fieldName = field.getName();
                 if (!"serialVersionUID".equals(fieldName)) {
                     List<DocletTag> paramTags = field.getTags();
-                    if(!isResp){
+                    if (!isResp) {
                         pre:
                         for (DocletTag docletTag : paramTags) {
                             if (DocClassUtil.isIgnoreTag(docletTag.getName())) {
@@ -910,7 +907,7 @@ public class SourceBuilder {
                 int requestBodyCounter = 0;
                 for (JavaAnnotation annotation : annotations) {
                     String annotationName = annotation.getType().getSimpleName();
-                    if (REQUEST_BODY.equals(annotationName)||REQUEST_BODY_FULLY.equals(annotationName)) {
+                    if (REQUEST_BODY.equals(annotationName) || REQUEST_BODY_FULLY.equals(annotationName)) {
                         requestBodyCounter++;
                         apiMethodDoc.setContentType(JSON_CONTENT_TYPE);
                         if (DocClassUtil.isPrimitive(simpleTypeName)) {
