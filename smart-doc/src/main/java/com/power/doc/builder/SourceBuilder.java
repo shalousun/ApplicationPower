@@ -19,13 +19,23 @@ public class SourceBuilder {
 
     private static final String GET_MAPPING = "GetMapping";
 
+    private static final String GET_MAPPING_FULLY = "org.springframework.web.bind.annotation.GetMapping";
+
     private static final String POST_MAPPING = "PostMapping";
+
+    private static final String POST_MAPPING_FULLY = "org.springframework.web.bind.annotation.PostMapping";
 
     private static final String PUT_MAPPING = "PutMapping";
 
+    private static final String PUT_MAPPING_FULLY = "org.springframework.web.bind.annotation.PutMapping";
+
     private static final String DELETE_MAPPING = "DeleteMapping";
 
+    private static final String DELETE_MAPPING_FULLY = "org.springframework.web.bind.annotation.DeleteMapping";
+
     private static final String REQUEST_MAPPING = "RequestMapping";
+
+    private static final String REQUEST_MAPPING_FULLY = "org.springframework.web.bind.annotation.RequestMapping";
 
     private static final String REQUEST_BODY = "RequestBody";
 
@@ -36,6 +46,8 @@ public class SourceBuilder {
     private static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
 
     private static final String MAP_CLASS = "java.util.Map";
+
+
 
     public Map<String, JavaClass> javaFilesMap = new HashMap<>();
 
@@ -94,7 +106,7 @@ public class SourceBuilder {
     /**
      * 加载项目的源代码
      *
-     * @param path
+     * @param paths
      */
     private void loadJavaFiles(List<SourcePath> paths) {
         JavaProjectBuilder builder = new JavaProjectBuilder();
@@ -130,7 +142,10 @@ public class SourceBuilder {
         List<JavaAnnotation> classAnnotations = cls.getAnnotations();
         for (JavaAnnotation annotation : classAnnotations) {
             String annotationName = annotation.getType().getName();
-            if ("Controller".equals(annotationName) || "RestController".equals(annotationName)) {
+            if ("Controller".equals(annotationName)  || "RestController".equals(annotationName)
+                    || "org.springframework.web.bind.annotation.RestController".equals(annotationName)
+                    || "org.springframework.stereotype.Controller".equals(annotationName)
+            ) {
                 counter++;
             }
         }
@@ -212,7 +227,7 @@ public class SourceBuilder {
         String baseUrl = null;
         for (JavaAnnotation annotation : classAnnotations) {
             String annotationName = annotation.getType().getName();
-            if (REQUEST_MAPPING.equals(annotationName)) {
+            if (REQUEST_MAPPING.equals(annotationName) || REQUEST_MAPPING_FULLY.equals(annotationName)) {
                 baseUrl = annotation.getNamedParameter("value").toString();
                 baseUrl = baseUrl.replaceAll("\"", "");
             }
@@ -231,7 +246,7 @@ public class SourceBuilder {
             int methodCounter = 0;
             for (JavaAnnotation annotation : annotations) {
                 String annotationName = annotation.getType().getName();
-                if (REQUEST_MAPPING.equals(annotationName)) {
+                if (REQUEST_MAPPING.equals(annotationName) || REQUEST_MAPPING_FULLY.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
                         url = "/";
                     } else {
@@ -254,7 +269,7 @@ public class SourceBuilder {
                         methodType = "GET";
                     }
                     methodCounter++;
-                } else if (GET_MAPPING.equals(annotationName)) {
+                } else if (GET_MAPPING.equals(annotationName) || GET_MAPPING_FULLY.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
                         url = "/";
                     } else {
@@ -262,7 +277,7 @@ public class SourceBuilder {
                     }
                     methodType = "GET";
                     methodCounter++;
-                } else if (POST_MAPPING.equals(annotationName)) {
+                } else if (POST_MAPPING.equals(annotationName) || POST_MAPPING_FULLY.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
                         url = "/";
                     } else {
@@ -270,7 +285,7 @@ public class SourceBuilder {
                     }
                     methodType = "POST";
                     methodCounter++;
-                } else if (PUT_MAPPING.equals(annotationName)) {
+                } else if (PUT_MAPPING.equals(annotationName) || PUT_MAPPING_FULLY.equals(annotationName)) {
                     if (null == annotation.getNamedParameter("value")) {
                         url = "/";
                     } else {
@@ -278,7 +293,7 @@ public class SourceBuilder {
                     }
                     methodType = "PUT";
                     methodCounter++;
-                } else if (DELETE_MAPPING.equals(annotationName)){
+                } else if (DELETE_MAPPING.equals(annotationName) ||DELETE_MAPPING_FULLY.equals(annotationName)){
                     if (null == annotation.getNamedParameter("value")) {
                         url = "/";
                     } else {
