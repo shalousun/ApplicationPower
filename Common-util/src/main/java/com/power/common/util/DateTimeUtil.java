@@ -5,13 +5,19 @@ package com.power.common.util;
  */
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class DateTimeUtil {
+
+    private static final ConcurrentMap<String, DateTimeFormatter> FORMATTER_CACHE = new ConcurrentHashMap<>();
+
+    private static final int PATTERN_CACHE_SIZE = 500;
 
     private final static String[] WEEK_ARR = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 
@@ -58,13 +64,7 @@ public class DateTimeUtil {
      * @return
      */
     public static String dateToStr(Date date,String format,Locale locale){
-        SimpleDateFormat dateFormat = null;
-        if(null != locale){
-            dateFormat = new SimpleDateFormat(format,locale);
-        } else{
-            dateFormat = new SimpleDateFormat(format);
-        }
-        return dateFormat.format(date);
+        return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), format);
     }
 
     /**
@@ -75,8 +75,8 @@ public class DateTimeUtil {
      * @return String
      */
     public static String sqlDateToStr(java.sql.Date date, String format) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-        return dateFormat.format(date);
+
+        return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), format);
     }
 
 
@@ -88,13 +88,10 @@ public class DateTimeUtil {
      * @return Date
      */
     public static Date strToDate(String sDate, String format) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-        try {
-            return simpleDateFormat.parse(sDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
+        LocalDate localDate = parseLocalDate(sDate, format);
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zdt = localDate.atStartOfDay(zoneId);
+        return Date.from(zdt.toInstant());
     }
 
     /**
@@ -113,7 +110,7 @@ public class DateTimeUtil {
      * @return java.sql.Timestamp
      */
     public static Timestamp strToStamp(String date) {
-        return strToStamp(date, DATE_FORMAT_DAY);
+        return strToStamp(date, DATE_FORMAT_SECOND);
     }
 
     /**
@@ -124,16 +121,8 @@ public class DateTimeUtil {
      * @return Timestamp
      */
     public static Timestamp strToStamp(String date, String format) {
-        Timestamp time = null;
-        if (date != null) {
-            SimpleDateFormat df = new SimpleDateFormat(format);
-            try {
-                time = new Timestamp(df.parse(date).getTime());
-            } catch (Exception e) {
-
-            }
-        }
-        return time;
+        LocalDateTime localDateTime = parseLocalDateTime(date, format);
+        return Timestamp.valueOf(localDateTime);
     }
 
     public static Timestamp getTimestampFromStr(String date) {
@@ -197,8 +186,9 @@ public class DateTimeUtil {
      * @return String
      */
     public static String timestampToString(Timestamp time, String fmt) {
-        SimpleDateFormat df = new SimpleDateFormat(fmt);
-        return df.format(time);
+        DateTimeFormatter dateTimeFormatter = createCacheFormatter(fmt);
+        LocalDateTime dateTime = time.toLocalDateTime();
+        return dateTimeFormatter.format(dateTime);
     }
 
     /**
@@ -418,9 +408,8 @@ public class DateTimeUtil {
      * @return String
      */
     public static String long2Str(long millSec, String format, Locale locale) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
         Date date = new Date(millSec);
-        return sdf.format(date);
+        return dateToStr(date, format);
     }
 
     /**
@@ -431,19 +420,8 @@ public class DateTimeUtil {
      * @return long
      */
     public static long strToLong(String dateFormat, String strDate) {
-        long temp;
-        if (isEmpty(strDate)) {
-            temp = 0;
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-            try {
-                Date date = sdf.parse(strDate);
-                temp = date.getTime();
-            } catch (ParseException e) {
-                temp = 0;
-            }
-        }
-        return temp;
+        LocalDateTime localDateTime = parseLocalDateTime(strDate, dateFormat);
+        return LocalDateTimeToLong(localDateTime);
     }
 
     private static boolean isEmpty(String str) {
@@ -967,5 +945,75 @@ public class DateTimeUtil {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * localDateTime转换为格式化时间
+     *
+     * @param localDateTime localDateTime
+     * @param pattern       格式
+     * @return
+     */
+    public static String format(LocalDateTime localDateTime, String pattern) {
+        DateTimeFormatter formatter = createCacheFormatter(pattern);
+        return localDateTime.format(formatter);
+    }
+
+    /**
+     * 在缓存中创建DateTimeFormatter
+     *
+     * @param pattern 格式
+     * @return
+     */
+    private static DateTimeFormatter createCacheFormatter(String pattern) {
+        if (pattern == null || pattern.length() == 0) {
+            throw new IllegalArgumentException("Invalid pattern specification");
+        }
+        DateTimeFormatter formatter = FORMATTER_CACHE.get(pattern);
+        if (formatter == null) {
+            if (FORMATTER_CACHE.size() < PATTERN_CACHE_SIZE) {
+                formatter = DateTimeFormatter.ofPattern(pattern);
+                DateTimeFormatter oldFormatter = FORMATTER_CACHE.putIfAbsent(pattern, formatter);
+                if (oldFormatter != null) {
+                    formatter = oldFormatter;
+                }
+            }
+        }
+        return formatter;
+    }
+
+    /**
+     * 字符串转化成LocalDate
+     *
+     * @param time    格式化时间
+     * @param pattern 格式
+     * @return
+     */
+    public static LocalDate parseLocalDate(String time, String pattern) {
+        DateTimeFormatter formatter = createCacheFormatter(pattern);
+        return LocalDate.parse(time, formatter);
+    }
+
+    /**
+     * 格式化字符串转为LocalDateTime
+     *
+     * @param time    格式化时间
+     * @param pattern 格式
+     * @return
+     */
+    public static LocalDateTime parseLocalDateTime(String time, String pattern) {
+        DateTimeFormatter formatter = createCacheFormatter(pattern);
+        return LocalDateTime.parse(time, formatter);
+    }
+
+    /**
+     * LocalDateTime 转化成long
+     * @param dateTime LocalDateTime
+     * @return
+     */
+    public static long LocalDateTimeToLong(LocalDateTime dateTime) {
+        Long milliSecond = dateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        return milliSecond;
     }
 }
