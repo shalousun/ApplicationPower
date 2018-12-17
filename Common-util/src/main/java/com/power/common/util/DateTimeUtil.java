@@ -125,16 +125,6 @@ public class DateTimeUtil {
         return Timestamp.valueOf(localDateTime);
     }
 
-    public static Timestamp getTimestampFromStr(String date) {
-        Timestamp time = null;
-        try {
-            time = Timestamp.valueOf(date);
-        } catch (IllegalArgumentException e) {
-
-        }
-        return time;
-    }
-
     /**
      * input began time and end time calculate run time
      *
@@ -953,7 +943,7 @@ public class DateTimeUtil {
      *
      * @param localDateTime localDateTime
      * @param pattern       格式
-     * @return
+     * @return String
      */
     public static String format(LocalDateTime localDateTime, String pattern) {
         DateTimeFormatter formatter = createCacheFormatter(pattern);
@@ -988,7 +978,7 @@ public class DateTimeUtil {
      *
      * @param time    格式化时间
      * @param pattern 格式
-     * @return
+     * @return LocalDate
      */
     public static LocalDate parseLocalDate(String time, String pattern) {
         DateTimeFormatter formatter = createCacheFormatter(pattern);
@@ -1000,7 +990,7 @@ public class DateTimeUtil {
      *
      * @param time    格式化时间
      * @param pattern 格式
-     * @return
+     * @return LocalDateTime
      */
     public static LocalDateTime parseLocalDateTime(String time, String pattern) {
         DateTimeFormatter formatter = createCacheFormatter(pattern);
@@ -1010,7 +1000,7 @@ public class DateTimeUtil {
     /**
      * LocalDateTime 转化成long
      * @param dateTime LocalDateTime
-     * @return
+     * @return long
      */
     public static long LocalDateTimeToLong(LocalDateTime dateTime) {
         Long milliSecond = dateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
