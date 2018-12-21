@@ -80,4 +80,8 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 - 更新日期：2018-12-13
 - 更新内容：
 	1. 改common-util模块CommonResult【兼容旧版本】，增加常用静态方法方便快速编码
-	
+#### 版本号：1.7.1
+- 更新日期：2018-12-21
+- 更新内容：
+	1. 改common-util模块修改ValidateUtil验证工具的邮箱验证，符合RFC 5322邮箱规范
+	2. 改common-util模块修改DateTimeUtil升级使用jdk 8的特性，符合RFC 5322邮箱规范
