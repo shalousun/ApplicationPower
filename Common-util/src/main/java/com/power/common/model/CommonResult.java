@@ -66,8 +66,8 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * Usage:
      * Result.ok().setResult("hello")
      * 返回结果时携带数据
-     * @param data
-     * @return
+     * @param data you return data
+     * @return CommonResult
      */
     public CommonResult<T> setResult(T data) {
         this.setData(data);
@@ -77,7 +77,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     /**
      * 通用成功响应(默认响应码为0000)
      *
-     * @return
+     * @return CommonResult
      */
     public static CommonResult ok() {
         return ok(BaseErrorCode.Common.SUCCESS);
@@ -85,9 +85,9 @@ public class CommonResult<T> extends BaseResult implements Serializable {
 
     /**
      * 自动义成功响应，一般定义枚举实现IMessage
-     * @param msg
-     * @param <T>
-     * @return
+     * @param msg IMessage interface
+     * @param <T> Object
+     * @return CommonResult
      */
     public static <T> CommonResult<T> ok(IMessage msg) {
         return baseCreate(msg.getCode(), msg.getMessage(), true);
@@ -96,7 +96,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     /**
      * 通用服务器未知异常(默认响应码9999)
      *
-     * @return
+     * @return CommonResult
      */
     public static CommonResult fail() {
         return fail(BaseErrorCode.Common.UNKNOWN_ERROR);
@@ -106,7 +106,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * 失败响应
      *
      * @param message IMessage
-     * @return
+     * @return CommonResult
      */
     public static CommonResult fail(IMessage message) {
         return fail(message.getCode(), message.getMessage());
@@ -117,7 +117,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      *
      * @param code 错误响应码
      * @param msg  错误信息
-     * @return
+     * @return CommonResult
      */
     public static CommonResult fail(String code, String msg) {
         return baseCreate(code, msg, false);

@@ -523,7 +523,7 @@ public class StringUtil {
 
 	/**
 	 * convert unicode to string
-	 * @param unicode
+	 * @param unicode unicode character
 	 * @return String
 	 */
 	public static String unicode2String(String unicode) {

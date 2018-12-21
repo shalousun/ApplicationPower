@@ -58,7 +58,7 @@ public class DateTimeUtil {
 
     /**
      * get str now time
-     * @param pattern
+     * @param pattern pattern like yyyy-MM-dd
      * @return String
      */
     public static String nowStrTime(String pattern){
@@ -67,13 +67,13 @@ public class DateTimeUtil {
 
     /**
      * Convert Date to String
-     * @param date
-     * @param format
-     * @param locale
+     * @param date java.util.Date
+     * @param pattern pattern like yyyy-MM-dd
+     * @param locale locale
      * @return String
      */
-    public static String dateToStr(Date date,String format,Locale locale){
-        return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), format);
+    public static String dateToStr(Date date,String pattern,Locale locale){
+        return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), pattern);
     }
 
     /**
