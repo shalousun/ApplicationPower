@@ -11,5 +11,11 @@ public class DateTimeUtilTest {
         System.out.println(DateTimeUtil.getNowTime());
     }
 
+    @Test
+    public void testGetAge(){
+        int age = DateTimeUtil.getAge(System.currentTimeMillis()+100);
+        System.out.println("age: "+age);
+    }
+
 
 }

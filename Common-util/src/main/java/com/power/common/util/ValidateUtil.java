@@ -7,7 +7,7 @@ package com.power.common.util;
  */
 public class ValidateUtil {
 
-    public static final String EMAIL_PATTERN = "\\w+@\\w+\\.(com\\.cn)|\\w+@\\w+\\.(com|cn)";
+    public static final String EMAIL_PATTERN = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     public static final String CHINESE_PATTERN = "^[\u4e00-\u9fa5]{0,}$";
     public static final String NUMBER_ADN_LETTER = "^[A-Za-z0-9]+$";
     public static final String QQ_PATTERN = "/[1-9][0-9]{4,}/";
