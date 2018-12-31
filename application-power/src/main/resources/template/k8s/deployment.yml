@@ -63,6 +63,12 @@ spec:
 #          env:
 #              - name:  your key
 #                value: "your value"
+#              # from configmap
+#              - name: xx-ENV
+#                valueFrom:
+#                  configMapKeyRef:
+#                    name: configmap-meta-name
+#                    key: data-key
           ports:
             - containerPort: 8080
       imagePullSecrets:
