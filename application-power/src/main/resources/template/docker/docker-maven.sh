@@ -9,7 +9,7 @@ source /etc/profile
 
 CUR_PATH=$(cd `dirname $0`;pwd)
 
-DOCKER_REGISTRY=192.168.248.128:8086
+DOCKER_REGISTRY=192.168.248.128
 
 HARBOR_PROJECT=library
 
