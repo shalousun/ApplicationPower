@@ -37,7 +37,7 @@ spring:
 
 mybatis:
   type-aliases-package: ${basePackage}
-  mapper-locations: classpath*:${mappingDir}/mapping/*.xml
+  mapper-locations: classpath*:mappers/*.xml
   configuration:
      log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
      map-underscore-to-camel-case: true

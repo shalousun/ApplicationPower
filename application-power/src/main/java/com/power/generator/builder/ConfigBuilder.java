@@ -183,7 +183,7 @@ public class ConfigBuilder {
                 pathInfo.put(ConstVal.ENTITY_PATH, joinPath(javaDir, packageInfo.get(ConstVal.ENTITY)));
                 mybatisGenPath.put(BuilderCfg.MODEL_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.ENTITY), ConstVal.JAVA_SUFFIX));
             } else if (ConstVal.MAPPER.equals(str)) {
-                packageInfo.put(ConstVal.MAPPER, joinPackage(basePackage, config.getMapper()));
+                packageInfo.put(ConstVal.MAPPER,config.getMapper());
                 pathInfo.put(ConstVal.MAPPER_PATH, joinPath(resourceDir, packageInfo.get(ConstVal.MAPPER)));
                 mybatisGenPath.put(BuilderCfg.MAPPER_BUILDER, joinFinalPath(resourceDir, packageInfo.get(ConstVal.MAPPER), ConstVal.MAPPER_SUBFIX));
             } else if (ConstVal.CONTROLLER.equals(str)) {

@@ -15,7 +15,7 @@ public class PackageConfig {
 
     private String dao = "dao";
 
-    private String mapper = "mapping";
+    private String mapper = "mappers";
 
     private String converter = "convert";
 
