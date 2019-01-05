@@ -20,11 +20,12 @@ public class ControllerBuilder implements IBuilder{
 
 
     @Override
-    public String generateTemplate(TableInfo tableInfo, Map<String, Column> columnMap) {
+    public String generateTemplate(TableInfo tableInfo) {
         String tableTemp = StringUtil.removePrefix(tableInfo.getName(), GeneratorProperties.tablePrefix());
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(tableTemp);//类名
         String firstLowName = StringUtil.firstToLowerCase(entitySimpleName);//类实例变量名
         Template controllerTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_CONTROLLER);
+        controllerTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE,tableInfo.getPrimaryKeyType());
         controllerTemplate.binding(GeneratorConstant.COMMON_VARIABLE);//作者
         controllerTemplate.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         controllerTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名

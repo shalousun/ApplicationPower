@@ -43,7 +43,7 @@ public interface ${entitySimpleName}Service {
 	 * @param id
 	 * @return
      */
-	CommonResult delete(int id);
+	CommonResult delete(${primaryKeyType} id);
     <%}%>
     <%if(query){ %>
 
@@ -52,7 +52,7 @@ public interface ${entitySimpleName}Service {
 	 * @param id
 	 * @return
      */
-	CommonResult queryById(int id);
+	CommonResult queryById(${primaryKeyType} id);
     <%}%>
     <%if(page){ %>
 

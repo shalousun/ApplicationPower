@@ -272,7 +272,9 @@ public class CodeWriter extends AbstractCodeWriter {
         DbProvider dbProvider = new DbProviderFactory().getInstance();
         for (TableInfo tableInfo : tables) {
             String table = tableInfo.getName();
-            Map<String, Column> columnMap = dbProvider.getColumnsInfo(table);
+            tableInfo = dbProvider.getTableInfo(table);
+            tableInfo.setName(table);
+//            Map<String, Column> columnMap = dbProvider.getColumnsInfo(table);
             //实体名需要移除表前缀
             String tableTemp = StringUtil.removePrefix(table, GeneratorProperties.tablePrefix());
             String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);
@@ -285,7 +287,7 @@ public class CodeWriter extends AbstractCodeWriter {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                String template = builder.generateTemplate(tableInfo,columnMap);
+                String template = builder.generateTemplate(tableInfo);
                 FileUtil.writeFileNotAppend(template, String.format(value,entityName));
             }
         }

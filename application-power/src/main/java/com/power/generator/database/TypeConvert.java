@@ -117,4 +117,17 @@ public class TypeConvert {
         }
         return dataType;
     }
+
+    public static String mybatisType(String type){
+        switch (type){
+            case "String":
+                return "string";
+            case "Integer":
+                return  "int";
+            case "Long":
+                return  "long";
+            default:
+               return  "string";
+        }
+    }
 }

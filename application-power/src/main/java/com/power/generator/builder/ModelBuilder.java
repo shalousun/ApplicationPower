@@ -18,10 +18,11 @@ import java.util.*;
 public class ModelBuilder implements IBuilder {
 
     @Override
-    public String generateTemplate(TableInfo tableInfo, Map<String, Column> columnMap) {
+    public String generateTemplate(TableInfo tableInfo) {
         String tableName = tableInfo.getName();
         String tableTemp = StringUtil.removePrefix(tableName, GeneratorProperties.tablePrefix());
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(tableTemp);//类名
+        Map<String, Column> columnMap = tableInfo.getColumnsInfo();
         String fields = generateFields(columnMap);
         String gettersAndSetters = this.generateSetAndGetMethods(columnMap);
         String imports = this.generateImport(columnMap);
@@ -76,7 +77,7 @@ public class ModelBuilder implements IBuilder {
         StringBuilder builder = new StringBuilder();
 
         List<String> list = new ArrayList<>();
-        boolean flag = true;
+        boolean flag = false;
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             String type = entry.getValue().getColumnType();
             if ("BigDecimal".equals(type)) {

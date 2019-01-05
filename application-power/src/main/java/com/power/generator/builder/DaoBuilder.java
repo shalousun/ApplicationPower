@@ -20,11 +20,13 @@ import java.util.Set;
 public class DaoBuilder implements IBuilder {
 
     @Override
-    public String generateTemplate(TableInfo table, Map<String, Column> columnMap) {
+    public String generateTemplate(TableInfo table) {
+        System.out.println("keyType:"+table.getPrimaryKeyType());
         String tableTemp = StringUtil.removePrefix(table.getName(), GeneratorProperties.tablePrefix());
         String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(entityName);//类名
         Template daoTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_DAO);
+        daoTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE,table.getPrimaryKeyType());
         daoTemplate.binding(GeneratorConstant.COMMON_VARIABLE);
         daoTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
         daoTemplate.binding(GeneratorProperties.getGenerateMethods());//过滤方法

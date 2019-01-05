@@ -20,7 +20,7 @@ import java.util.Map;
 public class ServiceTestBuilder implements IBuilder {
 
     @Override
-    public String generateTemplate(TableInfo tableInfo, Map<String, Column> columnMap) {
+    public String generateTemplate(TableInfo tableInfo) {
         String tableTemp = StringUtil.removePrefix(tableInfo.getName(), GeneratorProperties.tablePrefix());
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(tableTemp);//类名
         String firstLowName = StringUtil.firstToLowerCase(entitySimpleName);

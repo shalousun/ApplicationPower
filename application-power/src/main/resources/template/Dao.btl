@@ -52,7 +52,7 @@ public interface ${entitySimpleName}Dao {
 	 * @param id
 	 * @return
      */
-	int delete(int id);
+	int delete(${primaryKeyType} id);
     <%} %>
     <%if(query){ %>
 
@@ -61,7 +61,7 @@ public interface ${entitySimpleName}Dao {
 	 * @param id
 	 * @return
      */
-	${entitySimpleName} queryById(int id);
+	${entitySimpleName} queryById(${primaryKeyType} id);
     <%} %>
     <%if(page){ %>
 

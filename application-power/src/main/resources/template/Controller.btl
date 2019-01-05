@@ -78,7 +78,7 @@ public class ${entitySimpleName}Controller {
 	 * @return
 	 */
 	@GetMapping(value = "/delete/{id}")
-	public CommonResult delete(@PathVariable int id) {
+	public CommonResult delete(@PathVariable ${primaryKeyType} id) {
 		return ${firstLowerName}Service.delete(id);
 	}
     <%}%>
@@ -90,7 +90,7 @@ public class ${entitySimpleName}Controller {
 	 * @return
 	 */
 	@GetMapping(value = "/query/{id}")
-	public CommonResult<${entitySimpleName}> queryById(@PathVariable int id) {
+	public CommonResult<${entitySimpleName}> queryById(@PathVariable ${primaryKeyType} id) {
 		return ${firstLowerName}Service.queryById(id);
 	}
 	<%}%>

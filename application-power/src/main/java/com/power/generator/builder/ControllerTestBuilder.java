@@ -24,7 +24,8 @@ public class ControllerTestBuilder implements IBuilder {
     private static final String controllerTestParams = "params";
 
     @Override
-    public String generateTemplate(TableInfo tableInfo, Map<String, Column> columnMap) {
+    public String generateTemplate(TableInfo tableInfo) {
+        Map<String, Column> columnMap = tableInfo.getColumnsInfo();
         //实体名需要移除表前缀
         String tableTemp = StringUtil.removePrefix(tableInfo.getName(), GeneratorProperties.tablePrefix());
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(tableTemp);//类名

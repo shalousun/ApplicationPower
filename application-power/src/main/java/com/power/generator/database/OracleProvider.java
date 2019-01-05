@@ -18,7 +18,7 @@ public class OracleProvider extends BaseProvider implements DbProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(OracleProvider.class);
 
     @Override
-    public Map<String, Column> getColumnsInfo(String tableName) {
+    public TableInfo getTableInfo(String tableName) {
         String sql = "SELECT COL.table_name, col.column_name, col.data_type, c.comments , CASE uc.constraint_type " +
                 "WHEN 'P' THEN 'yes' ELSE '' END AS \"PRIMARY_KEY\" FROM user_tab_columns col LEFT JOIN " +
                 "user_cons_columns ucc ON ucc.table_name = col.table_name AND ucc.column_name = col.column_name LEFT JOIN " +
@@ -30,7 +30,10 @@ public class OracleProvider extends BaseProvider implements DbProvider {
             sqlBuilder.append(" where col.table_name = '").append(tableName.toUpperCase()).append("'");
         }
         LOGGER.debug("oracle provider sql: {}", sqlBuilder.toString());
-        return getColumnsSchema(sqlBuilder.toString());
+        TableInfo tableInfo = new TableInfo();
+        tableInfo.setColumnsInfo(getColumnsSchema(sqlBuilder.toString()));
+        tableInfo.setPrimaryKeyType("long");
+        return tableInfo;
     }
 
     @Override

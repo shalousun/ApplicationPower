@@ -67,7 +67,7 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
     <%if(delete){ %>
 
 	@Override
-	public CommonResult delete(int id) {
+	public CommonResult delete(${primaryKeyType} id) {
         try {
             ${firstLowerName}Dao.delete(id);
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
     <%if(query){ %>
 
 	@Override
-	public CommonResult queryById(int id) {
+	public CommonResult queryById(${primaryKeyType} id) {
 	    ${entitySimpleName} entity = ${firstLowerName}Dao.queryById(id);
 	    if (null != entity) {
 	        //成功返回数据

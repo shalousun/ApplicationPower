@@ -1,19 +1,18 @@
 package com.power.generator.database;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yu on 2016/12/11.
  */
 public interface DbProvider {
     /**
-     * 根据表名获取列信息
+     * 根据表名获取表信息，包括主键，表全部字段信息
      *
      * @param tableName
      * @return
      */
-    Map<String, Column> getColumnsInfo(String tableName);
+    TableInfo getTableInfo(String tableName);
 
     /**
      * 获取所有表信息

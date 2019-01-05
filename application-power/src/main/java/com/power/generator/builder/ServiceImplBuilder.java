@@ -20,12 +20,13 @@ import java.util.Map;
 public class ServiceImplBuilder implements IBuilder {
 
     @Override
-    public String generateTemplate(TableInfo tableInfo, Map<String, Column> columnMap) {
+    public String generateTemplate(TableInfo tableInfo) {
         String tableTemp = StringUtil.removePrefix(tableInfo.getName(), GeneratorProperties.tablePrefix());
         String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(entityName);//类名
         String firstLowName = StringUtil.firstToLowerCase(entitySimpleName);
         Template serviceImplTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_SERVICEIMPL);
+        serviceImplTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE,tableInfo.getPrimaryKeyType());
         serviceImplTemplate.binding(GeneratorConstant.COMMON_VARIABLE);//作者
         serviceImplTemplate.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         serviceImplTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名

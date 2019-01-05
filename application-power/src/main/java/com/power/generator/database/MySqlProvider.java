@@ -24,8 +24,9 @@ public class MySqlProvider implements DbProvider {
      * @return
      */
     @Override
-    public Map<String, Column> getColumnsInfo(String tableName) {
+    public TableInfo getTableInfo(String tableName) {
         String primaryKey = getPrimaryKeysInfo(tableName);
+        TableInfo tableInfo = new TableInfo();
         Map<String, Column> colMap = new LinkedHashMap<>();
         Connection connection = null;
         try {
@@ -45,19 +46,23 @@ public class MySqlProvider implements DbProvider {
                 column.setColumnType(columnType);
                 column.setRemarks(remarks);
                 if ("YES".equals(isAutoIncrement)) {
+                    tableInfo.setPrimaryKeyIsAutoIncrement(true);
                     column.setAutoIncrement(true);
                 }
                 if (columnName.equals(primaryKey)) {
+                    tableInfo.setPrimaryKey(columnName);
+                    tableInfo.setPrimaryKeyType(columnType);
                     column.setPrimaryKey(true);
                 }
                 colMap.put(columnName, column);
             }
+            tableInfo.setColumnsInfo(colMap);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             DbUtil.close(connection);
         }
-        return colMap;
+        return tableInfo;
     }
 
     /**

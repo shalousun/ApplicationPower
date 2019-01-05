@@ -11,7 +11,7 @@
 
     <!--保存数据selectKey若启用则添加成功后id会自动返回-->
 	<insert id="save" parameterType="${entitySimpleName}">
-	<!-- <selectKey resultType="int" keyProperty="id" order="AFTER">-->
+	<!-- <selectKey resultType="${primaryKeyType}" keyProperty="${primaryKey}" order="AFTER">-->
 		<!--	SELECT LAST_INSERT_ID()-->
 	<!--	 </selectKey>-->
 		${insertSql}
@@ -32,14 +32,14 @@
     <%if(delete){ %>
 
     <!--删除数据-->
-	<delete id="delete" parameterType="int">
-		delete from ${tableName} where id = #{id}
+	<delete id="delete" parameterType="${primaryKeyType}">
+		delete from ${tableName} where ${primaryKey} = #{id}
 	</delete>
     <%}%>
     <%if(query){ %>
 
     <!--根据id返回一条记录-->
-	<select id="queryById" parameterType="int" resultType="${entitySimpleName}">
+	<select id="queryById" parameterType="${primaryKeyType}" resultType="${entitySimpleName}">
 	    ${selectSql}
 		where ${primaryKey} = #{id}
 	</select>

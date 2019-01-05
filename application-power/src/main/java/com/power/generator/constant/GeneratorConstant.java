@@ -118,6 +118,10 @@ public class GeneratorConstant {
     public static final String PRIMARY_KEY = "primaryKey";
 
     /**
+     * 主键类型
+     */
+    public static final String PRIMARY_KEY_TYPE = "primaryKeyType";
+    /**
      * toString方法
      */
     public static final String TO_STRING = "toString";

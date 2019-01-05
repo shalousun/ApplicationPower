@@ -5,6 +5,7 @@ import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.database.Column;
 import com.power.generator.database.TableInfo;
+import com.power.generator.database.TypeConvert;
 import com.power.generator.utils.GeneratorProperties;
 import com.power.generator.utils.BeetlTemplateUtil;
 import org.beetl.core.Template;
@@ -19,11 +20,12 @@ import java.util.Map;
 public class MapperBuilder implements IBuilder {
 
     @Override
-    public String generateTemplate(TableInfo tableInfo, Map<String, Column> columnMap) {
+    public String generateTemplate(TableInfo tableInfo) {
         String tableName = tableInfo.getName();
         String tableTemp = StringUtil.removePrefix(tableName, GeneratorProperties.tablePrefix());
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(tableTemp);//类名
         String firstLowName = StringUtil.firstToLowerCase(entitySimpleName);
+        Map<String, Column> columnMap = tableInfo.getColumnsInfo();
         String insertSql = generateInsertSql(columnMap, tableName);
         String batchInsertSql = generateBatchInsertSql(columnMap, tableName);
         String updateSql = generateConditionUpdateSql(columnMap, tableName);
@@ -31,6 +33,8 @@ public class MapperBuilder implements IBuilder {
         String results = generateResultMap(columnMap);
         String primaryKey = getPrimaryKey(columnMap);
         Template mapper = BeetlTemplateUtil.getByName(ConstVal.TPL_MAPPER);
+        String idType = TypeConvert.mybatisType(tableInfo.getPrimaryKeyType());
+        mapper.binding(GeneratorConstant.PRIMARY_KEY_TYPE,idType);
         mapper.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         mapper.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
         mapper.binding(GeneratorConstant.BASE_PACKAGE, GeneratorProperties.basePackage());//基包名

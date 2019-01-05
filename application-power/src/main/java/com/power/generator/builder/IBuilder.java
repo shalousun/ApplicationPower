@@ -1,9 +1,6 @@
 package com.power.generator.builder;
 
-import com.power.generator.database.Column;
 import com.power.generator.database.TableInfo;
-
-import java.util.Map;
 
 /**
  * builder的公用接口,仅用于有表参与的模板生成
@@ -17,6 +14,6 @@ public interface IBuilder {
      * @param columnMap 表对应的数据列
      * @return
      */
-    String generateTemplate(TableInfo tableInfo, Map<String, Column> columnMap);
+    String generateTemplate(TableInfo tableInfo);
 
 }
