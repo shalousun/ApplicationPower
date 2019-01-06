@@ -5,7 +5,7 @@ common-util是一个和任何模块都无关的模块，common-util模块中主�
 <dependency>
   <groupId>com.github.shalousun</groupId>
   <artifactId>common-util</artifactId>
-  <version>1.4</version>
+  <version>1.7.2</version>
 </dependency>
 ```
 common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、ValidateUtil、IpUtil等。
@@ -85,3 +85,7 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 - 更新内容：
 	1. 改common-util模块修改ValidateUtil验证工具的邮箱验证，符合RFC 5322邮箱规范
 	2. 改common-util模块修改DateTimeUtil升级使用jdk 8的特性，符合RFC 5322邮箱规范
+#### 版本号：1.7.2
+- 更新日期：2019-01-06
+- 更新内容：
+	1. 改common-util的StringUtil添加中横线转驼峰方法

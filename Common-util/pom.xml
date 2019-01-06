@@ -7,7 +7,7 @@
     <groupId>com.github.shalousun</groupId>
     <artifactId>common-util</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.1</version>
+    <version>1.7.2</version>
 
     <name>common-util</name>
     <url>https://github.com/shalousun/ApplicationPower.git</url>
@@ -87,7 +87,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -112,7 +112,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
