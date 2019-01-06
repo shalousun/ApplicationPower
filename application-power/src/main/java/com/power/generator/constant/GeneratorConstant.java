@@ -135,4 +135,9 @@ public class GeneratorConstant {
      * lombok
      */
     public static final String LOMBOK = "lombok";
+
+    /**
+     * SpringBoot启动名
+     */
+    public static final String APP_NAME = "SpringBootApp";
 }

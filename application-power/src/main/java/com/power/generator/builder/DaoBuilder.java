@@ -21,7 +21,6 @@ public class DaoBuilder implements IBuilder {
 
     @Override
     public String generateTemplate(TableInfo table) {
-        System.out.println("keyType:"+table.getPrimaryKeyType());
         String tableTemp = StringUtil.removePrefix(table.getName(), GeneratorProperties.tablePrefix());
         String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(entityName);//类名

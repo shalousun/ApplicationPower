@@ -218,11 +218,14 @@ public class CodeWriter extends AbstractCodeWriter {
     private void writeSpringBootBaseCode(ConfigBuilder config) {
         String basePackage = GeneratorProperties.basePackage();
         writeBaseCode(config,true);
+
+        String appName = StringUtil.firstToUpperCase(StringUtil.hyphenLineToCamel(GeneratorProperties.applicationName()));
         //创建启动的主类
         Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_SPRING_BOOT_MAIN);
         template.binding(GeneratorConstant.COMMON_VARIABLE);
+        template.binding(GeneratorConstant.APP_NAME,appName);
         String basePackagePath = PathUtil.joinPath(config.getProjectPath().getJavaSrcPath(), basePackage);
-        FileUtil.writeFileNotAppend(template.render(), basePackagePath + ConstVal.FILE_SEPARATOR+ "SpringBootMainApplication.java");
+        FileUtil.writeFileNotAppend(template.render(), basePackagePath + ConstVal.FILE_SEPARATOR+ appName+"Application.java");
     }
 
     private void writeDbSourceAndJTACode(ConfigBuilder config, SpringBootProjectConfig projectConfig){
