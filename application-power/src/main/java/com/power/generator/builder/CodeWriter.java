@@ -275,9 +275,10 @@ public class CodeWriter extends AbstractCodeWriter {
         DbProvider dbProvider = new DbProviderFactory().getInstance();
         for (TableInfo tableInfo : tables) {
             String table = tableInfo.getName();
+            String comment = tableInfo.getRemarks();
             tableInfo = dbProvider.getTableInfo(table);
             tableInfo.setName(table);
-//            Map<String, Column> columnMap = dbProvider.getColumnsInfo(table);
+            tableInfo.setRemarks(comment);
             //实体名需要移除表前缀
             String tableTemp = StringUtil.removePrefix(table, GeneratorProperties.tablePrefix());
             String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);

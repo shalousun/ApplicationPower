@@ -122,10 +122,16 @@ public class MySqlProvider implements DbProvider {
             stmt = connection.prepareStatement(sql.toString());
             rs = stmt.executeQuery();
             tableList = new ArrayList<>();
+            String comment;
             while (rs.next()) {
                 tableInfo = new TableInfo();
                 tableInfo.setName(rs.getString("Name"));
-                tableInfo.setRemarks(rs.getString("Comment"));
+                comment = rs.getString("Comment");
+                if(StringUtil.isEmpty(comment)){
+                    tableInfo.setRemarks(rs.getString("Name"));
+                }else {
+                    tableInfo.setRemarks(rs.getString("Name")+"["+comment+"]");
+                }
                 tableList.add(tableInfo);
             }
         } catch (SQLException e) {
