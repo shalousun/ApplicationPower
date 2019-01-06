@@ -26,7 +26,6 @@
     <!--更新数据-->
     <update id="update" parameterType="${entitySimpleName}">
     	${updateSql}
-    	where ${primaryKey} = #{id}
     </update>
     <%}%>
     <%if(delete){ %>

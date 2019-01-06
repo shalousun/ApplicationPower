@@ -93,6 +93,11 @@ public class GeneratorConstant {
     public static final String UPDATE_SQL = "updateSql";
 
     /**
+     * 批量更新语句
+     */
+    public static final String BATCH_UPDATE_SQL = "batchUpdateSql";
+
+    /**
      * 查询语句
      */
     public static final String SELECT_SQL = "selectSql";

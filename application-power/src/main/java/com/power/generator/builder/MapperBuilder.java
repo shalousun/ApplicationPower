@@ -28,8 +28,9 @@ public class MapperBuilder implements IBuilder {
         Map<String, Column> columnMap = tableInfo.getColumnsInfo();
         String insertSql = generateInsertSql(columnMap, tableName);
         String batchInsertSql = generateBatchInsertSql(columnMap, tableName);
-        String updateSql = generateConditionUpdateSql(columnMap, tableName);
-        String selectSql = generateSelectSql(columnMap, tableName);
+        String updateSql = generateConditionUpdateSql(tableInfo);
+        String batchUpdateSql = generateBatchUpdateSql(tableInfo);
+        String selectSql = generateSelectSql(tableInfo);
         String results = generateResultMap(columnMap);
         String primaryKey = getPrimaryKey(columnMap);
         Template mapper = BeetlTemplateUtil.getByName(ConstVal.TPL_MAPPER);
@@ -41,6 +42,7 @@ public class MapperBuilder implements IBuilder {
         mapper.binding(GeneratorConstant.INSERT_SQL, insertSql);
         mapper.binding(GeneratorConstant.BATCH_INSERT_SQL, batchInsertSql);
         mapper.binding(GeneratorConstant.UPDATE_SQL, updateSql);
+       // mapper.binding(GeneratorConstant.BATCH_UPDATE_SQL,batchUpdateSql);
         mapper.binding(GeneratorConstant.SELECT_SQL, selectSql);
         mapper.binding(GeneratorConstant.RESULT_MAP, results);
         mapper.binding(GeneratorConstant.IS_RESULT_MAP, GeneratorProperties.getResultMap());
@@ -172,16 +174,15 @@ public class MapperBuilder implements IBuilder {
     /**
      * 生成update语句,过滤掉自增列,使用trim
      *
-     * @param columnMap
-     * @param tableName
+     * @param tableInfo
      * @return
      */
-    private String generateConditionUpdateSql(Map<String, Column> columnMap, String tableName) {
+    private String generateConditionUpdateSql(TableInfo tableInfo) {
         StringBuilder updateSql = new StringBuilder();
-        updateSql.append("update ").append(tableName).append("\n");
+        updateSql.append("update ").append(tableInfo.getName()).append("\n");
         updateSql.append("\t\t<trim prefix=\"set\" suffixOverrides=\",\">\n");
         Column column;
-        for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
+        for (Map.Entry<String, Column> entry : tableInfo.getColumnsInfo().entrySet()) {
             column = entry.getValue();
             String camelKey = StringUtil.underlineToCamel(entry.getKey());
             if (!column.isPrimaryKey()) {
@@ -190,21 +191,50 @@ public class MapperBuilder implements IBuilder {
                 updateSql.append(StringUtil.underlineToCamel(entry.getKey())).append("},</if>\n");
             }
         }
-        updateSql.append("\t\t</trim>");
+        String pk = tableInfo.getPrimaryKey();
+        String camelPk = StringUtil.underlineToCamel(pk);
+        updateSql.append("\t\t</trim>\n");
+        updateSql.append("\t\twhere ").append(pk).append(" = #{").append(camelPk).append("}");
         return updateSql.toString();
     }
 
     /**
-     * 生成查询语句
-     *
-     * @param columnMap
-     * @param tableName
+     * 批量修改的语句
+     * @param tableInfo
      * @return
      */
-    private String generateSelectSql(Map<String, Column> columnMap, String tableName) {
+    private String generateBatchUpdateSql(TableInfo tableInfo){
+        String primaryKeyName = tableInfo.getPrimaryKey();
+        StringBuilder updateSql = new StringBuilder();
+        updateSql.append("update ").append(tableInfo.getName()).append("\n");
+        updateSql.append("\t\t<trim prefix=\"set\" suffixOverrides=\",\">\n");
+        Column column;
+        for (Map.Entry<String, Column> entry : tableInfo.getColumnsInfo().entrySet()) {
+            column = entry.getValue();
+            String camelKey = StringUtil.underlineToCamel(entry.getKey());
+            if (!column.isPrimaryKey()) {
+                updateSql.append("			").append("<if test=\"").append(camelKey).append("!=null\">");
+                updateSql.append(entry.getKey()).append(" = #{item.");
+                updateSql.append(StringUtil.underlineToCamel(entry.getKey())).append("},</if>\n");
+            }
+        }
+        updateSql.append("\t\t</trim>\n").append("\t\twhere ").append(primaryKeyName).append(" in\n")
+        .append("\t\t<foreach collection=\"list\" item=\"item\" index=\"index\" open=\"(\" close=\")\" separator=\",\">\n")
+                .append("\t\t\t${item.").append(primaryKeyName).append("}\n")
+                .append("\t\t</foreach>");
+        return updateSql.toString();
+    }
+    /**
+     * 生成查询语句
+     *
+     * @param tableInfo
+     * @return
+     */
+    private String generateSelectSql(TableInfo tableInfo) {
         StringBuilder selectSql = new StringBuilder();
         selectSql.append("select \n");
         int i = 0;
+        Map<String,Column> columnMap = tableInfo.getColumnsInfo();
         int size = columnMap.size();
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             if (i < size - 1) {
@@ -214,7 +244,7 @@ public class MapperBuilder implements IBuilder {
             }
             i++;
         }
-        selectSql.append(" 		from ").append(tableName);
+        selectSql.append(" 		from ").append(tableInfo.getName());
         return selectSql.toString();
     }
 
