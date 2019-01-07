@@ -98,6 +98,7 @@ task('package', type: Tar) {
 task buildDocker(type: Docker, dependsOn: build) {
     applicationName = jar.baseName
     dockerfile = file('src/main/docker/Dockerfile')
+    tagVersion = "1.0"
     doFirst {
         copy {
             from jar
