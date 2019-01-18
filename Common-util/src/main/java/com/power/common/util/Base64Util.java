@@ -18,7 +18,7 @@ public class Base64Util {
      * BASE64解密
      *
      * @param encryptedData 已加密的字节数组
-     * @return
+     * @return byte array
      */
     public static byte[] decryptBASE64(byte[] encryptedData) {
         return Base64.getDecoder().decode(encryptedData);
