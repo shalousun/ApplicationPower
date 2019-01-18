@@ -89,3 +89,10 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 - 更新日期：2019-01-06
 - 更新内容：
 	1. 改common-util的StringUtil添加中横线转驼峰方法
+#### 版本号：1.8
+- 更新日期：2019-01-18
+- 更新内容：
+	1. common-util增加Base64工具类
+	2. 优化CollectionUtil工具类
+	3. 添加HexUtil工具类
+	4. 优化DateUtil工具类
