@@ -414,13 +414,18 @@ public class DateTimeUtil {
     /**
      * transfer string to long
      *
-     * @param dateFormat String
-     * @param strDate    String
+
+     * @param strTime    String
+     * @param pattern String
      * @return long
      */
-    public static long strToLong(String dateFormat, String strDate) {
-        LocalDateTime localDateTime = parseLocalDateTime(strDate, dateFormat);
-        return LocalDateTimeToLong(localDateTime);
+    public static long strToLong(String strTime, String pattern) {
+        try{
+            return LocalDateTimeToLong(parseLocalDateTime(strTime, pattern));
+        }catch (Exception e){
+
+        }
+        return localDateToLong(parseLocalDate(strTime, pattern));
     }
 
     private static boolean isEmpty(String str) {
@@ -980,6 +985,15 @@ public class DateTimeUtil {
             }
         }
         return formatter;
+    }
+
+    /**
+     * localDate转时间戳
+     * @param localDate
+     * @return long
+     */
+    public static long localDateToLong(LocalDate localDate){
+        return localDate.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000;
     }
 
     /**
