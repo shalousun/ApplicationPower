@@ -173,7 +173,7 @@ public class AESUtil {
      */
     public static String decodeByCBC(String content, String key, String initVector, String padding) {
         AESUtil.checkParamsOfCBC(content, key, initVector);
-        byte[] decryptFrom = parseHexStr2Byte(content);
+        byte[] decryptFrom = HexUtil.hexStr2ByteArr(content);
         byte[] decryptResult = decryptByCBC(decryptFrom, key.getBytes(), initVector.getBytes(), padding);
         return new String(decryptResult);
     }
@@ -189,7 +189,7 @@ public class AESUtil {
      */
     public static String decodeByCBCBase64(String content, String key, String initVector, String padding) {
         AESUtil.checkParamsOfCBC(content, key, initVector);
-        byte[] decryptFrom = Base64.decodeBase64(content);
+        byte[] decryptFrom = Base64Util.decryptBASE64(content);
         byte[] decryptResult = decryptByCBC(decryptFrom, key.getBytes(), initVector.getBytes(), padding);
         return new String(decryptResult);
     }
@@ -256,7 +256,7 @@ public class AESUtil {
         try {
             byte[] encrypted = encryptByECB(content.getBytes(Charset.DEFAULT_CHARSET), key.getBytes(Charset.DEFAULT_CHARSET), padding);
             //BASE64 is used here as a transcoding function, which can also play a role of 2 times encryption
-            return new Base64().encodeToString(encrypted);
+            return Base64Util.decryptToString(encrypted);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -273,7 +273,7 @@ public class AESUtil {
     public static String decodeByECB(String content, String key) {
         AESUtil.checkContentAndKey(content, key);
         try {
-            byte[] result = decryptByECB(Base64.decodeBase64(content), key.getBytes(Charset.DEFAULT_CHARSET));
+            byte[] result = decryptByECB(Base64Util.decryptBASE64(content), key.getBytes(Charset.DEFAULT_CHARSET));
             return new String(result, Charset.DEFAULT_CHARSET);
         } catch (UnsupportedEncodingException ex) {
             ex.printStackTrace();
@@ -281,43 +281,6 @@ public class AESUtil {
         return null;
     }
 
-
-    /**
-     * 将byte数组转换成16进制
-     *
-     * @param buf byte数组
-     * @return String
-     */
-    public static String parseByte2HexStr(byte buf[]) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < buf.length; i++) {
-            String hex = Integer.toHexString(buf[i] & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
-            }
-            sb.append(hex);
-        }
-        return sb.toString();
-    }
-
-    /**
-     * 将16进制字符串转换为byte数组
-     *
-     * @param hexStr 16进制字符串
-     * @return byte[]
-     */
-    public static byte[] parseHexStr2Byte(String hexStr) {
-        if (hexStr.length() < 1) {
-            return null;
-        }
-        byte[] result = new byte[hexStr.length() >> 1];
-        for (int i = 0; i < hexStr.length() >> 1; i++) {
-            int high = Integer.parseInt(hexStr.substring(i << 1, (i << 1) + 1), 16);
-            int low = Integer.parseInt(hexStr.substring((i << 1) + 1, (i + 1) << 1), 16);
-            result[i] = (byte) ((high << 4) + low);
-        }
-        return result;
-    }
 
     /**
      * ecb加解密
@@ -378,7 +341,7 @@ public class AESUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return base64 ? new String(Base64.encodeBase64(encryptResult)) : parseByte2HexStr(encryptResult);
+        return base64 ? new String(Base64.encodeBase64(encryptResult)) : HexUtil.byteArr2HexStr(encryptResult);
     }
 
     /**
