@@ -6,14 +6,14 @@ package com.power.common.interfaces;
 public interface IMessage {
 
     /**
-     * 响应码
-     * @return
+     * error code
+     * @return String
      */
     String getCode();
 
     /**
-     * 获取响应信息
-     * @return
+     * error message
+     * @return String
      */
     String getMessage();
 }

@@ -81,7 +81,7 @@ public class AESUtil {
      * @param key        加密key
      * @param initVector 初始向量
      * @param padding    填充模式
-     * @return
+     * @return byte array
      */
     public static byte[] encryptByCBC(byte[] content, byte[] key, byte[] initVector, String padding) {
         try {
@@ -109,7 +109,7 @@ public class AESUtil {
      * @param content 待解密字节数组
      * @param key     解密的密匙
      * @param padding 填充模式
-     * @return
+     * @return byte array
      */
     public static byte[] decryptByECB(byte[] content, byte[] key, String padding) {
         try {
@@ -213,7 +213,7 @@ public class AESUtil {
      * @param key        密匙
      * @param initVector 初始向量
      * @param padding    填充模式
-     * @return
+     * @return String
      */
     public static String encodeByCBC(String content, String key, String initVector, String padding) {
         return encodeByCBC(content, key, initVector, padding, false);
@@ -226,7 +226,7 @@ public class AESUtil {
      * @param key        密匙
      * @param initVector 初始向量
      * @param padding    填充模式
-     * @return
+     * @return String
      */
     public static String encodeByCBCBase64(String content, String key, String initVector, String padding) {
         return encodeByCBC(content, key, initVector, padding, true);
@@ -249,7 +249,7 @@ public class AESUtil {
      * @param content 待加密的内容
      * @param key     加密的key
      * @param padding 填充模式
-     * @return
+     * @return String
      */
     public static String encodeByECB(String content, String key, String padding) {
         AESUtil.checkContentAndKey(content, key);
@@ -289,7 +289,7 @@ public class AESUtil {
      * @param key     待解密key
      * @param mode    算法模式(加密或者是解密)
      * @param padding 填充模式
-     * @return
+     * @return byte array
      * @throws GeneralSecurityException
      */
     private static byte[] doFinalECB(byte[] content, byte[] key, int mode, String padding) throws GeneralSecurityException {
@@ -307,7 +307,7 @@ public class AESUtil {
      * @param initVector 加解密向量
      * @param mode       算法模式(加密或者是解密)
      * @param padding    填充模式
-     * @return
+     * @return byte array
      * @throws GeneralSecurityException
      */
     private static byte[] doFinal(byte[] content, byte[] key, byte[] initVector, int mode, String padding)

@@ -988,8 +988,8 @@ public class DateTimeUtil {
     }
 
     /**
-     * localDate转时间戳
-     * @param localDate
+     * convert localDate to long
+     * @param localDate LocalDate
      * @return long
      */
     public static long localDateToLong(LocalDate localDate){

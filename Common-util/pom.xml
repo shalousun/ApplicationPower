@@ -7,7 +7,7 @@
     <groupId>com.github.shalousun</groupId>
     <artifactId>common-util</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.2</version>
+    <version>1.8</version>
 
     <name>common-util</name>
     <url>https://github.com/shalousun/ApplicationPower.git</url>
@@ -47,11 +47,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.8.3</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>

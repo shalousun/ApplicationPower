@@ -69,7 +69,7 @@ public class CollectionUtil {
      * @param stream     Stream
      * @param startIndex (included)
      * @param endIndex   (not included)
-     * @param <T>
+     * @param <T>  type of param
      * @return Stream
      */
     public static <T> Stream<T> slice(Stream<T> stream, int startIndex, int endIndex) {
@@ -86,9 +86,9 @@ public class CollectionUtil {
      * partition list by size
      *
      * @param list List of data
-     * @param size size
-     * @param <T>
-     * @return List<List   <   T>>
+     * @param size page size
+     * @param <T>  type of param
+     * @return List
      */
     public static <T> List<List<T>> partition(List<T> list, final int size) {
         if (list != null && list.size() > 0) {

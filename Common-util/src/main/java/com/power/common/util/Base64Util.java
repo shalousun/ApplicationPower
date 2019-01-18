@@ -67,7 +67,6 @@ public class Base64Util {
      *
      * @param decryptedData 已加密的字节数组
      * @return a byte array
-     * @throws Exception
      */
     public static byte[] encryptBASE64(byte[] decryptedData) {
         return Base64.getEncoder().encode(decryptedData);
