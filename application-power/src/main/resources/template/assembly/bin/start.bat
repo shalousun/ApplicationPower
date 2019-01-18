@@ -9,6 +9,10 @@ setlocal enabledelayedexpansion
 
 set APP_NAME=${appName}.jar
 
+set CURRENT_PATH=%cd%
+
+echo INFO: Working space is %CURRENT_PATH%
+
 set SPRING_CONFIG_LOCATION=../config/application.yml
 
 set LOG_IMPL=log4j2.xml
@@ -35,7 +39,7 @@ set final_config_location=!config_location:\=/!
 echo INFO: loaded config files %final_config_location%
 set CONFIG= -Dlogging.path=%log_dir% -Dlogging.config=%conf_dir%/%LOG_IMPL% -Dspring.config.location=%SPRING_CONFIG_LOCATION%,"%final_config_location%"
 ::----------------------------------------------------------------------
-:: set jvm  -Xms、-Xmx、-Xss.
+:: set jvm  -Xms -Xmx -Xss.
 :: Usage:set JAVA_OPTS=-server -Xms512M -Xmx512M -Xss256K -Djava.awt.headless=true -Dfile.encoding=utf-8 -XX:PermSize=64M -XX:MaxPermSize=128m
 ::----------------------------------------------------------------------
 set JVM_OPTS=-server -Xms512m -Xmx512m
