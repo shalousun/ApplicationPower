@@ -14,32 +14,24 @@ public class CollectionUtil {
     /**
      * isNotEmpty:(检查集合是否为空，不为空返回true)
      *
-     * @param <T> type of param
-     * @param c   collection
+     * @param <T>        type of param
+     * @param collection collection
      * @return boolean
      */
-    public static <T> boolean isNotEmpty(Collection<T> c) {
-        if (c != null && c.size() != 0) {
-            return true;
-        } else {
-            return false;
-        }
+    public static <T> boolean isNotEmpty(Collection<T> collection) {
+        return !isEmpty(collection);
     }
 
 
     /**
      * checkEmpty:(检查集合是否为空，为空返回true)
      *
-     * @param <T> type of param
-     * @param c   collection
+     * @param <T>        type of param
+     * @param collection collection
      * @return boolean
      */
-    public static <T> boolean isEmpty(Collection<T> c) {
-        if (c == null || c.size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+    public static <T> boolean isEmpty(Collection<T> collection) {
+        return null == collection || collection.isEmpty();
     }
 
     /**
@@ -69,7 +61,7 @@ public class CollectionUtil {
      * @param stream     Stream
      * @param startIndex (included)
      * @param endIndex   (not included)
-     * @param <T>  type of param
+     * @param <T>        type of param
      * @return Stream
      */
     public static <T> Stream<T> slice(Stream<T> stream, int startIndex, int endIndex) {
