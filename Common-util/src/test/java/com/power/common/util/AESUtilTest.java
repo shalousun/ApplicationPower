@@ -66,9 +66,12 @@ public class AESUtilTest {
     @Test
     public void testDecryptByECB() {
 
-        byte[] key = Base64.decodeBase64("T2+PfV1qoSpkSUI6Yu1ZsQ==");
+        //base 64加密后的key
+        String base64Key = Base64Util.encryptToString(KEY);
 
-        byte[] content = Base64.encodeBase64("hello".getBytes());
+        byte[] key = Base64Util.decryptBASE64(base64Key);
+
+        byte[] content = "hello".getBytes();
 
         //加密
         byte[] encodeResult = AESUtil.encryptByECB(content, key);
@@ -76,6 +79,6 @@ public class AESUtilTest {
         //解密
         byte[] result = AESUtil.decryptByECB(encodeResult, key);
 
-        System.out.println(new String(Base64.decodeBase64(result)));
+        System.out.println(new String(result));
     }
 }
