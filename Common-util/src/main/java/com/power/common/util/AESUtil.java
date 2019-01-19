@@ -256,7 +256,7 @@ public class AESUtil {
         try {
             byte[] encrypted = encryptByECB(content.getBytes(Charset.DEFAULT_CHARSET), key.getBytes(Charset.DEFAULT_CHARSET), padding);
             //BASE64 is used here as a transcoding function, which can also play a role of 2 times encryption
-            return Base64Util.decryptToString(encrypted);
+            return Base64Util.encryptToString(encrypted);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
