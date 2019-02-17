@@ -70,7 +70,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(value = {Exception.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public CommonResult unknownException(Exception ex) {
         LOGGER.error("Error code 500：{}", ex);
         return new CommonResult("500", ex.getMessage());
