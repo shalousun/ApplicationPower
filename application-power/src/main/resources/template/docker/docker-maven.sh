@@ -105,7 +105,7 @@ fi
 #========================================================================
 #MYIMAGE=$GROUP/$PROJECT_NAME:$APP_VERSION
 MYIMAGE=$GROUP/$PROJECT_NAME:$APP_VERSION
-TAG_IMAGE=$GROUP/$PROJECT_NAME:v${TIME_VERSION}
+TAG_IMAGE=$GROUP/$PROJECT_NAME:v\${TIME_VERSION}
 echo "INFO: The image name is $MYIMAGE"
 
 # =========================stop container================================
@@ -158,6 +158,6 @@ echo "INFO: export port is $SERVER_PORT"
 # ==========================push image to registry========================
 # uncomment if you need push
 # docker login ${DOCKER_REGISTRY} -u $HARBOR_USER -p $HARBOR_PASSWORD
-echo "INFO：Starting push image of ${TAG_IMAGE} to docker registry ${DOCKER_REGISTRY}"
-# docker tag ${MYIMAGE}  ${DOCKER_REGISTRY}/$HARBOR_PROJECT/${TAG_IMAGE}
-# docker push ${DOCKER_REGISTRY}/$HARBOR_PROJECT/${TAG_IMAGE}
+echo "INFO：Starting push image of \${TAG_IMAGE} to docker registry ${DOCKER_REGISTRY}"
+# docker tag ${MYIMAGE}  ${DOCKER_REGISTRY}/$HARBOR_PROJECT/\${TAG_IMAGE}
+# docker push ${DOCKER_REGISTRY}/$HARBOR_PROJECT/\${TAG_IMAGE}
