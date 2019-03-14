@@ -525,7 +525,7 @@ public class ValidateUtil {
     }
 
     /**
-     * valid time lime 12:00:06
+     * valid time lime 12:00:06 or 12:00
      * @param time time string
      * @return boo
      */
