@@ -1,24 +1,33 @@
 package com.power.common.util;
 
+import com.power.common.net.SSLSocketFactoryBuilder;
+import com.power.common.net.TrustAnyTrustManager;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
  * Http请求工具类
  *
  * @author yu 2018/06/19.
  */
 public class OkHttp3Util {
 
-    private static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
+    private static final Logger LOGGER = LoggerFactory.getLogger(OkHttp3Util.class);
 
-    private static final MediaType FORM_DATA = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
+    public static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
+
+    public static final MediaType FORM_DATA = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
 
 
     /**
@@ -170,6 +179,7 @@ public class OkHttp3Util {
      */
     public static String syncPostJson(String url, String json, Map<String, String> headersMap) {
         RequestBody body = RequestBody.create(JSON_TYPE, json);
+        LOGGER.debug("OkHttp3 sync json param:{} ",json);
         return doSyncPost(url, body, headersMap);
     }
 
@@ -183,6 +193,7 @@ public class OkHttp3Util {
      */
     public static void asyncPostJson(String url, String json, Map<String, String> headersMap, Callback callback) {
         RequestBody body = RequestBody.create(JSON_TYPE, json);
+        LOGGER.debug("OkHttp3 async post json param:{} ",json);
         doAsyncPost(url, body, headersMap, callback);
     }
 
@@ -190,6 +201,7 @@ public class OkHttp3Util {
                                    Callback callback) {
         OkHttpClient client = OkHttp3Util.getInstance();
         String url = urlJoin(baseUrl, params);
+        LOGGER.debug("OkHttp3 async get url:{}",url);
         Request request;
         if (null == headersMap || headersMap.size() == 0) {
             request = new Request.Builder().url(url).build();
@@ -204,6 +216,8 @@ public class OkHttp3Util {
     private static String doSyncGet(String baseUrl, Map<String, String> params, Map<String, String> headersMap) {
         OkHttpClient client = OkHttp3Util.getInstance();
         String url = urlJoin(baseUrl, params);
+        LOGGER.debug("SyncGet Request url: {}",url);
+        long startTime = System.currentTimeMillis();
         Request request;
         if (null == headersMap || headersMap.size() == 0) {
             request = new Request.Builder().url(url).build();
@@ -214,8 +228,10 @@ public class OkHttp3Util {
         Call call = client.newCall(request);
         try {
             Response response = call.execute();
-
-            return response.body().string();
+            String responseBody = response.body().string();
+            LOGGER.debug("SyncGet Response body is:{}",responseBody);
+            LOGGER.debug("SyncGet Cost time:",(System.currentTimeMillis()-startTime));
+            return responseBody;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -262,12 +278,17 @@ public class OkHttp3Util {
             Headers headers = setHeaders(headersMap);
             request = new Request.Builder().post(body).url(url).headers(headers).build();
         }
+        LOGGER.debug("Request url: {}",url);
+        long startTime = System.currentTimeMillis();
         Call call = client.newCall(request);
         try {
             Response response = call.execute();
-            return response.body().string();
+            String responseBody = response.body().string();
+            LOGGER.debug("Response body is:{}",responseBody);
+            LOGGER.debug("Cost time:",(System.currentTimeMillis()-startTime));
+            return responseBody;
         } catch (IOException e) {
-            throw new RuntimeException("Can't connect server",e);
+            throw new RuntimeException("Can't connect server", e);
         }
     }
 
@@ -315,6 +336,8 @@ public class OkHttp3Util {
         private static final OkHttpClient INSTANCE = new OkHttpClient.Builder()
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                .writeTimeout(10000L, TimeUnit.MILLISECONDS)
+                .sslSocketFactory(SSLSocketFactoryBuilder.getSslSocketFactory(),new TrustAnyTrustManager())
                 .build();
     }
 }

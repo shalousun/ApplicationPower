@@ -5,7 +5,7 @@ common-util是一个和任何模块都无关的模块，common-util模块中主�
 <dependency>
   <groupId>com.github.shalousun</groupId>
   <artifactId>common-util</artifactId>
-  <version>1.7.2</version>
+  <version>1.8.2</version>
 </dependency>
 ```
 common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、ValidateUtil、IpUtil等。
@@ -96,3 +96,8 @@ common-util下包含众多的工具类，例如：DateTimeUtil、StringUtil、Va
 	2. 优化CollectionUtil工具类
 	3. 添加HexUtil工具类
 	4. 优化DateUtil工具类
+#### 版本号：1.8.2
+- 更新日期：2019-03-18
+- 更新内容：
+	1. OkHttp工具增加Https支持
+	4. CommonResult增加返回数据的方法getData
