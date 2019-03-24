@@ -39,15 +39,19 @@ metadata:
   namespace: default
 spec:
   selector:
-      matchLabels:
-        app: ${applicationNameLowerCase}
-        tier: backend
+    matchLabels:
+      app: ${applicationNameLowerCase}
+      tier: backend
   replicas: 1
   template:
     metadata:
       labels:
         app: ${applicationNameLowerCase}
         tier: backend
+      annotations:
+        prometheus.io/path: '/actuator/prometheus'
+        prometheus.io/port: '8080'
+        prometheus.io/scrape: 'true'
     spec:
       containers:
         - name: ${applicationNameLowerCase}
@@ -90,3 +94,29 @@ spec:
         backend:
           serviceName: ${applicationNameLowerCase}-svc
           servicePort: 8080
+---
+# ------------------- SpringBoot Application HPA ---------------------- #
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ${applicationNameLowerCase}-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ${applicationNameLowerCase}-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Pods
+    pods:
+      metricName: requests_per_second
+      targetAverageValue: 500
+#  - type: Resource
+#    resource:
+#      name: cpu
+#      targetAverageUtilization: 80
+#  - type: Resource
+#    resource:
+#      name: memory
+#      targetAverageValue: 200Mi
