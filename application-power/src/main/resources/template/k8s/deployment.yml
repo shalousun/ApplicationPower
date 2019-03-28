@@ -96,6 +96,7 @@ spec:
           servicePort: 8080
 ---
 # ------------------- SpringBoot Application HPA ---------------------- #
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: ${applicationNameLowerCase}-hpa
@@ -110,13 +111,17 @@ spec:
   metrics:
   - type: Pods
     pods:
-      metricName: requests_per_second
-      targetAverageValue: 500
-#  - type: Resource
-#    resource:
-#      name: cpu
-#      targetAverageUtilization: 80
-#  - type: Resource
-#    resource:
-#      name: memory
-#      targetAverageValue: 200Mi
+      metricName: http_requests
+      targetAverageValue: 10
+  - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: AverageUtilization
+          averageUtilization: 50
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Value
+        averageValue: 500Mi
