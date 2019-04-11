@@ -6,11 +6,7 @@ import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -216,6 +212,7 @@ public class OkHttp3Util {
     private static String doSyncGet(String baseUrl, Map<String, String> params, Map<String, String> headersMap) {
         OkHttpClient client = OkHttp3Util.getInstance();
         String url = urlJoin(baseUrl, params);
+        System.out.println(url);
         LOGGER.debug("SyncGet Request url: {}",url);
         long startTime = System.currentTimeMillis();
         Request request;

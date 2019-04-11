@@ -4,8 +4,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by yu on 2017/3/9.
@@ -231,15 +230,9 @@ public class FileUtil {
      */
     public static String getFileContent(InputStream inputStream) {
         BufferedReader reader = null;
-        StringBuilder fileContent = new StringBuilder();
         try {
             reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                fileContent.append(line);
-                fileContent.append("\n");
-            }
-
+            return reader.lines().collect(Collectors.joining("\n"));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -251,7 +244,7 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-        return fileContent.toString();
+        return null;
     }
 
     /**
