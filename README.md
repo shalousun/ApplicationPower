@@ -290,6 +290,18 @@ application-power整合的springboot打包后的结构参考
 	1. 修改common-util模块CommonResult【兼容旧版本】，增加常用静态方法方便快速编码
 	2. 优化代码生成的service模板，减少重复代码，该优化依赖common-util 1.7版本
 	3. 代码生成删除ResultUtil,目前由CommonResult接管
+#### 版本号：1.8.2
+- 更新日期：2019-01-06
+- 更新内容：
+	1. 修改代码生成mybatis mapper目录为resources下的mappers下
+	2. 优化代码生成，生成过程中可以自动根据主键类型和主键名称来变更对应的接口层参数类型
+	3. 修改自动生成SpringBoot启动类的命名规则，根据应用名来自动实现
+	4. 生成的代码model表注释规则优化为table+comment
+#### 版本号：1.8.3
+- 更新日期：2019-04-18
+- 更新内容：
+	1. 优化生成的k8s部署模板
+	2. 升级代码生成对Common-util版本的依赖
 
 	
 
