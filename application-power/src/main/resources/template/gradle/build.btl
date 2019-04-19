@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.0.RELEASE'
+        springBootVersion = '2.1.4.RELEASE'
     }
     repositories {
         maven {url 'http://localhost:8081/nexus/content/groups/public/'}
@@ -47,14 +47,14 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
-    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2'
-    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.5'
-    compile 'com.alibaba:druid-spring-boot-starter:1.1.10'
-    compile 'mysql:mysql-connector-java:6.0.6'
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10'
+    compile 'com.alibaba:druid-spring-boot-starter:1.1.16'
+    compile 'mysql:mysql-connector-java:8.0.15'
     compile('org.springframework.boot:spring-boot-starter-log4j2')
     compile 'com.lmax:disruptor:3.4.2'
     compile('org.springframework.boot:spring-boot-starter-aop')
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.51'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.57'
     compile 'org.apache.commons:commons-lang3:3.5'
     <%if(useJTA){ %>
     compile('org.springframework.boot:spring-boot-starter-jta-atomikos')
@@ -62,10 +62,10 @@ dependencies {
     <% if(isMultipleDataSource){%>
     compile 'com.github.shalousun:mybatis-template:0.1'
     <% } %>
-    compile 'com.github.shalousun:common-util:1.4'
+    compile 'com.github.shalousun:common-util:1.8.2'
     compileOnly 'org.projectlombok:lombok:1.18.0'
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'com.github.shalousun:smart-doc:1.5'
+    testCompile 'com.github.shalousun:smart-doc:1.6'
 
 }
 
