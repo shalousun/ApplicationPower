@@ -29,7 +29,7 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
   6. 支持springboot项目容器化构建Dockerfile文件创建
   7. 自动创建项目的kubernates容器编排部署yaml文件。
   8. 自动集成当前基于代码推导的零侵入restful api文档生成工具。
-  9. 支持自动集成atomikos分布式事务管理(谨慎使用)
+  9. 支持自动集成atomikos分布式事务管理(谨慎使用,druid整合多数据源mysql驱动请先使用6.0.6版本)
   10. 吸纳开源提供一些可以使用的基础工具类
   11. 超自由的代码生成配置，自由控制自己需要的。
   12. 省心生成通用的restful exception处理类，和jsr303参数验证错误处理模板。
@@ -302,6 +302,10 @@ application-power整合的springboot打包后的结构参考
 - 更新内容：
 	1. 优化生成的k8s部署模板
 	2. 升级代码生成对Common-util版本的依赖
+#### 版本号：1.8.4
+- 更新日期：2019-04-21
+- 更新内容：
+	1. 修复生成的多数据源代码错误问题
 
 	
 

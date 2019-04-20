@@ -6,7 +6,7 @@ mybatis-template主要作用是重写了mybatis的SqlSessionTemplate，
 <dependency>
     <groupId>com.github.shalousun</groupId>
     <artifactId>mybatis-template</artifactId>
-    <version>0.1</version>
+    <version>1.0</version>
 </dependency>
 
 ```
@@ -133,7 +133,10 @@ public class MyBatisConfig extends AbstractDataSourceConfig {
         bean.setDataSource(dataSource);
         bean.setVfs(SpringBootVFS.class);
         bean.setTypeAliasesPackage(ALIASES_PACKAGE);
-        bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session
+                .Configuration();
+        configuration.setMapUnderscoreToCamelCase(true);
+        bean.setConfiguration(configuration);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
         return bean.getObject();
     }
