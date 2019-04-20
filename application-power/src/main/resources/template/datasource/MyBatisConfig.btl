@@ -26,7 +26,7 @@ public class MyBatisConfig extends AbstractDataSourceConfig {
 
     static final String ALIASES_PACKAGE = "${basePackage}.model";
 
-    static final String MAPPER_LOCATION = "classpath:${mappingDir}/mapping/*.xml";
+    static final String MAPPER_LOCATION = "classpath:mappers/*.xml";
 
     ${dataSource}
 
@@ -62,7 +62,10 @@ ${sqlSessionFactoryMap}
         bean.setDataSource(dataSource);
         bean.setVfs(SpringBootVFS.class);
         bean.setTypeAliasesPackage(ALIASES_PACKAGE);
-        bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session
+                .Configuration();
+        configuration.setMapUnderscoreToCamelCase(true);
+        bean.setConfiguration(configuration);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
         return bean.getObject();
     }
