@@ -60,12 +60,12 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-jta-atomikos')
     <% } %>
     <% if(isMultipleDataSource){%>
-    compile 'com.github.shalousun:mybatis-template:0.1'
+    compile 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
     compile 'com.github.shalousun:common-util:1.8.2'
     compileOnly 'org.projectlombok:lombok:1.18.0'
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'com.github.shalousun:smart-doc:1.6'
+    testCompile 'com.github.shalousun:smart-doc:1.6.2'
 
 }
 
