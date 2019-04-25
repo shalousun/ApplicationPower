@@ -1,7 +1,13 @@
 package com.power.common.util;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IpUtil {
 
@@ -47,5 +53,55 @@ public class IpUtil {
 	 */
 	public static String getServerIp() {
 		return serverIp;
+	}
+
+	/**
+	 * 获取所有的网卡的ip v4地址,key为网卡地址，value为ip地址
+	 * @return
+	 */
+	public static Map<String,String> getLocalIPV4(){
+		Map<String,String> map = new HashMap<>();
+		InetAddress ip = null;
+		try {
+			Enumeration<NetworkInterface> netInterfaces = NetworkInterface.getNetworkInterfaces();
+			while (netInterfaces.hasMoreElements()) {
+				NetworkInterface ni = netInterfaces.nextElement();
+				Enumeration<InetAddress> ips = ni.getInetAddresses();
+				while (ips.hasMoreElements()) {
+					ip = ips.nextElement();
+					if(ip instanceof Inet4Address){
+						map.put(ni.getName(),ip.getHostAddress());
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	/**
+	 * 获取所有ipv6地址
+	 * @return
+	 */
+	public static Map<String,String> getLocalIPV6(){
+		Map<String,String> map = new HashMap<>();
+		InetAddress ip = null;
+		try {
+			Enumeration<NetworkInterface> netInterfaces = NetworkInterface.getNetworkInterfaces();
+			while (netInterfaces.hasMoreElements()) {
+				NetworkInterface ni = netInterfaces.nextElement();
+				Enumeration<InetAddress> ips = ni.getInetAddresses();
+				while (ips.hasMoreElements()) {
+					ip = ips.nextElement();
+					if(ip instanceof Inet6Address){
+						map.put(ni.getName(),ip.getHostAddress());
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
 	}
 }
