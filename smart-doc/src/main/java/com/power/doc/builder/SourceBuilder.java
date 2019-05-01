@@ -106,7 +106,7 @@ public class SourceBuilder {
     /**
      * 加载项目的源代码
      *
-     * @param paths
+     * @param paths list of SourcePath
      */
     private void loadJavaFiles(List<SourcePath> paths) {
         JavaProjectBuilder builder = new JavaProjectBuilder();
@@ -154,8 +154,8 @@ public class SourceBuilder {
     /**
      * 检查是否是rest controller
      *
-     * @param cls
-     * @return
+     * @param cls The JavaClass object
+     * @return boolean
      */
     private boolean isRestController(JavaClass cls) {
         List<JavaAnnotation> classAnnotations = cls.getAnnotations();
@@ -336,8 +336,8 @@ public class SourceBuilder {
     /**
      * create request headers
      *
-     * @param headers
-     * @return
+     * @param headers Api request headers
+     * @return headers
      */
     private String createHeaders(List<ApiReqHeader> headers) {
         StringBuilder builder = new StringBuilder();
@@ -345,9 +345,9 @@ public class SourceBuilder {
             headers = new ArrayList<>(0);
         }
         for (ApiReqHeader header : headers) {
-            builder.append(header.getName()).append("|");
-            builder.append(header.getType()).append("|");
-            builder.append(header.getDesc()).append("\n");
+            builder.append(header.getName()).append("|")
+                    .append(header.getType()).append("|")
+                    .append(header.getDesc()).append("\n");
         }
         return builder.toString();
     }
@@ -396,16 +396,19 @@ public class SourceBuilder {
     }
 
     /**
-     * @param className
-     * @param pre
-     * @param i                缩进计数器
-     * @param isRequired
-     * @param responseFieldMap
-     * @param isResp
-     * @return
+     * @param className        class name
+     * @param pre              pre
+     * @param i                counter
+     * @param isRequired       required flag
+     * @param responseFieldMap response map
+     * @param isResp           response flag
+     * @return params
      */
     private String buildParams(String className, String pre, int i, String isRequired,
                                Map<String, CustomRespField> responseFieldMap, boolean isResp) {
+        if (StringUtil.isEmpty(className)) {
+            throw new RuntimeException("Class name can't be null or empty.");
+        }
         StringBuilder params0 = new StringBuilder();
         String simpleName = DocClassUtil.getSimpleName(className);
 
@@ -630,16 +633,18 @@ public class SourceBuilder {
 
     private String primitiveReturnRespComment(String typeName) {
         StringBuilder comments = new StringBuilder();
-        comments.append("no param name|").append(typeName).append("|").append("The interface directly returns the ");
-        comments.append(typeName).append(" type value.\n");
+        comments.append("no param name|")
+                .append(typeName).append("|")
+                .append("The interface directly returns the ")
+                .append(typeName).append(" type value.\n");
         return comments.toString();
     }
 
     /**
      * 构建返回的json
      *
-     * @param method
-     * @return
+     * @param method The JavaMethod object
+     * @return String
      */
     private String buildReturnJson(JavaMethod method, Map<String, CustomRespField> responseFieldMap) {
         if ("void".equals(method.getReturnType().getFullyQualifiedName())) {
@@ -651,11 +656,11 @@ public class SourceBuilder {
     }
 
     /**
-     * @param typeName
-     * @param genericCanonicalName
-     * @param responseFieldMap
-     * @param isResp               是否是响应返回
-     * @return
+     * @param typeName             type name
+     * @param genericCanonicalName genericCanonicalName
+     * @param responseFieldMap     map of response fields data
+     * @param isResp               response flag
+     * @return String
      */
     private String buildJson(String typeName, String genericCanonicalName, Map<String, CustomRespField> responseFieldMap, boolean isResp) {
         if (DocClassUtil.isMvcIgnoreParams(typeName)) {
@@ -912,8 +917,11 @@ public class SourceBuilder {
                         apiMethodDoc.setContentType(JSON_CONTENT_TYPE);
                         if (DocClassUtil.isPrimitive(simpleTypeName)) {
                             StringBuilder builder = new StringBuilder();
-                            builder.append("{\"").append(paraName).append("\":");
-                            builder.append(DocUtil.jsonValueByType(simpleTypeName)).append("}");
+                            builder.append("{\"")
+                                    .append(paraName)
+                                    .append("\":")
+                                    .append(DocUtil.jsonValueByType(simpleTypeName))
+                                    .append("}");
                             return builder.toString();
                         } else {
                             return buildJson(typeName, gicTypeName, this.fieldMap, false);
@@ -933,6 +941,14 @@ public class SourceBuilder {
         return "No request parameters are required.";
     }
 
+    /**
+     * Get tag
+     *
+     * @param javaMethod The JavaMethod method
+     * @param tagName    The doc tag name
+     * @param className  The class name
+     * @return String
+     */
     private String getCommentTag(final JavaMethod javaMethod, final String tagName, final String className) {
         //
         Map<String, CustomRespField> responseFieldMap = new HashMap<>();
@@ -1082,9 +1098,11 @@ public class SourceBuilder {
     }
 
     /**
-     * @param cls1
-     * @param i    递归计数器
-     * @return
+     * Get fields
+     *
+     * @param cls1 The JavaClass object
+     * @param i    Recursive counter
+     * @return list of JavaField
      */
     private List<JavaField> getFields(JavaClass cls1, int i) {
         List<JavaField> fieldList = new ArrayList<>();
