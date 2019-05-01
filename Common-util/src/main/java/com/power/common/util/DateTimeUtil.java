@@ -27,11 +27,21 @@ public class DateTimeUtil {
 
     public static final String DATE_FORMAT_SECOND = "yyyy-MM-dd HH:mm:ss";
 
+    public static final String DATE_FORMAT_SECOND_12 = "yyyy-MM-dd hh:mm:ss";
+
+    public static final String DATE_FORMAT_MILLISECOND = "yyyy-MM-dd HH:mm:ss.SSS";
+
     public static final String DATE_FORMAT_CHINESE = "yyyy年MM月dd日";
 
     public static final String DATE_FORMAT_CHINESE_SECONDE = "yyyy年MM月dd日 HH:mm:ss";
 
     public static final String DATE_FORMAT_CHINESE_WEEK_SECONDE = "yyyy年MM月dd日 E HH:mm:ss";
+
+    public static final String YYYYMMDD = "yyyyMMdd";
+
+    public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+
+    public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
 
     public static final long DAY_MS = 86400000L;
 
@@ -423,7 +433,7 @@ public class DateTimeUtil {
         try{
             return LocalDateTimeToLong(parseLocalDateTime(strTime, pattern));
         }catch (Exception e){
-
+            //ignore
         }
         return localDateToLong(parseLocalDate(strTime, pattern));
     }
