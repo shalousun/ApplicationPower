@@ -199,8 +199,8 @@ public class OkHttp3Util {
      * @param client   OkHttpClient
      * @param baseUrl  request base url
      * @param params   request params
-     * @param headers  request headers
-     * @param callback call back
+     * @param headersMap  request headers
+     * @param callback callback
      */
     public static void asyncGet(OkHttpClient client, String baseUrl, Map<String, String> params, Map<String, String> headersMap,
                                 Callback callback) {
@@ -225,7 +225,7 @@ public class OkHttp3Util {
      * @param url        request url
      * @param body       OkHttp3 RequestBody
      * @param headersMap request headers
-     * @param callback
+     * @param callback call back
      */
     public static void asyncPost(OkHttpClient client, String url, RequestBody body, Map<String, String> headersMap,
                                  Callback callback) {

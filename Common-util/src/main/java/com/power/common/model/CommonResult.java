@@ -77,7 +77,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
 
     /**
      * 覆盖supper方法
-     * @return
+     * @return T
      */
     public T getData() {
         return (T) super.getData();
