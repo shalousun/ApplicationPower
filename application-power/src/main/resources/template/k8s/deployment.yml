@@ -32,7 +32,7 @@ spec:
   tier: backend
 ---
 # --------------------------- Deployment ------------------- #
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ${applicationNameLowerCase}-deployment
@@ -99,7 +99,7 @@ spec:
       imagePullSecrets:
       - name: harbor-key
 ---
-# --------------------------- ingress ---------------------- #
+# --------------------------- ingress,k8s 1.13---------------------- #
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -107,11 +107,10 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: ${domain}.com
-    http:
+  - http:
       #port: 80
       paths:
-      - path: /
+      - path: /your_path
         backend:
           serviceName: ${applicationNameLowerCase}-svc
           servicePort: 8080
