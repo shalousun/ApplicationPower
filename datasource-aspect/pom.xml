@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.shalousun</groupId>
-    <version>0.1</version>
+    <version>0.2</version>
     <artifactId>datasource-aspect</artifactId>
     <packaging>jar</packaging>
 
@@ -55,8 +55,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

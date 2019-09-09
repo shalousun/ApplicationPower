@@ -18,8 +18,9 @@ public class StringUtilTest {
         list.add("/ac/*");
         list.add("/me/add");
         list.add("/login.*");
-
-        System.out.println(isMatches(list,url));
+        System.out.println(DateTimeUtil.strToLong("2019-08-30 20:44:38.40","yyyy-MM-dd HH:mm:ss.SS"));
+        System.out.println(DateTimeUtil.long2Str(1567169078400L,DateTimeUtil.DATE_FORMAT_SECOND));
+       // System.out.println(isMatches(list,url));
 
 
     }

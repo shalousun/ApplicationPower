@@ -18,10 +18,10 @@ public class PathUtil {
      * @return 连接后的路径
      */
     public static String joinPath(String parentDir, String packageName) {
-        if (org.apache.commons.lang.StringUtils.isEmpty(parentDir)) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(parentDir)) {
             parentDir = System.getProperty(ConstVal.JAVA_TMPDIR);
         }
-        if (!org.apache.commons.lang.StringUtils.endsWith(parentDir, File.separator)) {
+        if (!org.apache.commons.lang3.StringUtils.endsWith(parentDir, File.separator)) {
             parentDir += File.separator;
         }
         packageName = packageName.replaceAll("\\.", ConstVal.FILE_SEPARATOR + File.separator);
@@ -36,10 +36,10 @@ public class PathUtil {
      * @return
      */
     public static String connectPath(String parentDir, String path) {
-        if (org.apache.commons.lang.StringUtils.isEmpty(parentDir)) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(parentDir)) {
             parentDir = System.getProperty(ConstVal.JAVA_TMPDIR);
         }
-        if (!org.apache.commons.lang.StringUtils.endsWith(parentDir, File.separator)) {
+        if (!org.apache.commons.lang3.StringUtils.endsWith(parentDir, File.separator)) {
             parentDir += File.separator;
         }
         return parentDir + File.separator + path;
@@ -53,7 +53,7 @@ public class PathUtil {
      * @return 连接后的包名
      */
     public static String joinPackage(String parent, String subPackage) {
-        if (org.apache.commons.lang.StringUtils.isEmpty(parent)) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(parent)) {
             return subPackage;
         }
         return parent + "." + subPackage;
