@@ -24,8 +24,10 @@ public class ShutdownConfig {
 
 
     @Bean
-    public GracefulShutdown gracefulShutdown() {
-        return new GracefulShutdown();
+    public GracefulShutdown gracefulShutdown(@Value("\${server.shutdown-wait-seconds:30}") int shutdownWaitSeconds) {
+        GracefulShutdown gracefulShutdown = new GracefulShutdown();
+        gracefulShutdown.setShutdownWaitSeconds(shutdownWaitSeconds);
+        return gracefulShutdown;
     }
 
     @Bean
@@ -38,10 +40,18 @@ public class ShutdownConfig {
     public static class GracefulShutdown implements TomcatConnectorCustomizer, ApplicationListener<ContextClosedEvent> {
         private static final Logger log = LoggerFactory.getLogger(GracefulShutdown.class);
         private volatile Connector connector;
+
+        private int shutdownWaitSeconds;
+
+        public void setShutdownWaitSeconds(int shutdownWaitSeconds) {
+            this.shutdownWaitSeconds = shutdownWaitSeconds;
+        }
+
         @Override
         public void customize(Connector connector) {
             this.connector = connector;
         }
+
         @Override
         public void onApplicationEvent(ContextClosedEvent event) {
             this.connector.pause();
@@ -50,9 +60,9 @@ public class ShutdownConfig {
                 try {
                     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) executor;
                     threadPoolExecutor.shutdown();
-                    if (!threadPoolExecutor.awaitTermination(30, TimeUnit.SECONDS)) {
-                        log.warn("Tomcat thread pool did not shut down gracefully within "
-                                + "30 seconds. Proceeding with forceful shutdown");
+                    if (!threadPoolExecutor.awaitTermination(shutdownWaitSeconds, TimeUnit.SECONDS)) {
+                        log.warn("Tomcat thread pool did not shut down gracefully within {} seconds. " +
+                                "Proceeding with forceful shutdown", shutdownWaitSeconds);
                     }
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
