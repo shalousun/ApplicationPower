@@ -55,14 +55,6 @@ public abstract class AbstractCodeWriter {
         }
     }
 
-    /**
-     * 获取线程池数用于并发写文件
-     * @return
-     */
-    protected ExecutorService getExecutors(){
-        return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2);
-    }
-
     public DbProvider getDataBaseInfo() {
         return dataBaseInfo;
     }

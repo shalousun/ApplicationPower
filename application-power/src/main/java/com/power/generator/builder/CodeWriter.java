@@ -146,10 +146,8 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding("dbDriver", dbProp.getProperty("jdbc.driver"));
                 template.binding("list", GeneratorProperties.getMultipleDataSource());
                 template.binding("isJTA", GeneratorProperties.isJTA());
-                final Template template1 = template;
-                this.getExecutors().submit(() -> {
-                    FileUtil.writeFileNotAppend(template1.render(), entry.getValue());
-                });
+
+                FileUtil.writeFileNotAppend(template.render(), entry.getValue());
             }
         }
         template = BeetlTemplateUtil.getByName(ConstVal.TPL_GITIGNORE);
@@ -283,10 +281,7 @@ public class CodeWriter extends AbstractCodeWriter {
                     e.printStackTrace();
                 }
                 String template = builder.generateTemplate(tableInfo);
-                this.getExecutors().submit(() -> {
-                    FileUtil.writeFileNotAppend(template, String.format(value, entityName));
-                });
-
+                FileUtil.writeFileNotAppend(template, String.format(value, entityName));
             }
         }
         return true;
