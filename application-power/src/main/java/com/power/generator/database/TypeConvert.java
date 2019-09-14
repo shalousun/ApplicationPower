@@ -39,8 +39,8 @@ public class TypeConvert {
                 dataType = "Float";
                 break;
             case Types.REAL: //7
-                 dataType= "Float";
-                 break;
+                dataType = "Float";
+                break;
             case Types.DECIMAL:    //3
                 dataType = "BigDecimal";
                 break;
@@ -60,13 +60,12 @@ public class TypeConvert {
     }
 
     /**
-     *
      * @param type
      * @return
      */
     public static String sqlTypeToJavaType(String type) {
         String dataType = "";
-        switch (type){
+        switch (type) {
             case "char":
                 dataType = "String";
                 break;
@@ -98,7 +97,7 @@ public class TypeConvert {
                 dataType = "Long";
                 break;
             case "float":
-                dataType= "Float";
+                dataType = "Float";
                 break;
             case "date":
                 dataType = "Timestamp";
@@ -118,16 +117,16 @@ public class TypeConvert {
         return dataType;
     }
 
-    public static String mybatisType(String type){
-        switch (type){
+    public static String mybatisType(String type) {
+        switch (type) {
             case "String":
                 return "string";
             case "Integer":
-                return  "int";
+                return "int";
             case "Long":
-                return  "long";
+                return "long";
             default:
-               return  "string";
+                return "string";
         }
     }
 }

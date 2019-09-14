@@ -60,8 +60,8 @@ public class PathUtil {
     }
 
     /**
-     *
      * 创建代码输出路径
+     *
      * @param pathInfo 路径信息
      */
     public static void mkdirs(Map<String, String> pathInfo) {

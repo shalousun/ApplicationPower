@@ -12,27 +12,22 @@ import com.power.generator.factory.DbProviderFactory;
 public abstract class AbstractCodeWriter {
 
     /**
+     *
+     */
+    protected ConfigBuilder config;
+    /**
      * 数据库信息
      */
     private DbProvider dataBaseInfo;
-
     /**
      * 包配置
      */
     private PackageConfig packageConfig;
-
     /**
      * 工程配置
      */
     private ProjectConfig projectConfig;
-
-
     private SpringBootProjectConfig springBootProjectConfig;
-
-    /**
-     *
-     */
-    protected ConfigBuilder config;
 
     /**
      * 初始化配置

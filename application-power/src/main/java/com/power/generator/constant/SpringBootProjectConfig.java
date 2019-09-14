@@ -6,6 +6,7 @@ package com.power.generator.constant;
  */
 public class SpringBootProjectConfig {
 
+    private static final String jpaPath = "config";
     private String resource = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "resources";
     private String mybatisConfig = resource + ConstVal.FILE_SEPARATOR + "mybatis-config.xml";
     private String errorPath = resource + ConstVal.FILE_SEPARATOR + "static" + ConstVal.FILE_SEPARATOR + "error";
@@ -15,15 +16,11 @@ public class SpringBootProjectConfig {
     private String pom = "pom.xml";
     private String log4j2 = resource + ConstVal.FILE_SEPARATOR + "log4j2.xml";
     private String applicationYml = resource + ConstVal.FILE_SEPARATOR + "application.yml";
-
     private String assemblyRoot = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "assembly";
     private String assemblyBin = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "assembly" + ConstVal.FILE_SEPARATOR + "bin";
     private String assemblyCfg = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "assembly" + ConstVal.FILE_SEPARATOR + "config";
     private String log4j2Assembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "log4j2.xml";
     private String applicationYmlAssembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "application.yml";
-
-    private static final String jpaPath = "config";
-
 
     public String getResource() {
         return resource;

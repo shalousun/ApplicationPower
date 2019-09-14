@@ -50,27 +50,6 @@ public class ConfigBuilder {
      */
     private ProjectPath projectPath;
 
-    /**
-     * 初始化构建一个maven项目配置表
-     */
-    private void initProjectPath() {
-        projectPath = new ProjectPath();
-        String fileSeparator = System.getProperty("file.separator");
-        String applicationName = GeneratorProperties.applicationName();
-        String basePath = GeneratorProperties.outDir() + fileSeparator + applicationName;
-        String javaDir = basePath + fileSeparator + ConstVal.JAVA_PATH;
-        String testDir = basePath + fileSeparator + ConstVal.TEST_JAVA_PATH;
-        String resourceDir = basePath + fileSeparator + ConstVal.RESOURCE_DIR;
-        String docsDir = basePath + fileSeparator + ConstVal.DOCS_PATH;
-
-        projectPath.setBasePath(basePath);
-        projectPath.setJavaSrcPath(javaDir);
-        projectPath.setResourceDir(resourceDir);
-        projectPath.setTestJavaSrcPath(testDir);
-
-
-    }
-
     public ConfigBuilder(DbProvider dataBaseInfo, PackageConfig packageConfig, ProjectConfig projectConfig) {
         //全局设置项目的机构
         initProjectPath();
@@ -128,6 +107,26 @@ public class ConfigBuilder {
         getTableInfoList(dataBaseInfo);
     }
 
+    /**
+     * 初始化构建一个maven项目配置表
+     */
+    private void initProjectPath() {
+        projectPath = new ProjectPath();
+        String fileSeparator = System.getProperty("file.separator");
+        String applicationName = GeneratorProperties.applicationName();
+        String basePath = GeneratorProperties.outDir() + fileSeparator + applicationName;
+        String javaDir = basePath + fileSeparator + ConstVal.JAVA_PATH;
+        String testDir = basePath + fileSeparator + ConstVal.TEST_JAVA_PATH;
+        String resourceDir = basePath + fileSeparator + ConstVal.RESOURCE_DIR;
+        String docsDir = basePath + fileSeparator + ConstVal.DOCS_PATH;
+
+        projectPath.setBasePath(basePath);
+        projectPath.setJavaSrcPath(javaDir);
+        projectPath.setResourceDir(resourceDir);
+        projectPath.setTestJavaSrcPath(testDir);
+
+
+    }
 
     /**
      * 获取列信息
@@ -159,7 +158,7 @@ public class ConfigBuilder {
         Set<String> layerSet = new HashSet<>();
         layerSet.addAll(Arrays.asList(layerArr));
         for (String str : layerSet) {
-            if (ConstVal.SERVICE.equals(str)) {
+            if (ConstVal.SERVICE.equals(str) && GeneratorProperties.useDb()) {
                 packageInfo.put(ConstVal.SERVICE, joinPackage(basePackage, config.getService()));
                 packageInfo.put(ConstVal.SERVICEIMPL, joinPackage(basePackage, config.getServiceImpl()));
                 pathInfo.put(ConstVal.SERVICE_PATH, joinPath(javaDir, packageInfo.get(ConstVal.SERVICE)));
@@ -174,16 +173,16 @@ public class ConfigBuilder {
                 packageInfo.put(ConstVal.CONTROLLER_TEST, joinPackage(basePackage, config.getController()));
                 pathInfo.put(ConstVal.CONTROLLER_TEST_PATH, joinPath(testDir, packageInfo.get(ConstVal.CONTROLLER_TEST)));
                 mybatisGenPath.put(BuilderCfg.CONTROLLER_TEST_BUILER, joinFinalPath(testDir, packageInfo.get(ConstVal.CONTROLLER_TEST), ConstVal.CONTROLLER_TEST_SUBFIX));
-            } else if (ConstVal.DAO.equals(str)) {
+            } else if (ConstVal.DAO.equals(str) && GeneratorProperties.useDb()) {
                 packageInfo.put(ConstVal.DAO, joinPackage(basePackage, config.getDao()));
                 pathInfo.put(ConstVal.DAO_PATH, joinPath(javaDir, packageInfo.get(ConstVal.DAO)));
                 mybatisGenPath.put(BuilderCfg.DAO_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.DAO), ConstVal.DAO_SUBFIX));
-            } else if (ConstVal.ENTITY.equals(str)) {
+            } else if (ConstVal.ENTITY.equals(str) && GeneratorProperties.useDb()) {
                 packageInfo.put(ConstVal.ENTITY, joinPackage(basePackage, config.getEntity()));
                 pathInfo.put(ConstVal.ENTITY_PATH, joinPath(javaDir, packageInfo.get(ConstVal.ENTITY)));
                 mybatisGenPath.put(BuilderCfg.MODEL_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.ENTITY), ConstVal.JAVA_SUFFIX));
-            } else if (ConstVal.MAPPER.equals(str)) {
-                packageInfo.put(ConstVal.MAPPER,config.getMapper());
+            } else if (ConstVal.MAPPER.equals(str) && GeneratorProperties.useDb()) {
+                packageInfo.put(ConstVal.MAPPER, config.getMapper());
                 pathInfo.put(ConstVal.MAPPER_PATH, joinPath(resourceDir, packageInfo.get(ConstVal.MAPPER)));
                 mybatisGenPath.put(BuilderCfg.MAPPER_BUILDER, joinFinalPath(resourceDir, packageInfo.get(ConstVal.MAPPER), ConstVal.MAPPER_SUBFIX));
             } else if (ConstVal.CONTROLLER.equals(str)) {
@@ -235,7 +234,7 @@ public class ConfigBuilder {
             baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS, connectPath(basePath, config.getSpringMybatis()));
         }
         baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS, connectPath(basePath, config.getSpringMybatis()));
-        baseConfigFilesPath.put(ConstVal.TPL_MYBATIS_CONFIG, connectPath(basePath, config.getMybatisConfig()));
+        //baseConfigFilesPath.put(ConstVal.TPL_MYBATIS_CONFIG, connectPath(basePath, config.getMybatisConfig()));
         baseConfigFilesPath.put(ConstVal.TPL_WEB_XML, connectPath(basePath, config.getWebXml()));
         baseConfigFilesPath.put(ConstVal.TPL_JDBC, connectPath(basePath, config.getJdbc()));
     }
@@ -259,7 +258,7 @@ public class ConfigBuilder {
             baseConfigFilesPath.put(ConstVal.TPL_SPRING_BOOT_CFG_YML, connectPath(basePath, config.getApplicationYml()));
         }
         baseConfigFilesPath.put(ConstVal.TPL_LOF4J2, connectPath(basePath, config.getLog4j2()));
-        baseConfigFilesPath.put(ConstVal.TPL_MYBATIS_CONFIG, connectPath(basePath, config.getMybatisConfig()));
+        //baseConfigFilesPath.put(ConstVal.TPL_MYBATIS_CONFIG, connectPath(basePath, config.getMybatisConfig()));
         baseConfigFilesPath.put(ConstVal.TPL_400, connectPath(basePath, config.getHtml400()));
         baseConfigFilesPath.put(ConstVal.TPL_404, connectPath(basePath, config.getHtml404()));
         baseConfigFilesPath.put(ConstVal.TPL_500, connectPath(basePath, config.getHtml500()));

@@ -11,8 +11,8 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="\${LOG_PATTERN}"/>
         </Console>
-        <RollingRandomAccessFile name="RollingFileInfo" fileName="${LOG_HOME}/catalina.out"
-                                 filePattern="${LOG_HOME}/app.%d{yyyy-MM-dd}-%i.log.gz" append="true">
+        <RollingRandomAccessFile name="RollingFileInfo" fileName="\${LOG_HOME}/catalina.out"
+                                 filePattern="\${LOG_HOME}/app.%d{yyyy-MM-dd}-%i.log.gz" append="true">
             <PatternLayout pattern="\${LOG_PATTERN}"/>
             <Filters>
                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
@@ -27,6 +27,7 @@
         </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
+       <%if(useDb){%>
         <!--mybatis debug log-->
         <AsyncLogger name="log4j.logger.org.mybatis" level="debug" additivity="false">
             <!--<appender-ref ref="Console"/>-->
@@ -52,6 +53,7 @@
             <!--<appender-ref ref="Console"/>-->
             <AppenderRef ref="RollingFileInfo"/>
         </AsyncLogger>
+        <%}%>
         <!--global log level-->
         <!--TRACE、DEBUG、INFO、WARN、ERROR、FATAL-->
         <Root level="INFO">

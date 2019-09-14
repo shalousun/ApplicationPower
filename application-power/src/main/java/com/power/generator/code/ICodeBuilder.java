@@ -65,17 +65,19 @@ public interface ICodeBuilder {
 
     /**
      * base package
+     *
      * @return
      */
-    default String basePackage(){
+    default String basePackage() {
         return GeneratorProperties.basePackage();
     }
 
     /**
      * 获取
+     *
      * @return
      */
-    default String getTestSrcPath(){
+    default String getTestSrcPath() {
         String testDir = getBasePath() + ConstVal.FILE_SEPARATOR + ConstVal.TEST_JAVA_PATH;
         return testDir;
     }

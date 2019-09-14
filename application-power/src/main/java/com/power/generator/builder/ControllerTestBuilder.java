@@ -20,7 +20,6 @@ import java.util.Map;
 public class ControllerTestBuilder implements IBuilder {
 
 
-
     private static final String controllerTestParams = "params";
 
     @Override
@@ -34,16 +33,15 @@ public class ControllerTestBuilder implements IBuilder {
         controllerTemplate.binding(GeneratorConstant.COMMON_VARIABLE);//作者
         controllerTemplate.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         controllerTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
-        controllerTemplate.binding(controllerTestParams,generateParams(columnMap));
+        controllerTemplate.binding(controllerTestParams, generateParams(columnMap));
         controllerTemplate.binding(GeneratorProperties.getGenerateMethods());
         return controllerTemplate.render();
     }
 
     /**
-     *
      * @return
      */
-    private String generateParams(Map<String,Column> columnMap){
+    private String generateParams(Map<String, Column> columnMap) {
         StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             Column column = entry.getValue();

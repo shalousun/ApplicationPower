@@ -1,6 +1,8 @@
 package ${basePackage};
 
+<%if(useDb){ %>
 import org.mybatis.spring.annotation.MapperScan;
+<%}%>
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,7 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author ${authorName} on ${createTime}.
  */
 @SpringBootApplication
+<%if(useDb){ %>
 @MapperScan("${basePackage}.dao")
+<%}%>
 public class ${SpringBootApp}Application {
     public static void main(String[] args) {
         SpringApplication.run(${SpringBootApp}Application.class, args);

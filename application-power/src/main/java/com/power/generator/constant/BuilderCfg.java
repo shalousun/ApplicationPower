@@ -9,6 +9,6 @@ public class BuilderCfg {
     public final static String SERVICE_BUILDER = BUILDER_PRE + "ServiceBuilder";
     public final static String SERVICEIMPL_BUILER = BUILDER_PRE + "ServiceImplBuilder";
     public final static String SERVICE_TEST_BUILER = BUILDER_PRE + "ServiceTestBuilder";
-    public final static String CONTROLLER_BUILER = BUILDER_PRE  + "ControllerBuilder";
-    public final static String CONTROLLER_TEST_BUILER = BUILDER_PRE +"ControllerTestBuilder";
+    public final static String CONTROLLER_BUILER = BUILDER_PRE + "ControllerBuilder";
+    public final static String CONTROLLER_TEST_BUILER = BUILDER_PRE + "ControllerTestBuilder";
 }

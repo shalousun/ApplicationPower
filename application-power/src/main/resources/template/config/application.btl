@@ -5,6 +5,7 @@ spring:
 ---
 spring:
   profiles : dev
+  <%if(useDb){%>
   datasource:
     name: mydb
     type: com.alibaba.druid.pool.DruidDataSource
@@ -27,6 +28,7 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     filters: stat,wall,log4j2
+    <%}%>
   <%if(isJTA){%>
   # transaction manager
   jta:
@@ -38,7 +40,7 @@ spring:
   resources:
     add-mappings: false
 
-
+<%if(useDb){%>
 mybatis:
   type-aliases-package: ${basePackage}
   mapper-locations: classpath*:mappers/*.xml
@@ -46,6 +48,7 @@ mybatis:
      log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
      map-underscore-to-camel-case: true
      cache-enabled: true
+ <%}%>
 server:
   port: 8080
   tomcat:

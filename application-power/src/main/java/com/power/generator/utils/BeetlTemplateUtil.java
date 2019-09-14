@@ -30,7 +30,6 @@ public class BeetlTemplateUtil {
     }
 
     /**
-     *
      * @param path
      * @param params
      * @return
@@ -53,13 +52,12 @@ public class BeetlTemplateUtil {
     }
 
     /**
-     *
      * @param path
      * @return
      */
     private static GroupTemplate getGroupTemplate(String path) {
         try {
-            ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("/"+path+"/");
+            ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("/" + path + "/");
             Configuration cfg = Configuration.defaultConfiguration();
             GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
             return gt;

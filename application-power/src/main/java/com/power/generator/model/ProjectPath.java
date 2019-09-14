@@ -26,8 +26,6 @@ public class ProjectPath {
     private String resourceDir;
 
 
-
-
     //getters and setters
     public String getBasePath() {
         return basePath;

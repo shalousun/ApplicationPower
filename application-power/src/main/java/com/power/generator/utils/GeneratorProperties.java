@@ -2,7 +2,10 @@ package com.power.generator.utils;
 
 import com.power.common.util.StringUtil;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author sunyu 2016/12/5.
@@ -206,9 +209,19 @@ public class GeneratorProperties {
 
     /**
      * 获取lombok配置
+     *
      * @return
      */
-    public static Boolean useLombok(){
+    public static Boolean useLombok() {
         return Boolean.valueOf(props.getProperty("generator.lombok"));
+    }
+
+    /**
+     * 是否需要生成db相关代码
+     *
+     * @return
+     */
+    public static Boolean useDb() {
+        return Boolean.valueOf(props.getProperty("generator.useDb"));
     }
 }

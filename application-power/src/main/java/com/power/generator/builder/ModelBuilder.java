@@ -34,12 +34,11 @@ public class ModelBuilder implements IBuilder {
         template.binding(GeneratorConstant.GETTERS_AND_SETTERS, gettersAndSetters);//get和set方法
         template.binding(GeneratorConstant.TABLE_COMMENT, tableInfo.getRemarks());//表注释
         template.binding(GeneratorConstant.TO_STRING, toString);
-        template.binding(GeneratorConstant.LOMBOK,GeneratorProperties.useLombok());
+        template.binding(GeneratorConstant.LOMBOK, GeneratorProperties.useLombok());
         template.binding("SerialVersionUID", String.valueOf(UUID.randomUUID().getLeastSignificantBits()));
         template.binding("modelImports", imports);
         return template.render();
     }
-
 
 
     /**

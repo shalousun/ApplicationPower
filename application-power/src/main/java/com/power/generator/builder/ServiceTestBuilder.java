@@ -3,14 +3,10 @@ package com.power.generator.builder;
 import com.power.common.util.StringUtil;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
-import com.power.generator.database.Column;
 import com.power.generator.database.TableInfo;
 import com.power.generator.utils.BeetlTemplateUtil;
 import com.power.generator.utils.GeneratorProperties;
-
 import org.beetl.core.Template;
-
-import java.util.Map;
 
 /**
  * 创建service层测试框架

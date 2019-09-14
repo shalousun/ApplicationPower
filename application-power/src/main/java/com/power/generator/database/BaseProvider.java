@@ -22,10 +22,11 @@ public class BaseProvider {
     /**
      * 获取字段信息,DatabaseMetaData.getColumns无法获取oracle的字段注释，
      * 因此调用次方法
+     *
      * @param sql
      * @return
      */
-    protected Map<String, Column> getColumnsSchema(String sql){
+    protected Map<String, Column> getColumnsSchema(String sql) {
         Map<String, Column> colMap = new LinkedHashMap<>();
         Connection connection = null;
         PreparedStatement pst = null;
@@ -46,15 +47,16 @@ public class BaseProvider {
                 colMap.put(columnName, column);
             }
         } catch (Exception e) {
-            LOGGER.error("读取schema信息失败",e);
+            LOGGER.error("读取schema信息失败", e);
         } finally {
-            DbUtil.close(connection,pst,colRet);
+            DbUtil.close(connection, pst, colRet);
         }
         return colMap;
     }
 
     /**
      * 获取表信息
+     *
      * @param sql
      * @param ds
      * @return
@@ -77,7 +79,7 @@ public class BaseProvider {
                 tableList.add(tableInfo);
             }
         } catch (SQLException e) {
-            LOGGER.error("读取字段信息失败",e);
+            LOGGER.error("读取字段信息失败", e);
             throw new RuntimeException(e);
         } finally {
             DbUtil.close(connection, stmt, rs);

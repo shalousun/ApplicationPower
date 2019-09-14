@@ -6,8 +6,8 @@ import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.database.Column;
 import com.power.generator.database.TableInfo;
 import com.power.generator.database.TypeConvert;
-import com.power.generator.utils.GeneratorProperties;
 import com.power.generator.utils.BeetlTemplateUtil;
+import com.power.generator.utils.GeneratorProperties;
 import org.beetl.core.Template;
 
 import java.util.Map;
@@ -35,14 +35,14 @@ public class MapperBuilder implements IBuilder {
         String primaryKey = getPrimaryKey(columnMap);
         Template mapper = BeetlTemplateUtil.getByName(ConstVal.TPL_MAPPER);
         String idType = TypeConvert.mybatisType(tableInfo.getPrimaryKeyType());
-        mapper.binding(GeneratorConstant.PRIMARY_KEY_TYPE,idType);
+        mapper.binding(GeneratorConstant.PRIMARY_KEY_TYPE, idType);
         mapper.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         mapper.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
         mapper.binding(GeneratorConstant.BASE_PACKAGE, GeneratorProperties.basePackage());//基包名
         mapper.binding(GeneratorConstant.INSERT_SQL, insertSql);
         mapper.binding(GeneratorConstant.BATCH_INSERT_SQL, batchInsertSql);
         mapper.binding(GeneratorConstant.UPDATE_SQL, updateSql);
-       // mapper.binding(GeneratorConstant.BATCH_UPDATE_SQL,batchUpdateSql);
+        // mapper.binding(GeneratorConstant.BATCH_UPDATE_SQL,batchUpdateSql);
         mapper.binding(GeneratorConstant.SELECT_SQL, selectSql);
         mapper.binding(GeneratorConstant.RESULT_MAP, results);
         mapper.binding(GeneratorConstant.IS_RESULT_MAP, GeneratorProperties.getResultMap());
@@ -200,10 +200,11 @@ public class MapperBuilder implements IBuilder {
 
     /**
      * 批量修改的语句
+     *
      * @param tableInfo
      * @return
      */
-    private String generateBatchUpdateSql(TableInfo tableInfo){
+    private String generateBatchUpdateSql(TableInfo tableInfo) {
         String primaryKeyName = tableInfo.getPrimaryKey();
         StringBuilder updateSql = new StringBuilder();
         updateSql.append("update ").append(tableInfo.getName()).append("\n");
@@ -219,11 +220,12 @@ public class MapperBuilder implements IBuilder {
             }
         }
         updateSql.append("\t\t</trim>\n").append("\t\twhere ").append(primaryKeyName).append(" in\n")
-        .append("\t\t<foreach collection=\"list\" item=\"item\" index=\"index\" open=\"(\" close=\")\" separator=\",\">\n")
+                .append("\t\t<foreach collection=\"list\" item=\"item\" index=\"index\" open=\"(\" close=\")\" separator=\",\">\n")
                 .append("\t\t\t${item.").append(primaryKeyName).append("}\n")
                 .append("\t\t</foreach>");
         return updateSql.toString();
     }
+
     /**
      * 生成查询语句
      *
@@ -234,7 +236,7 @@ public class MapperBuilder implements IBuilder {
         StringBuilder selectSql = new StringBuilder();
         selectSql.append("select \n");
         int i = 0;
-        Map<String,Column> columnMap = tableInfo.getColumnsInfo();
+        Map<String, Column> columnMap = tableInfo.getColumnsInfo();
         int size = columnMap.size();
         for (Map.Entry<String, Column> entry : columnMap.entrySet()) {
             if (i < size - 1) {

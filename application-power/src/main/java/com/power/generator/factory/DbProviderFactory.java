@@ -6,9 +6,7 @@ import com.power.generator.database.MySqlProvider;
 import com.power.generator.database.OracleProvider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author sunyu 2016/12/11.
@@ -16,11 +14,13 @@ import java.util.Map;
 public class DbProviderFactory {
 
     private static List<String> drivers = new ArrayList<>();
+
     static {
         drivers.add("com.mysql.jdbc.Driver");
         drivers.add("com.mysql.cj.jdbc.Driver");
         drivers.add("oracle.jdbc.OracleDriver");
     }
+
     /**
      * 数据库属性
      */
@@ -32,7 +32,7 @@ public class DbProviderFactory {
 
     public DbProvider getInstance() {
         String driverName = this.properties.getDriver();
-        if(!drivers.contains(driverName)){
+        if (!drivers.contains(driverName)) {
             throw new RuntimeException("Can't support your db driver name.");
         }
         DbProvider provider = null;

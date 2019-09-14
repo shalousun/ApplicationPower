@@ -8,7 +8,6 @@ import com.power.generator.utils.BeetlTemplateUtil;
 import com.power.generator.utils.CodeWriteUtil;
 import com.power.generator.utils.GeneratorProperties;
 import com.power.generator.utils.PathUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.beetl.core.Template;
 
 import java.util.HashMap;
@@ -32,7 +31,10 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
      * kubernates template
      */
     private final String K8S_DEPLOYMENT_TPL = "k8s/deployment.yml";
-
+    /**
+     *
+     */
+    private Map<String, String> paths;
 
     public KubeYmlCodeBuilder() {
         if (GeneratorProperties.useDocker()) {
@@ -40,11 +42,6 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
             buildCode();
         }
     }
-
-    /**
-     *
-     */
-    private Map<String, String> paths;
 
     @Override
     public void buildPath() {

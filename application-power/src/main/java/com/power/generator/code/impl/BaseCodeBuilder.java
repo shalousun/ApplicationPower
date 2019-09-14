@@ -5,6 +5,7 @@ import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.utils.BeetlTemplateUtil;
 import com.power.generator.utils.CodeWriteUtil;
+import com.power.generator.utils.GeneratorProperties;
 import com.power.generator.utils.PathUtil;
 import org.beetl.core.Template;
 
@@ -29,9 +30,9 @@ public class BaseCodeBuilder implements ICodeBuilder {
     /**
      *
      */
-    private Map<String,String> paths;
+    private Map<String, String> paths;
 
-    public BaseCodeBuilder(){
+    public BaseCodeBuilder() {
         buildPath();
         buildCode();
     }
@@ -41,14 +42,14 @@ public class BaseCodeBuilder implements ICodeBuilder {
         String mainPth = getMainPath();
         String javaPath = getJavaSrcPath();
         paths = new HashMap<>();
-        String enumPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.ENUM_PACKAGE);
-        String controllerPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.CONTROLLER);
-        String annotationPath = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.ANNOTATION_PACKAGE);
-        String config = PathUtil.joinPath(javaPath,basePackage()+"."+ConstVal.CONFIG_PACKAGE);
-        paths.put(ERROR_CODE_ENUM,enumPath);
-        paths.put(BASE_CONTROLLER,controllerPath);
-        paths.put(ConstVal.ANNOTATION_PACKAGE,annotationPath);
-        paths.put(GRACE_FUL_SHUTDOWN,config);
+        String enumPath = PathUtil.joinPath(javaPath, basePackage() + "." + ConstVal.ENUM_PACKAGE);
+        String controllerPath = PathUtil.joinPath(javaPath, basePackage() + "." + ConstVal.CONTROLLER);
+        String annotationPath = PathUtil.joinPath(javaPath, basePackage() + "." + ConstVal.ANNOTATION_PACKAGE);
+        String config = PathUtil.joinPath(javaPath, basePackage() + "." + ConstVal.CONFIG_PACKAGE);
+        paths.put(ERROR_CODE_ENUM, enumPath);
+        paths.put(BASE_CONTROLLER, controllerPath);
+        paths.put(ConstVal.ANNOTATION_PACKAGE, annotationPath);
+        paths.put(GRACE_FUL_SHUTDOWN, config);
         PathUtil.mkdirs(paths);
 
     }
@@ -62,28 +63,30 @@ public class BaseCodeBuilder implements ICodeBuilder {
     @Override
     public Map<String, String> handleTemplates() {
         //key is path
-        Map<String,String> templates = new HashMap<>(2);
+        Map<String, String> templates = new HashMap<>(2);
 
         Template baseControllerTpl = BeetlTemplateUtil.getByName("BaseController.btl");
         baseControllerTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String baseControllerOut = paths.get(BASE_CONTROLLER)+ConstVal.FILE_SEPARATOR+"BaseController.java";
-        templates.put(baseControllerOut,baseControllerTpl.render());
+        String baseControllerOut = paths.get(BASE_CONTROLLER) + ConstVal.FILE_SEPARATOR + "BaseController.java";
+        templates.put(baseControllerOut, baseControllerTpl.render());
 
         Template errorCodeEnumTpl = BeetlTemplateUtil.getByName("ErrorCode.btl");
         errorCodeEnumTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String errorCodeEnumOut = paths.get(ERROR_CODE_ENUM)+ConstVal.FILE_SEPARATOR+"ErrorCode.java";
-        templates.put(errorCodeEnumOut,errorCodeEnumTpl.render());
+        String errorCodeEnumOut = paths.get(ERROR_CODE_ENUM) + ConstVal.FILE_SEPARATOR + "ErrorCode.java";
+        templates.put(errorCodeEnumOut, errorCodeEnumTpl.render());
 
 
         Template gracefulTpl = BeetlTemplateUtil.getByName("ShutdownConfig.btl");
         gracefulTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String gracefulOut = paths.get(GRACE_FUL_SHUTDOWN)+ConstVal.FILE_SEPARATOR+"ShutdownConfig.java";
-        templates.put(gracefulOut,gracefulTpl.render());
+        String gracefulOut = paths.get(GRACE_FUL_SHUTDOWN) + ConstVal.FILE_SEPARATOR + "ShutdownConfig.java";
+        templates.put(gracefulOut, gracefulTpl.render());
 
-        Template druidCfgTpl = BeetlTemplateUtil.getByName("DruidConfig.btl");
-        druidCfgTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String druidCfgOut = paths.get(GRACE_FUL_SHUTDOWN)+ConstVal.FILE_SEPARATOR+"DruidConfig.java";
-        templates.put(druidCfgOut,druidCfgTpl.render());
+        if (GeneratorProperties.useDb()) {
+            Template druidCfgTpl = BeetlTemplateUtil.getByName("DruidConfig.btl");
+            druidCfgTpl.binding(GeneratorConstant.COMMON_VARIABLE);
+            String druidCfgOut = paths.get(GRACE_FUL_SHUTDOWN) + ConstVal.FILE_SEPARATOR + "DruidConfig.java";
+            templates.put(druidCfgOut, druidCfgTpl.render());
+        }
 
         return templates;
     }

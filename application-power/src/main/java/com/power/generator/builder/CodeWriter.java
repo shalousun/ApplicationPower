@@ -6,7 +6,6 @@ import com.power.generator.code.impl.*;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
 import com.power.generator.constant.SpringBootProjectConfig;
-import com.power.generator.database.Column;
 import com.power.generator.database.DbProvider;
 import com.power.generator.database.TableInfo;
 import com.power.generator.factory.DbProviderFactory;
@@ -39,7 +38,7 @@ public class CodeWriter extends AbstractCodeWriter {
         //创建代码
         writeCode(config);
         //创建项目所需基础类
-        writeBaseCode(config,false);
+        writeBaseCode(config, false);
 
         writeJTAForSpringMvc(config);
     }
@@ -63,7 +62,7 @@ public class CodeWriter extends AbstractCodeWriter {
         //创建assembly配置
         writeAssemblyConfig();
 
-        writeDbSourceAndJTACode(config,new SpringBootProjectConfig());
+        writeDbSourceAndJTACode(config, new SpringBootProjectConfig());
 
         new DockerCodeBuilder();
 
@@ -111,46 +110,32 @@ public class CodeWriter extends AbstractCodeWriter {
             } else {
                 template = BeetlTemplateUtil.getByName(key);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
+
                 //spring mybatis config
                 template.binding("mappingDir", basePackage.replaceAll("[.]", "/"));
-                template.binding("jdbcDriver","${jdbc.driver}");
+                template.binding("jdbcDriver", "${jdbc.driver}");
                 template.binding("jdbcUrl", "${jdbc.url}");
                 template.binding("jdbcUserName", "${jdbc.username}");
                 template.binding("jdbcPassword", "${jdbc.password}");
                 Set<String> dataSourceSet = GeneratorProperties.getMultipleDataSource();
-                Map<String,String> dataSourceMap = new HashMap<>();
+                Map<String, String> dataSourceMap = new HashMap<>();
                 int i = 0;
-                for(String str:dataSourceSet){
-                    dataSourceMap.put(StringUtil.firstToUpperCase(str),str);
-                    if(i==0){
+                for (String str : dataSourceSet) {
+                    dataSourceMap.put(StringUtil.firstToUpperCase(str), str);
+                    if (i == 0) {
                         template.binding("defaultDs", StringUtil.firstToUpperCase(str));
                     }
                     i++;
                 }
-                template.binding("dataSourceMap",dataSourceMap);
+                template.binding("dataSourceMap", dataSourceMap);
                 //pom
-                template.binding("projectVersion", "${project.version}");
-                template.binding("springVersion", "${spring.version}");
-                template.binding("mybatisVersion", "${mybatis.version}");
-                template.binding("jacksonVersion", "${jackson.version}");
-                template.binding("slf4jVersion", "${slf4j.version}");
-                template.binding("log4j2Version", "${log4j2.version}");
-                template.binding("atomikosVersion","${atomikos.version}");
-                template.binding("project_basedir","${project.basedir}");
-                template.binding("project_build_directory","${project.build.directory}");
-                template.binding("project_build_finalName","${project.build.finalName}");
-                template.binding("project_version","${project.version}");
-                template.binding("project_groupId","${project.groupId}");
                 template.binding("useAssembly", GeneratorProperties.getAssembly());
-                template.binding("useJTA",GeneratorProperties.isJTA());
-                template.binding("isMultipleDataSource",GeneratorProperties.isMultipleDataSource());
-                template.binding("jdkVersion","${java.version}");
-                template.binding("isUseDocker",GeneratorProperties.useDocker());
-                template.binding(GeneratorConstant.LOMBOK,GeneratorProperties.useLombok());
+                template.binding("useJTA", GeneratorProperties.isJTA());
+                template.binding("isMultipleDataSource", GeneratorProperties.isMultipleDataSource());
+                template.binding("isUseDocker", GeneratorProperties.useDocker());
+                template.binding(GeneratorConstant.LOMBOK, GeneratorProperties.useLombok());
                 //log4j2
-                template.binding("LOG_HOME", "${LOG_HOME}");
-                template.binding("LOG_PATH","${sys:logging.path}");
-                template.binding("CATALINA_HOME", "${CATALINA_HOME}");
+                template.binding("LOG_PATH", "${sys:logging.path}");
                 //mybatis config
                 template.binding("cacheEnabled", GeneratorProperties.enableCache());
 
@@ -159,13 +144,14 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding("dbUserName", YmlUtil.addDoubleQuote(dbProp.getProperty("jdbc.username")));
                 template.binding("dbPassword", YmlUtil.addDoubleQuote(dbProp.getProperty("jdbc.password")));
                 template.binding("dbDriver", dbProp.getProperty("jdbc.driver"));
-                template.binding("list",GeneratorProperties.getMultipleDataSource());
-                template.binding("isJTA",GeneratorProperties.isJTA());
+                template.binding("list", GeneratorProperties.getMultipleDataSource());
+                template.binding("isJTA", GeneratorProperties.isJTA());
+
                 FileUtil.writeFileNotAppend(template.render(), entry.getValue());
             }
         }
         template = BeetlTemplateUtil.getByName(ConstVal.TPL_GITIGNORE);
-        FileUtil.writeFileNotAppend(template.render(),config.getProjectPath().getBasePath()+"/.gitignore");
+        FileUtil.writeFileNotAppend(template.render(), config.getProjectPath().getBasePath() + "/.gitignore");
     }
 
     /**
@@ -174,38 +160,38 @@ public class CodeWriter extends AbstractCodeWriter {
      *
      * @param config
      */
-    private void writeBaseCode(ConfigBuilder config,boolean isSpringboot) {
+    private void writeBaseCode(ConfigBuilder config, boolean isSpringboot) {
         Map<String, String> dirMap = config.getPathInfo();
         for (Map.Entry<String, String> entry : dirMap.entrySet()) {
             String value = entry.getValue();
             String key = entry.getKey();
             if (ConstVal.SERVICE_TEST_PATH.equals(key)) {
                 String templateName = ConstVal.TPL_SERVICE_BASE_TEST;
-                if(isSpringboot){
+                if (isSpringboot) {
                     templateName = ConstVal.TPL_SPRING_BOOT_SERVICE_BASE_TEST;
                 }
                 Template template = BeetlTemplateUtil.getByName(templateName);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR+"ServiceBaseTest.java");
+                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR + "ServiceBaseTest.java");
             }
             if (ConstVal.CONTROLLER_TEST_PATH.equals(key)) {
                 String templateName = ConstVal.TPL_CONTROLLER_BASE_TEST;
-                if(isSpringboot){
+                if (isSpringboot) {
                     templateName = ConstVal.TPL_SPRING_BOOT_CONTROLLER_BASE_TEST;
                 }
                 Template template = BeetlTemplateUtil.getByName(templateName);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value+ ConstVal.FILE_SEPARATOR+"ControllerBaseTest.java");
+                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR + "ControllerBaseTest.java");
             }
             if (ConstVal.DATE_CONVERTER_PATH.equals(key)) {
                 Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_DATE_CONVERTER);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR+"DateConverter.java");
+                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR + "DateConverter.java");
             }
-            if(ConstVal.REST_ERROR_PATH.contains(key)){
+            if (ConstVal.REST_ERROR_PATH.contains(key)) {
                 Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_REST_ERROR);
                 template.binding(GeneratorConstant.COMMON_VARIABLE);
-                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR+ "RestExceptionHandler.java");
+                FileUtil.writeFileNotAppend(template.render(), value + ConstVal.FILE_SEPARATOR + "RestExceptionHandler.java");
             }
         }
     }
@@ -217,50 +203,50 @@ public class CodeWriter extends AbstractCodeWriter {
      */
     private void writeSpringBootBaseCode(ConfigBuilder config) {
         String basePackage = GeneratorProperties.basePackage();
-        writeBaseCode(config,true);
+        writeBaseCode(config, true);
 
         String appName = StringUtil.firstToUpperCase(StringUtil.hyphenLineToCamel(GeneratorProperties.applicationName()));
         //创建启动的主类
         Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_SPRING_BOOT_MAIN);
         template.binding(GeneratorConstant.COMMON_VARIABLE);
-        template.binding(GeneratorConstant.APP_NAME,appName);
+        template.binding(GeneratorConstant.APP_NAME, appName);
         String basePackagePath = PathUtil.joinPath(config.getProjectPath().getJavaSrcPath(), basePackage);
-        FileUtil.writeFileNotAppend(template.render(), basePackagePath + ConstVal.FILE_SEPARATOR+ appName+"Application.java");
+        FileUtil.writeFileNotAppend(template.render(), basePackagePath + ConstVal.FILE_SEPARATOR + appName + "Application.java");
     }
 
-    private void writeDbSourceAndJTACode(ConfigBuilder config, SpringBootProjectConfig projectConfig){
+    private void writeDbSourceAndJTACode(ConfigBuilder config, SpringBootProjectConfig projectConfig) {
         String basePackage = GeneratorProperties.basePackage();
         Map<String, String> dirMap = config.getPathInfo();
         Set<String> dataSources = GeneratorProperties.getMultipleDataSource();
-        if(GeneratorProperties.isJTA()||dataSources.size()>0){
+        if (GeneratorProperties.isJTA() || dataSources.size() > 0) {
             Template jtaTpl = BeetlTemplateUtil.getByName(ConstVal.TPL_JTA);
             jtaTpl.binding(GeneratorConstant.COMMON_VARIABLE);
 //            FileUtil.writeFileNotAppend(jtaTpl.render(),dirMap.get(ConstVal.DATA_SOURCE_FIG)+"\\TransactionManagerConfig.java");
         }
-        if(dataSources.size()>0){
+        if (dataSources.size() > 0) {
             String configPath = dirMap.get(ConstVal.DATA_SOURCE_FIG);
             Template aspectTpl = BeetlTemplateUtil.getByName(ConstVal.TPL_DATASOURCE_ASPECT);
             aspectTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(aspectTpl.render(),dirMap.get(ConstVal.ASPECT)+ ConstVal.FILE_SEPARATOR+ "DbAspect.java");
+            FileUtil.writeFileNotAppend(aspectTpl.render(), dirMap.get(ConstVal.ASPECT) + ConstVal.FILE_SEPARATOR + "DbAspect.java");
 
             DataSourceKeyBuilder sourceKeyBuilder = new DataSourceKeyBuilder();
-            String  dataSourceTpl = sourceKeyBuilder.builderDataSourceKey(dataSources);
-            FileUtil.writeFileNotAppend(dataSourceTpl,dirMap.get(ConstVal.CONSTANTS)+ ConstVal.FILE_SEPARATOR+ "DataSourceKey.java");
+            String dataSourceTpl = sourceKeyBuilder.builderDataSourceKey(dataSources);
+            FileUtil.writeFileNotAppend(dataSourceTpl, dirMap.get(ConstVal.CONSTANTS) + ConstVal.FILE_SEPARATOR + "DataSourceKey.java");
 
             Template abstractCfg = BeetlTemplateUtil.getByName(ConstVal.TPL_DATASOURCE_CFG);
             abstractCfg.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(abstractCfg.render(),configPath+ ConstVal.FILE_SEPARATOR+ "AbstractDataSourceConfig.java");
+            FileUtil.writeFileNotAppend(abstractCfg.render(), configPath + ConstVal.FILE_SEPARATOR + "AbstractDataSourceConfig.java");
 
             SpringBootMybatisCfgBuilder builder = new SpringBootMybatisCfgBuilder();
             String mybatisCfgTpl = builder.createMybatisCfg(dataSources);
-            FileUtil.writeFileNotAppend(mybatisCfgTpl,configPath+ ConstVal.FILE_SEPARATOR+ "MyBatisConfig.java");
+            FileUtil.writeFileNotAppend(mybatisCfgTpl, configPath + ConstVal.FILE_SEPARATOR + "MyBatisConfig.java");
         }
     }
 
     /**
      * assembly
      */
-    private void writeAssemblyConfig(){
+    private void writeAssemblyConfig() {
         new AssemblyCodeBuilder();
     }
 
@@ -269,7 +255,10 @@ public class CodeWriter extends AbstractCodeWriter {
      *
      * @param config
      */
-    private void writeCode(ConfigBuilder config) {
+    private boolean writeCode(ConfigBuilder config) {
+        if (!GeneratorProperties.useDb()) {
+            return false;
+        }
         Map<String, String> dirMap = config.getMybatisGenPath();
         List<TableInfo> tables = config.getTableInfo();
         DbProvider dbProvider = new DbProviderFactory().getInstance();
@@ -287,28 +276,29 @@ public class CodeWriter extends AbstractCodeWriter {
                 String key = entry.getKey();
                 IBuilder builder = null;
                 try {
-                    builder = (IBuilder)Class.forName(key).newInstance();
-                }catch (Exception e){
+                    builder = (IBuilder) Class.forName(key).newInstance();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 String template = builder.generateTemplate(tableInfo);
-                FileUtil.writeFileNotAppend(template, String.format(value,entityName));
+                FileUtil.writeFileNotAppend(template, String.format(value, entityName));
             }
         }
+        return true;
     }
 
-    private void writeJTAForSpringMvc(ConfigBuilder config){
+    private void writeJTAForSpringMvc(ConfigBuilder config) {
         Map<String, String> dirMap = config.getPathInfo();
         Set<String> dataSources = GeneratorProperties.getMultipleDataSource();
-        if(GeneratorProperties.isMultipleDataSource()){
+        if (GeneratorProperties.isMultipleDataSource()) {
             String configPath = dirMap.get(ConstVal.DATA_SOURCE_FIG);
             Template aspectTpl = BeetlTemplateUtil.getByName(ConstVal.TPL_DATASOURCE_ASPECT);
             aspectTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(aspectTpl.render(),dirMap.get(ConstVal.ASPECT)+ ConstVal.FILE_SEPARATOR+ "DbAspect.java");
+            FileUtil.writeFileNotAppend(aspectTpl.render(), dirMap.get(ConstVal.ASPECT) + ConstVal.FILE_SEPARATOR + "DbAspect.java");
 
             DataSourceKeyBuilder sourceKeyBuilder = new DataSourceKeyBuilder();
-            String  dataSourceTpl = sourceKeyBuilder.builderDataSourceKey(dataSources);
-            FileUtil.writeFileNotAppend(dataSourceTpl,dirMap.get(ConstVal.CONSTANTS)+ ConstVal.FILE_SEPARATOR+ "DataSourceKey.java");
+            String dataSourceTpl = sourceKeyBuilder.builderDataSourceKey(dataSources);
+            FileUtil.writeFileNotAppend(dataSourceTpl, dirMap.get(ConstVal.CONSTANTS) + ConstVal.FILE_SEPARATOR + "DataSourceKey.java");
         }
     }
 }

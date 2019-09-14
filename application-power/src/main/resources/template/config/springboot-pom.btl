@@ -23,31 +23,6 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
-
-        <!-- mybatis spring -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-        <!--pagehelper-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.10</version>
-        </dependency>
-        <!-- ali druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.20</version>
-        </dependency>
-        <!-- mysql driver-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.15</version>
-        </dependency>
         <!-- spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -76,6 +51,42 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <!-- Spring boot actuator to expose metrics endpoint -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Micrometer Prometheus registry  -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <%if(useDb){ %>
+        <!-- mybatis spring -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <!--pagehelper-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+        <!-- ali druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.20</version>
+        </dependency>
+        <!-- mysql driver-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.15</version>
+        </dependency>
+        <%} %>
          <!--log4j2 Asynchronous Loggers requires disruptor-->
         <dependency>
             <groupId>com.lmax</groupId>
@@ -165,14 +176,14 @@
                 <version>1.2.1</version>
                 <configuration>
                     <!--<dockerHost>http://192.168.248.135:2376</dockerHost>-->
-                    <imageName>${project_groupId}/${project_build_finalName}:${project_version}</imageName>
-                    <dockerDirectory>${project_basedir}/src/main/docker</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <directory>${project_build_directory}</directory>
-                            <include>${project_build_finalName}.jar</include>
-                        </resource>
-                    </resources>
+                   <imageName>\${project.groupId}/\${project.build.finalName}:\${project.version}</imageName>
+                   <dockerDirectory>\${project.basedir}/src/main/docker</dockerDirectory>
+                   <resources>
+                       <resource>
+                           <directory>\${project.build.directory}</directory>
+                           <include>\${project.build.finalName}.jar</include>
+                       </resource>
+                   </resources>
                 </configuration>
             </plugin>
             <%} %>
@@ -181,8 +192,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${jdkVersion}</source>
-                    <target>${jdkVersion}</target>
+                    <source>\${java.version}</source>
+                    <target>\${java.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

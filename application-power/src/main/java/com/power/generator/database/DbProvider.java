@@ -16,9 +16,10 @@ public interface DbProvider {
 
     /**
      * 获取所有表信息
+     *
      * @param tableName 表名
-     * @param filter 表名过滤器
+     * @param filter    表名过滤器
      * @return
      */
-    List<TableInfo> getTablesInfo(String tableName,String filter);
+    List<TableInfo> getTablesInfo(String tableName, String filter);
 }

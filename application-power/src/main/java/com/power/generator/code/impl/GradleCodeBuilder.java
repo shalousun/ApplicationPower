@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * build artifact of gradle project
+ *
  * @author yu 2018/06/03.
  */
 public class GradleCodeBuilder implements ICodeBuilder {
@@ -28,10 +29,10 @@ public class GradleCodeBuilder implements ICodeBuilder {
     /**
      * store paths for gradle project config
      */
-    private Map<String,String> paths;
+    private Map<String, String> paths;
 
-    public GradleCodeBuilder(){
-        if(GeneratorProperties.useGradle()){
+    public GradleCodeBuilder() {
+        if (GeneratorProperties.useGradle()) {
             buildPath();
             buildCode();
         }
@@ -42,9 +43,9 @@ public class GradleCodeBuilder implements ICodeBuilder {
         // init path
         paths = new HashMap<>();
         String basePath = getBasePath();
-        String wrapperPath = getBasePath() + ConstVal.FILE_SEPARATOR +ConstVal.GRADLE_WRAPPER;
-        paths.put(WRAPPER_PATH,wrapperPath);
-        paths.put("basePath",basePath);
+        String wrapperPath = getBasePath() + ConstVal.FILE_SEPARATOR + ConstVal.GRADLE_WRAPPER;
+        paths.put(WRAPPER_PATH, wrapperPath);
+        paths.put("basePath", basePath);
         paths.put(ConstVal.GRADLE_BIN, PathUtil.connectPath(basePath, ConstVal.GRADLE_BIN));
         PathUtil.mkdirs(paths);
 
@@ -60,33 +61,33 @@ public class GradleCodeBuilder implements ICodeBuilder {
         CodeWriteUtil.writeFileNotAppend(handleTemplates());
         String basePath = getBasePath();
         //copy gradlew
-        CodeWriteUtil.nioCopy("template/gradle/gradlew",PathUtil.connectPath(basePath,"gradlew"));
+        CodeWriteUtil.nioCopy("template/gradle/gradlew", PathUtil.connectPath(basePath, "gradlew"));
         //copy gradlew.bat
-        CodeWriteUtil.nioCopy("template/gradle/gradlew.bat",PathUtil.connectPath(basePath,"gradlew.bat"));
+        CodeWriteUtil.nioCopy("template/gradle/gradlew.bat", PathUtil.connectPath(basePath, "gradlew.bat"));
         //copy wrapper
-       CodeWriteUtil.nioCopyDir("template/gradle/wrapper/",paths.get(WRAPPER_PATH));
+        CodeWriteUtil.nioCopyDir("template/gradle/wrapper/", paths.get(WRAPPER_PATH));
 
     }
 
     @Override
     public Map<String, String> handleTemplates() {
         //key is path ,value is template content
-        Map<String,String> templates = new HashMap<>();
+        Map<String, String> templates = new HashMap<>();
         //init settings
         Template settingsTpl = BeetlTemplateUtil.getByName(SETTINGS_TPL);
         settingsTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String settingsOut = PathUtil.connectPath(getBasePath(),"settings.gradle");
-        templates.put(settingsOut,settingsTpl.render());
+        String settingsOut = PathUtil.connectPath(getBasePath(), "settings.gradle");
+        templates.put(settingsOut, settingsTpl.render());
 
         Template buildTpl = BeetlTemplateUtil.getByName(BUILD_TPL);
-        buildTpl.binding("basePackage",GeneratorProperties.basePackage());
-        buildTpl.binding("springBootVersion","${springBootVersion}");
+        buildTpl.binding("basePackage", GeneratorProperties.basePackage());
+        buildTpl.binding("springBootVersion", "${springBootVersion}");
         buildTpl.binding("useJTA", GeneratorProperties.isJTA());
-        buildTpl.binding("isMultipleDataSource",GeneratorProperties.isMultipleDataSource());
-        buildTpl.binding("jdkVersion","${java.version}");
-        buildTpl.binding("isUseDocker",GeneratorProperties.useDocker());
-        String buildOut = PathUtil.connectPath(getBasePath(),"build.gradle");
-        templates.put(buildOut,buildTpl.render());
+        buildTpl.binding("isMultipleDataSource", GeneratorProperties.isMultipleDataSource());
+        buildTpl.binding("jdkVersion", "${java.version}");
+        buildTpl.binding("isUseDocker", GeneratorProperties.useDocker());
+        String buildOut = PathUtil.connectPath(getBasePath(), "build.gradle");
+        templates.put(buildOut, buildTpl.render());
 
         return templates;
     }

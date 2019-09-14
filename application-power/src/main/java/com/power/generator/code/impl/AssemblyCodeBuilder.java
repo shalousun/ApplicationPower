@@ -62,7 +62,7 @@ public class AssemblyCodeBuilder implements ICodeBuilder {
         //复制assembly.xml
         String assemblyRoot = paths.get(ConstVal.ASSEMBLY_DIR);
         String assemblyXml = Thread.currentThread().getContextClassLoader().getResource(ConstVal.TPL_ASSEMBLY_XML).getPath();
-        FileUtil.nioTransferCopy(new File(assemblyXml), new File(assemblyRoot +  ConstVal.FILE_SEPARATOR +"assembly.xml"));
+        FileUtil.nioTransferCopy(new File(assemblyXml), new File(assemblyRoot + ConstVal.FILE_SEPARATOR + "assembly.xml"));
 
         Map<String, String> templatesMap = handleTemplates();
         CodeWriteUtil.writeFileNotAppend(templatesMap);

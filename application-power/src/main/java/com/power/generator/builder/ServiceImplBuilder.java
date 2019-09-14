@@ -3,14 +3,10 @@ package com.power.generator.builder;
 import com.power.common.util.StringUtil;
 import com.power.generator.constant.ConstVal;
 import com.power.generator.constant.GeneratorConstant;
-import com.power.generator.database.Column;
 import com.power.generator.database.TableInfo;
 import com.power.generator.utils.BeetlTemplateUtil;
-
 import com.power.generator.utils.GeneratorProperties;
 import org.beetl.core.Template;
-
-import java.util.Map;
 
 /**
  * 生成service层实现模板
@@ -26,7 +22,7 @@ public class ServiceImplBuilder implements IBuilder {
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(entityName);//类名
         String firstLowName = StringUtil.firstToLowerCase(entitySimpleName);
         Template serviceImplTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_SERVICEIMPL);
-        serviceImplTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE,tableInfo.getPrimaryKeyType());
+        serviceImplTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE, tableInfo.getPrimaryKeyType());
         serviceImplTemplate.binding(GeneratorConstant.COMMON_VARIABLE);//作者
         serviceImplTemplate.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         serviceImplTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
