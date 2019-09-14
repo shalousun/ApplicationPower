@@ -6,6 +6,10 @@ import com.power.generator.constant.SpringBootProjectConfig;
 import com.power.generator.database.DbProvider;
 import com.power.generator.factory.DbProviderFactory;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
 /**
  * Created by yu on 2016/12/10.
  */
@@ -49,6 +53,14 @@ public abstract class AbstractCodeWriter {
             config = new ConfigBuilder(dataBaseInfo, packageConfig, springBootProjectConfig);
 
         }
+    }
+
+    /**
+     * 获取线程池数用于并发写文件
+     * @return
+     */
+    protected ExecutorService getExecutors(){
+        return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2);
     }
 
     public DbProvider getDataBaseInfo() {

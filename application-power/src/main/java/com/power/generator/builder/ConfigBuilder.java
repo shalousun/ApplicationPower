@@ -134,7 +134,11 @@ public class ConfigBuilder {
      * @param dbProvider
      */
     private void getTableInfoList(DbProvider dbProvider) {
-        tableInfo = dbProvider.getTablesInfo(GeneratorProperties.getTableName(), GeneratorProperties.tableFilterPrefix());
+        if(null != dbProvider) {
+            tableInfo = dbProvider.getTablesInfo(GeneratorProperties.getTableName(), GeneratorProperties.tableFilterPrefix());
+        }else{
+            tableInfo = new ArrayList<>(0);
+        }
     }
 
     /**

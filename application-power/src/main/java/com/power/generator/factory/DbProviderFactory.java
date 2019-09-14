@@ -4,6 +4,7 @@ import com.power.generator.database.DbProperties;
 import com.power.generator.database.DbProvider;
 import com.power.generator.database.MySqlProvider;
 import com.power.generator.database.OracleProvider;
+import com.power.generator.utils.GeneratorProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,9 @@ public class DbProviderFactory {
     }
 
     public DbProvider getInstance() {
+        if(!GeneratorProperties.useDb()){
+            return null;
+        }
         String driverName = this.properties.getDriver();
         if (!drivers.contains(driverName)) {
             throw new RuntimeException("Can't support your db driver name.");
