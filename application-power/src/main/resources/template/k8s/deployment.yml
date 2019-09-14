@@ -57,13 +57,13 @@ spec:
         - name: ${applicationNameLowerCase}
           image: your-registry/your-registry-project/${basePackage}/${applicationNameLowerCase}:1.0
           imagePullPolicy: Always
-#          resources:
-#            requests:
-#              cpu: 100m
-#              memory: 100Mi
-#            limits:
-#              cpu: 100m
-#              memory: 100Mi
+          resources:
+            requests:
+              cpu: 1
+              memory: 100Mi
+            limits:
+              cpu: 1
+              memory: 100Mi
           env:
               - name:  JAVA_OPTS
               # Override the jvm param setting in dockerfile
