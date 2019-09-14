@@ -35,11 +35,11 @@ public class CasRefererFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        if (isExcluded(req)){
+        if (isExcluded(req)) {
             chain.doFilter(request, response);
             return;
-        }else{
-            req.getRequestDispatcher("/hhhhhhhhh").forward(request,response);
+        } else {
+            req.getRequestDispatcher("/hhhhhhhhh").forward(request, response);
         }
 
     }
@@ -47,7 +47,7 @@ public class CasRefererFilter implements Filter {
 
     private boolean isExcluded(HttpServletRequest request) {
         String referer = request.getHeader("referer");
-        if(null == referer){
+        if (null == referer) {
             return true;
         }
         return includeServices.contains(referer);

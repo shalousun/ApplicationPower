@@ -5,17 +5,19 @@ import java.io.FilenameFilter;
 
 /**
  * 文件过滤器
- * @author sunyu
  *
+ * @author sunyu
  */
 public class FileNameFilter implements FilenameFilter {
-	String extension = ".";
-	public FileNameFilter(String fileExtensionNoDot) {
-		extension += fileExtensionNoDot;
-	}
-	@Override
-	public boolean accept(File dir, String name) {
-		return name.endsWith(extension);
-	}
+    String extension = ".";
+
+    public FileNameFilter(String fileExtensionNoDot) {
+        extension += fileExtensionNoDot;
+    }
+
+    @Override
+    public boolean accept(File dir, String name) {
+        return name.endsWith(extension);
+    }
 
 }

@@ -22,19 +22,20 @@ public class DirUtil {
      * Copies a directory tree
      *
      * @param from from
-     * @param to to
+     * @param to   to
      */
-    public static void copy(Path from, Path to)  {
+    public static void copy(Path from, Path to) {
         validate(from);
         try {
-            Files.walkFileTree(from, EnumSet.of(FileVisitOption.FOLLOW_LINKS),Integer.MAX_VALUE,new CopyDirVisitor(from, to));
-        }catch (IOException e){
+            Files.walkFileTree(from, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE, new CopyDirVisitor(from, to));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * validate path
+     *
      * @param paths array of path
      */
     private static void validate(Path... paths) {

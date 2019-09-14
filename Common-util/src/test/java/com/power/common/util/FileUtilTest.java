@@ -11,7 +11,7 @@ import org.junit.Test;
 public class FileUtilTest {
 
     @Test
-    public void testToSuffix(){
+    public void testToSuffix() {
         System.out.println(FileUtil.toSuffix("me.java"));
     }
 }

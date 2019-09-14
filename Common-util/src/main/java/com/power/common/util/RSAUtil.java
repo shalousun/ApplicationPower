@@ -23,17 +23,12 @@ import java.util.Map;
  */
 public class RSAUtil {
 
-    private static final String RSA_ECB_PADDING = "RSA/ECB/PKCS1Padding";
-
     public static final String PUBLIC_KEY = "publicKey";
-
     public static final String PRIVATE_KEY = "privateKey";
-
-    private static final String KEY_ALGORITHM = "RSA";
-
     public static final String CHARSET = "UTF-8";
-
     public static final int KEY_SIZE = 2048;
+    private static final String RSA_ECB_PADDING = "RSA/ECB/PKCS1Padding";
+    private static final String KEY_ALGORITHM = "RSA";
 
     /**
      * * 生成密钥对 *
@@ -54,6 +49,7 @@ public class RSAUtil {
 
     /**
      * map中的公钥和私钥都经过base64编码
+     *
      * @param keySize size of key
      * @return map
      */
@@ -76,20 +72,22 @@ public class RSAUtil {
 
     /**
      * 根据秘钥对KeyPair获取公钥
+     *
      * @param keyPair KeyPair
      * @return String
      */
-    public static String getPublicKey(KeyPair keyPair){
+    public static String getPublicKey(KeyPair keyPair) {
         Key publicKey = keyPair.getPublic();
         return Base64.encodeBase64URLSafeString(publicKey.getEncoded());
     }
 
     /**
      * 根据秘钥对KeyPair获取私钥
+     *
      * @param keyPair KeyPair
      * @return String
      */
-    public static String getPrivateKey(KeyPair keyPair){
+    public static String getPrivateKey(KeyPair keyPair) {
         Key privateKey = keyPair.getPrivate();
         return Base64.encodeBase64URLSafeString(privateKey.getEncoded());
     }
@@ -211,7 +209,7 @@ public class RSAUtil {
     /**
      * 私钥解密
      *
-     * @param plaintext 待加密的字符串
+     * @param plaintext  待加密的字符串
      * @param privateKey 字符串公钥
      * @return String
      */

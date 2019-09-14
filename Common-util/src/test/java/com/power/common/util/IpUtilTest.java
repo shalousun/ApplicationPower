@@ -8,7 +8,7 @@ import org.junit.Test;
 public class IpUtilTest {
 
     @Test
-    public void testGetIpAddress(){
+    public void testGetIpAddress() {
 
     }
 }

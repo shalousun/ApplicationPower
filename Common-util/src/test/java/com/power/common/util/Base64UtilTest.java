@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Base64UtilTest {
 
     @Test
-    public void test() throws Exception{
+    public void test() throws Exception {
 
         String str = "F++/vWvvv73vv70gKO+/vQ9G77+9fuSAug==";
 
@@ -21,7 +21,7 @@ public class Base64UtilTest {
 
         byte[] b = strBase.getBytes(Charset.DEFAULT_CHARSET);
 
-        System.out.println(Arrays.equals(a,b));
+        System.out.println(Arrays.equals(a, b));
 
     }
 }

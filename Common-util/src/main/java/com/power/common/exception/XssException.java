@@ -8,7 +8,7 @@ package com.power.common.exception;
  */
 public class XssException extends RuntimeException {
 
-    public XssException(String message){
+    public XssException(String message) {
         super(message);
     }
 }

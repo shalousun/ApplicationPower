@@ -5,7 +5,7 @@ package com.power.common.exception;
  */
 public class IPException extends RuntimeException {
 
-    public IPException(String message){
+    public IPException(String message) {
         super(message);
     }
 

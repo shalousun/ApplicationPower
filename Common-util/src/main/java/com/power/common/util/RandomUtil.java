@@ -9,19 +9,24 @@ import java.util.Random;
  */
 public class RandomUtil {
 
-    private static String FORMAT = "0.00";
-
-    private static Random random = new Random();
-
-    /** random selected numbers */
+    /**
+     * random selected numbers
+     */
     private static final String BASE_NUMBER = "0123456789";
-    /** random selected characters */
+    /**
+     * random selected characters
+     */
     private static final String BASE_CHAR = "abcdefghijklmnopqrstuvwxyz";
-    /** random selected characters and numbers */
+    /**
+     * random selected characters and numbers
+     */
     private static final String BASE_CHAR_NUMBER = BASE_CHAR + BASE_NUMBER;
+    private static String FORMAT = "0.00";
+    private static Random random = new Random();
 
     /**
      * random int value between min and max
+     *
      * @param min min value
      * @param max max value
      * @return int value
@@ -32,14 +37,17 @@ public class RandomUtil {
 
     /**
      * random int value between o and limit
+     *
      * @param limit limit of max value
      * @return int value
      */
     public static int randomInt(int limit) {
         return random.nextInt(limit);
     }
+
     /**
      * random int value
+     *
      * @return int value
      */
     public static int randomInt() {
@@ -48,25 +56,28 @@ public class RandomUtil {
 
     /**
      * random long
+     *
      * @return long value
      */
-    public static long randomLong(){
+    public static long randomLong() {
         return random.nextLong();
     }
 
     /**
      * random long value between min and max
+     *
      * @param min min value
      * @param max max value
      * @return long value
      */
-    public static long randomLong(long min,long max){
+    public static long randomLong(long min, long max) {
         long rangeLong = min + (((long) (new Random().nextDouble() * (max - min))));
         return rangeLong;
     }
 
     /**
      * random string that only contains numbers and letters
+     *
      * @param length length of String
      * @return random string
      */
@@ -76,6 +87,7 @@ public class RandomUtil {
 
     /**
      * random string that only contains numbers
+     *
      * @param length length of String
      * @return random string
      */
@@ -86,8 +98,9 @@ public class RandomUtil {
 
     /**
      * random string from base characters
+     *
      * @param baseString base characters
-     * @param length length of String
+     * @param length     length of String
      * @return random string
      */
     public static String randomString(String baseString, int length) {
@@ -106,6 +119,7 @@ public class RandomUtil {
 
     /**
      * random double value between min and max
+     *
      * @param min min value
      * @param max max value
      * @return double
@@ -116,23 +130,26 @@ public class RandomUtil {
 
     /**
      * random double value between 0 and 100
+     *
      * @return double
      */
-    public static double randomDouble(){
-        return randomDouble(0.00,100.00);
+    public static double randomDouble() {
+        return randomDouble(0.00, 100.00);
     }
 
     /**
      * random double value between 0 and 100
+     *
      * @param format number format
      * @return String
      */
-    public static String randomDouble(String format){
+    public static String randomDouble(String format) {
         return new DecimalFormat(format).format(randomDouble());
     }
 
     /**
      * Generate random initial values based on type
+     *
      * @param type type of object
      * @return string
      */
@@ -144,14 +161,14 @@ public class RandomUtil {
                 return randomString(1);
             case "Integer":    //4
                 return String.valueOf(randomInt(1000));
-            case "int" :
+            case "int":
                 return String.valueOf(randomInt(1000));
             case "Long": //-5
                 return String.valueOf(randomInt(1000));
             case "long":
-               return String.valueOf(randomInt(1000));
+                return String.valueOf(randomInt(1000));
             case "Double": //8
-                return  String.valueOf(randomDouble(FORMAT));
+                return String.valueOf(randomDouble(FORMAT));
             case "double":
                 return String.valueOf(randomDouble(FORMAT));
             case "Float": //6
@@ -159,27 +176,27 @@ public class RandomUtil {
             case "float":
                 return String.valueOf(randomDouble(FORMAT));
             case "short":
-                return String.valueOf(randomInt(0,32767));
+                return String.valueOf(randomInt(0, 32767));
             case "Short":
-                return String.valueOf(randomInt(0,32767));
+                return String.valueOf(randomInt(0, 32767));
             case "boolean":
-                return  "true";
+                return "true";
             case "Boolean":
-                return  "true";
+                return "true";
             case "BigDecimal":    //3
-                return  String.valueOf(randomInt(1000));
+                return String.valueOf(randomInt(1000));
             case "BigInteger":
-                return  String.valueOf(randomInt(1000));
+                return String.valueOf(randomInt(1000));
             case "Time":  //91
-                return DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
+                return DateTimeUtil.dateToStr(new Date(), "yyyy-MM-dd");
             case "Date":
-               return DateTimeUtil.dateToStr(new Date(),"yyyy-MM-dd");
+                return DateTimeUtil.dateToStr(new Date(), "yyyy-MM-dd");
             case "LocalDate":
-                return DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_DAY);
+                return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_DAY);
             case "Timestamp":  //91
-                return DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
+                return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_SECOND);
             case "LocalDateTime":
-                return DateTimeUtil.long2Str(System.currentTimeMillis(),DateTimeUtil.DATE_FORMAT_SECOND);
+                return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_SECOND);
             default:
                 return randomString(6);
         }

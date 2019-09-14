@@ -10,17 +10,19 @@ public class UUIDUtil {
 
     /**
      * uuid
+     *
      * @return string
      */
-    public static String getUuid(){
+    public static String getUuid() {
         return UUID.randomUUID().toString();
     }
 
     /**
      * 32位uuid
+     *
      * @return string
      */
-    public static String getUuid32(){
-        return UUID.randomUUID().toString().replace("-","");
+    public static String getUuid32() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 }

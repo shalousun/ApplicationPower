@@ -30,6 +30,7 @@ public class RewriteFilter extends AbstractUrlMatcher implements Filter {
     private Set<String> urlPatterns = null;//配置例外url
 
     private String rewriteTo = null;
+
     @Override
     public void init(FilterConfig cfg) throws ServletException {
         //配置拦击
@@ -50,8 +51,8 @@ public class RewriteFilter extends AbstractUrlMatcher implements Filter {
         String context = request.getContextPath();
         //匹配的路径重写
         if (isMatches(urlPatterns, servletPath)) {
-            req.getRequestDispatcher(context+"/"+rewriteTo).forward(req, resp);
-        }else{
+            req.getRequestDispatcher(context + "/" + rewriteTo).forward(req, resp);
+        } else {
             chain.doFilter(req, resp);
         }
     }

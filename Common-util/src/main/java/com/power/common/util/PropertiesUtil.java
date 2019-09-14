@@ -11,6 +11,7 @@ public class PropertiesUtil {
 
     /**
      * 从文件读取属性文件
+     *
      * @param filename file name
      * @return properties
      * @throws IOException io exception

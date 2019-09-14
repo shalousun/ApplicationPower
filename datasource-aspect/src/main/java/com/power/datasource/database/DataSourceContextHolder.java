@@ -11,17 +11,7 @@ public class DataSourceContextHolder {
 
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
 
-    public static List<String> dataSourceKeys =new ArrayList<>();
-
-    /**
-     * 设置当前数据库。
-     *
-     * @param dbType
-     */
-    public static void setDatasourceType(String dbType) {
-        contextHolder.set(dbType);
-
-    }
+    public static List<String> dataSourceKeys = new ArrayList<>();
 
     /**
      * 取得当前数据源。
@@ -34,6 +24,16 @@ public class DataSourceContextHolder {
     }
 
     /**
+     * 设置当前数据库。
+     *
+     * @param dbType
+     */
+    public static void setDatasourceType(String dbType) {
+        contextHolder.set(dbType);
+
+    }
+
+    /**
      * 清除上下文数据
      */
     public static void clearDatasourceType() {
@@ -41,11 +41,10 @@ public class DataSourceContextHolder {
     }
 
     /**
-     *
      * @param dataSourceId
      * @return
      */
-    public static boolean containsDataSource(String dataSourceId){
+    public static boolean containsDataSource(String dataSourceId) {
         return dataSourceKeys.contains(dataSourceId);
     }
 

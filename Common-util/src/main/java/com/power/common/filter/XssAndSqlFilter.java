@@ -14,12 +14,13 @@ import java.util.Set;
 /**
  * 通用xss和sql注入拦截过滤器
  */
-public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter  {
+public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter {
 
     public static final String IGNORES = "ignores";
     FilterConfig filterConfig = null;
 
     private Set<String> excluded = null;
+
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
         String excludedString = filterConfig.getInitParameter(IGNORES);
@@ -36,7 +37,7 @@ public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter  {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+                         FilterChain chain) throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpServletRequest req = (HttpServletRequest) request;
         //res.setHeader("Content-Security-Policy", "frame-ancestors 'self'");
@@ -46,9 +47,9 @@ public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter  {
         // Disabling browsers to perform risky mime sniffing
         res.addHeader("X-Content-Type-Options", "nosniff");
 //        res.setHeader("X-Frame-Options","sameorigin");
-        if(isExcluded(req)){
-            chain.doFilter(request,response);
-        }else{
+        if (isExcluded(req)) {
+            chain.doFilter(request, response);
+        } else {
             chain.doFilter(new XssHttpServletRequestWrapper(
                     (HttpServletRequest) request), response);
         }
@@ -56,11 +57,12 @@ public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter  {
 
     /**
      * 判断是否是例外接口例外
+     *
      * @param request
      * @return
      */
     private boolean isExcluded(HttpServletRequest request) {
         String url0 = request.getRequestURI();
-        return this.isMatches(excluded,url0);
+        return this.isMatches(excluded, url0);
     }
 }

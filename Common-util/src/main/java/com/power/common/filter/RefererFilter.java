@@ -17,9 +17,8 @@ import java.util.Set;
  */
 public class RefererFilter implements Filter {
 
-    private static final long serialVersionUID = 1L;
-
     public static final String IGNORES = "ignores";
+    private static final long serialVersionUID = 1L;
     private Set<String> excluded = null;
 
     @Override
@@ -38,10 +37,10 @@ public class RefererFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         // 链接来源地址
-        if(isExcluded(request)){
+        if (isExcluded(request)) {
             chain.doFilter(request, response);
-        }else{
-            request.getRequestDispatcher("/aa").forward(request,response);
+        } else {
+            request.getRequestDispatcher("/aa").forward(request, response);
         }
     }
 
@@ -51,20 +50,21 @@ public class RefererFilter implements Filter {
 
     /**
      * 判断是否是例外referer
+     *
      * @param request
      * @return
      */
     private boolean isExcluded(HttpServletRequest request) {
         String referer = request.getHeader("referer");
-        if(StringUtil.isEmpty(referer)){
+        if (StringUtil.isEmpty(referer)) {
             return true;
         }
         String severName = request.getServerName();
-        if(referer.contains(severName)){
+        if (referer.contains(severName)) {
             return true;
         }
-        for(String url:excluded){
-            if(referer.contains(url)){
+        for (String url : excluded) {
+            if (referer.contains(url)) {
                 return true;
             }
         }

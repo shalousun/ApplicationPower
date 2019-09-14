@@ -7,6 +7,6 @@ public class IdCardUtilTest {
 
     public static void main(String[] args) {
         String idCard = IDCardUtil.getIdCard();
-        System.out.println("IdCard:"+idCard);
+        System.out.println("IdCard:" + idCard);
     }
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * okhttp3异步测试
+ *
  * @author yu 2019/3/18.
  */
 public class OkHttp3UtilAsyncTest {
@@ -17,9 +18,9 @@ public class OkHttp3UtilAsyncTest {
     public static void main(String[] args) {
         String url = "http://www.baidu.com";
 
-        Map<String,String> map = new HashMap<>();
-        map.put("ok","ok");
-        OkHttp3Util.asyncGet(url,map, new Callback() {
+        Map<String, String> map = new HashMap<>();
+        map.put("ok", "ok");
+        OkHttp3Util.asyncGet(url, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 //do something

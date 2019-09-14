@@ -23,22 +23,19 @@ import java.util.Set;
  */
 public class IpFilter implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IpFilter.class);
     /**
      * ip白名单
      */
     public static final String ALLOW = "allow";
-
     /**
      * ip黑名单
      */
     public static final String DENY = "deny";
-
     /**
      * 响应信息
      */
     public static final String MSG = "msg";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(IpFilter.class);
     private Set<String> allowSet = null;
 
     private Set<String> denySet = null;

@@ -1,8 +1,6 @@
 package com.power.common.util;
 
 
-
-
 import com.power.common.constants.Charset;
 
 import java.io.UnsupportedEncodingException;
@@ -10,6 +8,7 @@ import java.util.Base64;
 
 /**
  * base64工具类
+ *
  * @author yu 2018/12/08.
  */
 public class Base64Util {
@@ -33,8 +32,8 @@ public class Base64Util {
     public static byte[] decryptBASE64(String encryptedData) {
         try {
             return decryptBASE64(encryptedData.getBytes(Charset.DEFAULT_CHARSET));
-        }catch (UnsupportedEncodingException e){
-            throw new RuntimeException("不支持的编码方式："+e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("不支持的编码方式：" + e);
         }
     }
 
@@ -45,10 +44,10 @@ public class Base64Util {
      * @return String
      */
     public static String decryptToString(String encryptedData) {
-        try{
+        try {
             return decryptToString(encryptedData.getBytes(Charset.DEFAULT_CHARSET));
-        }catch (UnsupportedEncodingException e){
-            throw new RuntimeException("不支持的编码方式："+e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("不支持的编码方式：" + e);
         }
     }
 
@@ -81,8 +80,8 @@ public class Base64Util {
     public static byte[] encryptBASE64(String plaintext) {
         try {
             return encryptBASE64(plaintext.getBytes(Charset.DEFAULT_CHARSET));
-        }catch (UnsupportedEncodingException e){
-            throw new RuntimeException("不支持的编码方式："+e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("不支持的编码方式：" + e);
         }
     }
 
@@ -93,10 +92,10 @@ public class Base64Util {
      * @return String
      */
     public static String encryptToString(String plaintext) {
-        try{
+        try {
             return encryptToString(plaintext.getBytes(Charset.DEFAULT_CHARSET));
-        }catch (UnsupportedEncodingException e){
-            throw new RuntimeException("不支持的编码方式："+e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("不支持的编码方式：" + e);
         }
     }
 

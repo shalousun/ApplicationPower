@@ -12,7 +12,7 @@ import java.security.SecureRandom;
  */
 public class SSLSocketFactoryBuilder {
 
-    public static SSLSocketFactory getSslSocketFactory(){
+    public static SSLSocketFactory getSslSocketFactory() {
         try {
             //信任任何链接
             SSLContext sslContext = SSLContext.getInstance("TLS");

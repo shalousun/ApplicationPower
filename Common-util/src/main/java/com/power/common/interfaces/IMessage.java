@@ -7,12 +7,14 @@ public interface IMessage {
 
     /**
      * error code
+     *
      * @return String
      */
     String getCode();
 
     /**
      * error message
+     *
      * @return String
      */
     String getMessage();

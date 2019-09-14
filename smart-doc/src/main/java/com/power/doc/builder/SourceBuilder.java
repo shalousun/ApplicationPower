@@ -50,21 +50,13 @@ public class SourceBuilder {
 
 
     public Map<String, JavaClass> javaFilesMap = new HashMap<>();
-
-    private JavaProjectBuilder builder;
-
-    private Collection<JavaClass> javaClasses;
-
-    private boolean isStrict;//严格模式
-
-    private String packageMatch;
-
-    private List<ApiReqHeader> headers;
-
-    private String appUrl;
-
-
     public Map<String, CustomRespField> fieldMap = new HashMap<>();
+    private JavaProjectBuilder builder;
+    private Collection<JavaClass> javaClasses;
+    private boolean isStrict;//严格模式
+    private String packageMatch;
+    private List<ApiReqHeader> headers;
+    private String appUrl;
 
     /**
      * if isStrict value is true,it while check all method

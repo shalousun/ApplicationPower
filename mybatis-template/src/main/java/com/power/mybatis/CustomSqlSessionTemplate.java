@@ -32,14 +32,6 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
     private Map<Object, SqlSessionFactory> targetSqlSessionFactorys;
     private SqlSessionFactory defaultTargetSqlSessionFactory;
 
-    public void setTargetSqlSessionFactorys(Map<Object, SqlSessionFactory> targetSqlSessionFactorys) {
-        this.targetSqlSessionFactorys = targetSqlSessionFactorys;
-    }
-
-    public void setDefaultTargetSqlSessionFactory(SqlSessionFactory defaultTargetSqlSessionFactory) {
-        this.defaultTargetSqlSessionFactory = defaultTargetSqlSessionFactory;
-    }
-
     public CustomSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         this(sqlSessionFactory, sqlSessionFactory.getConfiguration().getDefaultExecutorType());
     }
@@ -56,9 +48,17 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
         this.executorType = executorType;
         this.exceptionTranslator = exceptionTranslator;
 
-        this.sqlSessionProxy = (SqlSession) newProxyInstance(SqlSessionFactory.class.getClassLoader(), new Class[] { SqlSession.class }, new SqlSessionInterceptor());
+        this.sqlSessionProxy = (SqlSession) newProxyInstance(SqlSessionFactory.class.getClassLoader(), new Class[]{SqlSession.class}, new SqlSessionInterceptor());
 
         this.defaultTargetSqlSessionFactory = sqlSessionFactory;
+    }
+
+    public void setTargetSqlSessionFactorys(Map<Object, SqlSessionFactory> targetSqlSessionFactorys) {
+        this.targetSqlSessionFactorys = targetSqlSessionFactorys;
+    }
+
+    public void setDefaultTargetSqlSessionFactory(SqlSessionFactory defaultTargetSqlSessionFactory) {
+        this.defaultTargetSqlSessionFactory = defaultTargetSqlSessionFactory;
     }
 
     @Override
@@ -92,56 +92,56 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
      * {@inheritDoc}
      */
     public <T> T selectOne(String statement) {
-        return this.sqlSessionProxy.<T> selectOne(statement);
+        return this.sqlSessionProxy.<T>selectOne(statement);
     }
 
     /**
      * {@inheritDoc}
      */
     public <T> T selectOne(String statement, Object parameter) {
-        return this.sqlSessionProxy.<T> selectOne(statement, parameter);
+        return this.sqlSessionProxy.<T>selectOne(statement, parameter);
     }
 
     /**
      * {@inheritDoc}
      */
     public <K, V> Map<K, V> selectMap(String statement, String mapKey) {
-        return this.sqlSessionProxy.<K, V> selectMap(statement, mapKey);
+        return this.sqlSessionProxy.<K, V>selectMap(statement, mapKey);
     }
 
     /**
      * {@inheritDoc}
      */
     public <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey) {
-        return this.sqlSessionProxy.<K, V> selectMap(statement, parameter, mapKey);
+        return this.sqlSessionProxy.<K, V>selectMap(statement, parameter, mapKey);
     }
 
     /**
      * {@inheritDoc}
      */
     public <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey, RowBounds rowBounds) {
-        return this.sqlSessionProxy.<K, V> selectMap(statement, parameter, mapKey, rowBounds);
+        return this.sqlSessionProxy.<K, V>selectMap(statement, parameter, mapKey, rowBounds);
     }
 
     /**
      * {@inheritDoc}
      */
     public <E> List<E> selectList(String statement) {
-        return this.sqlSessionProxy.<E> selectList(statement);
+        return this.sqlSessionProxy.<E>selectList(statement);
     }
 
     /**
      * {@inheritDoc}
      */
     public <E> List<E> selectList(String statement, Object parameter) {
-        return this.sqlSessionProxy.<E> selectList(statement, parameter);
+        return this.sqlSessionProxy.<E>selectList(statement, parameter);
     }
 
     /**
      * {@inheritDoc}
      */
     public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
-        return this.sqlSessionProxy.<E> selectList(statement, parameter, rowBounds);
+        return this.sqlSessionProxy.<E>selectList(statement, parameter, rowBounds);
     }
 
     /**

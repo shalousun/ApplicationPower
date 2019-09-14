@@ -17,12 +17,12 @@ public class FontIconUtilTest {
         StringBuilder builder = new StringBuilder();
         //拼装数据icon-picker插件
         builder.append("var icons = [");
-        for(int i =0;i<icons.size();i++){
+        for (int i = 0; i < icons.size(); i++) {
             String icon = icons.get(i);
-            String simpleName = icon.substring(icon.indexOf("-")+1);
-            if(i<icons.size()-1){
+            String simpleName = icon.substring(icon.indexOf("-") + 1);
+            if (i < icons.size() - 1) {
                 builder.append("'").append(simpleName).append("',");
-            }else {
+            } else {
                 builder.append("'").append(simpleName).append("'");
             }
         }

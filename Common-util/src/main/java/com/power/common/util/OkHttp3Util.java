@@ -19,12 +19,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class OkHttp3Util {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OkHttp3Util.class);
-
     public static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
-
     public static final MediaType FORM_DATA = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(OkHttp3Util.class);
 
     /**
      * Simple sync get request.
@@ -196,11 +193,11 @@ public class OkHttp3Util {
     /**
      * Asynchronous get request with parameters and headers
      *
-     * @param client   OkHttpClient
-     * @param baseUrl  request base url
-     * @param params   request params
-     * @param headersMap  request headers
-     * @param callback callback
+     * @param client     OkHttpClient
+     * @param baseUrl    request base url
+     * @param params     request params
+     * @param headersMap request headers
+     * @param callback   callback
      */
     public static void asyncGet(OkHttpClient client, String baseUrl, Map<String, String> params, Map<String, String> headersMap,
                                 Callback callback) {
@@ -225,7 +222,7 @@ public class OkHttp3Util {
      * @param url        request url
      * @param body       OkHttp3 RequestBody
      * @param headersMap request headers
-     * @param callback call back
+     * @param callback   call back
      */
     public static void asyncPost(OkHttpClient client, String url, RequestBody body, Map<String, String> headersMap,
                                  Callback callback) {

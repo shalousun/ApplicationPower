@@ -8,6 +8,7 @@ import org.junit.Test;
 public class PrettyMemoryUtilsTest {
 
     private static final int UNIT = 1024;
+
     @Test
     public void testPrettyByteSize() throws Exception {
         System.out.println(PrettyMemoryUtil.prettyByteSize(1023));

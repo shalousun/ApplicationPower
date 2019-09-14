@@ -1,13 +1,12 @@
 package com.power.common.model;
 
 
-
 import java.io.Serializable;
 
 /**
  * @author yu 2018/11/30.
  */
-public abstract class BaseResult<T> implements Serializable{
+public abstract class BaseResult<T> implements Serializable {
 
     /**
      * 是否成功

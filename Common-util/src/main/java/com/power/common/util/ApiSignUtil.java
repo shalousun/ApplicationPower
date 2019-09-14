@@ -15,7 +15,7 @@ import java.util.Map;
  * 不相同则不通过，服务方最好对timestamp的时间验证，时间差超过5分钟的认为被劫持，
  * 时间越长风险越高，返回接口认证失败，当然如果想更细力度的控制最好加上请求的url也做为
  * 签名生成的条件
- *
+ * <p>
  * Created by yu on 2017/7/27.
  */
 public class ApiSignUtil {
@@ -23,48 +23,43 @@ public class ApiSignUtil {
     /**
      * 调用方根据自己的用户数据行生成签名返回给接口层
      * 接口层将接口设置及的四个参数值设置到请求参数中发送给接口服务方
-     * @param appID
-     *          应用id
-     * @param SECRET
-     *          密钥
-     * @param nonceStr
-     *          无意义的字符
+     *
+     * @param appID    应用id
+     * @param SECRET   密钥
+     * @param nonceStr 无意义的字符
      * @return hash map
      */
-    public static Map<String,Object> sign(String appID,String SECRET,String nonceStr){
-        Map<String,Object> ret = new HashMap<>();
-        long timestamp = System.currentTimeMillis()/1000L;
-        String signature = ApiSignUtil.getSignature(appID,SECRET,nonceStr,timestamp);
+    public static Map<String, Object> sign(String appID, String SECRET, String nonceStr) {
+        Map<String, Object> ret = new HashMap<>();
+        long timestamp = System.currentTimeMillis() / 1000L;
+        String signature = ApiSignUtil.getSignature(appID, SECRET, nonceStr, timestamp);
         ret.put("nonceStr", nonceStr);
         ret.put("timestamp", timestamp);
         ret.put("signature", signature);
-        ret.put("appId",appID);
+        ret.put("appId", appID);
         return ret;
     }
 
     /**
      * 服务方根据调用方生成的接口常用参数生成签名
-     * @param appID
-     *          应用ID
-     * @param SECRET
-     *          密钥
-     * @param nonceStr
-     *          无意义的字符
-     * @param timestamp
-     *          接口请求时间
+     *
+     * @param appID     应用ID
+     * @param SECRET    密钥
+     * @param nonceStr  无意义的字符
+     * @param timestamp 接口请求时间
      * @return string
      */
-    public static String getSignature(String appID,String SECRET,String nonceStr,long timestamp){
+    public static String getSignature(String appID, String SECRET, String nonceStr, long timestamp) {
         String string1;
         String signature = "";
-        string1 = "app_id=" + appID + "&app_key"+SECRET+"&noncestr=" + nonceStr
+        string1 = "app_id=" + appID + "&app_key" + SECRET + "&noncestr=" + nonceStr
                 + "&timestamp=" + timestamp;
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
             crypt.reset();
             crypt.update(string1.getBytes("UTF-8"));
             signature = byteToHex(crypt.digest());
-        } catch (NoSuchAlgorithmException |UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return signature;
@@ -72,6 +67,7 @@ public class ApiSignUtil {
 
     /**
      * byte转到16进制
+     *
      * @param hash
      * @return
      */

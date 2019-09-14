@@ -15,36 +15,21 @@ import java.util.concurrent.ConcurrentMap;
 
 public class DateTimeUtil {
 
-    private static final ConcurrentMap<String, DateTimeFormatter> FORMATTER_CACHE = new ConcurrentHashMap<>();
-
-    private static final int PATTERN_CACHE_SIZE = 500;
-
-    private final static String[] WEEK_ARR = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
-
     public static final String DATE_FORMAT_MINITE = "yyyy-MM-dd HH:mm";
-
     public static final String DATE_FORMAT_DAY = "yyyy-MM-dd";
-
     public static final String DATE_FORMAT_SECOND = "yyyy-MM-dd HH:mm:ss";
-
     public static final String DATE_FORMAT_SECOND_12 = "yyyy-MM-dd hh:mm:ss";
-
     public static final String DATE_FORMAT_MILLISECOND = "yyyy-MM-dd HH:mm:ss.SSS";
-
     public static final String DATE_FORMAT_CHINESE = "yyyy年MM月dd日";
-
     public static final String DATE_FORMAT_CHINESE_SECONDE = "yyyy年MM月dd日 HH:mm:ss";
-
     public static final String DATE_FORMAT_CHINESE_WEEK_SECONDE = "yyyy年MM月dd日 E HH:mm:ss";
-
     public static final String YYYYMMDD = "yyyyMMdd";
-
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
-
     public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
-
     public static final long DAY_MS = 86400000L;
-
+    private static final ConcurrentMap<String, DateTimeFormatter> FORMATTER_CACHE = new ConcurrentHashMap<>();
+    private static final int PATTERN_CACHE_SIZE = 500;
+    private final static String[] WEEK_ARR = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 
     /**
      * Formats a java.util.Date using a format string
@@ -54,7 +39,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String dateToStr(Date date, String format) {
-        return dateToStr(date,format,null);
+        return dateToStr(date, format, null);
     }
 
     /**
@@ -68,21 +53,23 @@ public class DateTimeUtil {
 
     /**
      * get str now time
+     *
      * @param pattern pattern like yyyy-MM-dd
      * @return String
      */
-    public static String nowStrTime(String pattern){
+    public static String nowStrTime(String pattern) {
         return long2Str(System.currentTimeMillis(), pattern);
     }
 
     /**
      * Convert Date to String
-     * @param date java.util.Date
+     *
+     * @param date    java.util.Date
      * @param pattern pattern like yyyy-MM-dd
-     * @param locale locale
+     * @param locale  locale
      * @return String
      */
-    public static String dateToStr(Date date,String pattern,Locale locale){
+    public static String dateToStr(Date date, String pattern, Locale locale) {
         return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), pattern);
     }
 
@@ -394,7 +381,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String long2Str(Long millSec) {
-        return long2Str(millSec,DATE_FORMAT_CHINESE);
+        return long2Str(millSec, DATE_FORMAT_CHINESE);
     }
 
     /**
@@ -405,7 +392,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String long2Str(long millSec, String format) {
-        return long2Str(millSec,format,Locale.CHINESE);
+        return long2Str(millSec, format, Locale.CHINESE);
     }
 
     /**
@@ -424,15 +411,14 @@ public class DateTimeUtil {
     /**
      * transfer string to long
      *
-
-     * @param strTime    String
+     * @param strTime String
      * @param pattern String
      * @return long
      */
     public static long strToLong(String strTime, String pattern) {
-        try{
+        try {
             return LocalDateTimeToLong(parseLocalDateTime(strTime, pattern));
-        }catch (Exception e){
+        } catch (Exception e) {
             //ignore
         }
         return localDateToLong(parseLocalDate(strTime, pattern));
@@ -999,11 +985,12 @@ public class DateTimeUtil {
 
     /**
      * convert localDate to long
+     *
      * @param localDate LocalDate
      * @return long
      */
-    public static long localDateToLong(LocalDate localDate){
-        return localDate.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000;
+    public static long localDateToLong(LocalDate localDate) {
+        return localDate.atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000;
     }
 
     /**
@@ -1032,6 +1019,7 @@ public class DateTimeUtil {
 
     /**
      * LocalDateTime 转化成long
+     *
      * @param dateTime LocalDateTime
      * @return long
      */

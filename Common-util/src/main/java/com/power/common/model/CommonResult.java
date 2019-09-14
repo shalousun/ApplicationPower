@@ -63,27 +63,6 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * Usage:
-     * Result.ok().setResult("hello")
-     * 返回结果时携带数据
-     *
-     * @param data you return data
-     * @return CommonResult
-     */
-    public CommonResult<T> setResult(T data) {
-        this.setData(data);
-        return this;
-    }
-
-    /**
-     * 覆盖supper方法
-     * @return T
-     */
-    public T getData() {
-        return (T) super.getData();
-    }
-
-    /**
      * 通用成功响应(默认响应码为0000)
      *
      * @return CommonResult
@@ -133,7 +112,6 @@ public class CommonResult<T> extends BaseResult implements Serializable {
         return baseCreate(code, msg, false);
     }
 
-
     private static <T> CommonResult<T> baseCreate(String code, String msg, boolean success) {
         CommonResult result = new CommonResult();
         result.setCode(code);
@@ -141,6 +119,28 @@ public class CommonResult<T> extends BaseResult implements Serializable {
         result.setMessage(msg);
         result.setTimestamp(DateTimeUtil.nowStrTime());
         return result;
+    }
+
+    /**
+     * Usage:
+     * Result.ok().setResult("hello")
+     * 返回结果时携带数据
+     *
+     * @param data you return data
+     * @return CommonResult
+     */
+    public CommonResult<T> setResult(T data) {
+        this.setData(data);
+        return this;
+    }
+
+    /**
+     * 覆盖supper方法
+     *
+     * @return T
+     */
+    public T getData() {
+        return (T) super.getData();
     }
 
 

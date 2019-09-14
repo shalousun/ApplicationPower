@@ -20,7 +20,7 @@ public class FileUtil {
      * @return boolean
      */
     public static boolean mkdir(String path) {
-        if(StringUtil.isEmpty(path)){
+        if (StringUtil.isEmpty(path)) {
             throw new NullPointerException("dir path can't null or empty");
         }
         File file = new File(path);
@@ -34,7 +34,7 @@ public class FileUtil {
      * @return boolean
      */
     public static boolean mkdirs(String path) {
-        if(StringUtil.isEmpty(path)){
+        if (StringUtil.isEmpty(path)) {
             throw new NullPointerException("dir path can't null or empty");
         }
         File file = new File(path);
@@ -43,23 +43,24 @@ public class FileUtil {
 
     /**
      * copy dir
-     * @param path path
+     *
+     * @param path     path
      * @param copyPath target path
      */
-    public static void copyDir(String path, String copyPath){
+    public static void copyDir(String path, String copyPath) {
         File filePath = new File(path);
-        if(filePath.isDirectory()){
+        if (filePath.isDirectory()) {
             File[] list = filePath.listFiles();
-            for(int i=0; i<list.length; i++){
+            for (int i = 0; i < list.length; i++) {
                 String newPath = path + File.separator + list[i].getName();
                 String newCopyPath = copyPath + File.separator + list[i].getName();
                 File newFile = new File(copyPath);
-                if(!newFile.exists()){
+                if (!newFile.exists()) {
                     newFile.mkdir();
                 }
-                nioTransferCopy(new File(newPath),new File(newCopyPath) );
+                nioTransferCopy(new File(newPath), new File(newCopyPath));
             }
-        }else{
+        } else {
             throw new IllegalArgumentException(String.format("%s is not a directory", filePath.getAbsolutePath()));
         }
     }
@@ -256,7 +257,7 @@ public class FileUtil {
     public static File[] getResourceFolderFiles(String folder) {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         URL url = loader.getResource(folder);
-        if(null == url){
+        if (null == url) {
             throw new RuntimeException("url is null");
         }
         String path = url.getPath();
@@ -270,17 +271,18 @@ public class FileUtil {
      * @param filePath file path
      * @return boolean
      */
-    public static boolean nioWriteFile(String contents,String filePath) {
+    public static boolean nioWriteFile(String contents, String filePath) {
         return nioWriteFile(filePath, contents, null);
     }
 
     /**
      * Appending The New Data To The Existing File
+     *
      * @param contents string contents
      * @param filePath file path
      * @return boolean
      */
-    public static boolean nioWriteAppendable(String contents,String filePath) {
+    public static boolean nioWriteAppendable(String contents, String filePath) {
         return nioWriteFile(filePath, contents, StandardOpenOption.APPEND);
     }
 
@@ -313,10 +315,11 @@ public class FileUtil {
 
     /**
      * To Suffix
-     *  getFileExt
-     *  @since 0.2
+     * getFileExt
+     *
      * @param fileName file name
      * @return String
+     * @since 0.2
      */
     public static String toSuffix(String fileName) {
         String name = null;

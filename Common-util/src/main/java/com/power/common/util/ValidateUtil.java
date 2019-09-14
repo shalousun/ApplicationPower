@@ -42,12 +42,13 @@ public class ValidateUtil {
     public static final String ARMY_ID_CARD = "南字第(\\d{6,8})号|北字第(\\d{6,8})号|沈字第(\\d{6,8})号|兰字第(\\d{6,8})号|成字第(\\d{6,8})号|济字第(\\d{6,8})号|广字第(\\d{6,8})号|海字第(\\d{6,8})号|空字第(\\d{6,8})号|参字第(\\d{6,8})号|政字第(\\d{6,8})号|后字第(\\d{6,8})号|装字第(\\d{6,8})号";
 
 
-    public static final String[] forbidden = {"\\bselect\\b", "\\bor\\b", "\\bdelete\\b", "\\bjoin\\b","\\btable\\b"
-            , "\\bdrop\\b", "\\biframe\\b","\\bwindow\\b", "\\b_\\b", "\\+", "%", "\\<", "\\>", "'","=",
-            "%3C", "\\(", "%28", "alert", "eval((.*))", "script","location.href"};
+    public static final String[] forbidden = {"\\bselect\\b", "\\bor\\b", "\\bdelete\\b", "\\bjoin\\b", "\\btable\\b"
+            , "\\bdrop\\b", "\\biframe\\b", "\\bwindow\\b", "\\b_\\b", "\\+", "%", "\\<", "\\>", "'", "=",
+            "%3C", "\\(", "%28", "alert", "eval((.*))", "script", "location.href"};
 
     /**
      * Match strings based on regular expressions
+     *
      * @param str     String
      * @param pattern regular expressions
      * @return boolean
@@ -58,6 +59,7 @@ public class ValidateUtil {
 
     /**
      * Check if the string is a email
+     *
      * @param email Email
      * @return boolean
      */
@@ -87,10 +89,11 @@ public class ValidateUtil {
 
     /**
      * Verify whether is not Chinese
+     *
      * @param chineseStr characters
      * @return boolean
      */
-    public static boolean isNotChinese(String chineseStr){
+    public static boolean isNotChinese(String chineseStr) {
         return !validate(chineseStr, CHINESE_PATTERN);
     }
 
@@ -231,6 +234,7 @@ public class ValidateUtil {
 
     /**
      * validate password
+     *
      * @param str password
      * @return boolean
      */
@@ -251,6 +255,7 @@ public class ValidateUtil {
     /**
      * Verify that it is a valid uuid,
      * If you remove the "-" you must also have a 32-bit length.
+     *
      * @param str String
      * @return boolean
      */
@@ -290,6 +295,7 @@ public class ValidateUtil {
 
     /**
      * Verification time format matches yyyy-MM-dd HH:mm:ss.
+     *
      * @param date String date
      * @return boolean
      */
@@ -455,39 +461,42 @@ public class ValidateUtil {
     public static boolean isNotPositiveFloat(String number) {
         return !isPositiveFloat(number);
     }
-    
+
     /**
-     * 
      * isPositiveInteger:(判断是否正整数)
-     * @author yolanda0608
+     *
      * @param number String number
      * @return boolean
+     * @author yolanda0608
      */
-    public static boolean isPositiveInteger(String number){
-    	return validate(number,POSITIVE_INTEGER);
+    public static boolean isPositiveInteger(String number) {
+        return validate(number, POSITIVE_INTEGER);
     }
 
 
     /**
      * Verify whether it is Army Identity Card
+     *
      * @param armyIdCard Army Identity Card
      * @return boolean
      */
-    public static boolean isArmyIdCard(String armyIdCard){
-    	return validate(armyIdCard,ARMY_ID_CARD);
+    public static boolean isArmyIdCard(String armyIdCard) {
+        return validate(armyIdCard, ARMY_ID_CARD);
     }
 
     /**
      * Verify whether it is not Army Identity Card
+     *
      * @param armyIdCard Army Identity Card
      * @return boolean
      */
-    public static boolean isNotArmyIdCard(String armyIdCard){
-        return !validate(armyIdCard,ARMY_ID_CARD);
+    public static boolean isNotArmyIdCard(String armyIdCard) {
+        return !validate(armyIdCard, ARMY_ID_CARD);
     }
 
     /**
      * is Contains Forbidden Character
+     *
      * @param number String number
      * @return boolean
      */
@@ -508,37 +517,41 @@ public class ValidateUtil {
 
     /**
      * valid year number between 1900 and 2099
+     *
      * @param yearNumber year number
      * @return boolean
      */
-    public static boolean isYear(String yearNumber){
-        return validate(yearNumber,YEAR_PATTERN);
+    public static boolean isYear(String yearNumber) {
+        return validate(yearNumber, YEAR_PATTERN);
     }
 
     /**
      * valid year number between 1900 and 2099
+     *
      * @param yearNumber year number
      * @return boolean
      */
-    public static boolean isNotYear(String yearNumber){
+    public static boolean isNotYear(String yearNumber) {
         return !isYear(yearNumber);
     }
 
     /**
      * valid time lime 12:00:06 or 12:00
+     *
      * @param time time string
      * @return boo
      */
-    public static boolean isTime(String time){
-        return validate(time,TIME_PATTERN);
+    public static boolean isTime(String time) {
+        return validate(time, TIME_PATTERN);
     }
 
     /**
      * valid time lime 12:00:06
+     *
      * @param time time string
      * @return boolean
      */
-    public static boolean isNotTime(String time){
+    public static boolean isNotTime(String time) {
         return !isTime(time);
     }
 

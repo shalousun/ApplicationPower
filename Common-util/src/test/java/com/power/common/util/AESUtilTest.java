@@ -1,7 +1,6 @@
 package com.power.common.util;
 
 import com.power.common.constants.AesPaddings;
-import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 
 /**
@@ -68,25 +67,25 @@ public class AESUtilTest {
 
         //base 64加密后的key
         String base64Key = "F51riKYgKK8PRrt+5IC6CQ==";
-                //Base64Util.encryptToString(KEY);
+        //Base64Util.encryptToString(KEY);
 
         byte[] key = Base64Util.decryptBASE64(base64Key);
 
-        System.out.println("key:"+new String(key));
+        System.out.println("key:" + new String(key));
 
         byte[] content = "hello".getBytes();
 
         //加密
         byte[] encodeResult = AESUtil.encryptByECB(content, key);
 
-        System.out.println("after encode:"+ Base64Util.encryptToString(encodeResult));
+        System.out.println("after encode:" + Base64Util.encryptToString(encodeResult));
 
         //解密
         byte[] result = AESUtil.decryptByECB(encodeResult, key);
 
-        System.out.println("after decode:"+ new String(result));
+        System.out.println("after decode:" + new String(result));
 
-        String result2 = AESUtil.decodeByECB(Base64Util.encryptToString(encodeResult),new String(key));
+        String result2 = AESUtil.decodeByECB(Base64Util.encryptToString(encodeResult), new String(key));
         System.out.println(result2);
     }
 }

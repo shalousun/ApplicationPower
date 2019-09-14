@@ -11,17 +11,32 @@ import org.aspectj.lang.annotation.Pointcut;
 import java.lang.reflect.Method;
 
 
-
 public class DataSourceAspect {
     protected static final ThreadLocal<String> preDatasourceHolder = new ThreadLocal<>();
 
+    /**
+     * @param clazz
+     * @param name
+     * @return
+     */
+    private static Method findUniqueMethod(Class<?> clazz, String name) {
+        Class<?> searchType = clazz;
+        while (searchType != null) {
+            Method[] methods = (searchType.isInterface() ? searchType.getMethods() : searchType.getDeclaredMethods());
+            for (Method method : methods) {
+                if (name.equals(method.getName())) {
+                    return method;
+                }
+            }
+            searchType = searchType.getSuperclass();
+        }
+        return null;
+    }
 
     @Pointcut("@annotation(com.power.datasource.annotations.TargetDataSource)")
     protected void datasourceAspect() {
 
     }
-
-
 
     /**
      * 根据@TargetDataSource的属性值设置不同的dataSourceKey,以供DynamicDataSource
@@ -39,7 +54,6 @@ public class DataSourceAspect {
     }
 
     /**
-     *
      * @param jp
      * @return
      */
@@ -52,7 +66,6 @@ public class DataSourceAspect {
         return resultDS;
     }
 
-
     /**
      *
      */
@@ -62,9 +75,7 @@ public class DataSourceAspect {
         preDatasourceHolder.remove();
     }
 
-
     /**
-     *
      * @param targetClass
      * @param methodName
      * @return
@@ -79,7 +90,6 @@ public class DataSourceAspect {
     }
 
     /**
-     *
      * @param classDS
      * @param methodDS
      * @return
@@ -89,7 +99,6 @@ public class DataSourceAspect {
     }
 
     /**
-     *
      * @param targetClass
      * @return
      */
@@ -99,31 +108,10 @@ public class DataSourceAspect {
     }
 
     /**
-     *
      * @param ds
      * @return
      */
     private String resolveDataSourceName(TargetDataSource ds) {
         return ds == null ? null : ds.value();
-    }
-
-    /**
-     *
-     * @param clazz
-     * @param name
-     * @return
-     */
-    private static Method findUniqueMethod(Class<?> clazz, String name) {
-        Class<?> searchType = clazz;
-        while (searchType != null) {
-            Method[] methods = (searchType.isInterface() ? searchType.getMethods() : searchType.getDeclaredMethods());
-            for (Method method : methods) {
-                if (name.equals(method.getName())) {
-                    return method;
-                }
-            }
-            searchType = searchType.getSuperclass();
-        }
-        return null;
     }
 }

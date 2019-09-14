@@ -13,6 +13,7 @@ public class IDCardUtil {
 
     /**
      * generate IdCard
+     *
      * @return String
      */
     public static String getIdCard() {

@@ -7,20 +7,20 @@ import com.power.common.interfaces.IMessage;
  */
 public class BaseRuntimeException extends RuntimeException implements IMessage {
 
-    private String  errorCode;
+    private String errorCode;
 
-    protected BaseRuntimeException(IMessage iMessage){
+    protected BaseRuntimeException(IMessage iMessage) {
         super(iMessage.getMessage());
         this.errorCode = iMessage.getCode();
     }
 
-    protected BaseRuntimeException(IMessage iMessage, String message){
+    protected BaseRuntimeException(IMessage iMessage, String message) {
         super(message);
         this.errorCode = iMessage.getCode();
     }
 
 
-    protected BaseRuntimeException(String errorCode, String message){
+    protected BaseRuntimeException(String errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }

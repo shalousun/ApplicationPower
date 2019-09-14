@@ -8,12 +8,12 @@ import org.junit.Test;
 public class UUIDUtilTest {
 
     @Test
-    public void testGetUUid(){
+    public void testGetUUid() {
         System.out.println(UUIDUtil.getUuid());
     }
 
     @Test
-    public void testGetUuid32(){
+    public void testGetUuid32() {
         System.out.println(UUIDUtil.getUuid32());
     }
 }
