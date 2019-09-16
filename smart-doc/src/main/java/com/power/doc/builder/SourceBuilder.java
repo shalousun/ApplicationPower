@@ -3,6 +3,7 @@ package com.power.doc.builder;
 import com.power.common.util.CollectionUtil;
 import com.power.common.util.JsonFormatUtil;
 import com.power.common.util.StringUtil;
+import com.power.doc.constants.DocTags;
 import com.power.doc.constants.GlobalConstants;
 import com.power.doc.model.*;
 import com.power.doc.utils.DocClassUtil;
@@ -407,6 +408,7 @@ public class SourceBuilder {
 
         String[] globGicName = DocClassUtil.getSimpleGicName(className);
         JavaClass cls = builder.getClassByName(simpleName);
+        //clsss.isEnum()
         List<JavaField> fields = getFields(cls, 0);
         int n = 0;
         if (DocClassUtil.isPrimitive(simpleName)) {
@@ -442,11 +444,20 @@ public class SourceBuilder {
                     List<JavaAnnotation> javaAnnotations = field.getAnnotations();
 
                     List<DocletTag> paramTags = field.getTags();
+                    String since = "";//since tag value
                     if (!isResp) {
                         pre:
                         for (DocletTag docletTag : paramTags) {
                             if (DocClassUtil.isIgnoreTag(docletTag.getName())) {
                                 continue out;
+                            } else if (DocTags.SINCE.equals(docletTag.getName())) {
+                                since = docletTag.getValue();
+                            }
+                        }
+                    } else {
+                        for (DocletTag docletTag : paramTags) {
+                            if (DocTags.SINCE.equals(docletTag.getName())) {
+                                since = docletTag.getValue();
                             }
                         }
                     }
@@ -492,6 +503,9 @@ public class SourceBuilder {
                     } else {
                         comment = field.getComment();
                     }
+                    if (StringUtil.isNotEmpty(comment)) {
+                        comment = comment.replace("\n", "<br>");
+                    }
                     if (DocClassUtil.isPrimitive(subTypeName)) {
                         params0.append(pre);
                         params0.append(fieldName).append("|")
@@ -499,15 +513,17 @@ public class SourceBuilder {
 
                         if (StringUtil.isNotEmpty(comment)) {
                             if (StringUtil.isEmpty(isRequired)) {
-                                params0.append(comment).append("\n");
+                                params0.append(comment).append("|").append(since).append("\n");
                             } else {
-                                params0.append(comment).append("|").append(strRequired).append("\n");
+                                params0.append(comment).append("|").append(strRequired)
+                                        .append("|").append(since).append("\n");
                             }
                         } else {
                             if (StringUtil.isEmpty(isRequired)) {
-                                params0.append("No comments found.").append("\n");
+                                params0.append("No comments found.").append("|").append(since).append("\n");
                             } else {
-                                params0.append("No comments found.").append("|").append(strRequired).append("\n");
+                                params0.append("No comments found.").append("|").append(strRequired)
+                                        .append("|").append(since).append("\n");
                             }
                         }
                     } else {
@@ -516,15 +532,17 @@ public class SourceBuilder {
                                 .append(DocClassUtil.processTypeNameForParams(typeSimpleName.toLowerCase())).append("|");
                         if (StringUtil.isNotEmpty(comment)) {
                             if (StringUtil.isEmpty(isRequired)) {
-                                params0.append(comment).append("\n");
+                                params0.append(comment).append("|").append(since).append("\n");
                             } else {
-                                params0.append(comment).append("|").append(strRequired).append("\n");
+                                params0.append(comment).append("|").append(strRequired)
+                                        .append("|").append(since).append("\n");
                             }
                         } else {
                             if (StringUtil.isEmpty(isRequired)) {
-                                params0.append("No comments found.").append("\n");
+                                params0.append("No comments found.").append("|").append(since).append("\n");
                             } else {
-                                params0.append("No comments found|").append(strRequired).append("\n");
+                                params0.append("No comments found|").append(strRequired)
+                                        .append("|").append(since).append("\n");
                             }
 
                         }
