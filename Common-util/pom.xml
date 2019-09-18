@@ -7,7 +7,7 @@
     <groupId>com.github.shalousun</groupId>
     <artifactId>common-util</artifactId>
     <packaging>jar</packaging>
-    <version>1.8.4</version>
+    <version>1.8.5</version>
 
     <name>common-util</name>
     <url>https://github.com/shalousun/ApplicationPower.git</url>

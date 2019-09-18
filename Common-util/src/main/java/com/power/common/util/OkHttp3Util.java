@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -201,7 +200,7 @@ public class OkHttp3Util {
      */
     public static void asyncGet(OkHttpClient client, String baseUrl, Map<String, String> params, Map<String, String> headersMap,
                                 Callback callback) {
-        String url = urlJoin(baseUrl, params);
+        String url = UrlUtil.urlJoin(baseUrl, params);
         LOGGER.debug("OkHttp3 async get url:{}", url);
         Request request;
         if (null == headersMap || headersMap.size() == 0) {
@@ -242,7 +241,7 @@ public class OkHttp3Util {
     private static void doAsyncGet(String baseUrl, Map<String, String> params, Map<String, String> headersMap,
                                    Callback callback) {
         OkHttpClient client = OkHttp3Util.getInstance();
-        String url = urlJoin(baseUrl, params);
+        String url = UrlUtil.urlJoin(baseUrl, params);
         LOGGER.debug("OkHttp3 async get url:{}", url);
         Request request;
         if (null == headersMap || headersMap.size() == 0) {
@@ -257,7 +256,7 @@ public class OkHttp3Util {
 
     private static String doSyncGet(String baseUrl, Map<String, String> params, Map<String, String> headersMap) {
         OkHttpClient client = OkHttp3Util.getInstance();
-        String url = urlJoin(baseUrl, params);
+        String url = UrlUtil.urlJoin(baseUrl, params);
         System.out.println(url);
         LOGGER.debug("SyncGet Request url: {}", url);
         long startTime = System.currentTimeMillis();
@@ -348,27 +347,6 @@ public class OkHttp3Util {
         }
         headers = headersBuilder.build();
         return headers;
-    }
-
-    private static String urlJoin(String url, Map<String, String> params) {
-        StringBuilder endUrl = new StringBuilder(url);
-        if (null == params) {
-            return url;
-        }
-        boolean isFirst = true;
-        Set<Map.Entry<String, String>> entrySet = params.entrySet();
-        for (Map.Entry<String, String> entry : entrySet) {
-            if (isFirst && !url.contains("?")) {
-                isFirst = false;
-                endUrl.append("?");
-            } else {
-                endUrl.append("&");
-            }
-            endUrl.append(entry.getKey());
-            endUrl.append("=");
-            endUrl.append(entry.getValue());
-        }
-        return endUrl.toString();
     }
 
     public static OkHttpClient getInstance() {
