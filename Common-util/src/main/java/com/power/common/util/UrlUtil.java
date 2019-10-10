@@ -41,7 +41,7 @@ public class UrlUtil {
      * @return processed url
      */
     public static String simplifyUrl(String url) {
-        int index = url.indexOf("//");
+        int index = url.indexOf("://");
         String urlHead = url.substring(0, index + 2);
         String urlTail = url.substring(index + 2, url.length()).replaceAll("/+", "/");
         return new StringBuilder().append(urlHead).append(urlTail).toString();
