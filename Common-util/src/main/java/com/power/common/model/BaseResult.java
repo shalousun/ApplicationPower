@@ -14,12 +14,12 @@ public abstract class BaseResult<T> implements Serializable {
     private boolean success = false;
 
     /**
-     * 响应信息
+     * 错误提示(成功succeed)
      */
     private String message;
 
     /**
-     * 响应数据
+     * 成功返回的数据
      */
     private T data;
 
