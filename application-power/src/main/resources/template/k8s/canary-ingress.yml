@@ -1,0 +1,20 @@
+# Used for Grayscale deployment
+# --------------------------- ingress,k8s 1.13---------------------- #
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: ${applicationNameLowerCase}
+    version: ${version}
+  name: ${applicationNameLowerCase}-${version}-canary-ingress
+  namespace: default
+spec:
+  rules:
+  - http:
+      #port: 80
+      paths:
+      - path: /your_path
+        backend:
+          serviceName: ${applicationNameLowerCase}-${version}-svc
+          servicePort: 8080
+---
