@@ -120,6 +120,11 @@ public class GeneratorConstant {
      */
     public static final String USE_DB = "useDb";
 
+    /**
+     * 版本号
+     */
+    public static final String VERSION = "version";
+
     static {
         COMMON_VARIABLE.put(GeneratorConstant.BASE_PACKAGE, GeneratorProperties.basePackage());
         COMMON_VARIABLE.put(GeneratorConstant.AUTHOR, System.getProperty("user.name"));
@@ -127,6 +132,7 @@ public class GeneratorConstant {
         COMMON_VARIABLE.put(GeneratorConstant.APPLICATION_NAME, GeneratorProperties.applicationName());
         COMMON_VARIABLE.put(GeneratorConstant.APPLICATION_NAME_LOWER, GeneratorProperties.applicationName().toLowerCase());
         COMMON_VARIABLE.put(GeneratorConstant.USE_DB, GeneratorProperties.useDb());
+        COMMON_VARIABLE.put(GeneratorConstant.VERSION,GeneratorProperties.appVersion());
 
     }
 }

@@ -224,4 +224,12 @@ public class GeneratorProperties {
     public static Boolean useDb() {
         return Boolean.valueOf(props.getProperty("generator.useDb"));
     }
+
+    /**
+     * 获取app版本号
+     * @return
+     */
+    public static String appVersion() {
+        return props.getProperty("generator.application.version");
+    }
 }
