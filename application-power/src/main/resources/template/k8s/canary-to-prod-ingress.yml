@@ -6,7 +6,7 @@ metadata:
   labels:
     app: ${applicationNameLowerCase}
     version: ${version}
-  name: ${applicationNameLowerCase}-${version}-ingress
+  name: ${applicationNameLowerCase}-${handleVersion}-ingress
   namespace: default
 spec:
   rules:
@@ -15,6 +15,6 @@ spec:
       paths:
       - path: /your_path
         backend:
-          serviceName: ${applicationNameLowerCase}-${version}-svc
+          serviceName: ${applicationNameLowerCase}-${handleVersion}-svc
           servicePort: 8080
 ---

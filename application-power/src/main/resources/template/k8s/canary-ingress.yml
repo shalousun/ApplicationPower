@@ -3,18 +3,22 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-by-header: "new"
   labels:
     app: ${applicationNameLowerCase}
     version: ${version}
-  name: ${applicationNameLowerCase}-${version}-canary-ingress
+  name: ${applicationNameLowerCase}-${handleVersion}-canary-ingress
   namespace: default
 spec:
   rules:
-  - http:
+  - host: your host
+    http:
       #port: 80
       paths:
       - path: /your_path
         backend:
-          serviceName: ${applicationNameLowerCase}-${version}-svc
+          serviceName: ${applicationNameLowerCase}-${handleVersion}-svc
           servicePort: 8080
 ---
