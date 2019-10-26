@@ -6,7 +6,7 @@ metadata:
   labels:
     app: ${applicationNameLowerCase}
     version: ${version}
-  name: ${applicationNameLowerCase}-${handleVersion}-ingress
+  name: ${applicationNameLowerCase}-ingress
   namespace: default
 spec:
   rules:
