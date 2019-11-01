@@ -15,7 +15,7 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
      ● 分布式事务管理：spring-boot-starter-jta-atomikos
      ● 日志管理：SLF4J和log4j2
 ## 结构说明
-   1. smart-doc完全基于源代码和原生注释来推导的restful api文档，无需在代码添加任何注解或者引入新的写法，完全零侵入,已经单独移出本仓库独立开发。
+   1. smart-doc已经单独移出本仓库独立开发。
    2. common-util是开发中常用的一些工具类，目前文档比较详细，也是application-power所依赖的模块，目前已发布到中央仓库。
    3. application-power是整个项目的核心，专门用于生成Spring Boot微服务架构项目和Spring mvc+mybatis架构项目的脚手架，
    4. datasource-aspect是spring web应用下多数据源动态切换的通用模块【未经过可靠测试，使用请谨慎】
