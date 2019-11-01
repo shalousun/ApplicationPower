@@ -420,7 +420,7 @@ public class StringUtil {
      */
     public static String removeQuotes(String str) {
         if (isNotEmpty(str)) {
-            return str.replace("'", "").replace("\"", "");
+            return str.replaceAll("'", "").replaceAll("\"", "");
         } else {
             return "";
         }
