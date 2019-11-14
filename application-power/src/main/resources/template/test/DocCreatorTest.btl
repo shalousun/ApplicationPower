@@ -27,7 +27,7 @@ public class DocCreatorTest {
    public void testBuilderControllersApi() {
        ApiConfig config = new ApiConfig();
        config.setStrict(true);
-       config.setAllInOne(false);
+       config.setAllInOne(true);
        config.setOutPath(DocGlobalConstants.HTML_DOC_OUT_PATH);
        // set java source path
        config.setSourceCodePaths(
