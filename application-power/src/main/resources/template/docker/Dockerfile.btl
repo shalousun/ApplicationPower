@@ -11,11 +11,11 @@ EXPOSE 8080
 VOLUME /tmp
 
 # Add the application's jar to the container
-ADD ${applicationNameLowerCase}.jar app.jar
+ADD ${applicationNameLowerCase}.jar ${applicationNameLowerCase}.jar
 
-RUN sh -c 'touch /app.jar'
+RUN sh -c 'touch /${applicationNameLowerCase}.jar'
 # Set jvm
 ENV JAVA_OPTS="-server -Xmx512m -Xms512m -Djava.awt.headless=true"
 
 # Run the jar file
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /${applicationNameLowerCase}.jar" ]
