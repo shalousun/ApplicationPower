@@ -2,7 +2,7 @@ package ${basePackage};
 
 import com.power.common.util.DateTimeUtil;
 import com.power.doc.builder.HtmlApiDocBuilder;
-import ${basePackage}.enums.ErrorCode;
+import ${basePackage}.enums.ErrorCodeEnum;
 import com.power.doc.model.ApiConfig;
 import com.power.doc.constants.DocGlobalConstants;
 import com.power.doc.model.ApiErrorCode;
@@ -15,7 +15,7 @@ import java.util.List;
 
 
 /**
- * @link https://github.com/shalousun/ApplicationPower/tree/master/api-doc
+ * @link https://github.com/shalousun/smart-doc.git
  * @author ${authorName} on ${createTime}.
  */
 public class DocCreatorTest {
@@ -41,7 +41,7 @@ public class DocCreatorTest {
 
        // set error code list
        List<ApiErrorCode> errorCodeList = new ArrayList<>();
-       for(ErrorCode codeEnum: ErrorCode.values()){
+       for(ErrorCodeEnum codeEnum: ErrorCodeEnum.values()){
            ApiErrorCode errorCode = new ApiErrorCode();
            errorCode.setValue(codeEnum.getCode()).setDesc(codeEnum.getMessage());
            errorCodeList.add(errorCode);

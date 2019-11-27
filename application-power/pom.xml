@@ -73,12 +73,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.60</version>
+            <version>1.2.61</version>
         </dependency>
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>common-util</artifactId>
-            <version>1.8.4</version>
+            <version>1.8.8</version>
         </dependency>
     </dependencies>
     <build>

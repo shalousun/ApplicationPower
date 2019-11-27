@@ -6,7 +6,7 @@ import com.power.common.interfaces.IMessage;
  * Error code enum
  * @author ${authorName} on ${createTime}.
  */
-public enum ErrorCode implements IMessage {
+public enum ErrorCodeEnum implements IMessage {
 
     SUCCESS("0000", "succeed"),
 
@@ -20,7 +20,7 @@ public enum ErrorCode implements IMessage {
     private String message;
 
 
-    ErrorCode(String errCode, String errMsg) {
+    ErrorCodeEnum(String errCode, String errMsg) {
         this.code = errCode;
         this.message = errMsg;
     }

@@ -72,7 +72,7 @@ public class BaseCodeBuilder implements ICodeBuilder {
 
         Template errorCodeEnumTpl = BeetlTemplateUtil.getByName("ErrorCode.btl");
         errorCodeEnumTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String errorCodeEnumOut = paths.get(ERROR_CODE_ENUM) + ConstVal.FILE_SEPARATOR + "ErrorCode.java";
+        String errorCodeEnumOut = paths.get(ERROR_CODE_ENUM) + ConstVal.FILE_SEPARATOR + "ErrorCodeEnum.java";
         templates.put(errorCodeEnumOut, errorCodeEnumTpl.render());
 
 
