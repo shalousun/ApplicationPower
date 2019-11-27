@@ -38,7 +38,7 @@ public class ${entitySimpleName}ServiceTest extends ServiceBaseTest {
 
 	@Test
 	public void testDelete() {
-		CommonResult result = ${firstLowerName}Service.delete(1L);
+		CommonResult result = ${firstLowerName}Service.delete(null);
 	}
 	<%}%>
     <%if(query){ %>

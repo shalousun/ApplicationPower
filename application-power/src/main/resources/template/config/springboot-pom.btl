@@ -119,14 +119,14 @@
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>smart-doc</artifactId>
-            <version>1.7.6</version>
+            <version>1.7.7</version>
             <scope>test</scope>
         </dependency>
        <% if(lombok){%>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <optional>true</optional>
             <scope>provided</scope>
         </dependency>
         <%}%>
