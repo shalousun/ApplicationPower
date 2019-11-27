@@ -5,7 +5,7 @@ import com.power.common.interfaces.IMessage;
 /**
  * 常用http状态码
  */
-public enum ResultCode implements IMessage {
+public enum HttpCodeEnum implements IMessage {
     SUCCESS("200","ok"),
     BAD_REQUEST("400","Bad Request"),
     UNAUTHORIZED("401","Unauthorized"),
@@ -21,7 +21,7 @@ public enum ResultCode implements IMessage {
 
     public String message;
 
-    ResultCode(String code,String message) {
+    HttpCodeEnum(String code, String message) {
         this.code = code;
         this.message = message;
     }
