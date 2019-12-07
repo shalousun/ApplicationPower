@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  * @author sunyu
  */
 public class ClassUtil {
+
     /**
      * 根据包名的到该包下的类
      *
@@ -71,5 +72,28 @@ public class ClassUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Get simple type name for val
+     * @param val object val
+     * @return String
+     */
+    public static String getSimpleTypeName(Object val) {
+        if (val instanceof String) {
+            return "string";
+        } else if (val instanceof Float) {
+            return "float";
+        } else if (val instanceof Double) {
+            return "double";
+        } else if (val instanceof Long) {
+            return "long";
+        } else if (val instanceof Short) {
+            return "short";
+        } else if (val instanceof Boolean) {
+            return "boolean";
+        } else {
+            return "object";
+        }
     }
 }
