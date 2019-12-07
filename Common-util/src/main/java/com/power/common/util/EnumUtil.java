@@ -57,6 +57,7 @@ public class EnumUtil {
      * Get enum information
      *
      * @param clazz java class
+     * @return hash map
      */
     public static Map<String, List<Map<String, Object>>> getEnumInformation(Class<?> clazz) {
         if (Objects.isNull(clazz)) {
