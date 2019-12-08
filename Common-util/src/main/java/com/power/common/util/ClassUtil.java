@@ -87,7 +87,7 @@ public class ClassUtil {
         } else if (val instanceof Double) {
             return "double(float64)";
         } else if (val instanceof Long) {
-            return "long(int 64)";
+            return "long(int64)";
         } else if (val instanceof Short) {
             return "short";
         } else if (val instanceof Boolean) {
