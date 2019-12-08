@@ -83,16 +83,18 @@ public class ClassUtil {
         if (val instanceof String) {
             return "string";
         } else if (val instanceof Float) {
-            return "float";
+            return "float(float32)";
         } else if (val instanceof Double) {
-            return "double";
+            return "double(float64)";
         } else if (val instanceof Long) {
-            return "long";
+            return "long(int 64)";
         } else if (val instanceof Short) {
             return "short";
         } else if (val instanceof Boolean) {
             return "boolean";
-        } else {
+        } else if(val instanceof Integer){
+            return "int32";
+        } else  {
             return "object";
         }
     }
