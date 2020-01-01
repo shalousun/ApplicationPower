@@ -1,0 +1,16 @@
+{
+  "serverUrl": "http://127.0.0.1",
+  "isStrict": false,
+  "allInOne": true,
+  "outPath": "D://md2",
+  "coverOld": true,
+  "packageFilters": "",
+  "md5EncryptedHtmlName": false,
+  "projectName": "${applicationName}",
+  "errorCodeDictionaries": [{
+    "title": "title",
+    "enumClassName": "com.power.common.enums.HttpCodeEnum",
+    "codeField": "code",
+    "descField": "message"
+  }]
+}

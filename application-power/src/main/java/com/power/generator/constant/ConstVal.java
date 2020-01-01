@@ -142,6 +142,8 @@ public class ConstVal {
 
     public static final String TPL_REST_ERROR = "error" + FILE_SEPARATOR + "RestExceptionHandler.btl";
 
+    public static final String TPL_SMART_DOC_CONFIG = "config" + FILE_SEPARATOR + "smart-doc.json";
+
     public static final String JAVA_TMPDIR = "java.io.tmpdir";
 
 

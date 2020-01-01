@@ -113,13 +113,13 @@
         <dependency>
            <groupId>com.github.shalousun</groupId>
            <artifactId>common-util</artifactId>
-           <version>1.8.8</version>
+           <version>1.9.0</version>
          </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.shalousun/smart-doc -->
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>smart-doc</artifactId>
-            <version>1.7.7</version>
+            <version>1.8.0</version>
             <scope>test</scope>
         </dependency>
        <% if(lombok){%>
@@ -148,6 +148,23 @@
                         <version>1.2.8.RELEASE</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>com.github.shalousun</groupId>
+                <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <!--smart-doc-->
+                    <configFile>./src/main/resources/smart-doc.json</configFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>html</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <%if(useAssembly){ %>
             <plugin>

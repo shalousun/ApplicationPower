@@ -19,7 +19,7 @@ import com.github.pagehelper.PageSerializable;
 <%if(add||query||delete||update){ %>
 import com.power.common.model.CommonResult;
 <%}%>
-import ${basePackage}.enums.ErrorCode;
+import ${basePackage}.enums.ErrorCodeEnum;
 import ${basePackage}.model.${entitySimpleName};
 import ${basePackage}.dao.${entitySimpleName}Dao;
 import ${basePackage}.service.${entitySimpleName}Service;
@@ -48,7 +48,7 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
         	//抛出异常方便事务管理，并且会被RestExceptionHandler自动处理
         	throw new RuntimeException("添加数据失败");
         }
-        return CommonResult.ok(ErrorCode.SUCCESS);
+        return CommonResult.ok(ErrorCodeEnum.SUCCESS);
 	}
     <%}%>
     <%if(update){ %>
@@ -61,7 +61,7 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
             logger.error("${entitySimpleName}Service修改数据异常：", e);
             throw new RuntimeException("修改数据失败");
         }
-        return CommonResult.ok(ErrorCode.SUCCESS);
+        return CommonResult.ok(ErrorCodeEnum.SUCCESS);
 	}
 	<%}%>
     <%if(delete){ %>
@@ -74,7 +74,7 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
             logger.error("${entitySimpleName}Service删除数据异常：", e);
             throw new RuntimeException("删除数据异常");
         }
-        return CommonResult.ok(ErrorCode.SUCCESS);
+        return CommonResult.ok(ErrorCodeEnum.SUCCESS);
 	}
 	<%}%>
     <%if(query){ %>
@@ -84,10 +84,10 @@ public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Servi
 	    ${entitySimpleName} entity = ${firstLowerName}Dao.queryById(id);
 	    if (null != entity) {
 	        //成功返回数据
-        	return CommonResult.ok(ErrorCode.SUCCESS).setResult(entity);
+        	return CommonResult.ok(ErrorCodeEnum.SUCCESS).setResult(entity);
         } else {
         	logger.info("${entitySimpleName}Service未查询到数据，编号：{}", id);
-        	return CommonResult.fail(ErrorCode.UNKNOWN_ERROR);
+        	return CommonResult.fail(ErrorCodeEnum.UNKNOWN_ERROR);
         }
 	}
 	<%}%>

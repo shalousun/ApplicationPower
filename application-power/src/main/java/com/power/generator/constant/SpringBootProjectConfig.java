@@ -21,6 +21,7 @@ public class SpringBootProjectConfig {
     private String assemblyCfg = "src" + ConstVal.FILE_SEPARATOR + "main" + ConstVal.FILE_SEPARATOR + "assembly" + ConstVal.FILE_SEPARATOR + "config";
     private String log4j2Assembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "log4j2.xml";
     private String applicationYmlAssembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "application.yml";
+    private String smartDocJson = resource + ConstVal.FILE_SEPARATOR + "smart-doc.json";
 
     public String getResource() {
         return resource;
@@ -112,5 +113,13 @@ public class SpringBootProjectConfig {
 
     public String getApplicationYmlAssembly() {
         return applicationYmlAssembly;
+    }
+
+    public String getSmartDocJson() {
+        return smartDocJson;
+    }
+
+    public void setSmartDocJson(String smartDocJson) {
+        this.smartDocJson = smartDocJson;
     }
 }

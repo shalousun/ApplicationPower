@@ -262,6 +262,7 @@ public class ConfigBuilder {
             baseConfigFilesPath.put(ConstVal.TPL_SPRING_BOOT_CFG_YML, connectPath(basePath, config.getApplicationYml()));
         }
         baseConfigFilesPath.put(ConstVal.TPL_LOF4J2, connectPath(basePath, config.getLog4j2()));
+        baseConfigFilesPath.put(ConstVal.TPL_SMART_DOC_CONFIG,connectPath(basePath, config.getSmartDocJson()));
         //baseConfigFilesPath.put(ConstVal.TPL_MYBATIS_CONFIG, connectPath(basePath, config.getMybatisConfig()));
         baseConfigFilesPath.put(ConstVal.TPL_400, connectPath(basePath, config.getHtml400()));
         baseConfigFilesPath.put(ConstVal.TPL_404, connectPath(basePath, config.getHtml404()));
