@@ -180,7 +180,7 @@ application-power整合的springboot打包后的结构参考
 │ .gitignore
 │ pom.xml
 ```
-##更新日志
+## 更新日志
  
 [更新记录](https://github.com/shalousun/ApplicationPower/blob/master/CHANGELOG.md)
 	
