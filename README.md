@@ -111,7 +111,7 @@ ApplicationPower只做有态度的开源，坚决不做伪开源!
  # 是否需要生成db相关代码
  generator.useDb=true
  
- # @since 1.8.0
+ # @since 1.8.6
  # 是否支持mybatis-plus
  generator.useMybatisPlus=true
 ```
