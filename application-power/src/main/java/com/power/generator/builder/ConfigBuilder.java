@@ -50,32 +50,6 @@ public class ConfigBuilder {
      */
     private ProjectPath projectPath;
 
-    public ConfigBuilder(DbProvider dataBaseInfo, PackageConfig packageConfig, ProjectConfig projectConfig) {
-        //全局设置项目的机构
-        initProjectPath();
-        //包配置
-        if (null == packageConfig) {
-            packageConfig = new PackageConfig();
-            handlerPackage(packageConfig, false);
-            handlerDocsPath(packageConfig);
-        } else {
-            handlerPackage(packageConfig, false);
-            handlerDocsPath(packageConfig);
-        }
-        //创建工程所需配置
-        if (null == projectConfig) {
-            projectConfig = new ProjectConfig();
-            handlerBaseConfigPath(projectConfig);
-            handlerBaseConfigFiles(projectConfig);
-        } else {
-            projectConfig = new ProjectConfig();
-            handlerBaseConfigPath(projectConfig);
-            handlerBaseConfigFiles(projectConfig);
-        }
-        getTableInfoList(dataBaseInfo);
-
-    }
-
     /**
      * 构建spring boot
      *
@@ -216,34 +190,6 @@ public class ConfigBuilder {
     }
 
     /**
-     * 处理ssm架构体系的工程配置文件
-     *
-     * @param config
-     */
-    private void handlerBaseConfigFiles(ProjectConfig config) {
-
-        String basePath = projectPath.getBasePath();
-        baseConfigFilesPath = new HashMap<>(10);
-
-
-        baseConfigFilesPath.put(ConstVal.TPL_POM, connectPath(basePath, config.getPom()));
-        baseConfigFilesPath.put(ConstVal.TPL_LOF4J2, connectPath(basePath, config.getLog4j2()));
-        baseConfigFilesPath.put(ConstVal.TPL_400, connectPath(basePath, config.getHtml400()));
-        baseConfigFilesPath.put(ConstVal.TPL_404, connectPath(basePath, config.getHtml404()));
-        baseConfigFilesPath.put(ConstVal.TPL_500, connectPath(basePath, config.getHtml500()));
-        baseConfigFilesPath.put(ConstVal.TPL_SPRING_MVC, connectPath(basePath, config.getSpringMvc()));
-        if (GeneratorProperties.isMultipleDataSource()) {
-            baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS_MULTIPLE, connectPath(basePath, config.getSpringMybatis()));
-        } else {
-            baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS, connectPath(basePath, config.getSpringMybatis()));
-        }
-        baseConfigFilesPath.put(ConstVal.TPL_SPRING_MYBATIS, connectPath(basePath, config.getSpringMybatis()));
-        //baseConfigFilesPath.put(ConstVal.TPL_MYBATIS_CONFIG, connectPath(basePath, config.getMybatisConfig()));
-        baseConfigFilesPath.put(ConstVal.TPL_WEB_XML, connectPath(basePath, config.getWebXml()));
-        baseConfigFilesPath.put(ConstVal.TPL_JDBC, connectPath(basePath, config.getJdbc()));
-    }
-
-    /**
      * 处理SpringBoot体系的项目配置文件
      *
      * @param config
@@ -281,15 +227,6 @@ public class ConfigBuilder {
         baseConfigPathInfo.put(ConstVal.RESOURCE_PATH, connectPath(basePath, config.getResource()));
         baseConfigPathInfo.put(ConstVal.STRING_BOOT_EORRO_DIR, connectPath(basePath, config.getErrorPath()));
 
-    }
-
-    private void handlerBaseConfigPath(ProjectConfig config) {
-        String basePath = projectPath.getBasePath();
-        baseConfigPathInfo = new HashMap<>(3);
-
-        baseConfigPathInfo.put(ConstVal.RESOURCE_PATH, connectPath(basePath, config.getResource()));
-        baseConfigPathInfo.put(ConstVal.WEB_INFO_PATH, connectPath(basePath, config.getWebInfoPath()));
-        baseConfigPathInfo.put(ConstVal.ERROR_PATH, connectPath(basePath, config.getErrorPath()));
     }
 
     /**

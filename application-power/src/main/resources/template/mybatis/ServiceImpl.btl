@@ -1,0 +1,110 @@
+package ${basePackage}.service.impl;
+
+<%if(page||queryToListMap){ %>
+import java.util.List;
+<%}%>
+<%if(queryToListMap){ %>
+import java.util.Map;
+<%}%>
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+<%if(page){ %>
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageSerializable;
+<%}%>
+<%if(add||query||delete||update){ %>
+import com.power.common.model.CommonResult;
+<%}%>
+import ${basePackage}.enums.ErrorCodeEnum;
+import ${basePackage}.model.${entitySimpleName};
+import ${basePackage}.dao.${entitySimpleName}Dao;
+import ${basePackage}.service.${entitySimpleName}Service;
+
+/**
+ * @author ${authorName} on ${createTime}.
+ */
+@Service("${firstLowerName}Service")
+public class ${entitySimpleName}ServiceImpl  implements ${entitySimpleName}Service{
+
+    /**
+     * 日志
+     */
+    private static Logger logger = LoggerFactory.getLogger(${entitySimpleName}Service.class);
+
+	@Resource
+	private ${entitySimpleName}Dao ${firstLowerName}Dao;
+    <%if(add){ %>
+
+	@Override
+	public CommonResult save(${entitySimpleName} entity) {
+        try {
+        	${firstLowerName}Dao.save(entity);
+        } catch (Exception e) {
+        	logger.error("${entitySimpleName}Service添加数据异常：", e);
+        	//抛出异常方便事务管理，并且会被RestExceptionHandler自动处理
+        	throw new RuntimeException("添加数据失败");
+        }
+        return CommonResult.ok(ErrorCodeEnum.SUCCESS);
+	}
+    <%}%>
+    <%if(update){ %>
+
+	@Override
+	public CommonResult update(${entitySimpleName} entity) {
+        try {
+            ${firstLowerName}Dao.update(entity);
+        } catch (Exception e) {
+            logger.error("${entitySimpleName}Service修改数据异常：", e);
+            throw new RuntimeException("修改数据失败");
+        }
+        return CommonResult.ok(ErrorCodeEnum.SUCCESS);
+	}
+	<%}%>
+    <%if(delete){ %>
+
+	@Override
+	public CommonResult delete(${primaryKeyType} id) {
+        try {
+            ${firstLowerName}Dao.delete(id);
+        } catch (Exception e) {
+            logger.error("${entitySimpleName}Service删除数据异常：", e);
+            throw new RuntimeException("删除数据异常");
+        }
+        return CommonResult.ok(ErrorCodeEnum.SUCCESS);
+	}
+	<%}%>
+    <%if(query){ %>
+
+	@Override
+	public CommonResult queryById(${primaryKeyType} id) {
+	    ${entitySimpleName} entity = ${firstLowerName}Dao.queryById(id);
+	    if (null != entity) {
+	        //成功返回数据
+        	return CommonResult.ok(ErrorCodeEnum.SUCCESS).setResult(entity);
+        } else {
+        	logger.info("${entitySimpleName}Service未查询到数据，编号：{}", id);
+        	return CommonResult.fail(ErrorCodeEnum.UNKNOWN_ERROR);
+        }
+	}
+	<%}%>
+    <%if(page){ %>
+
+	@Override
+    public PageSerializable queryPage(int offset, int limit) {
+        PageHelper.offsetPage(offset, limit);
+        List<${entitySimpleName}> list = ${firstLowerName}Dao.queryPage();
+        return new PageSerializable(list);
+    }
+    <%}%>
+    <%if(queryToListMap){ %>
+
+    @Override
+    public List<Map<String,Object>> queryToListMap(Map<String,Object> params){
+        return ${firstLowerName}Dao.queryToListMap(params);
+    }
+    <%}%>
+}

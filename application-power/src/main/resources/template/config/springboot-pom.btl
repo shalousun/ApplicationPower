@@ -61,7 +61,7 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
-        <%if(useDb){ %>
+        <%if(useDb&&!useMybatisPlus){ %>
         <!-- mybatis spring -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -74,19 +74,29 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
         </dependency>
-        <!-- ali druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.20</version>
-        </dependency>
+        <%} %>
+        <%if(useDb){ %>
         <!-- mysql driver-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <%} %>
+        <!-- ali druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.20</version>
+        </dependency>
+         <%} %>
+         <%if(useMybatisPlus){%>
+         <!--Mybatis-Plus-->
+         <dependency>
+             <groupId>com.baomidou</groupId>
+             <artifactId>mybatis-plus-boot-starter</artifactId>
+             <version>3.2.0</version>
+         </dependency>
+         <%}%>
          <!--log4j2 Asynchronous Loggers requires disruptor-->
         <dependency>
             <groupId>com.lmax</groupId>

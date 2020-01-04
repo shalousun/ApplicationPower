@@ -41,7 +41,7 @@ spring:
     add-mappings: true
 
 <%if(useDb){%>
-mybatis:
+${mybatis}:
   type-aliases-package: ${basePackage}
   mapper-locations: classpath*:mappers/*.xml
   configuration:

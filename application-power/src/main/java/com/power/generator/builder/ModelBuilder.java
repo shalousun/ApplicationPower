@@ -27,7 +27,8 @@ public class ModelBuilder implements IBuilder {
         String gettersAndSetters = this.generateSetAndGetMethods(columnMap);
         String imports = this.generateImport(columnMap);
         String toString = this.generateToStringMethod(entitySimpleName, columnMap);
-        Template template = BeetlTemplateUtil.getByName(ConstVal.TPL_ENTITY);
+        String templateName = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_ENTITY;
+        Template template = BeetlTemplateUtil.getByName(templateName);
         template.binding(GeneratorConstant.COMMON_VARIABLE);//作者
         template.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
         template.binding(GeneratorConstant.FIELDS, fields);//字段
@@ -35,6 +36,7 @@ public class ModelBuilder implements IBuilder {
         template.binding(GeneratorConstant.TABLE_COMMENT, tableInfo.getRemarks());//表注释
         template.binding(GeneratorConstant.TO_STRING, toString);
         template.binding(GeneratorConstant.LOMBOK, GeneratorProperties.useLombok());
+        template.binding(GeneratorConstant.TABLE_NAME,tableName);
         template.binding("SerialVersionUID", String.valueOf(UUID.randomUUID().getLeastSignificantBits()));
         template.binding("modelImports", imports);
         return template.render();

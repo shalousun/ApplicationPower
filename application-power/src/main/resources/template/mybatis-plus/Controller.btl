@@ -1,0 +1,117 @@
+package ${basePackage}.controller;
+
+<%if(queryToListMap){ %>
+import java.util.List;
+import java.util.Map;
+<%}%>
+import javax.annotation.Resource;
+
+
+import org.springframework.web.bind.annotation.RestController;
+<%if(delete||query||page||queryToListMap){ %>
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+<%}%>
+<%if(queryToListMap){ %>
+import org.springframework.web.bind.annotation.RequestParam;
+<%}%>
+<%if(add||update){ %>
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+<%}%>
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+<%if(page){ %>
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+<%}%>
+<%if(add||query||delete||update){ %>
+import com.power.common.model.CommonResult;
+<%}%>
+import ${basePackage}.model.${entitySimpleName};
+import ${basePackage}.service.${entitySimpleName}Service;
+
+/**
+ * ${entitySimpleName} Information Operation Interface
+ * @author ${authorName} on ${createTime}.
+ */
+@RestController
+@RequestMapping("${firstLowerName}")
+public class ${entitySimpleName}Controller {
+    /**
+     * log
+     */
+    private static Logger logger = LoggerFactory.getLogger(${entitySimpleName}Controller.class);
+
+	@Resource
+	private ${entitySimpleName}Service ${firstLowerName}Service;
+    <%if(add){ %>
+
+    /**
+	 * Add ${firstLowerName} info
+	 * @param entity ${firstLowerName} info
+	 * @return
+	 */
+	@PostMapping(value = "/add")
+	public CommonResult save(@RequestBody ${entitySimpleName} entity) {
+	    ${firstLowerName}Service.save(entity);
+		return CommonResult.ok();
+	}
+	<%}%>
+    <%if(update){ %>
+
+    /**
+	 * Update ${firstLowerName} info
+	 * @param entity ${firstLowerName} info
+	 * @return
+	 */
+	@PostMapping(value = "/update")
+	public CommonResult update(@RequestBody ${entitySimpleName} entity) {
+	    ${firstLowerName}Service.updateById(entity);
+		return CommonResult.ok();
+	}
+    <%}%>
+    <%if(delete){ %>
+
+    /**
+	 * Delete ${firstLowerName} by id
+	 * @param id ${firstLowerName} id
+	 * @return
+	 */
+	@GetMapping(value = "/delete/{id}")
+	public CommonResult delete(@PathVariable ${primaryKeyType} id) {
+	    ${firstLowerName}Service.removeById(id);
+		return CommonResult.ok();
+	}
+    <%}%>
+    <%if(query){ %>
+
+    /**
+	 * Query ${firstLowerName} by id
+	 * @param id ${firstLowerName} id
+	 * @return
+	 */
+	@GetMapping(value = "/query/{id}")
+	public CommonResult<${entitySimpleName}> queryById(@PathVariable ${primaryKeyType} id) {
+	    ${entitySimpleName} entity = ${firstLowerName}Service.getById(id);
+		return CommonResult.ok().setResult(entity);
+	}
+	<%}%>
+    <%if(page){ %>
+
+    /**
+	 * Pagination query ${firstLowerName} information
+	 * @param pageIndex page index
+	 * @param pageSize page size
+	 * @return
+	 */
+    @GetMapping(value = "/page/{pageIndex}/{pageSize}")
+    public Page<${entitySimpleName}> queryPage(@PathVariable int pageIndex,@PathVariable int pageSize) {
+        Page<${entitySimpleName}> page = new Page<>(pageIndex,pageSize);
+        page.setRecords(${firstLowerName}Service.page(page).getRecords());
+        return page;
+    }
+    <%}%>
+}

@@ -22,7 +22,8 @@ public class DaoBuilder implements IBuilder {
         String tableTemp = StringUtil.removePrefix(table.getName(), GeneratorProperties.tablePrefix());
         String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(entityName);//类名
-        Template daoTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_DAO);
+        String templateName = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_DAO;
+        Template daoTemplate = BeetlTemplateUtil.getByName(templateName);
         daoTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE, table.getPrimaryKeyType());
         daoTemplate.binding(GeneratorConstant.COMMON_VARIABLE);
         daoTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名

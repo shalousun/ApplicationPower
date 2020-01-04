@@ -120,6 +120,8 @@ public class GeneratorConstant {
      */
     public static final String USE_DB = "useDb";
 
+    public static final String USE_MYBATIS_PLUS = "useMybatisPlus";
+
     /**
      * 版本号
      */
@@ -133,6 +135,7 @@ public class GeneratorConstant {
         COMMON_VARIABLE.put(GeneratorConstant.APPLICATION_NAME_LOWER, GeneratorProperties.applicationName().toLowerCase());
         COMMON_VARIABLE.put(GeneratorConstant.USE_DB, GeneratorProperties.useDb());
         COMMON_VARIABLE.put(GeneratorConstant.VERSION,GeneratorProperties.appVersion());
+        COMMON_VARIABLE.put(GeneratorConstant.USE_MYBATIS_PLUS,GeneratorProperties.useMyBatisPlus());
 
     }
 }

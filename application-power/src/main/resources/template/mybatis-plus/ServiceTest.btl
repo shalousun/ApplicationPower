@@ -1,0 +1,62 @@
+package ${basePackage}.service;
+
+import javax.annotation.Resource;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.power.common.model.CommonResult;
+import ${basePackage}.model.${entitySimpleName};
+import ${basePackage}.service.${entitySimpleName}Service;
+
+/**
+ * @author ${authorName} on ${createTime}.
+ */
+public class ${entitySimpleName}ServiceTest extends ServiceBaseTest {
+
+	@Resource
+	private ${entitySimpleName}Service ${firstLowerName}Service;
+    <%if(add){ %>
+
+	@Test
+	public void testSave() {
+		${entitySimpleName} entity = new ${entitySimpleName}();
+	}
+    <%}%>
+    <%if(update){ %>
+
+	@Test
+	public void testUpdate() {
+		${entitySimpleName} entity = new ${entitySimpleName}();
+
+	}
+	<%}%>
+    <%if(delete){ %>
+
+	@Test
+	public void testDelete() {
+
+	}
+	<%}%>
+    <%if(query){ %>
+
+	@Test
+	public void testQueryById() {
+
+	}
+    <%}%>
+    <%if(page){ %>
+
+    /**
+     * 分页查询
+     *
+     */
+	@Test
+	public void testQueryPage() {
+
+	}
+	<%}%>
+
+}

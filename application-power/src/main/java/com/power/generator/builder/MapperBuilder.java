@@ -33,7 +33,8 @@ public class MapperBuilder implements IBuilder {
         String selectSql = generateSelectSql(tableInfo);
         String results = generateResultMap(columnMap);
         String primaryKey = getPrimaryKey(columnMap);
-        Template mapper = BeetlTemplateUtil.getByName(ConstVal.TPL_MAPPER);
+        String template = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_MAPPER;
+        Template mapper = BeetlTemplateUtil.getByName(template);
         String idType = TypeConvert.mybatisType(tableInfo.getPrimaryKeyType());
         mapper.binding(GeneratorConstant.PRIMARY_KEY_TYPE, idType);
         mapper.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);

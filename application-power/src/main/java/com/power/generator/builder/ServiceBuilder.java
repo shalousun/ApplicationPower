@@ -20,7 +20,8 @@ public class ServiceBuilder implements IBuilder {
         String tableTemp = StringUtil.removePrefix(tableInfo.getName(), GeneratorProperties.tablePrefix());
         String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(entityName);//类名
-        Template serviceTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_SERVICE);
+        String templateName = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_SERVICE;
+        Template serviceTemplate = BeetlTemplateUtil.getByName(templateName);
         serviceTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE, tableInfo.getPrimaryKeyType());
         serviceTemplate.binding(GeneratorConstant.COMMON_VARIABLE);//作者
         serviceTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名

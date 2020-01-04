@@ -1,0 +1,83 @@
+package ${basePackage}.dao;
+
+import java.util.List;
+import java.util.Map;
+
+<%if(isMultipleDataSource){%>
+import com.power.datasource.annotations.TargetDataSource;
+
+import ${basePackage}.constants.DataSourceKey;
+ <%} %>
+import ${basePackage}.model.${entitySimpleName};
+
+/**
+ * Created by ApplicationPower.
+ * @author ${authorName} on ${createTime}.
+ */
+ <%if(isMultipleDataSource){%>
+@TargetDataSource(DataSourceKey.${defaultDataSource})
+ <%} %>
+public interface ${entitySimpleName}Dao {
+    <%if(add){ %>
+
+	/**
+	 * 保存数据
+	 * @param entity
+	 * @return
+     */
+	int save(${entitySimpleName} entity);
+    <%} %>
+    <%if(add){ %>
+
+    /**
+     * 批量添加数据
+     * @param entityList
+     * @return
+     */
+	int batchSave(List<${entitySimpleName}> entityList);
+    <%} %>
+    <%if(update){ %>
+
+	/**
+	 * 更新数据
+	 * @param entity
+	 * @return
+     */
+	int update(${entitySimpleName} entity);
+    <%} %>
+    <%if(delete){ %>
+
+	/**
+	 * 删除数据
+	 * @param id
+	 * @return
+     */
+	int delete(${primaryKeyType} id);
+    <%} %>
+    <%if(query){ %>
+
+	/**
+	 * 根据id查询数据
+	 * @param id
+	 * @return
+     */
+	${entitySimpleName} queryById(${primaryKeyType} id);
+    <%} %>
+    <%if(page){ %>
+
+	/**
+	 * 分页查询数据
+	 * @return
+     */
+	List<${entitySimpleName}> queryPage();
+	<%} %>
+    <%if(queryToListMap){ %>
+
+    /**
+     * query result to list of map
+     * @param params Map查询参数
+     * @return
+     */
+    List<Map<String,Object>> queryToListMap(Map<String,Object> params);
+    <%}%>
+}

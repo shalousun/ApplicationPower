@@ -20,7 +20,8 @@ public class ServiceTestBuilder implements IBuilder {
         String tableTemp = StringUtil.removePrefix(tableInfo.getName(), GeneratorProperties.tablePrefix());
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(tableTemp);//类名
         String firstLowName = StringUtil.firstToLowerCase(entitySimpleName);
-        Template serviceTestTemplate = BeetlTemplateUtil.getByName(ConstVal.TPL_SERVICE_TEST);
+        String templateName = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_SERVICE_TEST;
+        Template serviceTestTemplate = BeetlTemplateUtil.getByName(templateName);
         serviceTestTemplate.binding(GeneratorConstant.COMMON_VARIABLE);//作者
         serviceTestTemplate.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         serviceTestTemplate.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名

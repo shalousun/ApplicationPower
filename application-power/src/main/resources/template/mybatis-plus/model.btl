@@ -1,0 +1,33 @@
+package ${basePackage}.model;
+
+import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+${modelImports}
+<%if(lombok){ %>
+import lombok.Data;
+import lombok.ToString;
+<%}%>
+
+/**
+ * Table:${tableComment}
+ * @author ${authorName} on ${createTime}.
+ */
+<%if(lombok){ %>
+@Data
+@ToString
+<%}%>
+@TableName(value = "${tableName}")
+public class ${entitySimpleName} implements Serializable {
+
+    private static final long serialVersionUID = ${SerialVersionUID}L;
+
+   ${fields}
+   <%if(!lombok){ %>
+	/** getters and setters */
+   ${gettersAndSetters}
+    @Override
+    public String toString() {
+        return ${toString}
+    }
+    <%}%>
+}

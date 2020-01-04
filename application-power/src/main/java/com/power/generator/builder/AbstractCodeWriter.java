@@ -33,16 +33,6 @@ public abstract class AbstractCodeWriter {
     private ProjectConfig projectConfig;
     private SpringBootProjectConfig springBootProjectConfig;
 
-    /**
-     * 初始化配置
-     */
-    protected void initConfig() {
-        if (null == config) {
-            dataBaseInfo = new DbProviderFactory().getInstance();
-            config = new ConfigBuilder(dataBaseInfo, packageConfig, projectConfig);
-
-        }
-    }
 
     /**
      * 初始化spring boot的配置

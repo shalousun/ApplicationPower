@@ -23,26 +23,6 @@ import java.util.Set;
  */
 public class CodeWriter extends AbstractCodeWriter {
 
-
-    public void execute() {
-        //初始化配置
-        initConfig();
-        //java代码目录
-        mkdirs(config.getPathInfo());
-        //创建配置文件路径
-        mkdirs(config.getBaseConfigPathInfo());
-        //创建文档路径
-        mkdirs(config.getDocsPath());
-        //创建配置文件
-        writeBaseConfig(config.getBaseConfigFilesPath());
-        //创建代码
-        writeCode(config);
-        //创建项目所需基础类
-        writeBaseCode(config, false);
-
-        writeJTAForSpringMvc(config);
-    }
-
     public void executeSpringBoot() {
         //初始化配置
         initSpringBootConfig();
@@ -146,6 +126,7 @@ public class CodeWriter extends AbstractCodeWriter {
                 template.binding("dbDriver", dbProp.getProperty("jdbc.driver"));
                 template.binding("list", GeneratorProperties.getMultipleDataSource());
                 template.binding("isJTA", GeneratorProperties.isJTA());
+                template.binding("mybatis",GeneratorProperties.getDbTemplatePath());
 
                 FileUtil.writeFileNotAppend(template.render(), entry.getValue());
             }
@@ -285,20 +266,5 @@ public class CodeWriter extends AbstractCodeWriter {
             }
         }
         return true;
-    }
-
-    private void writeJTAForSpringMvc(ConfigBuilder config) {
-        Map<String, String> dirMap = config.getPathInfo();
-        Set<String> dataSources = GeneratorProperties.getMultipleDataSource();
-        if (GeneratorProperties.isMultipleDataSource()) {
-            String configPath = dirMap.get(ConstVal.DATA_SOURCE_FIG);
-            Template aspectTpl = BeetlTemplateUtil.getByName(ConstVal.TPL_DATASOURCE_ASPECT);
-            aspectTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-            FileUtil.writeFileNotAppend(aspectTpl.render(), dirMap.get(ConstVal.ASPECT) + ConstVal.FILE_SEPARATOR + "DbAspect.java");
-
-            DataSourceKeyBuilder sourceKeyBuilder = new DataSourceKeyBuilder();
-            String dataSourceTpl = sourceKeyBuilder.builderDataSourceKey(dataSources);
-            FileUtil.writeFileNotAppend(dataSourceTpl, dirMap.get(ConstVal.CONSTANTS) + ConstVal.FILE_SEPARATOR + "DataSourceKey.java");
-        }
     }
 }

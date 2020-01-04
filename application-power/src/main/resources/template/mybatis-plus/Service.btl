@@ -1,0 +1,12 @@
+package ${basePackage}.service;
+
+import ${basePackage}.model.${entitySimpleName};
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+ *
+ * @author ${authorName} on ${createTime}.
+ */
+public interface ${entitySimpleName}Service extends IService<${entitySimpleName}> {
+
+}

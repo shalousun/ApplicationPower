@@ -1,0 +1,76 @@
+package ${basePackage}.service;
+
+<%if(queryToListMap){ %>
+import java.util.List;
+import java.util.Map;
+<%}%>
+
+<%if(page){ %>
+import com.github.pagehelper.PageSerializable;
+<%}%>
+<%if(add||query||delete||update){ %>
+import com.power.common.model.CommonResult;
+<%}%>
+import ${basePackage}.model.${entitySimpleName};
+
+/**
+ *
+ * @author ${authorName} on ${createTime}.
+ */
+public interface ${entitySimpleName}Service {
+    <%if(add){ %>
+
+	/**
+	 * 保存数据
+	 * @param entity
+	 * @return
+     */
+	CommonResult save(${entitySimpleName} entity);
+    <%}%>
+    <%if(update){ %>
+
+	/**
+	 * 修改数据
+	 * @param entity
+	 * @return
+     */
+	CommonResult update(${entitySimpleName} entity);
+    <%}%>
+    <%if(delete){ %>
+
+	/**
+	 * 删除数据
+	 * @param id
+	 * @return
+     */
+	CommonResult delete(${primaryKeyType} id);
+    <%}%>
+    <%if(query){ %>
+
+	/**
+	 * 根据id查询数据
+	 * @param id
+	 * @return
+     */
+	CommonResult queryById(${primaryKeyType} id);
+    <%}%>
+    <%if(page){ %>
+
+	/**
+     * 分页查询
+     * @param offset 偏移量
+     * @param limit 每页大小
+     * @return
+     */
+    PageSerializable queryPage(int offset, int limit);
+    <%}%>
+    <%if(queryToListMap){ %>
+
+    /**
+     * query result to list of map
+     * @param params Map查询参数
+     * @return
+     */
+    List<Map<String,Object>> queryToListMap(Map<String,Object> params);
+    <%}%>
+}

@@ -226,6 +226,23 @@ public class GeneratorProperties {
     }
 
     /**
+     * 是否需要生成db相关代码
+     *
+     * @return
+     */
+    public static Boolean useMyBatisPlus() {
+        return Boolean.valueOf(props.getProperty("generator.useMybatisPlus"));
+    }
+
+    public static String  getDbTemplatePath(){
+        if(useMyBatisPlus()){
+            return "mybatis-plus";
+        }else {
+            return "mybatis";
+        }
+    }
+
+    /**
      * 获取app版本号
      * @return
      */
