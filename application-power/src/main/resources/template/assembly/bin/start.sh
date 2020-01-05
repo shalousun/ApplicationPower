@@ -120,7 +120,7 @@ then
     LOGGING_CONFIG="-Dlogging.config=$CONF_DIR/$LOG_IMPL_FILE"
 fi
 
-CONFIG_FILES=" -Dlogging.path=$LOGS_DIR $LOGGING_CONFIG -Dspring.config.location=$FOUND_FILES "
+CONFIG_FILES=" -Dlogging.file.path=$LOGS_DIR $LOGGING_CONFIG -Dspring.config.location=$FOUND_FILES "
 
 # =================================set jvm params=======================================================
 JAVA_DEFAULT_OPTS=" -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true "
