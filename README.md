@@ -8,10 +8,10 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
  技术交流群：170651381<br/>
  [github同步地址](https://github.com/shalousun/ApplicationPower)
 ## 创建的项目技术
-     ● 核心框架：Spring Boot 1.5.14.RELEASE或Spring Boot 2.1.14.RELEASE
-     ● 数据库连接池：druid-spring-boot-starter 1.1.20
-     ● 持久层框架：mybatis-spring-boot-starter 2.1.0
-     ● 分页插件：pagehelper-spring-boot-starter 1.2.10
+     ● 核心框架：Spring Boot 1.5.14.RELEASE或Spring Boot 2.2.2.RELEASE
+     ● 数据库连接池：druid-spring-boot-starter 1.1.21
+     ● 持久层框架：mybatis-spring-boot-starter 2.1.1
+     ● 分页插件：pagehelper-spring-boot-starter 1.2.13
      ● 分布式事务管理：spring-boot-starter-jta-atomikos
      ● 日志管理：SLF4J和log4j2
 ## 结构说明
