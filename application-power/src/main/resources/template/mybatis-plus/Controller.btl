@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 <%if(page){ %>
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 <%}%>
 <%if(add||query||delete||update){ %>
 import com.power.common.model.CommonResult;
@@ -108,10 +108,9 @@ public class ${entitySimpleName}Controller {
 	 * @return
 	 */
     @GetMapping(value = "/page/{pageIndex}/{pageSize}")
-    public Page<${entitySimpleName}> queryPage(@PathVariable int pageIndex,@PathVariable int pageSize) {
+    public IPage<${entitySimpleName}> queryPage(@PathVariable int pageIndex,@PathVariable int pageSize) {
         Page<${entitySimpleName}> page = new Page<>(pageIndex,pageSize);
-        page.setRecords(${firstLowerName}Service.page(page).getRecords());
-        return page;
+        return reportDeviceInfoService.page(page);
     }
     <%}%>
 }

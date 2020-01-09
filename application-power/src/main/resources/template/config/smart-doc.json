@@ -2,7 +2,7 @@
   "serverUrl": "http://127.0.0.1",
   "isStrict": false,
   "allInOne": true,
-  "outPath": "D://md2",
+  "outPath": "src/main/resources/static/doc",
   "coverOld": true,
   "packageFilters": "",
   "md5EncryptedHtmlName": false,
