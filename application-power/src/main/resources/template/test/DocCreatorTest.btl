@@ -50,7 +50,7 @@ public class DocCreatorTest {
 
 
        long start = System.currentTimeMillis();
-       HtmlApiDocBuilder.builderControllersApi(config);
+       HtmlApiDocBuilder.buildApiDoc(config);
        long end = System.currentTimeMillis();
        DateTimeUtil.printRunTime(end, start);
    }
