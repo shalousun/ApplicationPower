@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 public class StringUtil {
 
+    public static final String ENMPTY = "";
     private static final String SERIALNO_PATTERN = "yyyyMMddHHmmssSSS";
     private static final char UNDERLINE = '_';
     private static final char HYPHEN_LINE = '-';

@@ -10,11 +10,13 @@ public abstract class BaseResult<T> implements Serializable {
 
     /**
      * 是否成功
+     * @mock true
      */
     private boolean success = false;
 
     /**
      * 错误提示(成功succeed)
+     * @mock succeed
      */
     private String message;
 
