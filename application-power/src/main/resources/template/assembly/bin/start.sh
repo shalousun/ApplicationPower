@@ -161,10 +161,16 @@ fi
 echo -e "Starting the $SERVER_NAME ..."
 nohup java $JAVA_OPTS_TEMP $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS $CONFIG_FILES -jar $DEPLOY_DIR/lib/$JAR_NAME >> $STDOUT_FILE 2>&1 &
 
+CHECK_COUNT=0
 COUNT=0
 while [ "$COUNT" -lt 1 ]; do
     echo -e ".\\c"
     sleep 1
+    let CHECK_COUNT+=1;
+    if [ "$CHECK_COUNT" -gt 20 ];then
+        echo -e "\nERROR: The $SERVER_NAME start failed, Please open $STDOUT_FILE to view the error log"
+        exit 1
+    fi
     if [ -n "$SERVER_PORT" ]; then
         COUNT=$(netstat -an | grep "$SERVER_PORT" | wc -l)
     else
