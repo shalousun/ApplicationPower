@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public class FileUtil {
 
-    private static final String DEFAULT_CHARSET = "utf-8";
+    private static final String DEFAULT_CHARSET = "UTF-8";
 
     /**
      * make dir
@@ -232,9 +232,9 @@ public class FileUtil {
     public static String getFileContent(InputStream inputStream) {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(inputStream));
+            reader = new BufferedReader(new InputStreamReader(inputStream, DEFAULT_CHARSET));
             return reader.lines().collect(Collectors.joining("\n"));
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } finally {
             try {
