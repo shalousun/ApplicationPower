@@ -45,12 +45,12 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>3.10</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.12</version>
+            <version>1.14</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.14.2</version>
+            <version>3.14.7</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
