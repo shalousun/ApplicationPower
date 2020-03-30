@@ -31,8 +31,8 @@ public class UUIDUtil {
 
     /**
      * 32未字符串还原成Uuid
-     * @param uuid
-     * @return
+     * @param uuid uuid
+     * @return UUID
      */
     public static UUID fromString32(String uuid) {
         if (StringUtils.isEmpty(uuid)) {
@@ -55,7 +55,7 @@ public class UUIDUtil {
     /**
      * Convert uuid to BigInteger
      * @param uuid uuid
-     * @return
+     * @return BigInteger
      */
     public static BigInteger uuidToBigInteger(UUID uuid) {
         BigInteger value1 = BigInteger.valueOf(uuid.getMostSignificantBits());
