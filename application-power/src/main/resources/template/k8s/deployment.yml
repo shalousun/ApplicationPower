@@ -71,6 +71,8 @@ spec:
               - name:  JAVA_OPTS
               # Override the jvm param setting in dockerfile
                 value: "-server -Xmx512m -Xms512m -Djava.awt.headless=true"
+              - name: PROFILES
+                value: 'default'
 #              # from configmap
 #              - name: xx-ENV
 #                valueFrom:

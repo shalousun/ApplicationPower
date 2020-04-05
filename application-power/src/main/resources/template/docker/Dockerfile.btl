@@ -16,6 +16,7 @@ ADD ${applicationNameLowerCase}.jar ${applicationNameLowerCase}.jar
 RUN sh -c 'touch /${applicationNameLowerCase}.jar'
 # Set jvm
 ENV JAVA_OPTS="-server -Xmx512m -Xms512m -Djava.awt.headless=true"
-
+# Spring boot profiles
+ENV PROFILES="default"
 # Run the jar file
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /${applicationNameLowerCase}.jar" ]
