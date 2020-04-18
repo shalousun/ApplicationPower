@@ -562,8 +562,8 @@ public class ValidateUtil {
 
     /**
      * contains chinese
-     * @param str
-     * @return
+     * @param str str
+     * @return boolean
      */
     public static boolean isContainsChinese(String str)  {
         if (StringUtil.isEmpty(str)) {
