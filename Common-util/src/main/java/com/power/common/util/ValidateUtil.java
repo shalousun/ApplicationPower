@@ -1,5 +1,8 @@
 package com.power.common.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 数据校验常用正则封装
  *
@@ -9,6 +12,7 @@ public class ValidateUtil {
 
     public static final String EMAIL_PATTERN = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     public static final String CHINESE_PATTERN = "^[\u4e00-\u9fa5]{0,}$";
+    public static final String CONTAINS_CHINESE_PATTERN = "[\u4E00-\u9FA5|\\！|\\，|\\。|\\（|\\）|\\《|\\》|\\“|\\”|\\？|\\：|\\；|\\【|\\】]";
     public static final String NUMBER_ADN_LETTER = "^[A-Za-z0-9]+$";
     public static final String QQ_PATTERN = "/[1-9][0-9]{4,}/";
     public static final String NUMBER_PATTERN = "[0-9]+";
@@ -553,6 +557,24 @@ public class ValidateUtil {
      */
     public static boolean isNotTime(String time) {
         return !isTime(time);
+    }
+
+
+    /**
+     * contains chinese
+     * @param str
+     * @return
+     */
+    public static boolean isContainsChinese(String str)  {
+        if (StringUtil.isEmpty(str)) {
+            return true;
+        }
+        Pattern p = Pattern.compile(CONTAINS_CHINESE_PATTERN);
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
     }
 
 
