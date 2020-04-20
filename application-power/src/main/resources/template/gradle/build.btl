@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.8.RELEASE'
+        springBootVersion = '2.2.6.RELEASE'
     }
     repositories {
         maven {url 'http://localhost:8081/nexus/content/groups/public/'}
@@ -26,11 +26,14 @@ apply plugin: 'docker'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-sourceCompatibility = 1.8
+sourceCompatibility = '1.8'
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+}
 
 repositories {
-    maven { url "http://maven.springframework.org/release" }
-    maven { url "http://maven.restlet.org" }
+    maven {url 'http://localhost:8081/nexus/content/groups/public/'}
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     mavenCentral()
 }
 
@@ -62,11 +65,11 @@ dependencies {
     <% if(isMultipleDataSource){%>
     compile 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    compile 'com.github.shalousun:common-util:1.8.7'
+    compile 'com.github.shalousun:common-util:1.9.3'
     compileOnly 'org.projectlombok:lombok:1.18.0'
-    testCompile 'com.github.shalousun:common-util:1.8.7:sources'
+    testCompile 'com.github.shalousun:common-util:1.9.3:sources'
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'com.github.shalousun:smart-doc:1.8.1'
+    testCompile 'com.github.shalousun:smart-doc:1.8.5'
 
 }
 
