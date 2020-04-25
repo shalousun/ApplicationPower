@@ -7,7 +7,7 @@
     <groupId>com.github.shalousun</groupId>
     <artifactId>common-util</artifactId>
     <packaging>jar</packaging>
-    <version>1.9.3</version>
+    <version>1.9.4</version>
 
     <name>common-util</name>
     <url>https://github.com/shalousun/ApplicationPower.git</url>
@@ -71,7 +71,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.26</version>
+            <version>1.7.30</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
