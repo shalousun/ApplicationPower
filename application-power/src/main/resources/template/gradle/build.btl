@@ -80,7 +80,7 @@ task('copyConf', type: Copy) {
 
 task('copyJar', type: Copy) {
     from 'build/libs'
-    into "build/package/\${project.name}/lib"
+    into "build/package/\${project.name}"
     dependsOn('build')
 }
 
