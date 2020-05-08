@@ -6,31 +6,31 @@ import com.power.generator.constant.SpringBootProjectConfig;
 import com.power.generator.database.DbProvider;
 import com.power.generator.factory.DbProviderFactory;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-
 /**
  * Created by yu on 2016/12/10.
  */
 public abstract class AbstractCodeWriter {
 
     /**
-     *
+     * builder config
      */
     protected ConfigBuilder config;
+
     /**
      * 数据库信息
      */
     private DbProvider dataBaseInfo;
+
     /**
      * 包配置
      */
     private PackageConfig packageConfig;
+
     /**
      * 工程配置
      */
     private ProjectConfig projectConfig;
+
     private SpringBootProjectConfig springBootProjectConfig;
 
 
