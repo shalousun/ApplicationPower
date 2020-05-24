@@ -10,6 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'com.github.shalousun:smart-doc-gradle-plugin:1.0.0'
         <%if(isUseDocker){ %>
         classpath('se.transmode.gradle:gradle-docker:1.2')
          <% } %>
@@ -25,6 +26,7 @@ apply plugin: 'docker'
  <% } %>
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'smart-doc'
 
 sourceCompatibility = '1.8'
 tasks.withType(JavaCompile) {
@@ -41,35 +43,37 @@ configurations.compile {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     exclude group: 'org.springframework.boot', module: 'logback-classic'
 }
+smartdoc {
+    configFile = file("src/main/resources/smart-doc.json")
+}
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.13'
     compile('org.springframework.boot:spring-boot-starter'){
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
     compile('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
-    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
-    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10'
-    compile 'com.alibaba:druid-spring-boot-starter:1.1.20'
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
+    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.13'
+    compile 'com.alibaba:druid-spring-boot-starter:1.1.22'
     compile 'mysql:mysql-connector-java:8.0.15'
     compile('org.springframework.boot:spring-boot-starter-log4j2')
     compile 'com.lmax:disruptor:3.4.2'
     compile('org.springframework.boot:spring-boot-starter-aop')
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
-    compile 'org.apache.commons:commons-lang3:3.5'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.68'
+    compile 'org.apache.commons:commons-lang3:3.10'
     <%if(useJTA){ %>
     compile('org.springframework.boot:spring-boot-starter-jta-atomikos')
     <% } %>
     <% if(isMultipleDataSource){%>
     compile 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    compile 'com.github.shalousun:common-util:1.9.3'
-    compileOnly 'org.projectlombok:lombok:1.18.0'
-    testCompile 'com.github.shalousun:common-util:1.9.3:sources'
+    compile 'com.github.shalousun:common-util:1.9.5'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'com.github.shalousun:smart-doc:1.8.5'
+    testCompile 'com.github.shalousun:smart-doc:1.8.6'
 
 }
 
