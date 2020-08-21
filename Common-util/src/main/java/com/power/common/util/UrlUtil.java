@@ -10,7 +10,8 @@ public class UrlUtil {
 
     /**
      * Get url join
-     * @param url base url
+     *
+     * @param url    base url
      * @param params params
      * @return String
      */
@@ -37,14 +38,19 @@ public class UrlUtil {
 
     /**
      * Replace '//' with '/' in the url.
+     *
      * @param url url
      * @return processed url
      */
     public static String simplifyUrl(String url) {
         int index = url.indexOf("://");
-        String urlHead = url.substring(0, index + 2);
-        String urlTail = url.substring(index + 2, url.length()).replaceAll("/+", "/");
-        String finalUrl = new StringBuilder().append(urlHead).append(urlTail).toString();
-        return StringUtil.trim(finalUrl);
+        if (index != -1) {
+            String urlHead = url.substring(0, index + 2);
+            String urlTail = url.substring(index + 2, url.length()).replaceAll("/+", "/");
+            String finalUrl = new StringBuilder().append(urlHead).append(urlTail).toString();
+            return StringUtil.trim(finalUrl);
+        } else {
+            return url.replaceAll("/+", "/");
+        }
     }
 }
