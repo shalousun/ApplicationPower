@@ -46,9 +46,9 @@ public class UrlUtil {
         int index = url.indexOf("://");
         if (index != -1) {
             String urlHead = url.substring(0, index + 2);
-            String urlTail = url.substring(index + 2, url.length()).replaceAll("/+", "/");
+            String urlTail = url.substring(index + 2).replaceAll("/+", "/");
             String finalUrl = new StringBuilder().append(urlHead).append(urlTail).toString();
-            return StringUtil.trim(finalUrl);
+            return finalUrl;
         } else {
             return url.replaceAll("/+", "/");
         }

@@ -71,7 +71,7 @@ public class StringEscapeUtil {
      */
     public static String escapeJava(String content, Boolean ignoreChinese) {
         if (Objects.isNull(content)) {
-            return content;
+            return null;
         }
         final StringBuilder tmp = new StringBuilder(content.length() * 6);
         char j;
