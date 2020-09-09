@@ -129,7 +129,7 @@
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>smart-doc</artifactId>
-            <version>1.9.3</version>
+            <version>1.9.4</version>
             <scope>test</scope>
         </dependency>
        <% if(lombok){%>
@@ -150,19 +150,11 @@
                 <configuration>
                     <includeSystemScope>true</includeSystemScope>
                 </configuration>
-                <dependencies>
-                    <!-- hot deploy in idea-->
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>1.2.8.RELEASE</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>1.1.7</version>
+                <version>1.1.8</version>
                 <configuration>
                     <!--smart-doc-->
                     <configFile>./src/main/resources/smart-doc.json</configFile>

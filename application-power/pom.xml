@@ -13,14 +13,14 @@
 
     <properties>
         <project.build.jdkVersion>1.8</project.build.jdkVersion>
-        <log4j.version>2.13.0</log4j.version>
+        <log4j.version>2.13.3</log4j.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13</version>
             <scope>test</scope>
         </dependency>
         <!--log4j2-->
@@ -67,18 +67,18 @@
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
-            <version>3.0.11.RELEASE</version>
+            <version>3.1.8.RELEASE</version>
         </dependency>
         <!-- 格式化对象，方便输出日志 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.68</version>
+            <version>1.2.73</version>
         </dependency>
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>common-util</artifactId>
-            <version>1.9.5</version>
+            <version>1.9.8</version>
         </dependency>
     </dependencies>
     <build>

@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'com.github.shalousun:smart-doc-gradle-plugin:1.1.7'
+        classpath 'com.github.shalousun:smart-doc-gradle-plugin:1.1.8'
         <%if(isUseDocker){ %>
         classpath('se.transmode.gradle:gradle-docker:1.2')
          <% } %>
@@ -73,7 +73,7 @@ dependencies {
     compile 'com.github.shalousun:common-util:1.9.8'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'com.github.shalousun:smart-doc:1.9.3'
+    testCompile 'com.github.shalousun:smart-doc:1.9.4'
 
 }
 
