@@ -22,6 +22,7 @@ public class SpringBootProjectConfig {
     private String log4j2Assembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "log4j2.xml";
     private String applicationYmlAssembly = assemblyCfg + ConstVal.FILE_SEPARATOR + "application.yml";
     private String smartDocJson = resource + ConstVal.FILE_SEPARATOR + "smart-doc.json";
+    private String readme = "README.md";
 
     public String getResource() {
         return resource;
@@ -121,5 +122,13 @@ public class SpringBootProjectConfig {
 
     public void setSmartDocJson(String smartDocJson) {
         this.smartDocJson = smartDocJson;
+    }
+
+    public String getReadme() {
+        return readme;
+    }
+
+    public void setReadme(String readme) {
+        this.readme = readme;
     }
 }

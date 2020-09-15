@@ -30,7 +30,7 @@ public class ConstVal {
 
 
     public static final String STRING_BOOT_STATIC_DIR = RESOURCE_DIR + FILE_SEPARATOR + "static";
-    public static final String STRING_BOOT_EORRO_DIR = STRING_BOOT_STATIC_DIR + FILE_SEPARATOR + "error";
+    public static final String STRING_BOOT_ERROR_DIR = STRING_BOOT_STATIC_DIR + FILE_SEPARATOR + "error";
 
     public static final String ENUM_PACKAGE = "enums";
     public static final String UTIL_PACKAGE = "util";
@@ -38,24 +38,24 @@ public class ConstVal {
     public static final String ANNOTATION_PACKAGE = "annotation";
     public static final String ENTITY = "model";
     public static final String SERVICE = "service";
-    public static final String SERVICE_SUBFIX = "Service.java";
-    public static final String SERVICEIMPL = "ServiceImpl";
-    public static final String SERVICEIMPL_SUBFIX = "ServiceImpl.java";
+    public static final String SERVICE_SUFFIX = "Service.java";
+    public static final String SERVICE_IMPL = "ServiceImpl";
+    public static final String SERVICE_IMPL_SUFFIX = "ServiceImpl.java";
     public static final String DAO = "dao";
-    public static final String DAO_SUBFIX = "Dao.java";
+    public static final String DAO_SUFFIX = "Dao.java";
     public static final String MAPPER = "mapper";
-    public static final String MAPPER_SUBFIX = "Dao.xml";
+    public static final String MAPPER_SUFFIX = "Dao.xml";
     public static final String CONTROLLER = "controller";
-    public static final String CONTROLLER_SUBFIX = "Controller.java";
+    public static final String CONTROLLER_SUFFIX = "Controller.java";
     public static final String CONTROLLER_TEST = "controllerTest";
-    public static final String CONTROLLER_TEST_SUBFIX = "ControllerTest.java";
+    public static final String CONTROLLER_TEST_SUFFIX = "ControllerTest.java";
     public static final String SERVICE_TEST = "serviceTest";
-    public static final String SERVICE_TEST_SUBFIX = "ServiceTest.java";
+    public static final String SERVICE_TEST_SUFFIX = "ServiceTest.java";
     public static final String DATE_CONVERTER = "DateConverter";
     public static final String REST_EXCEPTION = "RestExceptionHandler";
 
     //多数据源配置
-    public static final String ASPECT = "spect";
+    public static final String ASPECT = "aspect";
     public static final String DATA_SOURCE_FIG = "datasource_cfg";
     public static final String CONSTANTS = "constants";
 
@@ -64,8 +64,8 @@ public class ConstVal {
     public static final String WEB_INFO = "web-info";
 
     public static final String ENTITY_PATH = "entity_path";
-    public static final String SERVICE_PATH = "serivce_path";
-    public static final String SERVICEIMPL_PATH = "serviceimpl_path";
+    public static final String SERVICE_PATH = "service_path";
+    public static final String SERVICE_IMPL_PATH = "service_mpl_path";
     public static final String MAPPER_PATH = "mapper_path";
     public static final String DAO_PATH = "dao_path";
     public static final String CONTROLLER_PATH = "controller_path";
@@ -82,8 +82,8 @@ public class ConstVal {
 
     public static final String POM_PATH = "pom_path";
     public static final String MYBATIS_CFG_PATH = "mybatis_cfg_path";
-    public static final String STRING_MVC_PATH = "spring_mvc_path";
-    public static final String SPTING_MYBAIS_PATH = "spring_mybatis_path";
+    public static final String SPRING_MVC_PATH = "spring_mvc_path";
+    public static final String SPRING_MYBATIS_PATH = "spring_mybatis_path";
     public static final String HTML_404_PATH = "html404_path";
     public static final String HTML_505_PATH = "html505_path";
     public static final String WEB_XML_PATH = "web_xml_path";
@@ -96,7 +96,7 @@ public class ConstVal {
     public static final String TPL_DAO = "Dao.btl";
     public static final String TPL_MAPPER = "Mapper.btl";
     public static final String TPL_SERVICE = "Service.btl";
-    public static final String TPL_SERVICEIMPL = "ServiceImpl.btl";
+    public static final String TPL_SERVICE_IMPL = "ServiceImpl.btl";
     public static final String TPL_CONTROLLER = "Controller.btl";
     public static final String TPL_SERVICE_TEST = "ServiceTest.btl";
     public static final String TPL_CONTROLLER_TEST = "ControllerTest.btl";
@@ -133,6 +133,8 @@ public class ConstVal {
 
     public static final String TPL_GITIGNORE = "gitignore.btl";
 
+    public static final String TPL_README = "README.md";
+
     //多数据源模板定义(针对springboot)
     public static final String TPL_DATASOURCE_CFG = "datasource" + FILE_SEPARATOR + "AbstractDataSourceConfig.btl";
     public static final String TPL_DATASOURCE_KEY = "datasource" + FILE_SEPARATOR + "DataSourceKey.btl";
@@ -143,6 +145,8 @@ public class ConstVal {
     public static final String TPL_REST_ERROR = "error" + FILE_SEPARATOR + "RestExceptionHandler.btl";
 
     public static final String TPL_SMART_DOC_CONFIG = "config" + FILE_SEPARATOR + "smart-doc.json";
+
+
 
     public static final String JAVA_TMPDIR = "java.io.tmpdir";
 

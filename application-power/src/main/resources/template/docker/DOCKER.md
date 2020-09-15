@@ -46,7 +46,7 @@ docker run -dp $SERVER_PORT:$SERVER_PORT -t ${basePackage}/${applicationNameLowe
 ```
 docker exec -it [containerId] /bin/sh
 ```
-# 使用kubernates部署
+# 使用kubernetes部署
 - 在使用k8s部署时在构建前可将docker.sh脚本中的docker run注释掉
 ```
 # running container

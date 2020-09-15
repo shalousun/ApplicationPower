@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class DbProviderFactory {
 
-    private static List<String> drivers = new ArrayList<>();
+    private final static List<String> drivers = new ArrayList<>();
 
     static {
         drivers.add("com.mysql.jdbc.Driver");
@@ -25,7 +25,7 @@ public class DbProviderFactory {
     /**
      * 数据库属性
      */
-    private DbProperties properties;
+    private final DbProperties properties;
 
     public DbProviderFactory() {
         properties = new DbProperties();
@@ -39,7 +39,7 @@ public class DbProviderFactory {
         if (!drivers.contains(driverName)) {
             throw new RuntimeException("Can't support your db driver name.");
         }
-        DbProvider provider = null;
+        DbProvider provider;
         if ("com.mysql.jdbc.Driver".equals(driverName)) {
             provider = new MySqlProvider();
             return provider;

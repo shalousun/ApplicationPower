@@ -14,30 +14,20 @@ public class TypeConvert {
     public static String sqlTypeToJavaType(int type, int digits) {
         String dataType = "";
         switch (type) {
-            case Types.VARCHAR:  //12
-                dataType = "String";
-                break;
+            //12
             case Types.INTEGER:    //4
-                dataType = "Integer";
-                break;
-            case Types.TINYINT:    //4
-                dataType = "Integer";
-                break;
+            case Types.TINYINT:
             case Types.BIT:    //-7
+            case Types.SMALLINT:
                 dataType = "Integer";
                 break;
             case Types.BIGINT: //-5
                 dataType = "Long";
                 break;
-            case Types.SMALLINT:
-                dataType = "Integer";
-                break;
             case Types.DOUBLE: //8
                 dataType = "Double";
                 break;
             case Types.FLOAT: //6
-                dataType = "Float";
-                break;
             case Types.REAL: //7
                 dataType = "Float";
                 break;
@@ -48,8 +38,6 @@ public class TypeConvert {
                 dataType = "Time";
                 break;
             case Types.DATE:  //91
-                dataType = "Timestamp";
-                break;
             case Types.TIMESTAMP:
                 dataType = "Timestamp";
                 break;
@@ -66,27 +54,8 @@ public class TypeConvert {
     public static String sqlTypeToJavaType(String type) {
         String dataType = "";
         switch (type) {
-            case "char":
-                dataType = "String";
-                break;
-            case "varchar2":
-                dataType = "String";
-                break;
-            case "varchar":
-                dataType = "String";
-                break;
-            case "nvarchar":
-                dataType = "String";
-                break;
-            case "nvarchar2":
-                dataType = "String";
-                break;
             case "number":
-                dataType = "Integer";
-                break;
             case "numeric":
-                dataType = "Integer";
-                break;
             case "int":
                 dataType = "Integer";
                 break;
@@ -100,14 +69,8 @@ public class TypeConvert {
                 dataType = "Float";
                 break;
             case "date":
-                dataType = "Timestamp";
-                break;
             case "datetime":
-                dataType = "Timestamp";
-                break;
             case "timestamp(6)":
-                dataType = "Timestamp";
-                break;
             case "timestamp":
                 dataType = "Timestamp";
                 break;
@@ -119,8 +82,6 @@ public class TypeConvert {
 
     public static String mybatisType(String type) {
         switch (type) {
-            case "String":
-                return "string";
             case "Integer":
                 return "int";
             case "Long":

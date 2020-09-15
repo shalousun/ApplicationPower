@@ -1,5 +1,5 @@
 # Start with a base image containing Java runtime. The default timezone is Shanghai.
-FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-oraclejre8:1.0
+FROM registry.cn-shanghai.aliyuncs.com/shalousun/alpine-oraclejdk8-perf4j:1.0.2
 
 # Add Maintainer Info
 MAINTAINER shalousun
@@ -19,4 +19,4 @@ ENV JAVA_OPTS="-server -Xmx512m -Xms512m -Djava.awt.headless=true"
 # Spring boot profiles
 ENV PROFILES="default"
 # Run the jar file
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /${applicationNameLowerCase}.jar" ]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar -Dspring.profiles.active=$PROFILES /${applicationNameLowerCase}.jar" ]

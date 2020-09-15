@@ -1,6 +1,9 @@
 package com.power.generator.builder;
 
-import com.power.generator.constant.*;
+import com.power.generator.constant.BuilderCfg;
+import com.power.generator.constant.ConstVal;
+import com.power.generator.constant.PackageConfig;
+import com.power.generator.constant.SpringBootProjectConfig;
 import com.power.generator.database.DbProvider;
 import com.power.generator.database.TableInfo;
 import com.power.generator.model.ProjectPath;
@@ -69,15 +72,9 @@ public class ConfigBuilder {
             handlerDocsPath(packageConfig);
         }
         //创建工程所需配置
-        if (null == projectConfig) {
-            projectConfig = new SpringBootProjectConfig();
-            handlerSpringBootConfigPath(projectConfig);
-            handlerSpringBootConfigFiles(projectConfig);
-        } else {
-            projectConfig = new SpringBootProjectConfig();
-            handlerSpringBootConfigPath(projectConfig);
-            handlerSpringBootConfigFiles(projectConfig);
-        }
+        projectConfig = new SpringBootProjectConfig();
+        handlerSpringBootConfigPath(projectConfig);
+        handlerSpringBootConfigFiles(projectConfig);
         getTableInfoList(dataBaseInfo);
     }
 
@@ -108,9 +105,9 @@ public class ConfigBuilder {
      * @param dbProvider
      */
     private void getTableInfoList(DbProvider dbProvider) {
-        if(null != dbProvider) {
+        if (null != dbProvider) {
             tableInfo = dbProvider.getTablesInfo(GeneratorProperties.getTableName(), GeneratorProperties.tableFilterPrefix());
-        }else{
+        } else {
             tableInfo = new ArrayList<>(0);
         }
     }
@@ -138,35 +135,35 @@ public class ConfigBuilder {
         for (String str : layerSet) {
             if (ConstVal.SERVICE.equals(str) && GeneratorProperties.useDb()) {
                 packageInfo.put(ConstVal.SERVICE, joinPackage(basePackage, config.getService()));
-                packageInfo.put(ConstVal.SERVICEIMPL, joinPackage(basePackage, config.getServiceImpl()));
+                packageInfo.put(ConstVal.SERVICE_IMPL, joinPackage(basePackage, config.getServiceImpl()));
                 pathInfo.put(ConstVal.SERVICE_PATH, joinPath(javaDir, packageInfo.get(ConstVal.SERVICE)));
-                pathInfo.put(ConstVal.SERVICEIMPL_PATH, joinPath(javaDir, packageInfo.get(ConstVal.SERVICEIMPL)));
-                mybatisGenPath.put(BuilderCfg.SERVICE_BUILDER, joinJavaFilePath(packageInfo.get(ConstVal.SERVICE), ConstVal.SERVICE_SUBFIX));
-                mybatisGenPath.put(BuilderCfg.SERVICEIMPL_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.SERVICEIMPL), ConstVal.SERVICEIMPL_SUBFIX));
+                pathInfo.put(ConstVal.SERVICE_IMPL_PATH, joinPath(javaDir, packageInfo.get(ConstVal.SERVICE_IMPL)));
+                mybatisGenPath.put(BuilderCfg.SERVICE_BUILDER, joinJavaFilePath(packageInfo.get(ConstVal.SERVICE), ConstVal.SERVICE_SUFFIX));
+                mybatisGenPath.put(BuilderCfg.SERVICE_IMPL_BUILDER, joinJavaFilePath(packageInfo.get(ConstVal.SERVICE_IMPL), ConstVal.SERVICE_IMPL_SUFFIX));
             } else if (ConstVal.SERVICE_TEST.equals(str)) {
                 packageInfo.put(ConstVal.SERVICE_TEST, joinPackage(basePackage, config.getService()));
                 pathInfo.put(ConstVal.SERVICE_TEST_PATH, joinPath(testDir, packageInfo.get(ConstVal.SERVICE_TEST)));
-                mybatisGenPath.put(BuilderCfg.SERVICE_TEST_BUILER, joinFinalPath(testDir, packageInfo.get(ConstVal.SERVICE_TEST), ConstVal.SERVICE_TEST_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.SERVICE_TEST_BUILDER, joinFinalPath(testDir, packageInfo.get(ConstVal.SERVICE_TEST), ConstVal.SERVICE_TEST_SUFFIX));
             } else if (ConstVal.CONTROLLER_TEST.equals(str)) {
                 packageInfo.put(ConstVal.CONTROLLER_TEST, joinPackage(basePackage, config.getController()));
                 pathInfo.put(ConstVal.CONTROLLER_TEST_PATH, joinPath(testDir, packageInfo.get(ConstVal.CONTROLLER_TEST)));
-                mybatisGenPath.put(BuilderCfg.CONTROLLER_TEST_BUILER, joinFinalPath(testDir, packageInfo.get(ConstVal.CONTROLLER_TEST), ConstVal.CONTROLLER_TEST_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.CONTROLLER_TEST_BUILDER, joinFinalPath(testDir, packageInfo.get(ConstVal.CONTROLLER_TEST), ConstVal.CONTROLLER_TEST_SUFFIX));
             } else if (ConstVal.DAO.equals(str) && GeneratorProperties.useDb()) {
                 packageInfo.put(ConstVal.DAO, joinPackage(basePackage, config.getDao()));
                 pathInfo.put(ConstVal.DAO_PATH, joinPath(javaDir, packageInfo.get(ConstVal.DAO)));
-                mybatisGenPath.put(BuilderCfg.DAO_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.DAO), ConstVal.DAO_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.DAO_BUILDER, joinJavaFilePath(packageInfo.get(ConstVal.DAO), ConstVal.DAO_SUFFIX));
             } else if (ConstVal.ENTITY.equals(str) && GeneratorProperties.useDb()) {
                 packageInfo.put(ConstVal.ENTITY, joinPackage(basePackage, config.getEntity()));
                 pathInfo.put(ConstVal.ENTITY_PATH, joinPath(javaDir, packageInfo.get(ConstVal.ENTITY)));
-                mybatisGenPath.put(BuilderCfg.MODEL_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.ENTITY), ConstVal.JAVA_SUFFIX));
+                mybatisGenPath.put(BuilderCfg.MODEL_BUILDER, joinJavaFilePath(packageInfo.get(ConstVal.ENTITY), ConstVal.JAVA_SUFFIX));
             } else if (ConstVal.MAPPER.equals(str) && GeneratorProperties.useDb()) {
                 packageInfo.put(ConstVal.MAPPER, config.getMapper());
                 pathInfo.put(ConstVal.MAPPER_PATH, joinPath(resourceDir, packageInfo.get(ConstVal.MAPPER)));
-                mybatisGenPath.put(BuilderCfg.MAPPER_BUILDER, joinFinalPath(resourceDir, packageInfo.get(ConstVal.MAPPER), ConstVal.MAPPER_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.MAPPER_BUILDER, joinFinalPath(resourceDir, packageInfo.get(ConstVal.MAPPER), ConstVal.MAPPER_SUFFIX));
             } else if (ConstVal.CONTROLLER.equals(str)) {
                 packageInfo.put(ConstVal.CONTROLLER, joinPackage(basePackage, config.getController()));
                 pathInfo.put(ConstVal.CONTROLLER_PATH, joinPath(javaDir, packageInfo.get(ConstVal.CONTROLLER)));
-                mybatisGenPath.put(BuilderCfg.CONTROLLER_BUILER, joinJavaFilePath(packageInfo.get(ConstVal.CONTROLLER), ConstVal.CONTROLLER_SUBFIX));
+                mybatisGenPath.put(BuilderCfg.CONTROLLER_BUILDER, joinJavaFilePath(packageInfo.get(ConstVal.CONTROLLER), ConstVal.CONTROLLER_SUFFIX));
             }
         }
         packageInfo.put(ConstVal.DATE_CONVERTER, joinPackage(basePackage, config.getConverter()));
@@ -208,7 +205,8 @@ public class ConfigBuilder {
             baseConfigFilesPath.put(ConstVal.TPL_SPRING_BOOT_CFG_YML, connectPath(basePath, config.getApplicationYml()));
         }
         baseConfigFilesPath.put(ConstVal.TPL_LOF4J2, connectPath(basePath, config.getLog4j2()));
-        baseConfigFilesPath.put(ConstVal.TPL_SMART_DOC_CONFIG,connectPath(basePath, config.getSmartDocJson()));
+        baseConfigFilesPath.put(ConstVal.TPL_SMART_DOC_CONFIG, connectPath(basePath, config.getSmartDocJson()));
+        baseConfigFilesPath.put(ConstVal.TPL_README,connectPath(basePath,config.getReadme()));
         //baseConfigFilesPath.put(ConstVal.TPL_MYBATIS_CONFIG, connectPath(basePath, config.getMybatisConfig()));
         baseConfigFilesPath.put(ConstVal.TPL_400, connectPath(basePath, config.getHtml400()));
         baseConfigFilesPath.put(ConstVal.TPL_404, connectPath(basePath, config.getHtml404()));
@@ -225,7 +223,7 @@ public class ConfigBuilder {
         baseConfigPathInfo = new HashMap<>(5);
 
         baseConfigPathInfo.put(ConstVal.RESOURCE_PATH, connectPath(basePath, config.getResource()));
-        baseConfigPathInfo.put(ConstVal.STRING_BOOT_EORRO_DIR, connectPath(basePath, config.getErrorPath()));
+        baseConfigPathInfo.put(ConstVal.STRING_BOOT_ERROR_DIR, connectPath(basePath, config.getErrorPath()));
 
     }
 

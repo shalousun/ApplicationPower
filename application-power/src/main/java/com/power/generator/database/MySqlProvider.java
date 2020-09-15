@@ -20,8 +20,9 @@ public class MySqlProvider implements DbProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(MySqlProvider.class);
 
     /**
-     * @param tableName
-     * @return
+     * 获取表信息
+     * @param tableName 表名
+     * @return TableInfo
      */
     @Override
     public TableInfo getTableInfo(String tableName) {
@@ -68,8 +69,8 @@ public class MySqlProvider implements DbProvider {
     /**
      * 获取主键字段
      *
-     * @param tName
-     * @return
+     * @param tName 表名
+     * @return 主键信息
      */
     public String getPrimaryKeysInfo(String tName) {
         String columnName = "";

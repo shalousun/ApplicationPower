@@ -21,7 +21,7 @@ public class ServiceImplBuilder implements IBuilder {
         String entityName = StringUtil.toCapitalizeCamelCase(tableTemp);
         String entitySimpleName = StringUtil.toCapitalizeCamelCase(entityName);//类名
         String firstLowName = StringUtil.firstToLowerCase(entitySimpleName);
-        String templateName = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_SERVICEIMPL;
+        String templateName = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_SERVICE_IMPL;
         Template serviceImplTemplate = BeetlTemplateUtil.getByName(templateName);
         serviceImplTemplate.binding(GeneratorConstant.PRIMARY_KEY_TYPE, tableInfo.getPrimaryKeyType());
         serviceImplTemplate.binding(GeneratorConstant.COMMON_VARIABLE);//作者

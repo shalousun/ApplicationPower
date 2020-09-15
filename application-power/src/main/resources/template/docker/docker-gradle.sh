@@ -128,12 +128,12 @@ fi
 gradle build buildDocker -x test
 
 # running container
-docker run -dp $SERVER_PORT:$SERVER_PORT -t ${MYIMAGE}
+# docker run -dp $SERVER_PORT:$SERVER_PORT -t ${MYIMAGE}
 
 
 # ==========================push image to registry========================
 # uncomment if you need push
-# docker login \${DOCKER_REGISTRY} -u $HARBOR_USER -p $HARBOR_PASSWORD
+docker login \${DOCKER_REGISTRY} -u $HARBOR_USER -p $HARBOR_PASSWORD
 echo "INFO：Starting push image of \${TAG_IMAGE} to docker registry \${DOCKER_REGISTRY}"
-# docker tag \${MYIMAGE}  \${DOCKER_REGISTRY}/$HARBOR_PROJECT/\${TAG_IMAGE}
-# docker push \${DOCKER_REGISTRY}/\$HARBOR_PROJECT/\${TAG_IMAGE}
+docker tag \${MYIMAGE}  \${DOCKER_REGISTRY}/$HARBOR_PROJECT/\${TAG_IMAGE}
+docker push \${DOCKER_REGISTRY}/\$HARBOR_PROJECT/\${TAG_IMAGE}

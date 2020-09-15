@@ -40,6 +40,7 @@ import ${basePackage}.service.${entitySimpleName}Service;
 @RestController
 @RequestMapping("${firstLowerName}")
 public class ${entitySimpleName}Controller {
+
     /**
      * log
      */
@@ -104,15 +105,15 @@ public class ${entitySimpleName}Controller {
 	 * @return
 	 */
     @GetMapping(value = "/page/{offset}/{limit}")
-    public PageSerializable<${entitySimpleName}> queryPage(@PathVariable int offset,@PathVariable int limit) {
-        return ${firstLowerName}Service.queryPage(offset,limit);
+    public CommonResult<PageSerializable<ReportDeviceInfo>> queryPage(@PathVariable int offset, @PathVariable int limit) {
+        return CommonResult.ok().setResult(${firstLowerName}Service.queryPage(offset,limit));
     }
     <%}%>
     <%if(queryToListMap){ %>
 
     @GetMapping(value = "/listMap")
-    public List<Map<String,Object>> queryToListMap(@RequestParam Map<String,Object> params) {
-        return ${firstLowerName}Service.queryToListMap(params);
+    public CommonResult<List<Map<String,Object>>> queryToListMap(@RequestParam Map<String,Object> params) {
+        return CommonResult.ok().setResult(${firstLowerName}Service.queryToListMap(params));
     }
     <%}%>
 }

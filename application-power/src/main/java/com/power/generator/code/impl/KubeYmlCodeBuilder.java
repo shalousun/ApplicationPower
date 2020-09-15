@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * kuberates yaml
+ * kubernetes yaml
  *
  * @author yu 2018/8/8.
  */
@@ -28,7 +28,7 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
 
 
     /**
-     * kubernates template
+     * kubernetes template
      */
     private final String K8S_DEPLOYMENT_TPL = "k8s/deployment.yml";
     //canary deployment
@@ -38,9 +38,7 @@ public class KubeYmlCodeBuilder implements ICodeBuilder {
     private final String K8S_CANARY_INGRESS_TPL = "k8s/canary-ingress.yml";
     //canary to prod ingress
     private final String K8S_CANARY_TO_PROD_INGRESS_TPL = "k8s/canary-to-prod-ingress.yml";
-    /**
-     *
-     */
+
     private Map<String, String> paths;
 
     public KubeYmlCodeBuilder() {

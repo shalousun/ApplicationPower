@@ -27,7 +27,7 @@ public class DockerCodeBuilder implements ICodeBuilder {
     /**
      * DockerFile
      */
-    private final String DOCKER_FILR = "Dockerfile";
+    private final String DOCKER_FILE = "Dockerfile";
 
     /**
      * DockerFile template
@@ -106,8 +106,8 @@ public class DockerCodeBuilder implements ICodeBuilder {
         templates.put(dockerShOutPath, dockerSh.render());
 
         Template yamlShTemplate = BeetlTemplateUtil.getByName("assembly/bin/yaml.sh");
-        String yarmShPath = PathUtil.connectPath(getBasePath(), "yaml.sh");
-        templates.put(yarmShPath, yamlShTemplate.render());
+        String yamlShPath = PathUtil.connectPath(getBasePath(), "yaml.sh");
+        templates.put(yamlShPath, yamlShTemplate.render());
 
         Template dockerDoc = BeetlTemplateUtil.getByName(dockerDocTpl);
         String docPath = PathUtil.connectPath(getBasePath(), "docs/DOCKER.md");
