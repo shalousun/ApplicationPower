@@ -3,6 +3,8 @@
 # spring
 spring:
   #profiles : dev
+  lifecycle:
+      timeout-per-shutdown-phase: 30
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -48,3 +50,4 @@ server:
   error:
     whitelabel:
       enabled: false
+  shutdown: graceful

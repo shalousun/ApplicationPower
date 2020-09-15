@@ -5,6 +5,8 @@ spring:
 ---
 spring:
   profiles : dev
+  lifecycle:
+    timeout-per-shutdown-phase: 30
   <%if(useDb){%>
   datasource:
     name: mydb
@@ -58,3 +60,4 @@ server:
   error:
     whitelabel:
       enabled: false
+  shutdown: graceful
