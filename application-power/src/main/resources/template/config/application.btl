@@ -15,22 +15,23 @@ spring:
     username: ${dbUserName}
     password: ${dbPassword}
     driver-class-name: ${dbDriver}
-    minIdle: 5
-    maxActive: 20
-    initialSize: 5
-    timeBetweenEvictionRunsMillis: 3000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 'ZTM' FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    maxWait: 60000
-    # open PSCache
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    filters: stat,wall,log4j2
-    <%}%>
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 8
+      max-pool-prepared-statement-per-connection-size: 20
+      max-wait: 60000
+      min-evictable-idle-time-millis: 300000
+      pool-prepared-statements: false
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: SELECT 1
+      validation-query-timeout: 3000
+      use-global-data-source-stat: true
+      filters: stat,log4j2
+
   <%if(isJTA){%>
   # transaction manager
   jta:
