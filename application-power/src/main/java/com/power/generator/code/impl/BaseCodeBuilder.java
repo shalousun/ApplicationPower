@@ -76,10 +76,10 @@ public class BaseCodeBuilder implements ICodeBuilder {
         templates.put(errorCodeEnumOut, errorCodeEnumTpl.render());
 
 
-        Template gracefulTpl = BeetlTemplateUtil.getByName("ShutdownConfig.btl");
-        gracefulTpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String gracefulOut = paths.get(GRACE_FUL_SHUTDOWN) + ConstVal.FILE_SEPARATOR + "ShutdownConfig.java";
-        templates.put(gracefulOut, gracefulTpl.render());
+//        Template gracefulTpl = BeetlTemplateUtil.getByName("ShutdownConfig.btl");
+//        gracefulTpl.binding(GeneratorConstant.COMMON_VARIABLE);
+//        String gracefulOut = paths.get(GRACE_FUL_SHUTDOWN) + ConstVal.FILE_SEPARATOR + "ShutdownConfig.java";
+//        templates.put(gracefulOut, gracefulTpl.render());
 
         if (GeneratorProperties.useDb()) {
             Template druidCfgTpl = BeetlTemplateUtil.getByName("DruidConfig.btl");
