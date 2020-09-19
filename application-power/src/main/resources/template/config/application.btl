@@ -31,7 +31,7 @@ spring:
       validation-query-timeout: 3000
       use-global-data-source-stat: true
       filters: stat,log4j2
-
+  <%}%>
   <%if(isJTA){%>
   # transaction manager
   jta:
