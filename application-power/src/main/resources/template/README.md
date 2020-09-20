@@ -18,6 +18,14 @@
 ```
 http(https)://{base_url}/doc/index.html
 ```
+如果要查看项目接口postman collection的json文件可以访问
+```
+http(https)://{base_url}/doc/postman.json
+```
+如果要查看OpenApi 3.0的接口文档可以访问
+```
+http(https)://{base_url}/doc/OpenApi3.0.json
+```
 smart-doc更多使用配置请参考[《smart-doc官方wiki》](https://gitee.com/smart-doc-team/smart-doc/wikis)
 ## 项目需求与设计文档
 
