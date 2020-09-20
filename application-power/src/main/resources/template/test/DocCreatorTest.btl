@@ -18,7 +18,7 @@ import java.util.List;
  * @link https://github.com/shalousun/smart-doc.git
  * @author ${authorName} on ${createTime}.
  */
-public class DocCreatorTest {
+public class SmartDocTest {
 
    /**
     *  create api-doc
@@ -40,14 +40,12 @@ public class DocCreatorTest {
        );
 
        // set error code list
-       List<ApiErrorCode> errorCodeList = new ArrayList<>();
-       for(ErrorCodeEnum codeEnum: ErrorCodeEnum.values()){
-           ApiErrorCode errorCode = new ApiErrorCode();
-           errorCode.setValue(codeEnum.getCode()).setDesc(codeEnum.getMessage());
-           errorCodeList.add(errorCode);
-       }
-       config.setErrorCodes(errorCodeList);
-
+       config.setErrorCodeDictionaries(
+               ApiErrorCodeDictionary.dict()
+                       .setEnumClass(ErrorCodeEnum.class)
+                       .setCodeField("code")
+                       .setDescField("desc")
+       );
 
        long start = System.currentTimeMillis();
        HtmlApiDocBuilder.buildApiDoc(config);

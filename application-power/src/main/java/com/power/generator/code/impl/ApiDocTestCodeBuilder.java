@@ -47,9 +47,9 @@ public class ApiDocTestCodeBuilder implements ICodeBuilder {
     public Map<String, String> handleTemplates() {
         //key is path ,value is template content
         Map<String, String> templates = new HashMap<>();
-        Template tpl = BeetlTemplateUtil.getByName("/test/DocCreatorTest.btl");
+        Template tpl = BeetlTemplateUtil.getByName("/test/SmartDocTest.btl");
         tpl.binding(GeneratorConstant.COMMON_VARIABLE);
-        String tplOut = PathUtil.connectPath(paths.get(TEST_PATH), "DocCreatorTest.java");
+        String tplOut = PathUtil.connectPath(paths.get(TEST_PATH), "SmartDocTest.java");
         templates.put(tplOut, tpl.render());
         return templates;
     }
