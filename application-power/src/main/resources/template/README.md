@@ -18,7 +18,8 @@
 ```
 http(https)://{base_url}/doc/index.html
 ```
-如果要查看项目接口postman collection的json文件可以访问
+如果要查看项目接口postman collection的json文件可以参考下面url获取，
+你可以将改postman collection导入到postman中做接口测试。
 ```
 http(https)://{base_url}/doc/postman.json
 ```
