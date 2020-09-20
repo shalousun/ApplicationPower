@@ -129,7 +129,7 @@
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>smart-doc</artifactId>
-            <version>1.9.4</version>
+            <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
        <% if(lombok){%>
@@ -154,7 +154,7 @@
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>1.1.8</version>
+                <version>1.1.9</version>
                 <configuration>
                     <!--smart-doc-->
                     <configFile>./src/main/resources/smart-doc.json</configFile>
