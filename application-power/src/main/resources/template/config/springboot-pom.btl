@@ -72,7 +72,7 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.13</version>
+            <version>1.3.0</version>
         </dependency>
         <%} %>
         <%if(useDb){ %>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.23</version>
+            <version>1.1.24</version>
         </dependency>
          <%} %>
          <%if(useMybatisPlus){%>
