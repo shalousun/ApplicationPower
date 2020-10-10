@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'com.github.shalousun:smart-doc-gradle-plugin:1.1.9'
+        classpath 'com.github.shalousun:smart-doc-gradle-plugin:1.2.0'
         <%if(isUseDocker){ %>
         classpath('se.transmode.gradle:gradle-docker:1.2')
          <% } %>
@@ -56,14 +56,14 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
     compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3'
-    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.13'
-    compile 'com.alibaba:druid-spring-boot-starter:1.1.22'
+    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.3.0'
+    compile 'com.alibaba:druid-spring-boot-starter:1.2.1'
     runtimeOnly 'mysql:mysql-connector-java'
     compile('org.springframework.boot:spring-boot-starter-log4j2')
     compile 'com.lmax:disruptor:3.4.2'
     compile('org.springframework.boot:spring-boot-starter-aop')
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.73'
-    compile 'org.apache.commons:commons-lang3:3.10'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.74'
+    compile 'org.apache.commons:commons-lang3:3.11'
     <%if(useJTA){ %>
     compile('org.springframework.boot:spring-boot-starter-jta-atomikos')
     <% } %>
@@ -74,7 +74,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'com.github.shalousun:smart-doc:1.9.5'
+    testCompile 'com.github.shalousun:smart-doc:1.9.6'
 
 }
 
