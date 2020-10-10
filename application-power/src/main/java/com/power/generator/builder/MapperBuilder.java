@@ -29,13 +29,13 @@ public class MapperBuilder implements IBuilder {
         String insertSql = generateInsertSql(columnMap, tableName);
         String batchInsertSql = generateBatchInsertSql(columnMap, tableName);
         String updateSql = generateConditionUpdateSql(tableInfo);
-        String batchUpdateSql = generateBatchUpdateSql(tableInfo);
+//        String batchUpdateSql = generateBatchUpdateSql(tableInfo);
         String selectSql = generateSelectSql(tableInfo);
         String results = generateResultMap(columnMap);
         String primaryKey = getPrimaryKey(columnMap);
-        String template = GeneratorProperties.getDbTemplatePath()+"/"+ConstVal.TPL_MAPPER;
+        String template = GeneratorProperties.getDbTemplatePath() + "/" + ConstVal.TPL_MAPPER;
         Template mapper = BeetlTemplateUtil.getByName(template);
-        String idType = TypeConvert.mybatisType(tableInfo.getPrimaryKeyType());
+        String idType = TypeConvert.mybatisType(tableInfo.getPrimaryKeyType() == null ? "" : tableInfo.getPrimaryKeyType());
         mapper.binding(GeneratorConstant.PRIMARY_KEY_TYPE, idType);
         mapper.binding(GeneratorConstant.FIRST_LOWER_NAME, firstLowName);
         mapper.binding(GeneratorConstant.ENTITY_SIMPLE_NAME, entitySimpleName);//类名
