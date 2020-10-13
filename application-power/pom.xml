@@ -20,7 +20,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
         <!--log4j2-->
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>3.11</version>
         </dependency>
         <!--引入servlet用于controller单元测试-->
         <dependency>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
-            <version>3.1.8.RELEASE</version>
+            <version>3.2.1.RELEASE</version>
         </dependency>
         <!-- 格式化对象，方便输出日志 -->
         <dependency>
