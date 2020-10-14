@@ -26,6 +26,7 @@ public class DateTimeUtil {
     public static final String YYYYMMDD = "yyyyMMdd";
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
     public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
+    public static final String DATE_MINUTES_12 = "yyyy-MM-dd hh-mm-ss";
     public static final long DAY_MS = 86400000L;
     private static final ConcurrentMap<String, DateTimeFormatter> FORMATTER_CACHE = new ConcurrentHashMap<>();
     private static final int PATTERN_CACHE_SIZE = 500;
@@ -62,6 +63,24 @@ public class DateTimeUtil {
     }
 
     /**
+     * 12-hour clock
+     *
+     * @return String
+     */
+    public static String nowStrTime12() {
+        return long2Str(System.currentTimeMillis(), DATE_MINUTES_12);
+    }
+
+    /**
+     * Obtain now date
+     *
+     * @return String
+     */
+    public static String nowStrDate() {
+        return LocalDate.now().toString();
+    }
+
+    /**
      * Convert Date to String
      *
      * @param date    java.util.Date
@@ -81,7 +100,6 @@ public class DateTimeUtil {
      * @return String
      */
     public static String sqlDateToStr(java.sql.Date date, String format) {
-
         return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), format);
     }
 
@@ -195,8 +213,7 @@ public class DateTimeUtil {
      */
     public static long setTimeToNextDay0H0M0S(Timestamp time) {
         if (time != null) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(time.getTime());
+            Calendar cal = initCalenderWithMillis(time.getTime());
             cal.add(Calendar.DATE, 1);
             // 时、分、秒、毫秒置零
             cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -217,8 +234,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setTimeToNextDay0H0M0S(long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
+        Calendar cal = initCalenderWithMillis(millis);
         cal.add(Calendar.DATE, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -276,8 +292,7 @@ public class DateTimeUtil {
      */
     public static long setTimeTo0H0M0S(Timestamp time) {
         if (time != null) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(time.getTime());
+            Calendar cal = initCalenderWithMillis(time.getTime());
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
@@ -296,8 +311,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setTimeTo0H0M0S(long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
+        Calendar cal = initCalenderWithMillis(millis);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
@@ -314,8 +328,7 @@ public class DateTimeUtil {
      */
     public static void setTimeToLastDay0H0M0S(Timestamp time) {
         if (time != null) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(time.getTime());
+            Calendar cal = initCalenderWithMillis(time.getTime());
             cal.add(Calendar.DATE, -1);
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.MINUTE, 0);
@@ -351,10 +364,8 @@ public class DateTimeUtil {
         if (timestamp0 == null || timestamp1 == null) {
             throw new NullPointerException("Timestamp can not be null");
         } else {
-            Calendar cal1 = Calendar.getInstance();
-            cal1.setTimeInMillis(timestamp0.getTime());
-            Calendar cal2 = Calendar.getInstance();
-            cal2.setTimeInMillis(timestamp1.getTime());
+            Calendar cal1 = initCalenderWithMillis(timestamp0.getTime());
+            Calendar cal2 = initCalenderWithMillis(timestamp1.getTime());
             return isDifferentDay(cal1, cal2);
         }
     }
@@ -367,10 +378,8 @@ public class DateTimeUtil {
      * @return boolean
      */
     public static boolean isDifferentDay(long millis0, long millis1) {
-        Calendar cal1 = Calendar.getInstance();
-        cal1.setTimeInMillis(millis0);
-        Calendar cal2 = Calendar.getInstance();
-        cal2.setTimeInMillis(millis1);
+        Calendar cal1 = initCalenderWithMillis(millis0);
+        Calendar cal2 = initCalenderWithMillis(millis1);
         return isDifferentDay(cal1, cal2);
     }
 
@@ -436,8 +445,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long todayPastMillisecond(long millions) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millions);
+        Calendar cal = initCalenderWithMillis(millions);
         return cal.get(Calendar.HOUR_OF_DAY) * 3600 + cal.get(Calendar.MINUTE) * 60;
     }
 
@@ -461,8 +469,7 @@ public class DateTimeUtil {
      */
     public static int getCurrentMonthDays(Timestamp stamp) {
         if (null != stamp) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(stamp.getTime());
+            Calendar cal = initCalenderWithMillis(stamp.getTime());
             return getCurrentMonthDays(cal);
         } else {
             throw new NullPointerException("Timestamp can not be null");
@@ -476,8 +483,7 @@ public class DateTimeUtil {
      * @return int
      */
     public static int getCurrentMonthDays(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         return getCurrentMonthDays(cal);
     }
 
@@ -519,20 +525,16 @@ public class DateTimeUtil {
      * @return long
      */
     public static long getFirstDayOfCurrentWeek(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // 获取本周一的日期
         if (dayOfWeek == 1) {
             // 如果是星期天，则设置为上周
-            cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // 获取本周一的日期
             cal.add(Calendar.WEEK_OF_YEAR, -1);
-        } else {
-            // 如果不是星期天，则设置为本周
-            cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // 获取本周一的日期
         }
         return cal.getTimeInMillis();
     }
@@ -563,8 +565,7 @@ public class DateTimeUtil {
      */
 
     public static long setToFirstDayOfNextYear(long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
+        Calendar cal = initCalenderWithMillis(millis);
         cal.set(Calendar.DAY_OF_YEAR, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -581,8 +582,7 @@ public class DateTimeUtil {
      * @return millisecond
      */
     public static long setToFirstDayOfLastMonth(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         cal.add(Calendar.MONTH, -1);
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -599,8 +599,7 @@ public class DateTimeUtil {
      * @return millisecond
      */
     public static long setToLastMonthCommonDay(long ms) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(ms);
+        Calendar calendar = initCalenderWithMillis(ms);
         calendar.add(Calendar.MONTH, -1);
         return calendar.getTimeInMillis();
     }
@@ -612,8 +611,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setToFirstDayOfCurrentMonth(long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
+        Calendar cal = initCalenderWithMillis(millis);
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -629,8 +627,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setToFirstDayOfNextMonth(long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
+        Calendar cal = initCalenderWithMillis(millis);
         cal.add(Calendar.MONTH, 1);
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -647,8 +644,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setToNextYearCommonDay(long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
+        Calendar cal = initCalenderWithMillis(millis);
         cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
         return cal.getTimeInMillis();
     }
@@ -660,8 +656,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setToLastYearCommonDay(long millis) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
+        Calendar calendar = initCalenderWithMillis(millis);
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 1);
         return calendar.getTimeInMillis();
     }
@@ -673,8 +668,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long getLastDayOfCurrentWeek(Timestamp stamp) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(stamp.getTime());
+        Calendar cal = initCalenderWithMillis(stamp.getTime());
         cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         cal.add(Calendar.WEEK_OF_YEAR, 1);
         return cal.getTimeInMillis();
@@ -687,8 +681,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long getFirstDayOfCurrentQuarter(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         int currentMonth = cal.get(Calendar.MONTH) + 1;
         if (currentMonth >= 1 && currentMonth <= 3) {
             cal.set(Calendar.MONTH, 0);
@@ -714,8 +707,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long getFirstDayOfNextQuarter(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         int currentMonth = cal.get(Calendar.MONTH) + 1;
         if (currentMonth >= 1 && currentMonth <= 3) {
             cal.set(Calendar.MONTH, 2);
@@ -744,8 +736,7 @@ public class DateTimeUtil {
      * @return int
      */
     public static int getDayOfWeek(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         int a = cal.get(Calendar.DAY_OF_WEEK);
         if (a >= 2) {
             return a - 1;
@@ -828,16 +819,14 @@ public class DateTimeUtil {
     }
 
     public static String getDateWithWeek(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         int a = cal.get(Calendar.DAY_OF_WEEK);
         String[] weekARR = {"（周日）", "（周一）", "（周二）", "（周三）", "（周四）", "（周五）", "（周六）"};
         return long2Str(ms, "MM月dd日" + weekARR[a - 1]);
     }
 
     public static String getDateWithWeekAndTime(long ms) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(ms);
+        Calendar cal = initCalenderWithMillis(ms);
         int a = cal.get(Calendar.DAY_OF_WEEK);
         return long2Str(ms, "yyyy年MM月dd日 " + WEEK_ARR[a - 1] + " HH:mm");
     }
@@ -936,8 +925,7 @@ public class DateTimeUtil {
      * @return boolean
      */
     public static boolean isCurrentYear(long ms) {
-        Calendar calTemp = Calendar.getInstance();
-        calTemp.setTimeInMillis(ms);
+        Calendar calTemp = initCalenderWithMillis(ms);
         int yearTemp = calTemp.get(Calendar.YEAR);
         Calendar calNow = Calendar.getInstance();
         int yearNow = calNow.get(Calendar.YEAR);
@@ -1026,5 +1014,11 @@ public class DateTimeUtil {
     public static long LocalDateTimeToLong(LocalDateTime dateTime) {
         Long milliSecond = dateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
         return milliSecond;
+    }
+
+    private static Calendar initCalenderWithMillis(long ms) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(ms);
+        return cal;
     }
 }
