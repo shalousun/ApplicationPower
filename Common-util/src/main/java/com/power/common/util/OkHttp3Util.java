@@ -202,14 +202,7 @@ public class OkHttp3Util {
                                 Callback callback) {
         String url = UrlUtil.urlJoin(baseUrl, params);
         LOGGER.debug("OkHttp3 async get url:{}", url);
-        Request request;
-        if (null == headersMap || headersMap.size() == 0) {
-            request = new Request.Builder().url(url).build();
-        } else {
-            Headers headers = setHeaders(headersMap);
-            request = new Request.Builder().url(url).headers(headers).build();
-        }
-        Call call = client.newCall(request);
+        Call call = initCall(client, url, headersMap);
         call.enqueue(callback);
     }
 
@@ -226,14 +219,7 @@ public class OkHttp3Util {
     public static void asyncPost(OkHttpClient client, String url, RequestBody body, Map<String, String> headersMap,
                                  Callback callback) {
         LOGGER.debug("OkHttp3 async post url:{}", url);
-        Request request;
-        if (null == headersMap || headersMap.size() == 0) {
-            request = new Request.Builder().post(body).url(url).build();
-        } else {
-            Headers headers = setHeaders(headersMap);
-            request = new Request.Builder().post(body).url(url).headers(headers).build();
-        }
-        Call call = client.newCall(request);
+        Call call = initCallWithBody(client, url, headersMap, body);
         call.enqueue(callback);
     }
 
@@ -243,31 +229,16 @@ public class OkHttp3Util {
         OkHttpClient client = OkHttp3Util.getInstance();
         String url = UrlUtil.urlJoin(baseUrl, params);
         LOGGER.debug("OkHttp3 async get url:{}", url);
-        Request request;
-        if (null == headersMap || headersMap.size() == 0) {
-            request = new Request.Builder().url(url).build();
-        } else {
-            Headers headers = setHeaders(headersMap);
-            request = new Request.Builder().url(url).headers(headers).build();
-        }
-        Call call = client.newCall(request);
+        Call call = initCall(client, url, headersMap);
         call.enqueue(callback);
     }
 
     private static String doSyncGet(String baseUrl, Map<String, String> params, Map<String, String> headersMap) {
         OkHttpClient client = OkHttp3Util.getInstance();
         String url = UrlUtil.urlJoin(baseUrl, params);
-        System.out.println(url);
         LOGGER.debug("SyncGet Request url: {}", url);
         long startTime = System.currentTimeMillis();
-        Request request;
-        if (null == headersMap || headersMap.size() == 0) {
-            request = new Request.Builder().url(url).build();
-        } else {
-            Headers headers = setHeaders(headersMap);
-            request = new Request.Builder().url(url).headers(headers).build();
-        }
-        Call call = client.newCall(request);
+        Call call = initCall(client, url, headersMap);
         try {
             Response response = call.execute();
             String responseBody = response.body().string();
@@ -278,6 +249,17 @@ public class OkHttp3Util {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static Call initCall(OkHttpClient client, String url, Map<String, String> headersMap) {
+        Request request;
+        if (null == headersMap || headersMap.size() == 0) {
+            request = new Request.Builder().url(url).build();
+        } else {
+            Headers headers = setHeaders(headersMap);
+            request = new Request.Builder().url(url).headers(headers).build();
+        }
+        return client.newCall(request);
     }
 
     private static void doAsyncPost(String url, Map<String, String> params, Map<String, String> headersMap, Callback callback) {
@@ -300,6 +282,11 @@ public class OkHttp3Util {
 
     private static void doAsyncPost(String url, RequestBody body, Map<String, String> headersMap, Callback callback) {
         OkHttpClient client = OkHttp3Util.getInstance();
+        Call call = initCallWithBody(client, url, headersMap, body);
+        call.enqueue(callback);
+    }
+
+    private static Call initCallWithBody(OkHttpClient client, String url, Map<String, String> headersMap, RequestBody body) {
         Request request;
         if (null == headersMap || headersMap.size() == 0) {
             request = new Request.Builder().post(body).url(url).build();
@@ -307,22 +294,15 @@ public class OkHttp3Util {
             Headers headers = setHeaders(headersMap);
             request = new Request.Builder().post(body).url(url).headers(headers).build();
         }
-        Call call = client.newCall(request);
-        call.enqueue(callback);
+        return client.newCall(request);
     }
 
     private static String doSyncPost(String url, RequestBody body, Map<String, String> headersMap) {
         OkHttpClient client = OkHttp3Util.getInstance();
-        Request request;
-        if (null == headersMap || headersMap.size() == 0) {
-            request = new Request.Builder().post(body).url(url).build();
-        } else {
-            Headers headers = setHeaders(headersMap);
-            request = new Request.Builder().post(body).url(url).headers(headers).build();
-        }
         LOGGER.debug("Request url: {}", url);
         long startTime = System.currentTimeMillis();
-        Call call = client.newCall(request);
+        Call call = initCallWithBody(client, url, headersMap, body);
+        ;
         try {
             Response response = call.execute();
             String responseBody = response.body().string();
@@ -341,7 +321,7 @@ public class OkHttp3Util {
             Iterator<String> iterator = headersParams.keySet().iterator();
             String key;
             while (iterator.hasNext()) {
-                key = iterator.next().toString();
+                key = iterator.next();
                 headersBuilder.add(key, headersParams.get(key));
             }
         }
