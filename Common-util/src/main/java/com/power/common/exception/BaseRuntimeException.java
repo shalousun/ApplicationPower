@@ -1,5 +1,6 @@
 package com.power.common.exception;
 
+import com.power.common.constants.BaseErrorCode;
 import com.power.common.interfaces.IMessage;
 
 /**
@@ -8,6 +9,11 @@ import com.power.common.interfaces.IMessage;
 public class BaseRuntimeException extends RuntimeException implements IMessage {
 
     private String errorCode;
+
+    protected BaseRuntimeException(String message){
+        super(message);
+        this.errorCode = BaseErrorCode.Common.UNKNOWN_ERROR.getCode();
+    }
 
     protected BaseRuntimeException(IMessage iMessage) {
         super(iMessage.getMessage());

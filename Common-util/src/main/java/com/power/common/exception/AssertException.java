@@ -1,21 +1,23 @@
 package com.power.common.exception;
 
+import com.power.common.interfaces.IMessage;
+
 /**
  *
  * @author yu 2019/10/29.
  */
-public class AssertException extends RuntimeException {
+public class AssertException extends BaseRuntimeException {
 
     public AssertException(String message) {
         super(message);
     }
 
-    public AssertException(String message, Throwable cause) {
-        super(message, cause);
+    public AssertException(IMessage iMessage) {
+        super(iMessage);
     }
 
-    public AssertException(Throwable cause) {
-        super(cause);
+    public AssertException(IMessage errorCode, String errorMessage) {
+        super(errorCode,errorMessage);
     }
 
 }
