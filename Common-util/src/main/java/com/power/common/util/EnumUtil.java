@@ -16,9 +16,10 @@ public class EnumUtil {
     /**
      * get enum values
      *
-     * @param clazz      class
+     * @param clazz     class
      * @param codeField code field
      * @param descField desc field
+     * @param <T>       subclass of EnumDictionary
      * @return list
      */
     public static <T extends EnumDictionary> List<T> getEnumInformation(Class<?> clazz, String codeField, String descField) {
