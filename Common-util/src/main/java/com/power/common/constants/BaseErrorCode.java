@@ -21,9 +21,9 @@ public interface BaseErrorCode {
         private String message;
 
 
-        Common(String errCode, String errMsg) {
-            this.code = errCode;
-            this.message = errMsg;
+        Common(String errorCode, String errorMessage) {
+            this.code = errorCode;
+            this.message = errorMessage;
         }
 
         @Override
