@@ -105,7 +105,7 @@ public class ${entitySimpleName}Controller {
 	 * @return
 	 */
     @GetMapping(value = "/page/{offset}/{limit}")
-    public CommonResult<PageSerializable<ReportDeviceInfo>> queryPage(@PathVariable int offset, @PathVariable int limit) {
+    public CommonResult<PageSerializable<${entitySimpleName}>> queryPage(@PathVariable int offset, @PathVariable int limit) {
         return CommonResult.ok().setResult(${firstLowerName}Service.queryPage(offset,limit));
     }
     <%}%>
