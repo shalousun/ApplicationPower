@@ -1,6 +1,5 @@
 package com.power.common.exception;
 
-import com.power.common.constants.BaseErrorCode;
 import com.power.common.interfaces.IMessage;
 
 /**
