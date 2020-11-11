@@ -9,6 +9,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -346,6 +347,9 @@ public class FileUtil {
     public static List<FileInfo> getFilesFromFolder(String folder) {
         File file = new File(folder);
         File[] files = file.listFiles();
+        if (Objects.isNull(files)) {
+            return new ArrayList<>(0);
+        }
         List<FileInfo> fileInfoList = new ArrayList<>(files.length);
         for (File f : files) {
             if (f.isFile()) {
