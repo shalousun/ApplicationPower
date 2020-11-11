@@ -1,9 +1,14 @@
 package com.power.common.util;
 
+import com.power.common.model.FileInfo;
+
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -112,7 +117,7 @@ public class FileUtil {
      * @return byte array
      * @throws IOException io exception
      */
-    public static byte[] input2byte(InputStream inStream)
+    public static byte[] copyToByteArray(InputStream inStream)
             throws IOException {
         ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
         byte[] buff = new byte[100];
@@ -330,5 +335,28 @@ public class FileUtil {
             e.printStackTrace();
         }
         return name;
+    }
+
+    /**
+     * Get files from folder
+     *
+     * @param folder folder
+     * @return List
+     */
+    public static List<FileInfo> getFilesFromFolder(String folder) {
+        File file = new File(folder);
+        File[] files = file.listFiles();
+        List<FileInfo> fileInfoList = new ArrayList<>(files.length);
+        for (File f : files) {
+            if (f.isFile()) {
+                FileInfo fileInfo = FileInfo.builder()
+                        .setFileName(f.getName())
+                        .setPath(f.getPath())
+                        .setCreateTime(DateTimeUtil.long2Str(f.lastModified(), DateTimeUtil.DATE_FORMAT_SECOND))
+                        .setFileSize(f.length()).setMimeType(URLConnection.guessContentTypeFromName(f.getName()));
+                fileInfoList.add(fileInfo);
+            }
+        }
+        return fileInfoList;
     }
 }

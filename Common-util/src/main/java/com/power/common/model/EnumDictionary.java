@@ -1,7 +1,6 @@
 package com.power.common.model;
 
 /**
- *
  * @author yu 2019/12/7.
  */
 public class EnumDictionary {
@@ -29,6 +28,10 @@ public class EnumDictionary {
      * enum name
      */
     private String name;
+
+    public static EnumDictionary builder() {
+        return new EnumDictionary();
+    }
 
 
     public String getValue() {
@@ -78,12 +81,18 @@ public class EnumDictionary {
 
     @Override
     public String toString() {
-        return "EnumDictionary{" +
-                "value='" + value + '\'' +
-                ", type='" + type + '\'' +
-                ", desc='" + desc + '\'' +
-                ", ordinal=" + ordinal +
-                ", name='" + name + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"value\":\"")
+                .append(value).append('\"');
+        sb.append(",\"type\":\"")
+                .append(type).append('\"');
+        sb.append(",\"desc\":\"")
+                .append(desc).append('\"');
+        sb.append(",\"ordinal\":")
+                .append(ordinal);
+        sb.append(",\"name\":\"")
+                .append(name).append('\"');
+        sb.append('}');
+        return sb.toString();
     }
 }

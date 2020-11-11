@@ -132,7 +132,7 @@ public class PageVo<T> implements Serializable {
 
         int start = currentPage > ne_half ? Math.max(Math.min(currentPage - ne_half, upper_limit), 0) : 0;
         int end = currentPage > ne_half ? Math.min(currentPage + ne_half, totalPage) : Math.min(displayEntries, totalPage);
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("<div	id=\"pagination\" class=\"pagination\">");
         // Generate "Previous"-Link
         if (pageIndex == 1 || totalPage == 0) {
