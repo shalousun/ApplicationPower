@@ -70,7 +70,7 @@ dependencies {
     <% if(isMultipleDataSource){%>
     compile 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    compile 'com.github.shalousun:common-util:2.0.0'
+    compile 'com.github.shalousun:common-util:2.0.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompile('org.springframework.boot:spring-boot-starter-test')
