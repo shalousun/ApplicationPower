@@ -31,17 +31,17 @@ public class SmartDocTest {
        config.setOutPath(DocGlobalConstants.HTML_DOC_OUT_PATH);
        // set java source path
        config.setSourceCodePaths(
-               SourceCodePath.path().setDesc("current project").setPath("src/main/java")
+               SourceCodePath.builder().setDesc("current project").setPath("src/main/java")
        );
 
        // change field
        config.setCustomResponseFields(
-               CustomRespField.field().setName("code").setValue("00000")
+               CustomRespField.builder().setName("code").setValue("00000")
        );
 
        // set error code list
        config.setErrorCodeDictionaries(
-               ApiErrorCodeDictionary.dict()
+               ApiErrorCodeDictionary.builder()
                        .setEnumClass(ErrorCodeEnum.class)
                        .setCodeField("code")
                        .setDescField("desc")

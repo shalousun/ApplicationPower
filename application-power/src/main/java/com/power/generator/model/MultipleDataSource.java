@@ -1,5 +1,9 @@
 package com.power.generator.model;
 
+/**
+ * @<code>true</code>
+ * @version
+ */
 public class MultipleDataSource {
 
     private String name;
@@ -8,6 +12,9 @@ public class MultipleDataSource {
 
     private String url;
 
+    /**
+     * @version
+     */
     private String username;
 
     private String password;
