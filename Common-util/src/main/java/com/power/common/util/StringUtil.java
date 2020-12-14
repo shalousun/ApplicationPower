@@ -4,6 +4,8 @@ package com.power.common.util;
  * @author sunyu
  */
 
+import com.power.common.constants.Charset;
+
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,8 +14,8 @@ import java.util.regex.Pattern;
 
 public class StringUtil {
 
-    public static final String ENMPTY = "";
-    private static final String SERIALNO_PATTERN = "yyyyMMddHHmmssSSS";
+    public static final String EMPTY = "";
+    private static final String SERIAL_NO_PATTERN = "yyyyMMddHHmmssSSS";
     private static final char UNDERLINE = '_';
     private static final char HYPHEN_LINE = '-';
 
@@ -285,7 +287,7 @@ public class StringUtil {
      */
     public static String createSerialNo() {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat(SERIALNO_PATTERN);
+        SimpleDateFormat format = new SimpleDateFormat(SERIAL_NO_PATTERN);
         return format.format(cal.getTime());
     }
 
@@ -300,7 +302,25 @@ public class StringUtil {
             return null;
         } else {
             try {
-                return java.net.URLDecoder.decode(str, "UTF-8");
+                return java.net.URLDecoder.decode(str, Charset.DEFAULT_CHARSET);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Encoding the parameters for URL
+     * @param str pending character
+     * @return String after encode
+     */
+    public static String urlEncode(String str) {
+        if (StringUtil.isEmpty(str)) {
+            return null;
+        } else {
+            try {
+                return java.net.URLEncoder.encode(str, Charset.DEFAULT_CHARSET);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 return null;
@@ -319,7 +339,7 @@ public class StringUtil {
             return null;
         } else {
             try {
-                return new String(str.getBytes("iso8859-1"), "utf-8");
+                return new String(str.getBytes("iso8859-1"), Charset.DEFAULT_CHARSET);
             } catch (Exception e) {
                 return null;
             }
