@@ -2,17 +2,13 @@ package ${basePackage};
 
 import com.power.common.util.DateTimeUtil;
 import com.power.doc.builder.HtmlApiDocBuilder;
+import com.power.doc.model.ApiErrorCodeDictionary;
 import ${basePackage}.enums.ErrorCodeEnum;
 import com.power.doc.model.ApiConfig;
 import com.power.doc.constants.DocGlobalConstants;
-import com.power.doc.model.ApiErrorCode;
 import com.power.doc.model.CustomRespField;
 import com.power.doc.model.SourceCodePath;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * @link https://github.com/shalousun/smart-doc.git
