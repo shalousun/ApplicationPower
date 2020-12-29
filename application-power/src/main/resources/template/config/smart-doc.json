@@ -4,6 +4,8 @@
   "allInOne": true,
   "outPath": "src/main/resources/static/doc",
   "coverOld": true,
+  "style":"xt256",
+  "createDebugPage": true,
   "packageFilters": "",
   "md5EncryptedHtmlName": false,
   "projectName": "${applicationName}",
