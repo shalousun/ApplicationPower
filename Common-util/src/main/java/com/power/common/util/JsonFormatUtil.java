@@ -1,9 +1,10 @@
 package com.power.common.util;
 
 /**
- *
+ * @author yu
  */
 public class JsonFormatUtil {
+
     /**
      * 格式化json字符串
      *
@@ -11,7 +12,9 @@ public class JsonFormatUtil {
      * @return string
      */
     public static String formatJson(String jsonStr) {
-        if (null == jsonStr || "".equals(jsonStr)) return "";
+        if (null == jsonStr || "".equals(jsonStr)) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
         char last;
         char current = '\0';
@@ -41,6 +44,13 @@ public class JsonFormatUtil {
                         addIndentBlank(sb, indent);
                     }
                     break;
+                case ':':
+                    if (last != '\\') {
+                        sb.append(current).append(" ");
+                    } else {
+                        sb.append(current);
+                    }
+                    break;
                 default:
                     sb.append(current);
             }
@@ -60,5 +70,4 @@ public class JsonFormatUtil {
             sb.append('\t');
         }
     }
-
 }
