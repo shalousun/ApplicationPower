@@ -3,7 +3,7 @@ package com.power.common.enums;
 import com.power.common.interfaces.IMessage;
 
 /**
- * 常用http状态码
+ * HTTP Status Codes
  */
 public enum HttpCodeEnum implements IMessage {
     SUCCESS("200","ok"),

@@ -6,7 +6,7 @@ package com.power.common.util;
 public class JsonFormatUtil {
 
     /**
-     * 格式化json字符串
+     * Format Json
      *
      * @param jsonStr json content
      * @return string

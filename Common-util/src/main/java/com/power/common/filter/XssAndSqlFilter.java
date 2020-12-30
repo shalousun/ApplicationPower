@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 通用xss和sql注入拦截过滤器
+ * xss and sql injection filter
  */
 public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter {
 
@@ -55,12 +55,6 @@ public class XssAndSqlFilter extends AbstractUrlMatcher implements Filter {
         }
     }
 
-    /**
-     * 判断是否是例外接口例外
-     *
-     * @param request
-     * @return
-     */
     private boolean isExcluded(HttpServletRequest request) {
         String url0 = request.getRequestURI();
         return this.isMatches(excluded, url0);

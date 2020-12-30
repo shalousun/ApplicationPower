@@ -10,7 +10,7 @@ import java.util.List;
 public class DubboInterfaceBuilder {
 
     /**
-     * 生成dubbo提供方服务注册列表
+     * Generate dubbo provider service registration list
      *
      * @param classes list of class
      * @return dubbo provider interfaces

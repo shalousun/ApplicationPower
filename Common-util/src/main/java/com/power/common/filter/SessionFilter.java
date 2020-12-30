@@ -13,19 +13,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 通用的session拦截过滤器
+ * General session filter
  */
 public class SessionFilter extends AbstractUrlMatcher implements Filter {
 
     private String sessionKey;
-    private Set<String> exceptUrlPattern = null;//配置例外url
-    private String forwardUrl;//服务器转发地址,预留
-    private String redirectUrl;//重定向
+    private Set<String> exceptUrlPattern = null;
+    private String forwardUrl;
+    private String redirectUrl;
 
     @Override
     public void init(FilterConfig cfg) throws ServletException {
         sessionKey = cfg.getInitParameter("sessionKey");
-        //配置拦击
         String exceptUrlString = cfg.getInitParameter("exceptUrlPattern");
         if (StringUtil.isNotEmpty(exceptUrlString)) {
             exceptUrlPattern = Collections.unmodifiableSet(
@@ -40,7 +39,6 @@ public class SessionFilter extends AbstractUrlMatcher implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        //没有配置sessionKey则直接放行
         if (StringUtil.isEmpty(sessionKey)) {
             chain.doFilter(req, resp);
             return;
@@ -49,7 +47,6 @@ public class SessionFilter extends AbstractUrlMatcher implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         String servletPath = request.getServletPath();
 
-        // 如果请求的路径与forwardUrl相同，或请求的路径是排除的URL时，则直接放行
         if (servletPath.equals(redirectUrl) || isMatches(exceptUrlPattern, servletPath)) {
             chain.doFilter(req, resp);
             return;
@@ -59,7 +56,7 @@ public class SessionFilter extends AbstractUrlMatcher implements Filter {
             boolean isAjaxRequest = isAjaxRequest(request);
             if (isAjaxRequest) {
                 response.setCharacterEncoding("UTF-8");
-                response.sendError(401, "您已经太长时间没有操作,请刷新页面");
+                response.sendError(401, "You have not operated for too long, please refresh the page");
                 return;
             } else {
                 String contextPath = request.getContextPath();
@@ -78,7 +75,7 @@ public class SessionFilter extends AbstractUrlMatcher implements Filter {
     }
 
     /**
-     * 判断是否是ajax异步
+     * Is it an ajax asynchronous request
      *
      * @param request HttpServletRequest
      * @return boolean

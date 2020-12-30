@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 单点登录过滤器
+ * single sign-on filter
  * Created by yu on 2017/8/1.
  */
 public class CasRefererFilter implements Filter {

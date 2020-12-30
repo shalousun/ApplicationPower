@@ -18,22 +18,21 @@ import java.util.Set;
 public class RewriteFilter extends AbstractUrlMatcher implements Filter {
 
     /**
-     * 需要rewrite到的目的地址
+     * Need to rewrite to the destination url
      */
     public static final String REWRITE_TO = "rewriteToUrl";
 
     /**
-     * 拦截的url,url通配符之前用英文分号隔开
+     * Intercepted url, separated by English semicolon before url wildcard
      */
     public static final String REWRITE_PATTERNS = "urlPatterns";
 
-    private Set<String> urlPatterns = null;//配置例外url
+    private Set<String> urlPatterns = null;
 
     private String rewriteTo = null;
 
     @Override
     public void init(FilterConfig cfg) throws ServletException {
-        //配置拦击
         rewriteTo = cfg.getInitParameter(REWRITE_TO);
         String exceptUrlString = cfg.getInitParameter(REWRITE_PATTERNS);
         if (StringUtil.isNotEmpty(exceptUrlString)) {
@@ -49,7 +48,6 @@ public class RewriteFilter extends AbstractUrlMatcher implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         String servletPath = request.getServletPath();
         String context = request.getContextPath();
-        //匹配的路径重写
         if (isMatches(urlPatterns, servletPath)) {
             req.getRequestDispatcher(context + "/" + rewriteTo).forward(req, resp);
         } else {

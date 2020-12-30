@@ -14,9 +14,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author yu 2018/9/28.
- */
 
 /**
  * @author yu 2018/9/28.
@@ -24,15 +21,15 @@ import java.util.Set;
 public class IpFilter implements Filter {
 
     /**
-     * ip白名单
+     * ip whitelist
      */
     public static final String ALLOW = "allow";
     /**
-     * ip黑名单
+     * ip blacklist
      */
     public static final String DENY = "deny";
     /**
-     * 响应信息
+     * Response message
      */
     public static final String MSG = "msg";
     private static final Logger LOGGER = LoggerFactory.getLogger(IpFilter.class);

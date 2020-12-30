@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 数据校验常用正则封装
+ * Data verification tool
  *
  * @author sunyu
  */
@@ -387,7 +387,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 只能是整数或者浮点数
+     * Verification can only be integer or floating point numbers
      *
      * @param number String number
      * @return boolean
@@ -397,7 +397,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 判断不是整数或者浮点数
+     * Verify that it is not an integer or floating point number
      *
      * @param number String number
      * @return boolean
@@ -407,7 +407,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 判断是否是浮点数
+     * Verify that it is a floating point number
      *
      * @param number String number
      * @return boolean
@@ -417,7 +417,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 判断是费浮点数
+     * Verify non-floating point numbers
      *
      * @param number String number
      * @return boolean
@@ -427,7 +427,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 判断是否是负浮点数
+     * Verify negative floating point numbers
      *
      * @param number String number
      * @return boolean
@@ -437,7 +437,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 判断是否不是负浮点数
+     * Verify non-negative floating point numbers
      *
      * @param number String number
      * @return boolean
@@ -447,7 +447,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 判断是否是正浮点数
+     * Is it a positive floating point number
      *
      * @param number String number
      * @return boolean
@@ -457,7 +457,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 判断是否不是正浮点数
+     * Verify non-positive floating point numbers
      *
      * @param number String number
      * @return boolean
@@ -467,7 +467,7 @@ public class ValidateUtil {
     }
 
     /**
-     * isPositiveInteger:(判断是否正整数)
+     * Verify positive integer
      *
      * @param number String number
      * @return boolean

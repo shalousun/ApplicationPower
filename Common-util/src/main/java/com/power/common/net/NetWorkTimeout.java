@@ -6,17 +6,17 @@ package com.power.common.net;
 public class NetWorkTimeout {
 
     /**
-     * http或者https读取超时时间，单位为毫秒
+     * http or https read timeout (milliseconds)
      */
     private long readTimeout;
 
     /**
-     * http或者https写超时，单位为毫秒
+     * http or https write timeout (milliseconds)
      */
     private long writeTimeout;
 
     /**
-     * http或者https连接超时，，单位为毫秒
+     * http or https connection timeout, in milliseconds
      */
     private long connectTimeout;
 

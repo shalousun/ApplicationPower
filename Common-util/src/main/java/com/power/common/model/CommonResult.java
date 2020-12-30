@@ -7,7 +7,7 @@ import com.power.common.util.DateTimeUtil;
 import java.io.Serializable;
 
 /**
- * 公共返回结果
+ * Common Result
  *
  * @author sunyu
  */
@@ -20,15 +20,15 @@ public class CommonResult<T> extends BaseResult implements Serializable {
 
 
     /**
-     * 默认构造器
+     * Default constructor
      */
     public CommonResult() {
 
     }
 
     /**
-     * @param success 是否成功
-     * @param message 返回的消息
+     * @param success the success
+     * @param message the message
      */
     public CommonResult(boolean success, String message) {
         this.setSuccess(success);
@@ -36,7 +36,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * @param success 是否成功
+     * @param success the success
      */
     public CommonResult(boolean success) {
         this.setSuccess(success);
@@ -52,9 +52,9 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * @param success 是否成功
-     * @param message 消息
-     * @param data    数据
+     * @param success the success
+     * @param message success or error messages
+     * @param data    response data while true
      */
     public CommonResult(boolean success, String message, T data) {
         this.setSuccess(success);
@@ -63,7 +63,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * 通用成功响应(默认响应码为0000)
+     * Successful response (default response code is 0000)
      *
      * @return CommonResult
      */
@@ -72,18 +72,19 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * 自动义成功响应，一般定义枚举实现IMessage
+     * Customize success response message,
+     * generally define enumeration to implement IMessage
      *
-     * @param msg IMessage interface
+     * @param message IMessage interface
      * @param <T> Object
      * @return CommonResult
      */
-    public static <T> CommonResult<T> ok(IMessage msg) {
-        return baseCreate(msg.getCode(), msg.getMessage(), true);
+    public static <T> CommonResult<T> ok(IMessage message) {
+        return baseCreate(message.getCode(), message.getMessage(), true);
     }
 
     /**
-     * 通用服务器未知异常(默认响应码9999)
+     * Server unknown exception (default response code 9999)
      *
      * @return CommonResult
      */
@@ -92,7 +93,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * 失败响应
+     * Failed response
      *
      * @param message IMessage
      * @return CommonResult
@@ -104,12 +105,12 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     /**
      * 失败或失败响应
      *
-     * @param code 错误响应码
-     * @param msg  错误信息
+     * @param code the error code
+     * @param message  error message
      * @return CommonResult
      */
-    public static CommonResult fail(String code, String msg) {
-        return baseCreate(code, msg, false);
+    public static CommonResult fail(String code, String message) {
+        return baseCreate(code, message, false);
     }
 
     private static <T> CommonResult<T> baseCreate(String code, String msg, boolean success) {
@@ -124,7 +125,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     /**
      * Usage:
      * Result.ok().setResult("hello")
-     * 返回结果时携带数据
+     * Business data returned when processing is successful
      *
      * @param data you return data
      * @return CommonResult
@@ -135,7 +136,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * 覆盖supper方法
+     * Override the supper method
      *
      * @return T
      */

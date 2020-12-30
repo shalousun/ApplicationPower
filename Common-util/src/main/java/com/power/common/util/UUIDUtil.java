@@ -21,7 +21,7 @@ public class UUIDUtil {
     }
 
     /**
-     * 32位uuid
+     * Generated string id length to 32
      *
      * @return string
      */
@@ -42,11 +42,11 @@ public class UUIDUtil {
             return UUID.fromString(uuid);
         } else if (uuid.length() == 32) {
             StringBuilder uuidBuilder = new StringBuilder();
-            uuidBuilder.append(uuid.substring(0, 8)).append("-")
-                    .append(uuid.substring(8, 12)).append("-")
-                    .append(uuid.substring(12, 16)).append("-")
-                    .append(uuid.substring(16, 24)).append("-")
-                    .append(uuid.substring(24, 32));
+            uuidBuilder.append(uuid, 0, 8).append("-")
+                    .append(uuid, 8, 12).append("-")
+                    .append(uuid, 12, 16).append("-")
+                    .append(uuid, 16, 24).append("-")
+                    .append(uuid, 24, 32);
             return UUID.fromString(uuidBuilder.toString());
         }
         return null;

@@ -14,7 +14,6 @@ public class SSLSocketFactoryBuilder {
 
     public static SSLSocketFactory getSslSocketFactory() {
         try {
-            //信任任何链接
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, new TrustManager[]{new TrustAnyTrustManager()}, new SecureRandom());
             return sslContext.getSocketFactory();

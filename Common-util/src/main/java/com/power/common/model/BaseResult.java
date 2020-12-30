@@ -20,7 +20,7 @@ public abstract class BaseResult<T> implements Serializable {
     private String message;
 
     /**
-     * 成功返回的数据
+     * 处理成功返回的业务数据
      */
     private T data;
 

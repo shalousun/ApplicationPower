@@ -15,10 +15,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 /**
- * xss过滤
+ * xss filter wrapper
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
-    boolean isUpData = false;//判断是否是上传 上传忽略
+    boolean isUpData = false;
 
     public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
@@ -57,9 +57,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return StringUtil.cleanXSS(value);
     }
 
-    /**
-     * 获取request的属性时，做xss过滤
-     */
     @Override
     public Object getAttribute(String name) {
         Object value = super.getAttribute(name);

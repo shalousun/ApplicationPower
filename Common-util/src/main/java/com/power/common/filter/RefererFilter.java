@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * referer过滤器
+ * referer filter
  * Created by yu on 2017/7/23.
  */
 public class RefererFilter implements Filter {
@@ -36,7 +36,6 @@ public class RefererFilter implements Filter {
                          FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        // 链接来源地址
         if (isExcluded(request)) {
             chain.doFilter(request, response);
         } else {
@@ -48,12 +47,6 @@ public class RefererFilter implements Filter {
 
     }
 
-    /**
-     * 判断是否是例外referer
-     *
-     * @param request
-     * @return
-     */
     private boolean isExcluded(HttpServletRequest request) {
         String referer = request.getHeader("referer");
         if (StringUtil.isEmpty(referer)) {

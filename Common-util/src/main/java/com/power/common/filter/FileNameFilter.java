@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 /**
- * 文件过滤器
+ * File filter
  *
  * @author sunyu
  */
