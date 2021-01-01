@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'com.github.shalousun:smart-doc-gradle-plugin:2.0.3'
+        classpath 'com.github.shalousun:smart-doc-gradle-plugin:2.0.4'
         <%if(isUseDocker){ %>
         classpath('se.transmode.gradle:gradle-docker:1.2')
          <% } %>
@@ -70,11 +70,11 @@ dependencies {
     <% if(isMultipleDataSource){%>
     compile 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    compile 'com.github.shalousun:common-util:2.0.3'
+    compile 'com.github.shalousun:common-util:2.0.4'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'com.github.shalousun:smart-doc:2.0.3'
+    testCompile 'com.github.shalousun:smart-doc:2.0.4'
 
 }
 
