@@ -45,7 +45,7 @@ public class JsonFormatUtil {
                     }
                     break;
                 case ':':
-                    if (last != '\\') {
+                    if (last != '\\' && last == '"') {
                         sb.append(current).append(" ");
                     } else {
                         sb.append(current);
@@ -55,7 +55,6 @@ public class JsonFormatUtil {
                     sb.append(current);
             }
         }
-
         return sb.toString();
     }
 
