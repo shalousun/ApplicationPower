@@ -155,46 +155,36 @@ public class RandomUtil {
      */
     public static String randomValueByType(String type) {
         switch (type) {
-            case "String":  //12
-                return randomString(6);
+            //12
             case "char":
                 return randomString(1);
             case "Integer":    //4
-                return String.valueOf(randomInt(1000));
             case "int":
-                return String.valueOf(randomInt(1000));
             case "Long": //-5
-                return String.valueOf(randomInt(1000));
             case "long":
+            case "BigDecimal":    //3
+            case "BigInteger":
                 return String.valueOf(randomInt(1000));
             case "Double": //8
-                return String.valueOf(randomDouble(FORMAT));
             case "double":
-                return String.valueOf(randomDouble(FORMAT));
             case "Float": //6
-                return String.valueOf(randomDouble(FORMAT));
             case "float":
                 return String.valueOf(randomDouble(FORMAT));
             case "short":
-                return String.valueOf(randomInt(0, 32767));
             case "Short":
                 return String.valueOf(randomInt(0, 32767));
+            case "Byte":
+            case "byte":
+                return String.valueOf(randomInt(0, 127));
             case "boolean":
-                return "true";
             case "Boolean":
                 return "true";
-            case "BigDecimal":    //3
-                return String.valueOf(randomInt(1000));
-            case "BigInteger":
-                return String.valueOf(randomInt(1000));
             case "Time":  //91
-                return DateTimeUtil.dateToStr(new Date(), "yyyy-MM-dd");
             case "Date":
                 return DateTimeUtil.dateToStr(new Date(), "yyyy-MM-dd");
             case "LocalDate":
                 return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_DAY);
             case "Timestamp":  //91
-                return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_SECOND);
             case "LocalDateTime":
                 return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_SECOND);
             default:
