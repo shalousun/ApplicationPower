@@ -187,6 +187,9 @@ public class RandomUtil {
             case "Timestamp":  //91
             case "LocalDateTime":
                 return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_SECOND);
+            case "uuid":
+            case "UUID":
+                return UUIDUtil.getUuid();
             default:
                 return randomString(6);
         }
