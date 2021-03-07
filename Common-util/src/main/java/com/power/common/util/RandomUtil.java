@@ -1,6 +1,7 @@
 package com.power.common.util;
 
 import java.text.DecimalFormat;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Random;
 
@@ -187,6 +188,8 @@ public class RandomUtil {
             case "Timestamp":  //91
             case "LocalDateTime":
                 return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_SECOND);
+            case "ZonedDateTime":
+                return DateTimeUtil.zonedDateTimeToStr(ZonedDateTime.now(),DateTimeUtil.DATE_FORMAT_ZONED_DATE_TIME);
             case "uuid":
             case "UUID":
                 return UUIDUtil.getUuid();

@@ -23,6 +23,7 @@ public class DateTimeUtil {
     public static final String DATE_FORMAT_CHINESE = "yyyy年MM月dd日";
     public static final String DATE_FORMAT_CHINESE_SECONDE = "yyyy年MM月dd日 HH:mm:ss";
     public static final String DATE_FORMAT_CHINESE_WEEK_SECONDE = "yyyy年MM月dd日 E HH:mm:ss";
+    public static final String DATE_FORMAT_ZONED_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
     public static final String YYYYMMDD = "yyyyMMdd";
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
     public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
@@ -80,6 +81,15 @@ public class DateTimeUtil {
         return LocalDate.now().toString();
     }
 
+    /**
+     * Format ZonedDateTime to String
+     * @param zonedDateTime ZonedDateTime
+     * @param format Time format
+     * @return String
+     */
+    public static String zonedDateTimeToStr(ZonedDateTime zonedDateTime,String format){
+        return DateTimeFormatter.ofPattern(format).format(zonedDateTime);
+    }
     /**
      * Convert Date to String
      *
