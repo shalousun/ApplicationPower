@@ -1,0 +1,38 @@
+node('maven-jnlp') {
+    APP_NAME = "${applicationNameLowerCase}"
+    HARBOR_HOST = "Your Harbor Server."
+    HARBOR_PROJECT = "library"
+    IMAGE_TAG = "1.0"
+    NAMESPACE = "default"
+    stage('Clone') {
+        echo "1.Clone Stage"
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+        doGenerateSubmoduleConfigurations: false,
+        extensions: [], submoduleCfg: [],
+        userRemoteConfigs: [[credentialsId: 'gitee_id',
+        url: '[your repository].git']]])
+    }
+    stage('Test') {
+        echo "2.Test Stage"
+    }
+    stage('Build') {
+        echo "3.Build Docker Image Stage"
+        echo "Build tag is \${build_tag}"
+        sh "mvn clean package docker:build -DskipTests"
+    }
+    stage('Push') {
+        echo "\${build_tag}"
+        echo "4.Push Docker Image Stage"
+        sh "docker tag springboot-docker:1.0-SNAPSHOT  \${HARBOR_HOST}/\${HARBOR_PROJECT}/\${APP_NAME}:\${IMAGE_TAG}"
+        withCredentials([usernamePassword(credentialsId: 'harbor-registry', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+            sh "docker login -u \${dockerHubUser} -p \${dockerHubPassword} \${HARBOR_HOST}"
+            sh "docker push \${HARBOR_HOST}/\${HARBOR_PROJECT}/\${APP_NAME}:\${IMAGE_TAG}"
+       }
+    }
+    stage('Deploy') {
+        echo "5. Deploy Stage"
+        sh("kubectl get ns \${NAMESPACE} || kubectl create ns \${NAMESPACE}")
+        sh("kubectl --namespace=\${NAMESPACE} apply -f k8s/deployment.yaml")
+        sh("kubectl get pod -n \${NAMESPACE}")
+    }
+}

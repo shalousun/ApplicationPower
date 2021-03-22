@@ -54,6 +54,8 @@ public class CodeWriter extends AbstractCodeWriter {
 
         new BaseCodeBuilder();
 
+        new JenkinsfileCodeBuilder();
+
         new ApiDocTestCodeBuilder();
 
     }

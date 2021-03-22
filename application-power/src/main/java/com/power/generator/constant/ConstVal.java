@@ -135,6 +135,8 @@ public class ConstVal {
 
     public static final String TPL_README = "README.md";
 
+    public static final String TPL_JENKINS_PIPELINE = "Jenkinsfile.btl";
+
     //多数据源模板定义(针对springboot)
     public static final String TPL_DATASOURCE_CFG = "datasource" + FILE_SEPARATOR + "AbstractDataSourceConfig.btl";
     public static final String TPL_DATASOURCE_KEY = "datasource" + FILE_SEPARATOR + "DataSourceKey.btl";

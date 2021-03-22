@@ -5,8 +5,8 @@
 请补充你的项目说明。
 ## 主要技术
 
-- SpringBoot 2.2.9
-- Mybatis Starter 2.1.3
+- SpringBoot 2.3.9
+- Mybatis Starter 2.1.4
 ## 构建部署操作
 
 构建和部署操作请参考本项目docs目录中的《DEPLOY.md》和《DOCKER.md》。
@@ -28,6 +28,9 @@ http(https)://{base_url}/doc/postman.json
 http(https)://{base_url}/doc/OpenApi3.0.json
 ```
 smart-doc更多使用配置请参考[《smart-doc官方wiki》](https://gitee.com/smart-doc-team/smart-doc/wikis)
+## Jenkins构建项目
+项目内置了Jenkins slave(主要是k8s上弹性部署的Jenkins)分布式构建的pipeline模板Jenkinsfile。
+如果有构建环境可以直接根据实际情况修改后直接使用pipeline模板构建。
 ## 项目需求与设计文档
 
 - [《xxx需求文档》](https://gitee.com/smart-doc-team/smart-doc/wikis)
