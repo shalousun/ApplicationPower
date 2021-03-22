@@ -28,12 +28,13 @@ ApplicationPower是一个快速的项目生成脚手架，ApplicationPower一直
   5. 支持基于assembly打包的Spring Boot工程化启动脚本和部署说明文档
   6. 支持Spring Boot项目容器化构建Dockerfile文件创建
   7. 自动创建项目的kubernetes容器编排部署yaml文件。
-  8. 自动集成当前基于代码推导的零侵入文档生成工具[【smart-doc】](https://gitee.com/sunyurepository/smart-doc)。
+  8. 自动集成当前基于代码推导的零侵入文档生成工具[【smart-doc】](https://gitee.com/devin-alan/smart-doc)。
   9. 支持自动集成atomikos分布式事务管理(谨慎使用,druid整合多数据源mysql驱动请先使用6.0.6版本)
   10. 吸纳开源提供一些可以使用的基础工具类
   11. 超自由的代码生成配置，自由控制自己需要的。
   12. 省心生成通用的restful exception处理类，和jsr303参数验证错误处理模板。
   13. 自动化创建项目README模板。
+  14. 自动创建Jenkins pipeline构建模板。
   
 ApplicationPower提供的每一个功能都是走心的！不添油加醋，坚持简单不引入新的学习成本，只给你需要的！
 
