@@ -32,7 +32,7 @@ node('maven-jnlp') {
     stage('Deploy') {
         echo "5. Deploy Stage"
         sh("kubectl get ns \${NAMESPACE} || kubectl create ns \${NAMESPACE}")
-        sh("kubectl --namespace=\${NAMESPACE} apply -f k8s/deployment.yaml")
+        sh("kubectl --namespace=\${NAMESPACE} apply -f k8s/${applicationNameLowerCase}-deployment.yaml")
         sh("kubectl get pod -n \${NAMESPACE}")
     }
 }
