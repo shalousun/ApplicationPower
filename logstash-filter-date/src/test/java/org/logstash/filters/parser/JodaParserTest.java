@@ -25,15 +25,15 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class JodaParserTest {
-  @Test(expected = IllegalArgumentException.class)
-  public void emptyShouldFail() {
-    new TimestampParserFactory().makeParser("", "en", "UTC");
-  }
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyShouldFail() {
+        new TimestampParserFactory().makeParser("", "en", "UTC");
+    }
 
-  @Test
-  public void onePattern() {
-    JodaParser parser = new JodaParser("YYYY", null, null);
-    Instant instant = parser.parse("2016");
-    assertEquals(2016, instant.toDateTime().getYear());
-  }
+    @Test
+    public void onePattern() {
+        JodaParser parser = new JodaParser("YYYY", null, null);
+        Instant instant = parser.parse("2016");
+        assertEquals(2016, instant.toDateTime().getYear());
+    }
 }

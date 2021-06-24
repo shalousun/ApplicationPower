@@ -19,47 +19,48 @@
 
 package org.logstash.filters.parser;
 
-import java.math.BigDecimal;
 import org.joda.time.Instant;
 
+import java.math.BigDecimal;
+
 public class TAI64NParser implements TimestampParser {
-  @Override
-  public Instant parse(String value) {
-    int offset = 0;
-    if (value.startsWith("@")) {
-      offset = 1;
+    @Override
+    public Instant parse(String value) {
+        int offset = 0;
+        if (value.startsWith("@")) {
+            offset = 1;
+        }
+
+        // https://cr.yp.to/libtai/tai64.html
+        // First 8 bytes (16 hex chars) of TAI64N are seconds. TAI64's unix epoch is at 2^62
+        long secondsSinceEpoch = Long.parseLong(value.substring(offset, 16 + offset), 16) & ((1L << 62) - 1);
+        // last 4 bytes (8 hex chars) of TAI64N are subsecond value in nanoseconds.
+        int nanoseconds = Integer.parseInt(value.substring(16 + offset, 24 + offset), 16);
+
+        // Compensate for leap seconds to convert TAI to UTC.
+        // XXX: Leap seconds aren't this simple. We need to find out what times each leap second was introduced.
+        secondsSinceEpoch -= 10;
+
+        return new Instant(secondsSinceEpoch * 1000 + (nanoseconds / 1_000_000));
     }
 
-    // https://cr.yp.to/libtai/tai64.html
-    // First 8 bytes (16 hex chars) of TAI64N are seconds. TAI64's unix epoch is at 2^62
-    long secondsSinceEpoch = Long.parseLong(value.substring(offset, 16 + offset), 16) & ((1L << 62) - 1);
-    // last 4 bytes (8 hex chars) of TAI64N are subsecond value in nanoseconds.
-    int nanoseconds = Integer.parseInt(value.substring(16 + offset, 24 + offset), 16);
+    @Override
+    public Instant parse(Long value) {
+        throw new IllegalArgumentException("Expected a string value, but got a long (" + value + "). Cannot parse date.");
+    }
 
-    // Compensate for leap seconds to convert TAI to UTC.
-    // XXX: Leap seconds aren't this simple. We need to find out what times each leap second was introduced.
-    secondsSinceEpoch -= 10;
+    @Override
+    public Instant parse(Double value) {
+        throw new IllegalArgumentException("Expected a string value, but got a double (" + value + "). Cannot parse date.");
+    }
 
-    return new Instant(secondsSinceEpoch * 1000 + (nanoseconds / 1_000_000));
-  }
+    @Override
+    public Instant parse(BigDecimal value) {
+        throw new IllegalArgumentException("Expected a string value, but got a bigdecimal (" + value + "). Cannot parse date.");
+    }
 
-  @Override
-  public Instant parse(Long value) {
-    throw new IllegalArgumentException("Expected a string value, but got a long (" + value + "). Cannot parse date.");
-  }
-
-  @Override
-  public Instant parse(Double value) {
-    throw new IllegalArgumentException("Expected a string value, but got a double (" + value + "). Cannot parse date.");
-  }
-
-  @Override
-  public Instant parse(BigDecimal value) {
-    throw new IllegalArgumentException("Expected a string value, but got a bigdecimal (" + value + "). Cannot parse date.");
-  }
-
-  @Override
-  public Instant parseWithTimeZone(String value, String timezone) {
-    return parse(value);
-  }
+    @Override
+    public Instant parseWithTimeZone(String value, String timezone) {
+        return parse(value);
+    }
 }

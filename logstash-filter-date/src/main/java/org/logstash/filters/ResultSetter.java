@@ -23,5 +23,5 @@ import org.joda.time.Instant;
 
 
 interface ResultSetter {
-  void set(Instant instant);
+    void set(Instant instant);
 }

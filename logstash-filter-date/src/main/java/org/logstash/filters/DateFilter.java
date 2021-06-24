@@ -19,54 +19,54 @@
 
 package org.logstash.filters;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.Instant;
 import org.logstash.filters.parser.CasualISO8601Parser;
 import org.logstash.filters.parser.JodaParser;
 import org.logstash.filters.parser.TimestampParser;
 import org.logstash.filters.parser.TimestampParserFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DateFilter {
 
-  private static Logger logger = LogManager.getLogger();
-  private final String[] tagOnFailure;
-  private final List<ParserExecutor> executors = new ArrayList<>();
-  private final ResultSetter setter;
+    private static Logger logger = LoggerFactory.getLogger(DateFilter.class);
+    private final String[] tagOnFailure;
+    private final List<ParserExecutor> executors = new ArrayList<>();
+    private final ResultSetter setter;
 
 
-  public DateFilter(List<String> tagOnFailure) {
-    this.tagOnFailure = tagOnFailure.toArray(new String[0]);
-    this.setter = new TimestampSetter();
+    public DateFilter(List<String> tagOnFailure) {
+        this.tagOnFailure = tagOnFailure.toArray(new String[0]);
+        this.setter = new TimestampSetter();
 
-  }
-
-  public void acceptFilterConfig(String format, String locale, String timezone) {
-    TimestampParser parser = TimestampParserFactory.makeParser(format, locale, timezone);
-    logger.debug("Date filter with format={}, locale={}, timezone={} built as {}", format, locale, timezone, parser.getClass().getName());
-    if (parser instanceof JodaParser || parser instanceof CasualISO8601Parser) {
-      executors.add(new TextParserExecutor(parser, timezone));
-    } else {
-      executors.add(new NumericParserExecutor(parser));
     }
-  }
 
-  public Instant executeParsers(Object input) {
-    if (input == null) {
-      return null;
+    public void acceptFilterConfig(String format, String locale, String timezone) {
+        TimestampParser parser = TimestampParserFactory.makeParser(format, locale, timezone);
+        logger.debug("Date filter with format={}, locale={}, timezone={} built as {}", format, locale, timezone, parser.getClass().getName());
+        if (parser instanceof JodaParser || parser instanceof CasualISO8601Parser) {
+            executors.add(new TextParserExecutor(parser, timezone));
+        } else {
+            executors.add(new NumericParserExecutor(parser));
+        }
     }
-    for (ParserExecutor executor : executors) {
-      try {
-        Instant instant = executor.execute(input);
-        return instant;
-      } catch (IllegalArgumentException | IOException e) {
-        // do nothing, try next ParserExecutor
-      }
+
+    public Instant executeParsers(Object input) {
+        if (input == null) {
+            return null;
+        }
+        for (ParserExecutor executor : executors) {
+            try {
+                Instant instant = executor.execute(input);
+                return instant;
+            } catch (IllegalArgumentException | IOException e) {
+                // do nothing, try next ParserExecutor
+            }
+        }
+        return null;
     }
-    return null;
-  }
 }

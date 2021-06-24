@@ -24,5 +24,5 @@ import org.joda.time.Instant;
 import java.io.IOException;
 
 interface ParserExecutor {
-  Instant execute(Object input) throws IOException;
+    Instant execute(Object input) throws IOException;
 }

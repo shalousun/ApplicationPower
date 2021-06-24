@@ -25,24 +25,24 @@ import org.logstash.filters.parser.TimestampParser;
 import java.io.IOException;
 
 class TextParserExecutor implements ParserExecutor {
-  private InputHandler handler;
+    private InputHandler handler;
 
-  public TextParserExecutor(TimestampParser parser, String timeZone) {
-    if (timeZone != null && timeZone.contains("%{")) {
-      this.handler = new DynamicTzInputHandler(parser, timeZone);
-    } else {
-      this.handler = new StringInputHandler(parser);
+    public TextParserExecutor(TimestampParser parser, String timeZone) {
+        if (timeZone != null && timeZone.contains("%{")) {
+            this.handler = new DynamicTzInputHandler(parser, timeZone);
+        } else {
+            this.handler = new StringInputHandler(parser);
+        }
     }
-  }
 
-  public Instant execute(Object input) throws IOException {
-    if (!(input instanceof String)) {
-      throw new IllegalArgumentException("Cannot parse date for value of type " + input.getClass().getName());
+    public Instant execute(Object input) throws IOException {
+        if (!(input instanceof String)) {
+            throw new IllegalArgumentException("Cannot parse date for value of type " + input.getClass().getName());
+        }
+        return this.execute((String) input);
     }
-    return this.execute((String) input);
-  }
 
-  private Instant execute(String input) throws IOException {
-    return this.handler.handle(input);
-  }
+    private Instant execute(String input) throws IOException {
+        return this.handler.handle(input);
+    }
 }

@@ -22,12 +22,12 @@ package org.logstash.filters;
 import org.joda.time.Instant;
 
 class FieldSetter implements ResultSetter {
-  private String target;
+    private String target;
 
-  FieldSetter(String target) {
-    this.target = target;
-  }
+    FieldSetter(String target) {
+        this.target = target;
+    }
 
-  public void set(Instant instant) {
-  }
+    public void set(Instant instant) {
+    }
 }

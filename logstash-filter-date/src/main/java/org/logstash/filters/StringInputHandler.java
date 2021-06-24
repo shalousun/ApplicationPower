@@ -20,19 +20,18 @@
 package org.logstash.filters;
 
 import org.joda.time.Instant;
-
 import org.logstash.filters.parser.TimestampParser;
 
 import java.io.IOException;
 
 class StringInputHandler implements InputHandler {
-  private TimestampParser parser;
+    private TimestampParser parser;
 
-  public StringInputHandler(TimestampParser parser) {
-    this.parser = parser;
-  }
+    public StringInputHandler(TimestampParser parser) {
+        this.parser = parser;
+    }
 
-  public Instant handle(String input) throws IOException {
-    return this.parser.parse(input);
-  }
+    public Instant handle(String input) throws IOException {
+        return this.parser.parse(input);
+    }
 }

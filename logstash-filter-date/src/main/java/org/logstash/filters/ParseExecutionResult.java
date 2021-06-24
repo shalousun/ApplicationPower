@@ -20,8 +20,8 @@
 package org.logstash.filters;
 
 public enum ParseExecutionResult {
-  SUCCESS,
-  FAIL,
-  FIELD_VALUE_IS_NULL_OR_FIELD_NOT_PRESENT,
-  IGNORED
+    SUCCESS,
+    FAIL,
+    FIELD_VALUE_IS_NULL_OR_FIELD_NOT_PRESENT,
+    IGNORED
 }

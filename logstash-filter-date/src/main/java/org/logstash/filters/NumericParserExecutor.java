@@ -20,31 +20,31 @@
 package org.logstash.filters;
 
 import org.joda.time.Instant;
-
 import org.logstash.filters.parser.TimestampParser;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 
 class NumericParserExecutor implements ParserExecutor {
-  private TimestampParser parser;
-  public NumericParserExecutor(TimestampParser parser) {
-    this.parser = parser;
-  }
+    private TimestampParser parser;
 
-  public Instant execute(Object input) throws IOException {
-    if (input instanceof String) {
-      return parser.parse((String) input);
-    } else if (input instanceof Long) {
-      return parser.parse((Long)input);
-    } else if (input instanceof Integer) {
-      return parser.parse(((Integer) input).longValue());
-    } else if (input instanceof Double) {
-      return parser.parse((Double) input);
-    } else if (input instanceof BigDecimal) {
-      return parser.parse((BigDecimal) input);
-    } else {
-      throw new IllegalArgumentException("Cannot parse date for value of type " + input.getClass().getName());
+    public NumericParserExecutor(TimestampParser parser) {
+        this.parser = parser;
     }
-  }
+
+    public Instant execute(Object input) throws IOException {
+        if (input instanceof String) {
+            return parser.parse((String) input);
+        } else if (input instanceof Long) {
+            return parser.parse((Long) input);
+        } else if (input instanceof Integer) {
+            return parser.parse(((Integer) input).longValue());
+        } else if (input instanceof Double) {
+            return parser.parse((Double) input);
+        } else if (input instanceof BigDecimal) {
+            return parser.parse((BigDecimal) input);
+        } else {
+            throw new IllegalArgumentException("Cannot parse date for value of type " + input.getClass().getName());
+        }
+    }
 }

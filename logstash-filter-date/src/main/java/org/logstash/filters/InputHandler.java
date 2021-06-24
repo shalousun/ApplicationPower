@@ -24,5 +24,5 @@ import org.joda.time.Instant;
 import java.io.IOException;
 
 interface InputHandler {
-  Instant handle(String input) throws IOException;
+    Instant handle(String input) throws IOException;
 }

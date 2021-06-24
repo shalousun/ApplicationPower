@@ -23,6 +23,6 @@ import org.joda.time.Instant;
 
 
 class TimestampSetter implements ResultSetter {
-  public void set(Instant instant) {
-  }
+    public void set(Instant instant) {
+    }
 }

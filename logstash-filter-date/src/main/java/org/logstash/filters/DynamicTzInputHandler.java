@@ -25,19 +25,19 @@ import org.logstash.filters.parser.TimestampParser;
 import java.io.IOException;
 
 class DynamicTzInputHandler implements InputHandler {
-  private TimestampParser parser;
-  private String timeZone;
+    private TimestampParser parser;
+    private String timeZone;
 
-  public DynamicTzInputHandler(TimestampParser parser, String timeZone) {
-    this.parser = parser;
-    this.timeZone = timeZone;
-  }
+    public DynamicTzInputHandler(TimestampParser parser, String timeZone) {
+        this.parser = parser;
+        this.timeZone = timeZone;
+    }
 
-  public DynamicTzInputHandler(TimestampParser parser) {
-    this.parser = parser;
-  }
+    public DynamicTzInputHandler(TimestampParser parser) {
+        this.parser = parser;
+    }
 
-  public Instant handle(String input) throws IOException {
-    return this.parser.parseWithTimeZone(input,this.timeZone);
-  }
+    public Instant handle(String input) throws IOException {
+        return this.parser.parseWithTimeZone(input, this.timeZone);
+    }
 }
