@@ -5,11 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.shalousun</groupId>
-    <artifactId>logstash-filter-date</artifactId>
+    <artifactId>log-date-filter</artifactId>
     <version>1.0.0</version>
 
     <name>logstash-filter-date</name>
     <url>https://github.com/shalousun/ApplicationPower.git</url>
+    <description>log date filter</description>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -96,7 +97,7 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>logstash-filter-date</finalName>
+        <finalName>log-date-filter</finalName>
     </build>
     <profiles>
         <profile>

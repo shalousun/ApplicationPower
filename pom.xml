@@ -13,7 +13,7 @@
         <module>common-util</module>
         <module>datasource-aspect</module>
         <module>mybatis-template</module>
-      <module>logstash-filter-date</module>
+      <module>log-date-filter</module>
     </modules>
 
 
