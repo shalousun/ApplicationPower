@@ -8,7 +8,7 @@
     <artifactId>log-date-filter</artifactId>
     <version>1.0.0</version>
 
-    <name>logstash-filter-date</name>
+    <name>log-date-filter</name>
     <url>https://github.com/shalousun/ApplicationPower.git</url>
     <description>log date filter</description>
     <licenses>
