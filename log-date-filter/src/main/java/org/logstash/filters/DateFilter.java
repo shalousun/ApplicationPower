@@ -34,16 +34,7 @@ import java.util.List;
 public class DateFilter {
 
     private static Logger logger = LoggerFactory.getLogger(DateFilter.class);
-    private final String[] tagOnFailure;
     private final List<ParserExecutor> executors = new ArrayList<>();
-    private final ResultSetter setter;
-
-
-    public DateFilter(List<String> tagOnFailure) {
-        this.tagOnFailure = tagOnFailure.toArray(new String[0]);
-        this.setter = new TimestampSetter();
-
-    }
 
     public void acceptFilterConfig(String format, String locale, String timezone) {
         TimestampParser parser = TimestampParserFactory.makeParser(format, locale, timezone);
