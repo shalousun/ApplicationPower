@@ -26,6 +26,7 @@ public class DateFilterTest {
             put("2001-09-05T16:36:36+0000", "2001-09-05T16:36:36.000Z");
             put("2001-12-07T23:54:54Z", "2001-12-07T23:54:54.000Z");
             put("2001-12-07T23:54:54.000Z", "2001-12-07T23:54:54.000Z");
+            put("2021-06-25 08:44:46.292","2021-06-25T00:44:46.292Z");
         }};
         DateFilter subject = new DateFilter(failtagList);
         subject.acceptFilterConfig("ISO8601", loc, tz);
@@ -59,7 +60,7 @@ public class DateFilterTest {
             // Venezuela changed from -4:00 to -4:30 in late 2007
             put("2008-01-01T00:00:00", "2008-01-01T04:30:00.000Z");
             // Venezuela changed from -4:30 to -4:00 on Sunday, 1 May 2016
-            put("2016-05-01T08:18:18.123", "2016-05-01T12:18:18.123Z");
+            put("2016-05-01 08:18:18.123", "2016-05-01T12:18:18.123Z");
         }};
         DateFilter subject = new DateFilter(failtagList);
         subject.acceptFilterConfig("ISO8601", loc, "%{mytz}");
@@ -179,7 +180,7 @@ public class DateFilterTest {
     }
 
     private void commonAssertions(String supplied, String expected) {
-        Assert.assertEquals(supplied, expected);
+        Assert.assertEquals(expected,supplied);
         Assert.assertTrue(String.format("Unequal - expected: %s, actual: %s", expected, supplied), expected.equals(supplied));
     }
 
