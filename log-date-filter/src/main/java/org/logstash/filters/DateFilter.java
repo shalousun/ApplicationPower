@@ -36,6 +36,12 @@ public class DateFilter {
     private static Logger logger = LoggerFactory.getLogger(DateFilter.class);
     private final List<ParserExecutor> executors = new ArrayList<>();
 
+    /**
+     * Accept filter config
+     * @param format ISO8601,UNIX,TAI64N,UNIX_MS
+     * @param locale Specify a locale to be used for date parsing,e: en
+     * @param timezone Specify a time zone canonical ID to be used for date parsing
+     */
     public void acceptFilterConfig(String format, String locale, String timezone) {
         TimestampParser parser = TimestampParserFactory.makeParser(format, locale, timezone);
         logger.debug("Date filter with format={}, locale={}, timezone={} built as {}", format, locale, timezone, parser.getClass().getName());

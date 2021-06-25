@@ -14,8 +14,8 @@ import java.util.Map;
 public class DateFilterTest {
 
     public static final String STANDARD_DATE_FORMAT_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    private String tz = "UTC";
-    private String loc = "Asia/Shanghai";
+    private String tz = "Asia/Shanghai";
+    private String loc = "en";
 
     @Test
     public void testIsoStrings() throws Exception {
@@ -24,10 +24,10 @@ public class DateFilterTest {
             put("2001-09-05T16:36:36+0000", "2001-09-05T16:36:36.000Z");
             put("2001-12-07T23:54:54Z", "2001-12-07T23:54:54.000Z");
             put("2001-12-07T23:54:54.000Z", "2001-12-07T23:54:54.000Z");
-            put("2021-06-25T08:44:46,292", "2021-06-25T00:44:46.292Z");
+            put("2021-06-25 08:44:46,292", "2021-06-25T00:44:46.292Z");
         }};
         DateFilter subject = new DateFilter();
-        subject.acceptFilterConfig("ISO8601", tz, loc);
+        subject.acceptFilterConfig("ISO8601", loc, tz);
         for (Map.Entry<String, String> entry : testElements.entrySet()) {
             applyString(subject, entry.getKey(), entry.getValue());
         }
