@@ -12,7 +12,13 @@ public class StringEscapeUtilTest {
      */
     @Test
     public void testEscapeJava(){
-        String me = "你好NTQMXFCU^@\\THCvu@y|";
-        System.out.println(StringEscapeUtil.escapeJavaIgnoreChinese(me));
+        String me = "appid=\"xx\"&timestamp=\"\"";
+        System.out.println(me);
+
+        String str = me.replaceAll("&", "&amp;")
+                .replaceAll("\"","&quot;")
+                .replaceAll("<","&lt;")
+                .replaceAll(">","&gt;");
+        System.out.println(str);
     }
 }

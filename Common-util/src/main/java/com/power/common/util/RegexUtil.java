@@ -1,6 +1,9 @@
 package com.power.common.util;
 
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -9,13 +12,14 @@ import java.util.regex.Pattern;
 public class RegexUtil {
 
     /**
-     * match artifact
+     * match
+     *
      * @param patterns Set of patterns
-     * @param str string
+     * @param str      string
      * @return true if match
      */
-    public static boolean isMatches(Set<String> patterns, String str) {
-        if (null == patterns) {
+    public static boolean isMatches(Collection<String> patterns, String str) {
+        if (Objects.isNull(patterns)) {
             return false;
         }
         for (String patternStr : patterns) {
@@ -25,5 +29,21 @@ public class RegexUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * match str
+     *
+     * @param patterns Set of patterns
+     * @param str      string
+     * @return true if match
+     */
+    public static boolean isMatches(String patterns, String str) {
+        if (StringUtil.isNotEmpty(patterns)) {
+            List<String> patternList = Arrays.asList(patterns.split(";", 0));
+            return isMatches(patternList, str);
+        } else {
+            return false;
+        }
     }
 }

@@ -21,7 +21,6 @@ public class ValidateUtilTest {
 
     @Test
     public void testIsArmyIdCard() {
-
         System.out.println(ValidateUtil.isPhone("15n41678167"));
     }
 

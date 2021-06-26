@@ -1,7 +1,8 @@
 package com.power.common.filter;
 
+import com.power.common.util.PathMatcher;
+
 import java.util.Set;
-import java.util.regex.Pattern;
 
 /**
  * 抽象的url匹配封装
@@ -19,17 +20,10 @@ public abstract class AbstractUrlMatcher {
         if (null == patterns) {
             return false;
         }
+        PathMatcher matcher = new PathMatcher();
         for (String str : patterns) {
-            if (str.endsWith("/*")) {
-                String name = str.substring(0, str.length() - 2);
-                if (url.contains(name)) {
-                    return true;
-                }
-            } else {
-                Pattern pattern = Pattern.compile(str);
-                if (pattern.matcher(url).matches()) {
-                    return true;
-                }
+            if (matcher.matches(str, url)) {
+                return true;
             }
         }
         return false;
