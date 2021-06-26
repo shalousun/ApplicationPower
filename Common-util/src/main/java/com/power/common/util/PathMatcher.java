@@ -18,6 +18,7 @@ public class PathMatcher {
     /**
      * Set the path separator to use for pattern parsing.
      * Default is "/", as in Ant.
+     * @param pathSeparator path separator
      */
     public void setPathSeparator(String pathSeparator) {
         this.pathSeparator = (pathSeparator != null ? pathSeparator : DEFAULT_PATH_SEPARATOR);
@@ -331,19 +332,9 @@ public class PathMatcher {
 
     /**
      * Given a pattern and a full path, determine the pattern-mapped part.
-     * <p>For example:
-     * <ul>
-     * <li>'<code>/docs/cvs/commit.html</code>' and '<code>/docs/cvs/commit.html</code> -> ''</li>
-     * <li>'<code>/docs/*</code>' and '<code>/docs/cvs/commit</code> -> '<code>cvs/commit</code>'</li>
-     * <li>'<code>/docs/cvs/*.html</code>' and '<code>/docs/cvs/commit.html</code> -> '<code>commit.html</code>'</li>
-     * <li>'<code>/docs/**</code>' and '<code>/docs/cvs/commit</code> -> '<code>cvs/commit</code>'</li>
-     * <li>'<code>/docs/**\/*.html</code>' and '<code>/docs/cvs/commit.html</code> -> '<code>cvs/commit.html</code>'</li>
-     * <li>'<code>/*.html</code>' and '<code>/docs/cvs/commit.html</code> -> '<code>docs/cvs/commit.html</code>'</li>
-     * <li>'<code>*.html</code>' and '<code>/docs/cvs/commit.html</code> -> '<code>/docs/cvs/commit.html</code>'</li>
-     * <li>'<code>*</code>' and '<code>/docs/cvs/commit.html</code> -> '<code>/docs/cvs/commit.html</code>'</li>
-     * </ul>
-     * <p>Assumes that {@link #match} returns <code>true</code> for '<code>pattern</code>'
-     * and '<code>path</code>', but does <strong>not</strong> enforce this.
+     * @param pattern pattern
+     * @param path path
+     * @return String
      */
     public String extractPathWithinPattern(String pattern, String path) {
         String[] patternParts = StringUtil.tokenizeToStringArray(pattern, this.pathSeparator, false, true);

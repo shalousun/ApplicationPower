@@ -1028,6 +1028,7 @@ public class DateTimeUtil {
      *
      * @param utc    utc time
      * @param format out time format
+     * @return String
      */
     public static String UTCToCST(String utc, String format) {
         ZonedDateTime zdt = ZonedDateTime.parse(utc);
@@ -1037,7 +1038,12 @@ public class DateTimeUtil {
     }
 
     /**
+     * Convert CST to UTC
      *
+     * @param time        time
+     * @param inputFormat input time format
+     * @param outFormat   out time format
+     * @return String
      */
     public static String CTSToUTC(String time, String inputFormat, String outFormat) {
         OffsetDateTime utcTime = LocalDateTime.parse(time, DateTimeFormatter.ofPattern(inputFormat))
@@ -1047,6 +1053,13 @@ public class DateTimeUtil {
         return utcTime.format(DateTimeFormatter.ofPattern(outFormat));
     }
 
+    /**
+     * Convert CST to UTC
+     *
+     * @param timestamp timestamp
+     * @param outFormat out format
+     * @return String
+     */
     public static String CTSToUTC(long timestamp, String outFormat) {
         OffsetDateTime utcTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
                 .atZone(ZoneId.systemDefault())
