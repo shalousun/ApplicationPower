@@ -1,9 +1,5 @@
 package com.power.common.util;
 
-/**
- *
- */
-
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -250,7 +246,7 @@ public class RSAUtil {
         } catch (Exception e) {
             throw new RuntimeException("An exception occurred when the encryption and decryption threshold was [" + maxBlock + "]", e);
         }
-        byte[] resultDatas = out.toByteArray();
+        byte[] resultDates = out.toByteArray();
         try {
             if (null != out) {
                 out.close();
@@ -258,7 +254,7 @@ public class RSAUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return resultDatas;
+        return resultDates;
     }
 
 }
