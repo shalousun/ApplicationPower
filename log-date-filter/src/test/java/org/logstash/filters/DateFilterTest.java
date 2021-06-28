@@ -25,6 +25,7 @@ public class DateFilterTest {
             put("2001-12-07T23:54:54Z", "2001-12-07T23:54:54.000Z");
             put("2001-12-07T23:54:54.000Z", "2001-12-07T23:54:54.000Z");
             put("2021-06-25 08:44:46,292", "2021-06-25T00:44:46.292Z");
+            put("28/Jun/2021:03:16:29+0000","2021-06-28T00:03:16:29Z");
         }};
         DateFilter subject = new DateFilter();
         subject.acceptFilterConfig("ISO8601", loc, tz);
