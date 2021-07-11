@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * okhttp3异步测试
+ * okhttp3异步测试, 升级到okhttp 4.x版本也可测试通过
  *
  * @author yu 2019/3/18.
  */
@@ -29,7 +29,7 @@ public class OkHttp3UtilAsyncTest {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                System.out.println("resp");
+                System.out.println("resp:");
                 if (response.isSuccessful()) {
                     //do something
                     String result = response.body().string();
