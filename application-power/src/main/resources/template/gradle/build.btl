@@ -1,34 +1,15 @@
-buildscript {
-    ext {
-        springBootVersion = '2.3.9.RELEASE'
-    }
-    repositories {
-        maven {
-            allowInsecureProtocol = true
-            url 'http://localhost:8081/nexus/content/groups/public/'
-        }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'com.github.shalousun:smart-doc-gradle-plugin:2.2.2'
-        <%if(isUseDocker){ %>
-        classpath('se.transmode.gradle:gradle-docker:1.2')
-         <% } %>
-    }
+plugins {
+    id 'org.springframework.boot' version '2.3.12.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    <%if(isUseDocker){ %>
+    id 'docker'
+     <% } %>
+    id "maven-publish"
+    id "com.github.shalousun.smart-doc" version "2.2.2"
 }
 group '${basePackage}'
 version '1.0'
-
-apply plugin: 'java'
-apply plugin: 'maven'
-<%if(isUseDocker){ %>
-apply plugin: 'docker'
- <% } %>
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'smart-doc'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 tasks.withType(JavaCompile) {
@@ -36,8 +17,19 @@ tasks.withType(JavaCompile) {
 }
 
 repositories {
-    maven {url 'http://localhost:8081/nexus/content/groups/public/'}
-    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven {
+        allowInsecureProtocol = true
+        url 'http://localhost:8081/nexus/content/groups/public/'
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/public'
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/gradle-plugin'
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
     mavenCentral()
 }
 
@@ -99,7 +91,7 @@ task('copyBin', type: Copy) {
 
 task('package', type: Tar) {
     compression = Compression.GZIP
-    extension = 'tar.gz'
+    archiveExtension = 'tar.gz'
     from "build/package"
     mustRunAfter('clean')
     dependsOn('clean', 'copyConf', 'copyJar', 'copyBin')
@@ -124,15 +116,23 @@ if (version.endsWith("-SNAPSHOT")) {
     nexusUrl = "http://localhost:8081/nexus/content/repositories/snapshots/"
 }
 
-uploadArchives {
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.name
+            version "${version}"
+            from components.java
+            // more goes in here
+        }
+    }
     repositories {
-        mavenDeployer {
-            repository(url: nexusUrl) {
-                authentication(userName: "admin", password: "admin123")
+        maven {
+            url nexusUrl
+            credentials {
+                username 'admin'
+                password 'admin123'
             }
-            pom.version = "$project.version"
-            pom.artifactId = "$project.name"
-            pom.groupId = "$project.group"
         }
     }
 }
