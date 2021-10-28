@@ -43,6 +43,9 @@ public class ValidateUtil {
     public static final String INT_OR_FLOAT_PATTERN = "^\\d+\\.\\d+|\\d+$";
     public static final String FLOAT_PATTERN = "^(-?\\d+)(\\.\\d+)?$";
     public static final String POSITIVE_INTEGER = "[1-9]+\\d{0,10}";
+    //((git|ssh|http(s)?)|(git@[\w\.]+))(:(//)?)([\w\.@\:/\-~]+)(\.git)(/)?
+    public static final String GIT_URL_PATTERN = "(git@[\\w\\.]+)(:(//)?)([\\w\\.@\\:/\\-~]+)(\\.git)(/)?";
+
     public static final String ARMY_ID_CARD = "南字第(\\d{6,8})号|北字第(\\d{6,8})号|沈字第(\\d{6,8})号|兰字第(\\d{6,8})号|成字第(\\d{6,8})号|济字第(\\d{6,8})号|广字第(\\d{6,8})号|海字第(\\d{6,8})号|空字第(\\d{6,8})号|参字第(\\d{6,8})号|政字第(\\d{6,8})号|后字第(\\d{6,8})号|装字第(\\d{6,8})号";
 
 
@@ -577,5 +580,13 @@ public class ValidateUtil {
         return false;
     }
 
+    /**
+     * validate git url
+     * @param gitUrl git ssh url
+     * @return boolean
+     */
+    public static boolean isGitUrl(String gitUrl){
+        return validate(gitUrl,GIT_URL_PATTERN);
+    }
 
 }
