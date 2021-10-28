@@ -1,3 +1,4 @@
+# The node name is the label name of podTemplate in K8S.
 node('maven-jnlp') {
     APP_NAME = "${applicationNameLowerCase}"
     HARBOR_HOST = "Your Harbor Server."
