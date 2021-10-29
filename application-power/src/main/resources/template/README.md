@@ -5,8 +5,8 @@
 请补充你的项目说明。
 ## 主要技术
 
-- SpringBoot 2.3.9
-- Mybatis Starter 2.1.4
+- SpringBoot 2.5.6
+- Mybatis Starter 2.2.0
 ## 构建部署操作
 
 构建和部署操作请参考本项目docs目录中的《DEPLOY.md》和《DOCKER.md》。

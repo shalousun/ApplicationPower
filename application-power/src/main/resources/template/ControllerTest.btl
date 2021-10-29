@@ -1,7 +1,8 @@
 package ${basePackage}.controller;
 
-import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author ${authorName} on ${createTime}.
  *
  */
+@WebMvcTest(${entitySimpleName}Controller.class)
 public class ${entitySimpleName}ControllerTest extends ControllerBaseTest {
     <%if(add){ %>
 

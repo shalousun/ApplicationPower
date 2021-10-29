@@ -4,7 +4,9 @@ spring:
     active: dev
 ---
 spring:
-  profiles : dev
+  config:
+    activate:
+      on-profile: dev
   lifecycle:
     timeout-per-shutdown-phase: 30
   <%if(useDb){%>
@@ -40,8 +42,9 @@ spring:
   <%}%>
   mvc:
     throw-exception-if-no-handler-found: true
-  resources:
-    add-mappings: true
+  web:
+    resources:
+      add-mappings: true
 
 <%if(useDb){%>
 ${mybatis}:

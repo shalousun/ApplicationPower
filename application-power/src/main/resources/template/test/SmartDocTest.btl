@@ -6,7 +6,6 @@ import com.power.doc.model.ApiErrorCodeDictionary;
 import ${basePackage}.enums.ErrorCodeEnum;
 import com.power.doc.model.ApiConfig;
 import com.power.doc.constants.DocGlobalConstants;
-import com.power.doc.model.CustomRespField;
 import com.power.doc.model.SourceCodePath;
 import org.junit.Test;
 
@@ -28,11 +27,6 @@ public class SmartDocTest {
        // set java source path
        config.setSourceCodePaths(
                SourceCodePath.builder().setDesc("current project").setPath("src/main/java")
-       );
-
-       // change field
-       config.setCustomResponseFields(
-               CustomRespField.builder().setName("code").setValue("00000")
        );
 
        // set error code list
