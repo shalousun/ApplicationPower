@@ -28,7 +28,7 @@ node('maven-jnlp') {
         withCredentials([usernamePassword(credentialsId: 'harbor-registry', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
             sh "docker login -u \${dockerHubUser} -p \${dockerHubPassword} \${HARBOR_HOST}"
             sh "docker push \${HARBOR_HOST}/\${HARBOR_PROJECT}/\${APP_NAME}:\${IMAGE_TAG}"
-       }
+        }
     }
     stage('Deploy') {
         echo "5. Deploy Stage"
