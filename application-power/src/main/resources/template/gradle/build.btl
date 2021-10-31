@@ -6,7 +6,7 @@ plugins {
     id 'docker'
      <% } %>
     id "maven-publish"
-    id "com.github.shalousun.smart-doc" version "2.2.2"
+    id "com.github.shalousun.smart-doc" version "2.2.9"
 }
 group '${basePackage}'
 version '1.0'
@@ -68,7 +68,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'com.github.shalousun:smart-doc:2.2.2'
+    testImplementation 'com.github.shalousun:smart-doc:2.2.9'
 
 }
 
