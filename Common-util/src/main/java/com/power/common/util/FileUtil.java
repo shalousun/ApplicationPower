@@ -363,4 +363,34 @@ public class FileUtil {
         }
         return fileInfoList;
     }
+
+    /**
+     * Copies bytes from an InputStream source to a file destination. The directories up to destination will be created if they don't already exist. destination will be overwritten if it already exists.
+     * @param source the InputStream to copy bytes from, must not be null
+     * @param destination   the non-directory File to write bytes to (possibly overwriting), must not be null
+     * @param copyOption copy option
+     * @return
+     */
+    public static boolean copyInputStreamToFile(InputStream source,File destination,StandardCopyOption copyOption){
+        boolean flag = true;
+        try {
+            java.nio.file.Files.copy(
+                source,
+                destination.toPath(),
+                copyOption);
+        } catch (IOException e) {
+            e.printStackTrace();
+            flag = false;
+        } finally {
+            try {
+                if (source != null) {
+                    source.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                flag = false;
+            }
+        }
+        return flag;
+    }
 }
