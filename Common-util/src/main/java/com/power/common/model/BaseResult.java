@@ -34,6 +34,11 @@ public abstract class BaseResult<T> implements Serializable {
      */
     private String timestamp;
 
+    /**
+     * 链路ID
+     */
+    private String traceId;
+
 
     public boolean isSuccess() {
         return success;
@@ -73,5 +78,13 @@ public abstract class BaseResult<T> implements Serializable {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getTraceId() {
+        return traceId;
+    }
+
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
     }
 }

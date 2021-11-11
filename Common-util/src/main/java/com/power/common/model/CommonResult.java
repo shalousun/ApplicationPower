@@ -5,6 +5,7 @@ import com.power.common.interfaces.IMessage;
 import com.power.common.util.DateTimeUtil;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Common Result
@@ -119,7 +120,18 @@ public class CommonResult<T> extends BaseResult implements Serializable {
         result.setSuccess(success);
         result.setMessage(msg);
         result.setTimestamp(DateTimeUtil.nowStrTime());
+        result.setTraceId(UUID.randomUUID().toString());
         return result;
+    }
+
+    /**
+     * Add traceId
+     * @param traceId
+     * @return
+     */
+    public CommonResult<T> addTraceId(String traceId){
+        this.setTraceId(traceId);
+        return this;
     }
 
     /**
@@ -134,6 +146,20 @@ public class CommonResult<T> extends BaseResult implements Serializable {
         this.setData(data);
         return this;
     }
+
+    /**
+     * Usage:
+     * Result.ok().addData("hello")
+     * Business data returned when processing is successful
+     *
+     * @param data you return data
+     * @return CommonResult
+     */
+    public CommonResult<T> addData(T data) {
+        this.setData(data);
+        return this;
+    }
+
 
     /**
      * Override the supper method

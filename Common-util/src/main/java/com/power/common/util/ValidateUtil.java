@@ -565,10 +565,11 @@ public class ValidateUtil {
 
     /**
      * contains chinese
+     *
      * @param str str
      * @return boolean
      */
-    public static boolean isContainsChinese(String str)  {
+    public static boolean isContainsChinese(String str) {
         if (StringUtil.isEmpty(str)) {
             return true;
         }
@@ -582,11 +583,12 @@ public class ValidateUtil {
 
     /**
      * validate git url
+     *
      * @param gitUrl git ssh url
      * @return boolean
      */
-    public static boolean isGitUrl(String gitUrl){
-        return validate(gitUrl,GIT_URL_PATTERN);
+    public static boolean isGitUrl(String gitUrl) {
+        return validate(gitUrl, GIT_URL_PATTERN);
     }
 
 }
