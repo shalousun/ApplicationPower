@@ -22,7 +22,10 @@ public class EnumUtil {
      * @param <T>       subclass of EnumDictionary
      * @return list
      */
-    public static <T extends EnumDictionary> List<T> getEnumInformation(Class<?> clazz, String codeField, String descField) {
+    public static <T extends EnumDictionary> List<T> getEnumInformation(Class<? extends Enum> clazz, String codeField, String descField) {
+        if (Objects.isNull(clazz)) {
+            throw new RuntimeException("Enum class can't be null.");
+        }
         if (!clazz.isEnum()) {
             throw new RuntimeException(clazz.getCanonicalName() + " is not an enum class.");
         }
@@ -58,13 +61,12 @@ public class EnumUtil {
      * Get enum information
      *
      * @param clazz java class
-     * @return hash map
+     * @return hash map, Key is class Name ,value is enum Constants.
      */
-    public static Map<String, List<Map<String, Object>>> getEnumInformation(Class<?> clazz) {
+    public static Map<String, List<Map<String, Object>>> getEnumInformation(Class<? extends Enum> clazz) {
         if (Objects.isNull(clazz)) {
             throw new RuntimeException("Enum class can't be null.");
         }
-
         if (!clazz.isEnum()) {
             throw new RuntimeException("It's not an enum class.");
         }
@@ -93,6 +95,26 @@ public class EnumUtil {
         }
         enumTypeMap.put(clazzName, list);
         return enumTypeMap;
+    }
+
+    /**
+     *  Get enum names
+     * @param enumClass Enum Class
+     * @return List of enum name
+     */
+    public static List<String> getNames(Class<? extends Enum<?>> enumClass) {
+        if (Objects.isNull(enumClass)) {
+            throw new RuntimeException("Enum class can't be null.");
+        }
+        Enum[] enumConstants = enumClass.getEnumConstants();
+        if (Objects.isNull(enumConstants)) {
+            return new ArrayList<>(0);
+        }
+        List<String> list = new ArrayList<>(enumConstants.length);
+        for (Enum<?> e : enumConstants) {
+            list.add(e.name());
+        }
+        return list;
     }
 
     private static Map<String, Method> getMethods(Class<Enum> enumClass, Enum[] enumConstants) {

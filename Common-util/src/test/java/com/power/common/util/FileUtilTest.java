@@ -1,7 +1,7 @@
 package com.power.common.util;
 
 import com.power.common.model.FileInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
