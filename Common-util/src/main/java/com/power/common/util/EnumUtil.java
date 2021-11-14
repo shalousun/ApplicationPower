@@ -22,7 +22,7 @@ public class EnumUtil {
      * @param <T>       subclass of EnumDictionary
      * @return list
      */
-    public static <T extends EnumDictionary> List<T> getEnumInformation(Class<? extends Enum> clazz, String codeField, String descField) {
+    public static <T extends EnumDictionary> List<T> getEnumInformation(Class<?> clazz, String codeField, String descField) {
         if (Objects.isNull(clazz)) {
             throw new RuntimeException("Enum class can't be null.");
         }
@@ -63,7 +63,7 @@ public class EnumUtil {
      * @param clazz java class
      * @return hash map, Key is class Name ,value is enum Constants.
      */
-    public static Map<String, List<Map<String, Object>>> getEnumInformation(Class<? extends Enum> clazz) {
+    public static Map<String, List<Map<String, Object>>> getEnumInformation(Class<?> clazz) {
         if (Objects.isNull(clazz)) {
             throw new RuntimeException("Enum class can't be null.");
         }
