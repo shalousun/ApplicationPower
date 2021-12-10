@@ -13,7 +13,7 @@
 
     <properties>
         <project.build.jdkVersion>1.8</project.build.jdkVersion>
-        <log4j.version>2.14.1</log4j.version>
+        <log4j.version>2.15.0</log4j.version>
     </properties>
 
     <dependencies>
