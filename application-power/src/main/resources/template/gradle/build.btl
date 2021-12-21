@@ -6,7 +6,7 @@ plugins {
     id 'docker'
      <% } %>
     id "maven-publish"
-    id "com.github.shalousun.smart-doc" version "2.3.2"
+    id "com.github.shalousun.smart-doc" version "2.3.4"
 }
 group '${basePackage}'
 version '1.0'
@@ -64,11 +64,11 @@ dependencies {
     <% if(isMultipleDataSource){%>
     implementation 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    implementation 'com.github.shalousun:common-util:2.1.0'
+    implementation 'com.github.shalousun:common-util:2.1.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'com.github.shalousun:smart-doc:2.3.2'
+    testImplementation 'com.github.shalousun:smart-doc:2.3.4'
 
 }
 
