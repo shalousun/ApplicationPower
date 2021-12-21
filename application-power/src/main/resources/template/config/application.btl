@@ -65,3 +65,21 @@ server:
     whitelabel:
       enabled: false
   shutdown: graceful
+# Metrics related configurations
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
