@@ -36,7 +36,9 @@ public class EnumUtil {
         List<T> enumDictionaryList = new ArrayList<>();
         try {
             Method valueMethod = clazz.getMethod(valueMethodName);
+            valueMethod.setAccessible(true);
             Method descMethod = clazz.getMethod(descMethodName);
+            descMethod.setAccessible(true);
             for (Enum enumType : objects) {
                 Object val = valueMethod.invoke(enumType);
                 Object desc = descMethod.invoke(enumType);
