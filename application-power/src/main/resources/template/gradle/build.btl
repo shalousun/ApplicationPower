@@ -6,7 +6,7 @@ plugins {
     id 'docker'
      <% } %>
     id "maven-publish"
-    id "com.github.shalousun.smart-doc" version "2.4.4"
+    id "com.github.shalousun.smart-doc" version "2.4.5"
 }
 group '${basePackage}'
 version '1.0'
@@ -56,7 +56,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'
     implementation ('org.springframework.boot:spring-boot-starter-aop')
-    implementation group: 'com.alibaba', name: 'fastjson', version: '2.0.1'
+    implementation group: 'com.alibaba', name: 'fastjson', version: '2.0.2'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     <%if(useJTA){ %>
     implementation('org.springframework.boot:spring-boot-starter-jta-atomikos')
@@ -68,7 +68,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'com.github.shalousun:smart-doc:2.4.4'
+    testImplementation 'com.github.shalousun:smart-doc:2.4.5'
 
 }
 
