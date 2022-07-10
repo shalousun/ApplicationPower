@@ -7,6 +7,10 @@ package com.power.common.util;
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -228,15 +232,7 @@ public class DateTimeUtil {
      */
     public static long setTimeToNextDay0H0M0S(Timestamp time) {
         if (time != null) {
-            Calendar cal = initCalenderWithMillis(time.getTime());
-            cal.add(Calendar.DATE, 1);
-            // 时、分、秒、毫秒置零
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-            // time.setTime(cal.getTimeInMillis());
-            return cal.getTimeInMillis();
+            return setTimeToNextDay0H0M0S(time.getTime());
         } else {
             throw new NullPointerException("Timestamp can not be null");
         }
@@ -245,25 +241,20 @@ public class DateTimeUtil {
     /**
      * set time to next day's 0 hour 0 minute 0 second
      *
-     * @param millis long
+     * @param millis millisecond
      * @return long
      */
     public static long setTimeToNextDay0H0M0S(long millis) {
-        Calendar cal = initCalenderWithMillis(millis);
-        cal.add(Calendar.DATE, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        // time.setTime(cal.getTimeInMillis());
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        localDate = localDate.plusDays(1);
+        return localDateToLong(localDate);
     }
 
     /**
      * if the time is today return current milliseconds else set time to next
      * day's 0 hour 0 minute 0 second then return except today
      *
-     * @param millis long
+     * @param millis millisecond
      * @return long
      */
     public static long setToNextDay0H0M0SExceptToday(long millis) {
@@ -306,14 +297,8 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setTimeTo0H0M0S(Timestamp time) {
-        if (time != null) {
-            Calendar cal = initCalenderWithMillis(time.getTime());
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-            // time.setTime(cal.getTimeInMillis());
-            return cal.getTimeInMillis();
+        if (Objects.nonNull(time)) {
+            return setTimeTo0H0M0S(time.getTime());
         } else {
             throw new NullPointerException("Timestamp can not be null");
         }
@@ -326,13 +311,8 @@ public class DateTimeUtil {
      * @return long
      */
     public static long setTimeTo0H0M0S(long millis) {
-        Calendar cal = initCalenderWithMillis(millis);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        // time.setTime(cal.getTimeInMillis());
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        return localDateToLong(localDate);
 
     }
 
@@ -342,30 +322,13 @@ public class DateTimeUtil {
      * @param time java.sql.Timestamp
      */
     public static void setTimeToLastDay0H0M0S(Timestamp time) {
-        if (time != null) {
-            Calendar cal = initCalenderWithMillis(time.getTime());
-            cal.add(Calendar.DATE, -1);
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-            time.setTime(cal.getTimeInMillis());
+        if (Objects.nonNull(time)) {
+            LocalDate localDate = longToLocalDate(time.getTime());
+            localDate = localDate.plusDays(1);
+            time.setTime(localDateToLong(localDate));
         } else {
             throw new NullPointerException("Timestamp can not be null");
         }
-    }
-
-    /**
-     * Different day
-     *
-     * @param calendar1 Calendar
-     * @param calendar2 Calendar
-     * @return boolean
-     */
-    public static boolean isDifferentDay(Calendar calendar1, Calendar calendar2) {
-        return (calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR) || calendar1
-                .get(Calendar.DAY_OF_YEAR) != calendar2
-                .get(Calendar.DAY_OF_YEAR));
     }
 
     /**
@@ -376,32 +339,40 @@ public class DateTimeUtil {
      * @return boolean
      */
     public static boolean isDifferentDay(Timestamp timestamp0, Timestamp timestamp1) {
-        if (timestamp0 == null || timestamp1 == null) {
+        if (Objects.isNull(timestamp0) || Objects.isNull(timestamp1)) {
             throw new NullPointerException("Timestamp can not be null");
         } else {
-            Calendar cal1 = initCalenderWithMillis(timestamp0.getTime());
-            Calendar cal2 = initCalenderWithMillis(timestamp1.getTime());
-            return isDifferentDay(cal1, cal2);
+            return isDifferentDay(timestamp0.getTime(), timestamp1.getTime());
         }
     }
 
     /**
      * Different day
      *
-     * @param millis0 long
-     * @param millis1 long
+     * @param millis0 millisecond
+     * @param millis1 millisecond
      * @return boolean
      */
     public static boolean isDifferentDay(long millis0, long millis1) {
-        Calendar cal1 = initCalenderWithMillis(millis0);
-        Calendar cal2 = initCalenderWithMillis(millis1);
-        return isDifferentDay(cal1, cal2);
+        LocalDate localDate0 = longToLocalDate(millis0);
+        LocalDate localDate1 = longToLocalDate(millis1);
+        return isDifferentDay(localDate0, localDate1);
     }
 
     /**
-     * 将毫秒时间格式化为字符串时间(yyyy-MM-dd)
+     * Different day
+     * @param localDate0 LocalDate
+     * @param localDate1 LocalDate
+     * @return boolean
+     */
+    public static boolean isDifferentDay(LocalDate localDate0,LocalDate localDate1) {
+        return !localDate0.equals(localDate1);
+    }
+
+    /**
+     * Convert millisecond to String like (yyyy-MM-dd)
      *
-     * @param millSec 毫秒数
+     * @param millSec millisecond
      * @return String
      */
     public static String long2Str(Long millSec) {
@@ -409,10 +380,10 @@ public class DateTimeUtil {
     }
 
     /**
-     * 将毫秒时间格式化为指定格式的字符串时间
+     *  Convert millisecond to String with format
      *
-     * @param millSec 毫秒
-     * @param format  需要格式的样式(yyyy-MM-dd等)
+     * @param millSec millisecond
+     * @param format  like yyyy-MM-dd
      * @return String
      */
     public static String long2Str(long millSec, String format) {
@@ -420,11 +391,11 @@ public class DateTimeUtil {
     }
 
     /**
-     * 将毫秒时间格式化为指定格式的字符串时间
+     * Convert millisecond to String
      *
-     * @param millSec 毫秒
-     * @param format  需要格式的样式(yyyy-MM-dd等)
-     * @param locale  语言地域
+     * @param millSec millisecond
+     * @param format  like yyyy-MM-dd
+     * @param locale  locale
      * @return String
      */
     public static String long2Str(long millSec, String format, Locale locale) {
@@ -449,9 +420,9 @@ public class DateTimeUtil {
 
 
     /**
-     * 根据当天时间戳获取从0点起经过的毫秒数
+     * Pasted millisecond
      *
-     * @param millions long
+     * @param millions millisecond
      * @return long
      */
     public static long todayPastMillisecond(long millions) {
@@ -483,7 +454,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * 根据long时间戳获取所属于的天数
+     * Get length of month
      *
      * @param ms millisecond
      * @return int
@@ -507,19 +478,8 @@ public class DateTimeUtil {
         }
     }
 
-    public static int getCurrentMonthDays(Calendar cal) {
-        if (null != cal) {
-            cal.set(Calendar.DATE, 1);// 把日期设置为当月第一天
-            cal.roll(Calendar.DATE, -1);// 日期回滚一天，也就是最后一天
-            int maxDate = cal.get(Calendar.DATE);
-            return maxDate;
-        } else {
-            throw new NullPointerException("Calendar can not be null");
-        }
-    }
-
     /**
-     * 根据当前时间获取所属周的第一天(0HOMOS) 根据中国习惯将星期一当做第一天
+     * First day of week
      *
      * @param stamp java.sql.Timestamp
      * @return long
@@ -533,77 +493,55 @@ public class DateTimeUtil {
     }
 
     /**
-     * 根据时间获取所属周的第一天(0HOMOS) 根据中国习惯将星期一当做第一天
+     * First day of week
      *
-     * @param ms long
+     * @param ms millisecond
      * @return long
      */
     public static long getFirstDayOfCurrentWeek(long ms) {
-        Calendar cal = initCalenderWithMillis(ms);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // 获取本周一的日期
-        if (dayOfWeek == 1) {
-            // 如果是星期天，则设置为上周
-            cal.add(Calendar.WEEK_OF_YEAR, -1);
-        }
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(ms);
+        TemporalField fieldIso = WeekFields.of(DayOfWeek.MONDAY, 1).dayOfWeek();
+        localDate =localDate.with(fieldIso,1);
+        return localDateToLong(localDate);
     }
 
 
     /**
-     * 将时间设置位当年第一天，并且将时分秒全部置0
+     * First day of next year
      *
-     * @param millis long
+     * @param millis millisecond
      * @return long
      */
     public static long setToFirstDayOfCurrentYear(long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
-        cal.set(Calendar.DAY_OF_YEAR, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        localDate = localDate.with(TemporalAdjusters.firstDayOfYear());
+        return localDateToLong(localDate);
     }
 
     /**
-     * 将时间设置为下一年的第一天
+     * First day of next year
      *
-     * @param millis long
+     * @param millis millisecond
      * @return long
      */
 
     public static long setToFirstDayOfNextYear(long millis) {
-        Calendar cal = initCalenderWithMillis(millis);
-        cal.set(Calendar.DAY_OF_YEAR, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        cal.add(Calendar.YEAR, 1);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        localDate = localDate.with(TemporalAdjusters.firstDayOfNextYear());
+        return localDateToLong(localDate);
     }
 
     /**
-     * 将时间重置到上月的第一天
+     * First day of last month
      *
      * @param ms millisecond
      * @return millisecond
      */
     public static long setToFirstDayOfLastMonth(long ms) {
-        Calendar cal = initCalenderWithMillis(ms);
-        cal.add(Calendar.MONTH, -1);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(ms);
+        localDate = localDate.minusMonths(1);
+        localDate = localDate.with(TemporalAdjusters.firstDayOfMonth());
+        return localDateToLong(localDate);
     }
 
     /**
@@ -613,134 +551,99 @@ public class DateTimeUtil {
      * @return millisecond
      */
     public static long setToLastMonthCommonDay(long ms) {
-        Calendar calendar = initCalenderWithMillis(ms);
-        calendar.add(Calendar.MONTH, -1);
-        return calendar.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(ms);
+        localDate = localDate.minusMonths(1);
+        return localDateToLong(localDate);
     }
 
     /**
-     * 将时间重置为时间当前月的第一天，并且将时分秒全置0
+     * First day of month
      *
-     * @param millis long
+     * @param millis millisecond
      * @return long
      */
     public static long setToFirstDayOfCurrentMonth(long millis) {
-        Calendar cal = initCalenderWithMillis(millis);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        localDate = localDate.with(TemporalAdjusters.firstDayOfMonth());
+        return localDateToLong(localDate);
     }
 
     /**
-     * 将时间重置为下月的第一天，并将时分秒全置0
+     * First day of next month
      *
-     * @param millis long
+     * @param millis millisecond
      * @return long
      */
     public static long setToFirstDayOfNextMonth(long millis) {
-        Calendar cal = initCalenderWithMillis(millis);
-        cal.add(Calendar.MONTH, 1);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        localDate = localDate.with(TemporalAdjusters.firstDayOfNextMonth());
+        return localDateToLong(localDate);
     }
 
     /**
-     * 根据时间获取下一年的同一天
      *
-     * @param millis long
+     * Next year common day
+     * @param millis millisecond
      * @return long
      */
     public static long setToNextYearCommonDay(long millis) {
-        Calendar cal = initCalenderWithMillis(millis);
-        cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        localDate = localDate.plusYears(1);
+        return localDateToLong(localDate);
     }
 
     /**
-     * 去年同期
+     * Last year common day
      *
      * @param millis millisecond
      * @return long
      */
     public static long setToLastYearCommonDay(long millis) {
-        Calendar calendar = initCalenderWithMillis(millis);
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 1);
-        return calendar.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(millis);
+        localDate = localDate.minusYears(1);
+        return localDateToLong(localDate);
     }
 
     /**
-     * 根据时间获取所属周的最后一天(中国习惯)
+     * Last day of week
      *
      * @param stamp java.sql.Timestamp
      * @return long
      */
     public static long getLastDayOfCurrentWeek(Timestamp stamp) {
-        Calendar cal = initCalenderWithMillis(stamp.getTime());
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        cal.add(Calendar.WEEK_OF_YEAR, 1);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(stamp.getTime());
+        TemporalField fieldIso = WeekFields.of(DayOfWeek.MONDAY, 1).dayOfWeek();
+        localDate =localDate.with(fieldIso,7);
+        return localDateToLong(localDate);
     }
 
     /**
-     * 根据时间的得到所对应季度的第一天(0H0M0S)
+     * First day of current Quarter
      *
-     * @param ms 毫秒数
+     * @param ms millisecond
      * @return long
      */
     public static long getFirstDayOfCurrentQuarter(long ms) {
-        Calendar cal = initCalenderWithMillis(ms);
-        int currentMonth = cal.get(Calendar.MONTH) + 1;
-        if (currentMonth >= 1 && currentMonth <= 3) {
-            cal.set(Calendar.MONTH, 0);
-        } else if (currentMonth >= 4 && currentMonth <= 6) {
-            cal.set(Calendar.MONTH, 3);
-        } else if (currentMonth >= 7 && currentMonth <= 9) {
-            cal.set(Calendar.MONTH, 6);
-        } else if (currentMonth >= 10 && currentMonth <= 12) {
-            cal.set(Calendar.MONTH, 9);
-        }
-        cal.set(Calendar.DATE, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
+        LocalDate localDate = longToLocalDate(ms);
+        Month month = localDate.getMonth();
+        Month firstMonthOfQuarter = month.firstMonthOfQuarter();
+        localDate = LocalDate.of(localDate.getYear(), firstMonthOfQuarter, 1);
+        return localDateToLong(localDate);
     }
 
     /**
-     * 根据时间获取下一个季度的第一天(0H0M0S)
+     * First day of next Quarter
      *
-     * @param ms 毫秒数
+     * @param ms millisecond
      * @return long
      */
     public static long getFirstDayOfNextQuarter(long ms) {
-        Calendar cal = initCalenderWithMillis(ms);
-        int currentMonth = cal.get(Calendar.MONTH) + 1;
-        if (currentMonth >= 1 && currentMonth <= 3) {
-            cal.set(Calendar.MONTH, 2);
-            cal.set(Calendar.DATE, 31);
-        } else if (currentMonth >= 4 && currentMonth <= 6) {
-            cal.set(Calendar.MONTH, 5);
-            cal.set(Calendar.DATE, 30);
-        } else if (currentMonth >= 7 && currentMonth <= 9) {
-            cal.set(Calendar.MONTH, 8);
-            cal.set(Calendar.DATE, 30);
-        } else if (currentMonth >= 10 && currentMonth <= 12) {
-            cal.set(Calendar.MONTH, 11);
-            cal.set(Calendar.DATE, 31);
-        }
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis() + 86400000L;
+        LocalDate localDate = longToLocalDate(ms);
+        Month month = localDate.getMonth();
+        Month firstMonthOfQuarter = month.firstMonthOfQuarter();
+        Month endMonthOfQuarter = Month.of(firstMonthOfQuarter.getValue() + 3);
+        localDate = LocalDate.of(localDate.getYear(), endMonthOfQuarter, 1);
+        return localDateToLong(localDate);
     }
 
     /**
@@ -755,7 +658,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * 创建一个时间并将时分秒都置0
+     * Get start millisecond of current day
      *
      * @return long
      */
@@ -776,7 +679,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * 将时间戳转换称友好的时间显示
+     * Friendly time for chinese
      *
      * @param ms millisecond
      * @return String
@@ -816,6 +719,12 @@ public class DateTimeUtil {
         return ftime;
     }
 
+    /**
+     * Distance of week
+     * @param startTime millisecond
+     * @param endTime millisecond
+     * @return
+     */
     public static int getWeeks(long startTime, long endTime) {
         int temp = 0;
         try {
@@ -846,18 +755,12 @@ public class DateTimeUtil {
      * @return int
      */
     public static int getAge(long ms) {
-        int age;
-        Calendar born = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-        born.setTimeInMillis(ms);
-        if (born.after(now)) {
+        LocalDateTime born = longToLocalDateTime(ms);
+        if (born.isAfter(LocalDateTime.now())) {
             return -1;
         }
-        age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
-        if (now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR)) {
-            age -= 1;
-        }
-        return age;
+        Long until = born.until(LocalDateTime.now(), ChronoUnit.YEARS);
+        return until.intValue();
     }
 
     /**
@@ -868,32 +771,20 @@ public class DateTimeUtil {
      * @return String
      */
     public static String getLastYearCommonDay(String strDate, String format) {
-        Date date = strToDate(strDate, format);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 1);
-        return long2Str(calendar.getTimeInMillis(), format);
+        long ms = strToLong(strDate,format);
+        return DateTimeUtil.long2Str(setToLastYearCommonDay(ms),format);
     }
 
     /**
-     * 上月同期,如果是最后一天则重置到月末
+     * Last month common day
      *
      * @param strDate strDate
      * @param format  time format
      * @return String
      */
     public static String getLastMonthCommonDay(String strDate, String format) {
-        Date date = strToDate(strDate, format);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int a = calendar.get(Calendar.DATE);
-        int b = getLengthOfMonth(date.getTime());
-        if (a == b) {
-            long ms = setToFirstDayOfCurrentMonth(date.getTime()) - DAY_MS;
-            return long2Str(ms, format);
-        }
-        calendar.add(Calendar.MONTH, -1);
-        return long2Str(calendar.getTimeInMillis(), format);
+        long ms = strToLong(strDate,format);
+        return long2Str(setToLastMonthCommonDay(ms),format);
     }
 
     /**
@@ -927,7 +818,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * 判断是否是今年
+     * Is current year
      *
      * @param ms millisecond
      * @return boolean
@@ -980,7 +871,7 @@ public class DateTimeUtil {
 
   /**
    * Convert Long to LocalDate
-   * @param ms
+   * @param ms millisecond
    * @return
    */
     public static LocalDate longToLocalDate(long ms) {
@@ -989,7 +880,7 @@ public class DateTimeUtil {
 
   /**
    * Convert Long to LocalDate
-   * @param ms
+   * @param ms millisecond
    * @return
    */
     public static LocalDateTime longToLocalDateTime(long ms) {
@@ -1084,11 +975,6 @@ public class DateTimeUtil {
                 .toOffsetDateTime()
                 .withOffsetSameInstant(ZoneOffset.UTC);
         return utcTime.format(DateTimeFormatter.ofPattern(outFormat));
-    }
-
-    private static boolean isEmpty(String str) {
-        return Objects.isNull(str) || "".equals(str.trim())
-                || "null".equals(str.trim()) || "NaN".equals(str.trim());
     }
 
     private static Calendar initCalenderWithMillis(long ms) {
