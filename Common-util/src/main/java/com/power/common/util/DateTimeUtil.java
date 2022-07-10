@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -102,7 +103,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String dateToStr(Date date, String pattern, Locale locale) {
-        return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), pattern);
+        return localDateTimeToStr(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), pattern);
     }
 
     /**
@@ -113,7 +114,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String sqlDateToStr(java.sql.Date date, String format) {
-        return format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), format);
+        return localDateTimeToStr(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()), format);
     }
 
 
@@ -200,6 +201,7 @@ public class DateTimeUtil {
         return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
     }
 
+
     public static boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
@@ -284,7 +286,7 @@ public class DateTimeUtil {
      */
     public static long setToNextDay0H0M0SExceptToday(Timestamp stamp) {
         long finalTime;
-        if (stamp != null) {
+        if (Objects.nonNull(stamp)) {
             boolean flag = isDifferentDay(nowTimeStamp(), stamp);
             if (flag) {
                 finalTime = setTimeToNextDay0H0M0S(stamp);
@@ -354,7 +356,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * 判断是否是同一天
+     * Different day
      *
      * @param calendar1 Calendar
      * @param calendar2 Calendar
@@ -367,7 +369,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * 判断是否是同一天
+     * Different day
      *
      * @param timestamp0 java.sql.Timestamp
      * @param timestamp1 java.sql.Timestamp
@@ -384,7 +386,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * 判断是否是同一天
+     * Different day
      *
      * @param millis0 long
      * @param millis1 long
@@ -426,7 +428,7 @@ public class DateTimeUtil {
      * @return String
      */
     public static String long2Str(long millSec, String format, Locale locale) {
-        return format(LocalDateTime.ofInstant(Instant.ofEpochMilli(millSec), ZoneId.systemDefault()), format);
+        return localDateTimeToStr(LocalDateTime.ofInstant(Instant.ofEpochMilli(millSec), ZoneId.systemDefault()), format);
     }
 
     /**
@@ -458,27 +460,23 @@ public class DateTimeUtil {
     }
 
     /**
-     * 获取本月天数
+     * Get days of current month
      *
      * @return int
      */
-    public static int getCurrentMonthDays() {
-        Calendar a = Calendar.getInstance();
-        a.set(Calendar.DATE, 1);// 把日期设置为当月第一天
-        a.roll(Calendar.DATE, -1);// 日期回滚一天，也就是最后一天
-        return a.get(Calendar.DATE);
+    public static int getDayOfMonth() {
+        return LocalDate.now().lengthOfMonth();
     }
 
     /**
-     * 根据时间获得所属月的天数
+     * Get day of month
      *
      * @param stamp java.sql.Timestamp
      * @return int
      */
-    public static int getCurrentMonthDays(Timestamp stamp) {
-        if (null != stamp) {
-            Calendar cal = initCalenderWithMillis(stamp.getTime());
-            return getCurrentMonthDays(cal);
+    public static int getLengthOfMonth(Timestamp stamp) {
+        if (Objects.nonNull(stamp)) {;
+            return getLengthOfMonth(stamp.getTime());
         } else {
             throw new NullPointerException("Timestamp can not be null");
         }
@@ -490,17 +488,25 @@ public class DateTimeUtil {
      * @param ms millisecond
      * @return int
      */
-    public static int getCurrentMonthDays(long ms) {
-        Calendar cal = initCalenderWithMillis(ms);
-        return getCurrentMonthDays(cal);
+    public static int getLengthOfMonth(long ms) {
+        LocalDate localDateTime = longToLocalDate(ms);
+        return getLengthOfMonth(localDateTime);
     }
 
     /**
-     * 根据long时间戳获取所属于的天数
+     * Get day of Month
      *
-     * @param cal Calendar
+     * @param localDateTime LocalDateTime
      * @return int
      */
+    public static int getLengthOfMonth(LocalDate localDate) {
+        if (Objects.nonNull(localDate)) {
+            return localDate.lengthOfMonth();
+        } else {
+            throw new NullPointerException("LocalDate can not be null");
+        }
+    }
+
     public static int getCurrentMonthDays(Calendar cal) {
         if (null != cal) {
             cal.set(Calendar.DATE, 1);// 把日期设置为当月第一天
@@ -738,19 +744,14 @@ public class DateTimeUtil {
     }
 
     /**
-     * 根据时间获取是周几(中国化)
+     * Get day of week
      *
-     * @param ms long
+     * @param ms millisecond
      * @return int
      */
     public static int getDayOfWeek(long ms) {
-        Calendar cal = initCalenderWithMillis(ms);
-        int a = cal.get(Calendar.DAY_OF_WEEK);
-        if (a >= 2) {
-            return a - 1;
-        } else {
-            return 7;
-        }
+        LocalDate plainDate = longToLocalDate(ms);
+        return plainDate.getDayOfWeek().getValue();
     }
 
     /**
@@ -763,22 +764,21 @@ public class DateTimeUtil {
     }
 
     /**
-     * 判断是否是今天
+     * Is Today
      *
-     * @param ms 毫秒数
+     * @param ms millisecond
      * @return boolean
      */
     public static boolean isToday(long ms) {
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal2.setTimeInMillis(ms);
-        return !isDifferentDay(cal1, cal2);
+        LocalDate nowDate = LocalDate.now();
+        LocalDate plainDate = longToLocalDate(ms);
+        return nowDate.equals(plainDate);
     }
 
     /**
      * 将时间戳转换称友好的时间显示
      *
-     * @param ms long
+     * @param ms millisecond
      * @return String
      */
     public static String friendlyTime(long ms) {
@@ -887,7 +887,7 @@ public class DateTimeUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int a = calendar.get(Calendar.DATE);
-        int b = getCurrentMonthDays(date.getTime());
+        int b = getLengthOfMonth(date.getTime());
         if (a == b) {
             long ms = setToFirstDayOfCurrentMonth(date.getTime()) - DAY_MS;
             return long2Str(ms, format);
@@ -933,10 +933,10 @@ public class DateTimeUtil {
      * @return boolean
      */
     public static boolean isCurrentYear(long ms) {
-        Calendar calTemp = initCalenderWithMillis(ms);
-        int yearTemp = calTemp.get(Calendar.YEAR);
-        Calendar calNow = Calendar.getInstance();
-        int yearNow = calNow.get(Calendar.YEAR);
+        LocalDate localDate = longToLocalDate(ms);
+        int yearTemp = localDate.getYear();
+        LocalDate calNow = LocalDate.now();
+        int yearNow = calNow.getYear();
         if (yearNow == yearTemp) {
             return true;
         }
@@ -945,24 +945,24 @@ public class DateTimeUtil {
 
 
     /**
-     * localDateTime转换为格式化时间
+     * Convert LocalDateTime to String
      *
      * @param localDateTime localDateTime
-     * @param pattern       格式
+     * @param pattern       pattern
      * @return String
      */
-    public static String format(LocalDateTime localDateTime, String pattern) {
+    public static String localDateTimeToStr(LocalDateTime localDateTime, String pattern) {
         DateTimeFormatter formatter = createCacheFormatter(pattern);
         return localDateTime.format(formatter);
     }
 
     /**
-     * 在缓存中创建DateTimeFormatter
+     * Create DateTimeFormatter in cache
      *
-     * @param pattern 格式
+     * @param pattern pattern
      */
     private static DateTimeFormatter createCacheFormatter(String pattern) {
-        if (pattern == null || pattern.length() == 0) {
+        if (Objects.isNull(pattern) || pattern.length() == 0) {
             throw new IllegalArgumentException("Invalid pattern specification");
         }
         DateTimeFormatter formatter = FORMATTER_CACHE.get(pattern);
@@ -978,6 +978,24 @@ public class DateTimeUtil {
         return formatter;
     }
 
+  /**
+   * Convert Long to LocalDate
+   * @param ms
+   * @return
+   */
+    public static LocalDate longToLocalDate(long ms) {
+      return Instant.ofEpochMilli(ms).atZone(ZoneOffset.ofHours(8)).toLocalDate();
+    }
+
+  /**
+   * Convert Long to LocalDate
+   * @param ms
+   * @return
+   */
+    public static LocalDateTime longToLocalDateTime(long ms) {
+      return Instant.ofEpochMilli(ms).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+    }
+
     /**
      * convert localDate to long
      *
@@ -989,10 +1007,10 @@ public class DateTimeUtil {
     }
 
     /**
-     * 字符串转化成LocalDate
+     * Convert String to LocalDate
      *
-     * @param time    格式化时间
-     * @param pattern 格式
+     * @param time    time
+     * @param pattern pattern
      * @return LocalDate
      */
     public static LocalDate parseLocalDate(String time, String pattern) {
@@ -1001,10 +1019,10 @@ public class DateTimeUtil {
     }
 
     /**
-     * 格式化字符串转为LocalDateTime
+     *  Convert String to LocalDateTime
      *
-     * @param time    格式化时间
-     * @param pattern 格式
+     * @param time     formatted string
+     * @param pattern format
      * @return LocalDateTime
      */
     public static LocalDateTime parseLocalDateTime(String time, String pattern) {
@@ -1013,7 +1031,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * LocalDateTime 转化成long
+     * Convert LocalDateTime to Long
      *
      * @param dateTime LocalDateTime
      * @return long
@@ -1069,7 +1087,7 @@ public class DateTimeUtil {
     }
 
     private static boolean isEmpty(String str) {
-        return null == str || "".equals(str.trim())
+        return Objects.isNull(str) || "".equals(str.trim())
                 || "null".equals(str.trim()) || "NaN".equals(str.trim());
     }
 
