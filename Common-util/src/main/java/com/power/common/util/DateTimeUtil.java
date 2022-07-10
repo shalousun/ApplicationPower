@@ -1,9 +1,5 @@
 package com.power.common.util;
 
-/**
- * @author sunyu
- */
-
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +14,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * @author sunyu
+ */
 public class DateTimeUtil {
 
     public static final String DATE_FORMAT_MINITE = "yyyy-MM-dd HH:mm";
