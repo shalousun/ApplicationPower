@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public class CollectionUtil {
 
     /**
-     * isNotEmpty:(检查集合是否为空，不为空返回true)
+     * isNotEmpty:(Check if the collection is empty, not empty return true)
      *
      * @param <T>        type of param
      * @param collection collection
@@ -24,7 +24,7 @@ public class CollectionUtil {
 
 
     /**
-     * checkEmpty:(检查集合是否为空，为空返回true)
+     * checkEmpty:(Check if the collection is empty, return true if it is empty)
      *
      * @param <T>        type of param
      * @param collection collection
@@ -94,7 +94,7 @@ public class CollectionUtil {
     }
 
     /**
-     * 将数组转换为List,如果数组为空则返回一个空list
+     * Converts an array to a List, and returns an empty list if the array is empty
      *
      * @param <T> type of param
      * @param a   object array
@@ -110,8 +110,9 @@ public class CollectionUtil {
 
 
     /**
-     * 较差合并两个list的各项值交叉合并,合并有先后顺序，对于集合数据不为空的情况，
-     * result1的值第一个值放最前面
+     * Poorly merge the values of the two lists cross-merge, merge in sequence,
+     * for the case where the set data is not empty,
+     * The value of result1 The first value is placed first
      *
      * @param <T>     type of param
      * @param result1 first of list

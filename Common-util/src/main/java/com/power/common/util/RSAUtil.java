@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * RSA 工具类。提供加密，解密，生成密钥对等方法。
+ * RSA TOOls
  */
 public class RSAUtil {
 
@@ -27,10 +27,10 @@ public class RSAUtil {
     private static final String KEY_ALGORITHM = "RSA";
 
     /**
-     * * 生成密钥对 *
+     * generate key pair
      *
      * @param keySize key size
-     * @return KeyPair 密钥对
+     * @return KeyPair key pair
      * @throws NoSuchAlgorithmException NoSuchAlgorithmException
      */
     public static KeyPair generateKeyPair(int keySize) throws NoSuchAlgorithmException {
@@ -44,10 +44,10 @@ public class RSAUtil {
     }
 
     /**
-     * map中的公钥和私钥都经过base64编码
      *
+     * create key
      * @param keySize size of key
-     * @return map
+     * @return public key and private key
      */
     public static Map<String, String> createKeys(int keySize) {
         try {
@@ -67,7 +67,7 @@ public class RSAUtil {
     }
 
     /**
-     * 根据秘钥对KeyPair获取公钥
+     * Get public key
      *
      * @param keyPair KeyPair
      * @return String
@@ -78,7 +78,7 @@ public class RSAUtil {
     }
 
     /**
-     * 根据秘钥对KeyPair获取私钥
+     * Get private key
      *
      * @param keyPair KeyPair
      * @return String
@@ -89,9 +89,9 @@ public class RSAUtil {
     }
 
     /**
-     * 从文件中获取RSA的密钥对
+     * Get key pair from file
      *
-     * @param filePath 文件路径
+     * @param filePath file
      * @return KeyPair KeyPair
      * @throws Exception Exception
      */
@@ -105,28 +105,28 @@ public class RSAUtil {
     }
 
     /**
-     * 保存秘钥到文件中
+     * Save key pair into file
      *
-     * @param kp       秘钥对
-     * @param filePath 保存秘钥的文件路径
+     * @param kp       key pair
+     * @param filePath file
      * @throws Exception Exception
      */
     public static void saveKeyPair(KeyPair kp, String filePath) throws Exception {
         File file = new File(filePath);
         FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        // 生成密钥
+        // write key pair
         oos.writeObject(kp);
         oos.close();
         fos.close();
     }
 
     /**
-     * 根据以保存的私密对已加密的字符串进行解密
+     * Decrypt with private key
      *
-     * @param plaintext  待解密的字符串
-     * @param privateKey 字符串私钥
-     * @return 返回解密后对的字符串
+     * @param plaintext  plain text
+     * @param privateKey private key
+     * @return decrypted string
      */
     public static String decryptString(String plaintext, String privateKey) {
         return RSAUtil.privateDecrypt(plaintext, RSAUtil.getPrivateKey(privateKey));
@@ -134,10 +134,10 @@ public class RSAUtil {
 
 
     /**
-     * 根据公匙加密字符串
+     * Decrypt with private key
      *
-     * @param plaintext 待加密的字符串
-     * @param publicKey 字符串公钥
+     * @param plaintext plaintext
+     * @param publicKey public key
      * @return String
      */
     public static String encryptString(String plaintext, String publicKey) {
@@ -149,9 +149,9 @@ public class RSAUtil {
 
 
     /**
-     * 得到公钥
+     * Get public key
      *
-     * @param publicKey 密钥字符串（经过base64编码）
+     * @param publicKey key string (base64 encoded)
      * @return RSAPublicKey
      */
     public static RSAPublicKey getPublicKey(String publicKey) {
@@ -167,9 +167,9 @@ public class RSAUtil {
     }
 
     /**
-     * 得到私钥
+     * Get private key
      *
-     * @param privateKey 密钥字符串（经过base64编码）
+     * @param privateKey key string (base64 encoded)
      * @return RSAPrivateKey
      */
     public static RSAPrivateKey getPrivateKey(String privateKey) {
@@ -185,10 +185,10 @@ public class RSAUtil {
     }
 
     /**
-     * 公钥加密
+     * Use public key encryption
      *
-     * @param plaintext 待加密的字符串
-     * @param publicKey 字符串公钥
+     * @param plaintext String to be encrypted
+     * @param publicKey public key
      * @return String
      */
     public static String publicEncrypt(String plaintext, RSAPublicKey publicKey) {
@@ -203,10 +203,10 @@ public class RSAUtil {
     }
 
     /**
-     * 私钥解密
+     * Decrypt with private key
      *
-     * @param plaintext  待加密的字符串
-     * @param privateKey 字符串公钥
+     * @param plaintext  plaintext
+     * @param privateKey private key
      * @return String
      */
 

@@ -30,7 +30,7 @@ public class UUIDUtil {
     }
 
     /**
-     * 32未字符串还原成Uuid
+     * 32-bit string is restored to Uuid
      * @param uuid uuid
      * @return UUID
      */

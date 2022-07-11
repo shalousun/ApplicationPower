@@ -487,7 +487,7 @@ public class StringUtil {
      * @return String after replaced}
      */
     public static String replaceMobileHtml(String html) {
-        if (html == null) {
+        if (Objects.isNull(html)) {
             return "";
         }
         return html.replaceAll("<([a-z]+?)\\s+?.*?>", "<$1>");
@@ -529,7 +529,6 @@ public class StringUtil {
         if (isEmpty(str) || isEmpty(prefix)) {
             return str;
         }
-
         if (str.startsWith(prefix)) {
             return str.substring(prefix.length());
         }
@@ -544,10 +543,10 @@ public class StringUtil {
      * @return array of String
      */
     public static String[] split(String str, String regex) {
-        if (null != str) {
-            return str.split(regex);
+        if (Objects.isNull(str)) {
+            return null;
         }
-        return null;
+        return str.split(regex);
     }
 
     /**
@@ -681,7 +680,7 @@ public class StringUtil {
      */
     @SuppressWarnings({"unchecked"})
     public static String[] toStringArray(Collection collection) {
-        if (collection == null) {
+        if (Objects.isNull(collection)) {
             return null;
         }
         return (String[]) collection.toArray(new String[collection.size()]);

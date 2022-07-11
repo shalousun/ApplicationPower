@@ -7,7 +7,8 @@ public class PrettyMemoryUtil {
     private static final int UNIT = 1024;
 
     /**
-     * @param byteSize 字节
+     * Convert bytes to a human-readable string
+     * @param byteSize byte size
      * @return size of memory
      */
     public static String prettyByteSize(long byteSize) {
@@ -15,31 +16,31 @@ public class PrettyMemoryUtil {
         double size = 1.0 * byteSize;
 
         String type = "B";
-        if ((int) Math.floor(size / UNIT) <= 0) { //不足1KB
+        if ((int) Math.floor(size / UNIT) <= 0) { //Less than 1KB
             type = "B";
             return format(size, type);
         }
 
         size = size / UNIT;
-        if ((int) Math.floor(size / UNIT) <= 0) { //不足1MB
+        if ((int) Math.floor(size / UNIT) <= 0) { //Less than 1MB
             type = "KB";
             return format(size, type);
         }
 
         size = size / UNIT;
-        if ((int) Math.floor(size / UNIT) <= 0) { //不足1GB
+        if ((int) Math.floor(size / UNIT) <= 0) { //Less than 1GB
             type = "MB";
             return format(size, type);
         }
 
         size = size / UNIT;
-        if ((int) Math.floor(size / UNIT) <= 0) { //不足1TB
+        if ((int) Math.floor(size / UNIT) <= 0) { //Less than 1TB
             type = "GB";
             return format(size, type);
         }
 
         size = size / UNIT;
-        if ((int) Math.floor(size / UNIT) <= 0) { //不足1PB
+        if ((int) Math.floor(size / UNIT) <= 0) { //Less than 1PB
             type = "TB";
             return format(size, type);
         }

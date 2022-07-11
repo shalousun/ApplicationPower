@@ -4,16 +4,13 @@ import com.power.common.util.PathMatcher;
 
 import java.util.Set;
 
-/**
- * 抽象的url匹配封装
- */
 public abstract class AbstractUrlMatcher {
 
     /**
-     * 匹配返回true，不匹配返回false
+     * Returns true if matched, false if not matched
      *
-     * @param patterns 正则表达式或通配符
-     * @param url      请求的url
+     * @param patterns Regular expression or wildcard
+     * @param url      url
      * @return boolean
      */
     protected boolean isMatches(Set<String> patterns, String url) {

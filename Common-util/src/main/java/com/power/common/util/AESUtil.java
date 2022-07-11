@@ -15,7 +15,7 @@ import java.security.Security;
 
 /**
  * Description:
- * aes加密工具
+ * AES Tools
  *
  * @author yu 2018/06/08.
  */
@@ -23,7 +23,7 @@ public class AESUtil {
 
 
     /**
-     * key 算法
+     * key
      */
     private static final String KEY_ALGORITHM = "AES";
 
@@ -32,11 +32,11 @@ public class AESUtil {
     }
 
     /**
-     * 使用cbc加密解密(default use AES/CBC/PKCS5Padding)
+     * decrypt using cbc(default use AES/CBC/PKCS5Padding)
      *
-     * @param content    待解密字节数组
-     * @param key        解密的密匙
-     * @param initVector 初始向量
+     * @param content    byte array to be decrypted
+     * @param key        key
+     * @param initVector init vector
      * @return byte[]
      */
     public static byte[] decryptByCBC(byte[] content, byte[] key, byte[] initVector) {
@@ -45,12 +45,12 @@ public class AESUtil {
 
 
     /**
-     * 使用cbc加密解密
+     * Decrypt using CBC mode
      *
-     * @param content    待解密字节数组
-     * @param key        解密的密匙
-     * @param initVector 初始向量
-     * @param padding    填充模式
+     * @param content    byte array to be decrypted
+     * @param key        key
+     * @param initVector init vector
+     * @param padding    padding
      * @return byte[]
      */
     public static byte[] decryptByCBC(byte[] content, byte[] key, byte[] initVector, String padding) {
@@ -63,11 +63,11 @@ public class AESUtil {
     }
 
     /**
-     * 使用cbc加密模式解密
+     * Encrypt using CBC mode
      *
-     * @param content    待加密的内容
-     * @param key        加密key
-     * @param initVector 初始向量
+     * @param content    Content to be encrypted
+     * @param key        key
+     * @param initVector init vector
      * @return byte[]
      */
     public static byte[] encryptByCBC(byte[] content, byte[] key, byte[] initVector) {
@@ -75,12 +75,12 @@ public class AESUtil {
     }
 
     /**
-     * 使用cbc加密模式加密
+     * Encrypt using CBC mode
      *
-     * @param content    待加密的内容
-     * @param key        加密key
-     * @param initVector 初始向量
-     * @param padding    填充模式
+     * @param content    Content to be encrypted
+     * @param key        key
+     * @param initVector init vector
+     * @param padding    padding
      * @return byte array
      */
     public static byte[] encryptByCBC(byte[] content, byte[] key, byte[] initVector, String padding) {
@@ -93,10 +93,10 @@ public class AESUtil {
     }
 
     /**
-     * 使用ecb解密(default use AES/ECB/PKCS5Padding)
+     * Decrypt with ECB(default use AES/ECB/PKCS5Padding)
      *
-     * @param content 待解密字节数组
-     * @param key     解密的密匙
+     * @param content byte array to be decrypted
+     * @param key     key
      * @return byte[]
      */
     public static byte[] decryptByECB(byte[] content, byte[] key) {
@@ -104,11 +104,11 @@ public class AESUtil {
     }
 
     /**
-     * 使用ECB解密
+     * Decrypt with ECB
      *
-     * @param content 待解密字节数组
-     * @param key     解密的密匙
-     * @param padding 填充模式
+     * @param content byte array to be decrypted
+     * @param key     key
+     * @param padding padding
      * @return byte array
      */
     public static byte[] decryptByECB(byte[] content, byte[] key, String padding) {
@@ -121,10 +121,10 @@ public class AESUtil {
     }
 
     /**
-     * 使用ecb加密模式加密
+     * Encrypt with ecb encryption mode
      *
-     * @param content 待加密的内容
-     * @param key     加密key
+     * @param content Content to be encrypted
+     * @param key     key
      * @return byte[]
      */
     public static byte[] encryptByECB(byte[] content, byte[] key) {
@@ -133,11 +133,11 @@ public class AESUtil {
 
 
     /**
-     * 使用ecb加密模式加密
+     * Encrypt with ecb encryption mode
      *
-     * @param content 待加密的内容
-     * @param key     加密key
-     * @param padding 填充模式
+     * @param content Content to be encrypted
+     * @param key     key
+     * @param padding padding
      * @return byte[]
      */
     public static byte[] encryptByECB(byte[] content, byte[] key, String padding) {
@@ -151,11 +151,11 @@ public class AESUtil {
 
 
     /**
-     * 使用cbc模式解密字符串
+     * Decrypt string using cbc mode
      *
-     * @param content    带解密字节数组
-     * @param key        解密的密匙
-     * @param initVector 初始向量
+     * @param content    character to be decrypted
+     * @param key        key
+     * @param initVector init vector
      * @return String
      */
     public static String decodeByCBC(String content, String key, String initVector) {
@@ -163,12 +163,12 @@ public class AESUtil {
     }
 
     /**
-     * 使用CBC解密
+     * Decrypt with CBC
      *
-     * @param content    待解密的字符串
-     * @param key        解密的密匙
-     * @param initVector 初始向量
-     * @param padding    填充模式
+     * @param content    String to be decrypted
+     * @param key        key
+     * @param initVector init vector
+     * @param padding    padding
      * @return String
      */
     public static String decodeByCBC(String content, String key, String initVector, String padding) {
@@ -179,12 +179,12 @@ public class AESUtil {
     }
 
     /**
-     * 解密使用CBC和base64双重加密的字符串
+     * Decrypt a string encrypted with CBC and base64
      *
-     * @param content    经过base64和CBC的字串
-     * @param key        解密的密匙
-     * @param initVector 初始向量
-     * @param padding    填充模式
+     * @param content    String processed with base64 and CBC
+     * @param key        key
+     * @param initVector init vector
+     * @param padding    padding
      * @return String
      */
     public static String decodeByCBCBase64(String content, String key, String initVector, String padding) {
@@ -195,11 +195,11 @@ public class AESUtil {
     }
 
     /**
-     * 使用cbc模式加密
+     * Encrypt using cbc mode
      *
-     * @param content    待加密字节数组
-     * @param key        密匙
-     * @param initVector 初始向量
+     * @param content     String to be encrypted
+     * @param key        key
+     * @param initVector init vector
      * @return String
      */
     public static String encodeByCBC(String content, String key, String initVector) {
@@ -207,12 +207,12 @@ public class AESUtil {
     }
 
     /**
-     * 使用cbc模式加密
+     * Encrypt using cbc mode
      *
-     * @param content    待加密字符串
-     * @param key        密匙
-     * @param initVector 初始向量
-     * @param padding    填充模式
+     * @param content    String to be encrypted
+     * @param key        key
+     * @param initVector init vector
+     * @param padding    padding
      * @return String
      */
     public static String encodeByCBC(String content, String key, String initVector, String padding) {
@@ -220,12 +220,12 @@ public class AESUtil {
     }
 
     /**
-     * 使用cbc模式加密(增加base64加密)
+     * Use cbc mode encryption (add base64 encryption)
      *
-     * @param content    待加密字符串
-     * @param key        密匙
-     * @param initVector 初始向量
-     * @param padding    填充模式
+     * @param content    Content to be encrypted
+     * @param key        key
+     * @param initVector init vector
+     * @param padding    padding
      * @return String
      */
     public static String encodeByCBCBase64(String content, String key, String initVector, String padding) {
@@ -233,22 +233,22 @@ public class AESUtil {
     }
 
     /**
-     * 使用ecb模式加密
+     * Encrypt using ECB mode
      *
-     * @param content 待加密的内容
-     * @param key     加密key
-     * @return 返回Base64转码后的加密数据
+     * @param content Content to be encrypted
+     * @param key     key
+     * @return Returns encrypted data after Base64 transcoding
      */
     public static String encodeByECB(String content, String key) {
         return encodeByECB(content, key, AesPaddings.AES_ECB_PKCS5);
     }
 
     /**
-     * 使用ECB模式加密
+     * Encrypt using ECB mode
      *
-     * @param content 待加密的内容
-     * @param key     加密的key
-     * @param padding 填充模式
+     * @param content Content to be encrypted
+     * @param key     key
+     * @param padding padding
      * @return String
      */
     public static String encodeByECB(String content, String key, String padding) {
@@ -264,10 +264,10 @@ public class AESUtil {
     }
 
     /**
-     * 使用ecb模式解密
+     * decrypt using ecb mode
      *
-     * @param content 待加密的内容
-     * @param key     加密key
+     * @param content Content to be decrypted
+     * @param key     key
      * @return String
      */
     public static String decodeByECB(String content, String key) {
@@ -283,12 +283,12 @@ public class AESUtil {
 
 
     /**
-     * ecb加解密
+     * ecb encryption and decryption
      *
-     * @param content 待解密字节数组
-     * @param key     待解密key
-     * @param mode    算法模式(加密或者是解密)
-     * @param padding 填充模式
+     * @param content Byte array to be encrypted or decrypted
+     * @param key     decrypt key
+     * @param mode    Algorithmic mode
+     * @param padding padding pattern
      * @return byte array
      * @throws GeneralSecurityException
      */
@@ -300,13 +300,13 @@ public class AESUtil {
     }
 
     /**
-     * 除AES ECB算法外的其他算法公用
+     * General processing, except AES ECB algorithm
      *
-     * @param content    待解密字节数组
-     * @param key        待解密key
-     * @param initVector 加解密向量
-     * @param mode       算法模式(加密或者是解密)
-     * @param padding    填充模式
+     * @param content    Byte array to be encrypted or decrypted
+     * @param key        decrypt key
+     * @param initVector init vector
+     * @param mode       Algorithmic mode
+     * @param padding    padding pattern
      * @return byte array
      * @throws GeneralSecurityException
      */
@@ -320,11 +320,11 @@ public class AESUtil {
     }
 
     /**
-     * CBC加解密模式的参数检查
+     * Parameter check of CBC encryption and decryption mode
      *
-     * @param content    带解密字节数组
-     * @param key        解密的密匙
-     * @param initVector 初始向量
+     * @param content    String to be processed
+     * @param key        key
+     * @param initVector initial vector
      */
     private static void checkParamsOfCBC(String content, String key, String initVector) {
         AESUtil.checkContentAndKey(content, key);
@@ -345,10 +345,10 @@ public class AESUtil {
     }
 
     /**
-     * 检测加解密的参数
+     * Detect encryption and decryption parameters
      *
-     * @param content 带解密字节数组
-     * @param key     解密的密匙
+     * @param content String to be processed
+     * @param key     key
      */
     private static void checkContentAndKey(String content, String key) {
         if (StringUtil.isEmpty(content)) {
@@ -357,16 +357,15 @@ public class AESUtil {
         if (StringUtil.isEmpty(key)) {
             throw new NullPointerException("The key can't be null or empty.");
         }
-
         if (key.length() != 16) {
             throw new RuntimeException("The length of key must be 16 while use AES CBC mode.");
         }
     }
 
     /**
-     * 生成加密秘钥
+     * Generate Secret key
      *
-     * @param key 加密key
+     * @param key key
      * @return SecretKeySpec
      */
     private static SecretKeySpec getSecretKey(final String key) {

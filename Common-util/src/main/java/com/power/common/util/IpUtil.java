@@ -24,7 +24,7 @@ public class IpUtil {
     }
 
     /**
-     * 获取ip地址
+     * Get IP address via http request
      *
      * @param request HttpServletRequest
      * @return string
@@ -49,7 +49,7 @@ public class IpUtil {
 
 
     /**
-     * 获取服务器的ip地址
+     * Get local server ip address
      *
      * @return String
      */
@@ -58,9 +58,9 @@ public class IpUtil {
     }
 
     /**
-     * 获取所有的网卡的ip v4地址,key为网卡地址，value为ip地址
+     * Get IPV4 address
      *
-     * @return hash map
+     * @return hash map,key is net interface, value is ip address
      */
     public static Map<String, String> getLocalIPV4() {
         Map<String, String> map = new HashMap<>();
@@ -84,9 +84,9 @@ public class IpUtil {
     }
 
     /**
-     * 获取所有ipv6地址
+     * Get IPV6 address
      *
-     * @return hash map
+     * @return hash map,key is net interface, value is ip address
      */
     public static Map<String, String> getLocalIPV6() {
         Map<String, String> map = new HashMap<>();

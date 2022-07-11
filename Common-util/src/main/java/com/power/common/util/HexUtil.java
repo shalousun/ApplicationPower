@@ -6,9 +6,9 @@ package com.power.common.util;
 public class HexUtil {
 
     /**
-     * 将byte数组转换成16进制字符串
+     * Convert byte array to hex string
      *
-     * @param buf byte数组
+     * @param buf byte array
      * @return String
      */
     public static String byteArr2HexStr(byte[] buf) {
@@ -24,9 +24,9 @@ public class HexUtil {
     }
 
     /**
-     * 将16进制字符串转换为byte数组
+     * Convert hex string to byte array
      *
-     * @param hexStr 16进制字符串
+     * @param hexStr hex string
      * @return byte[]
      */
     public static byte[] hexStr2ByteArr(String hexStr) {

@@ -5,12 +5,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * @author sunyu
+ * @author sunyu 2018/01/04
  */
 public class PropertiesUtil {
 
     /**
-     * 从文件读取属性文件
+     * Read properties from file
      *
      * @param filename file name
      * @return properties

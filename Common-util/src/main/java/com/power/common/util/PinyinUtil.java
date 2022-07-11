@@ -6,7 +6,7 @@ package com.power.common.util;
 public class PinyinUtil {
 
     /**
-     * 获取汉字的首字母
+     * Get the initials of Chinese Pinyin
      *
      * @param str String content
      * @return string
@@ -16,7 +16,7 @@ public class PinyinUtil {
     }
 
     /**
-     * 获取人名拼音首字母
+     * Get the first letter of a person's name in Pinyin
      *
      * @param str String content
      * @return string

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class ClassUtil {
 
     /**
-     * 根据包名的到该包下的类
+     * Scan the classes under the package
      *
      * @param modelPackage String
      * @param root         String
@@ -44,10 +44,10 @@ public class ClassUtil {
     }
 
     /**
-     * 读取源代码获取类名
+     * Read the source code to get the class name
      *
-     * @param filePath        java源文件路径
-     * @param simpleClassName 和简单的类名进行对比，避免再往下读取
+     * @param filePath        java source file path
+     * @param simpleClassName Compare with a simple class name to avoid reading further down
      * @return string
      */
     public static String getClassName(String filePath, String simpleClassName) {

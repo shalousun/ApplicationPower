@@ -7,16 +7,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 /**
- * base64工具类
+ * Base64 Tools
  *
  * @author yu 2018/12/08.
  */
 public class Base64Util {
 
     /**
-     * BASE64解密
+     * BASE64 decryption
      *
-     * @param encryptedData 已加密的字节数组
+     * @param encryptedData encrypted byte array
      * @return byte array
      */
     public static byte[] decryptBASE64(byte[] encryptedData) {
@@ -24,37 +24,37 @@ public class Base64Util {
     }
 
     /**
-     * BASE64解密
+     * BASE64 decryption
      *
-     * @param encryptedData 已加密的字符串
+     * @param encryptedData encrypted string
      * @return a byte array
      */
     public static byte[] decryptBASE64(String encryptedData) {
         try {
             return decryptBASE64(encryptedData.getBytes(Charset.DEFAULT_CHARSET));
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("不支持的编码方式：" + e);
+            throw new RuntimeException("Unsupported encoding:" + e);
         }
     }
 
     /**
-     * BASE64解密
+     * BASE64 decryption
      *
-     * @param encryptedData 已加密的字节数组
+     * @param encryptedData encrypted string
      * @return String
      */
     public static String decryptToString(String encryptedData) {
         try {
             return decryptToString(encryptedData.getBytes(Charset.DEFAULT_CHARSET));
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("不支持的编码方式：" + e);
+            throw new RuntimeException("Unsupported encoding:" + e);
         }
     }
 
     /**
-     * BASE64解密
+     * BASE64 decryption
      *
-     * @param encryptedData 已加密的字节数组
+     * @param encryptedData encrypted byte array
      * @return String
      */
     public static String decryptToString(byte[] encryptedData) {
@@ -62,9 +62,9 @@ public class Base64Util {
     }
 
     /**
-     * BASE64加密
+     * BASE64 encryption
      *
-     * @param decryptedData 已加密的字节数组
+     * @param decryptedData byte array to be encrypted
      * @return a byte array
      */
     public static byte[] encryptBASE64(byte[] decryptedData) {
@@ -72,37 +72,37 @@ public class Base64Util {
     }
 
     /**
-     * base64加密
+     * BASE64 encryption
      *
-     * @param plaintext 待加密字符串
+     * @param plaintext String to be encrypted
      * @return a byte array
      */
     public static byte[] encryptBASE64(String plaintext) {
         try {
             return encryptBASE64(plaintext.getBytes(Charset.DEFAULT_CHARSET));
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("不支持的编码方式：" + e);
+            throw new RuntimeException("Unsupported encoding:" + e);
         }
     }
 
     /**
-     * base64加密
+     * BASE64 encryption
      *
-     * @param plaintext 待加密字符串
+     * @param plaintext String to be encrypted
      * @return String
      */
     public static String encryptToString(String plaintext) {
         try {
             return encryptToString(plaintext.getBytes(Charset.DEFAULT_CHARSET));
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("不支持的编码方式：" + e);
+            throw new RuntimeException("Unsupported encoding:" + e);
         }
     }
 
     /**
-     * base64加密
+     * BASE64 encryption
      *
-     * @param plainByteArr 待加密的字节数组
+     * @param plainByteArr byte array to be encrypted
      * @return String
      */
     public static String encryptToString(byte[] plainByteArr) {

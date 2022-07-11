@@ -9,15 +9,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 通过读取前端字体题库的css文件来生成字体库列表
+ * Generate a font library icon list by reading the css file of the front-end font library
  *
  * @author sunyu
  */
 public class FontIconUtil {
 
     /**
-     * 读取font-awesome.min.css等字体库样式文件获取图标列表
-     * 注意：在读取文件前需要将css文件格式化，即转化为非压缩模式
+     * Read font library style files such as font-awesome.min.css to get a list of icons
+     * Note: Before reading the file, you need to format the css file, that is, convert it to non-compressed mode
      *
      * @param cssFile css file
      * @return List
@@ -50,7 +50,7 @@ public class FontIconUtil {
     }
 
     /**
-     * 获取单个图标名称
+     * Get a single icon name
      *
      * @param selector css selector
      * @return String
