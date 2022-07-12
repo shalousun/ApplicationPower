@@ -57,9 +57,9 @@ public class FileUtil {
         File filePath = new File(path);
         if (filePath.isDirectory()) {
             File[] list = filePath.listFiles();
-            for (int i = 0; i < list.length; i++) {
-                String newPath = path + File.separator + list[i].getName();
-                String newCopyPath = copyPath + File.separator + list[i].getName();
+            for (File file : list) {
+                String newPath = path + File.separator + file.getName();
+                String newCopyPath = copyPath + File.separator + file.getName();
                 File newFile = new File(copyPath);
                 if (!newFile.exists()) {
                     newFile.mkdir();
@@ -173,7 +173,9 @@ public class FileUtil {
             flag = false;
         } finally {
             try {
-                osw.close();
+                if (Objects.nonNull(osw)) {
+                    osw.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -190,19 +192,20 @@ public class FileUtil {
      * @return boolean
      */
     public static boolean writeFile(String source, File file, boolean append) {
-        boolean flag;
+        boolean flag = false;
         BufferedWriter output = null;
         try {
-            file.createNewFile();
-            output = new BufferedWriter(new FileWriter(file, append));
-            output.write(source);
-            flag = true;
+            if (file.createNewFile()){
+                output = new BufferedWriter(new FileWriter(file, append));
+                output.write(source);
+                flag = true;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             flag = false;
         } finally {
             try {
-                if (null != output) {
+                if (Objects.nonNull(output)) {
                     output.close();
                 }
             } catch (IOException e) {
@@ -366,18 +369,19 @@ public class FileUtil {
 
     /**
      * Copies bytes from an InputStream source to a file destination. The directories up to destination will be created if they don't already exist. destination will be overwritten if it already exists.
-     * @param source the InputStream to copy bytes from, must not be null
-     * @param destination   the non-directory File to write bytes to (possibly overwriting), must not be null
-     * @param copyOption copy option
-     * @return
+     *
+     * @param source      the InputStream to copy bytes from, must not be null
+     * @param destination the non-directory File to write bytes to (possibly overwriting), must not be null
+     * @param copyOption  copy option
+     * @return boolean
      */
-    public static boolean copyInputStreamToFile(InputStream source,File destination,StandardCopyOption copyOption){
+    public static boolean copyInputStreamToFile(InputStream source, File destination, StandardCopyOption copyOption) {
         boolean flag = true;
         try {
             java.nio.file.Files.copy(
-                source,
-                destination.toPath(),
-                copyOption);
+                    source,
+                    destination.toPath(),
+                    copyOption);
         } catch (IOException e) {
             e.printStackTrace();
             flag = false;

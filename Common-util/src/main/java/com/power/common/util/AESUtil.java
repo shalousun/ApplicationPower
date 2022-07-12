@@ -11,6 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.Security;
+import java.util.Objects;
 
 
 /**
@@ -197,7 +198,7 @@ public class AESUtil {
     /**
      * Encrypt using cbc mode
      *
-     * @param content     String to be encrypted
+     * @param content    String to be encrypted
      * @param key        key
      * @param initVector init vector
      * @return String
@@ -341,7 +342,7 @@ public class AESUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return base64 ? new String(Base64.encodeBase64(encryptResult)) : HexUtil.byteArr2HexStr(encryptResult);
+        return base64 ? new String(Objects.requireNonNull(Base64.encodeBase64(encryptResult))) : HexUtil.byteArr2HexStr(encryptResult);
     }
 
     /**

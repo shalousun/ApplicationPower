@@ -8,6 +8,7 @@ public class PrettyMemoryUtil {
 
     /**
      * Convert bytes to a human-readable string
+     *
      * @param byteSize byte size
      * @return size of memory
      */
@@ -15,7 +16,7 @@ public class PrettyMemoryUtil {
 
         double size = 1.0 * byteSize;
 
-        String type = "B";
+        String type;
         if ((int) Math.floor(size / UNIT) <= 0) { //Less than 1KB
             type = "B";
             return format(size, type);
@@ -62,8 +63,6 @@ public class PrettyMemoryUtil {
             precision = 2;
         } else if (size * 10 % 10 > 0) {
             precision = 1;
-        } else {
-            precision = 0;
         }
 
         String formatStr = "%." + precision + "f";

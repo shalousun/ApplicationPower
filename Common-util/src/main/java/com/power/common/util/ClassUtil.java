@@ -76,6 +76,7 @@ public class ClassUtil {
 
     /**
      * Get simple type name for val
+     *
      * @param val object val
      * @return String
      */
@@ -92,9 +93,9 @@ public class ClassUtil {
             return "short";
         } else if (val instanceof Boolean) {
             return "boolean";
-        } else if(val instanceof Integer){
+        } else if (val instanceof Integer) {
             return "int32";
-        } else  {
+        } else {
             return "object";
         }
     }

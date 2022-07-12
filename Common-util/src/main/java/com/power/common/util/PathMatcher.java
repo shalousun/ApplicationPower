@@ -2,7 +2,8 @@ package com.power.common.util;
 
 
 /**
- *  From shiro core
+ * From shiro core
+ *
  * @author yu 2021/6/27.
  */
 public class PathMatcher {
@@ -18,6 +19,7 @@ public class PathMatcher {
     /**
      * Set the path separator to use for pattern parsing.
      * Default is "/", as in Ant.
+     *
      * @param pathSeparator path separator
      */
     public void setPathSeparator(String pathSeparator) {
@@ -26,6 +28,7 @@ public class PathMatcher {
 
     /**
      * Checks if {@code path} is a pattern (i.e. contains a '*', or '?'). For example the {@code /foo/**} would return {@code true}, while {@code /bar/} would return {@code false}.
+     *
      * @param path the string to check
      * @return this method returns {@code true} if {@code path} contains a '*' or '?', otherwise, {@code false}
      */
@@ -57,7 +60,7 @@ public class PathMatcher {
      * @param fullMatch whether a full pattern match is required
      *                  (else a pattern match as far as the given base path goes is sufficient)
      * @return <code>true</code> if the supplied <code>path</code> matched,
-     *         <code>false</code> if it didn't
+     * <code>false</code> if it didn't
      */
     protected boolean doMatch(String pattern, String path, boolean fullMatch) {
         if (path == null || path.startsWith(this.pathSeparator) != pattern.startsWith(this.pathSeparator)) {
@@ -88,8 +91,7 @@ public class PathMatcher {
         if (pathIdxStart > pathIdxEnd) {
             // Path is exhausted, only match if rest of pattern is * or **'s
             if (pattIdxStart > pattIdxEnd) {
-                return (pattern.endsWith(this.pathSeparator) ?
-                        path.endsWith(this.pathSeparator) : !path.endsWith(this.pathSeparator));
+                return (pattern.endsWith(this.pathSeparator) == path.endsWith(this.pathSeparator));
             }
             if (!fullMatch) {
                 return true;
@@ -156,8 +158,8 @@ public class PathMatcher {
             strLoop:
             for (int i = 0; i <= strLength - patLength; i++) {
                 for (int j = 0; j < patLength; j++) {
-                    String subPat = (String) pattDirs[pattIdxStart + j + 1];
-                    String subStr = (String) pathDirs[pathIdxStart + i + j];
+                    String subPat = pattDirs[pattIdxStart + j + 1];
+                    String subStr = pathDirs[pathIdxStart + i + j];
                     if (!matchStrings(subPat, subStr)) {
                         continue strLoop;
                     }
@@ -194,7 +196,7 @@ public class PathMatcher {
      * @param str     string which must be matched against the pattern.
      *                Must not be <code>null</code>.
      * @return <code>true</code> if the string matches against the
-     *         pattern, or <code>false</code> otherwise.
+     * pattern, or <code>false</code> otherwise.
      */
     private boolean matchStrings(String pattern, String str) {
         char[] patArr = pattern.toCharArray();
@@ -332,8 +334,9 @@ public class PathMatcher {
 
     /**
      * Given a pattern and a full path, determine the pattern-mapped part.
+     *
      * @param pattern pattern
-     * @param path path
+     * @param path    path
      * @return String
      */
     public String extractPathWithinPattern(String pattern, String path) {

@@ -100,7 +100,8 @@ public class EnumUtil {
     }
 
     /**
-     *  Get enum names
+     * Get enum names
+     *
      * @param enumClass Enum Class
      * @return List of enum name
      */
@@ -130,7 +131,7 @@ public class EnumUtil {
             String fieldName = field.getName();
             if (!enumNames.contains(fieldName) && !fieldName.equals("$VALUES")) {
                 try {
-                    Method method = enumClass.getMethod("get" + (fieldName.charAt(0) + "").toUpperCase() + fieldName.substring(1, fieldName.length()));
+                    Method method = enumClass.getMethod("get" + (fieldName.charAt(0) + "").toUpperCase() + fieldName.substring(1));
                     methods.put(fieldName, method);
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();

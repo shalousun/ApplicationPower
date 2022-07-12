@@ -360,11 +360,12 @@ public class DateTimeUtil {
 
     /**
      * Different day
+     *
      * @param localDate0 LocalDate
      * @param localDate1 LocalDate
      * @return boolean
      */
-    public static boolean isDifferentDay(LocalDate localDate0,LocalDate localDate1) {
+    public static boolean isDifferentDay(LocalDate localDate0, LocalDate localDate1) {
         return !localDate0.equals(localDate1);
     }
 
@@ -379,7 +380,7 @@ public class DateTimeUtil {
     }
 
     /**
-     *  Convert millisecond to String with format
+     * Convert millisecond to String with format
      *
      * @param millSec millisecond
      * @param format  like yyyy-MM-dd
@@ -445,7 +446,7 @@ public class DateTimeUtil {
      * @return int
      */
     public static int getLengthOfMonth(Timestamp stamp) {
-        if (Objects.nonNull(stamp)) {;
+        if (Objects.nonNull(stamp)) {
             return getLengthOfMonth(stamp.getTime());
         } else {
             throw new NullPointerException("Timestamp can not be null");
@@ -466,7 +467,7 @@ public class DateTimeUtil {
     /**
      * Get day of Month
      *
-     * @param localDateTime LocalDateTime
+     * @param localDate LocalDate
      * @return int
      */
     public static int getLengthOfMonth(LocalDate localDate) {
@@ -500,7 +501,7 @@ public class DateTimeUtil {
     public static long getFirstDayOfCurrentWeek(long ms) {
         LocalDate localDate = longToLocalDate(ms);
         TemporalField fieldIso = WeekFields.of(DayOfWeek.MONDAY, 1).dayOfWeek();
-        localDate =localDate.with(fieldIso,1);
+        localDate = localDate.with(fieldIso, 1);
         return localDateToLong(localDate);
     }
 
@@ -580,8 +581,8 @@ public class DateTimeUtil {
     }
 
     /**
-     *
      * Next year common day
+     *
      * @param millis millisecond
      * @return long
      */
@@ -612,7 +613,7 @@ public class DateTimeUtil {
     public static long getLastDayOfCurrentWeek(Timestamp stamp) {
         LocalDate localDate = longToLocalDate(stamp.getTime());
         TemporalField fieldIso = WeekFields.of(DayOfWeek.MONDAY, 1).dayOfWeek();
-        localDate =localDate.with(fieldIso,7);
+        localDate = localDate.with(fieldIso, 7);
         return localDateToLong(localDate);
     }
 
@@ -720,9 +721,10 @@ public class DateTimeUtil {
 
     /**
      * Distance of week
+     *
      * @param startTime millisecond
-     * @param endTime millisecond
-     * @return
+     * @param endTime   millisecond
+     * @return Integer
      */
     public static int getWeeks(long startTime, long endTime) {
         int temp = 0;
@@ -758,8 +760,8 @@ public class DateTimeUtil {
         if (born.isAfter(LocalDateTime.now())) {
             return -1;
         }
-        Long until = born.until(LocalDateTime.now(), ChronoUnit.YEARS);
-        return until.intValue();
+        long until = born.until(LocalDateTime.now(), ChronoUnit.YEARS);
+        return (int) until;
     }
 
     /**
@@ -770,8 +772,8 @@ public class DateTimeUtil {
      * @return String
      */
     public static String getLastYearCommonDay(String strDate, String format) {
-        long ms = strToLong(strDate,format);
-        return DateTimeUtil.long2Str(setToLastYearCommonDay(ms),format);
+        long ms = strToLong(strDate, format);
+        return DateTimeUtil.long2Str(setToLastYearCommonDay(ms), format);
     }
 
     /**
@@ -782,8 +784,8 @@ public class DateTimeUtil {
      * @return String
      */
     public static String getLastMonthCommonDay(String strDate, String format) {
-        long ms = strToLong(strDate,format);
-        return long2Str(setToLastMonthCommonDay(ms),format);
+        long ms = strToLong(strDate, format);
+        return long2Str(setToLastMonthCommonDay(ms), format);
     }
 
     /**
@@ -827,10 +829,7 @@ public class DateTimeUtil {
         int yearTemp = localDate.getYear();
         LocalDate calNow = LocalDate.now();
         int yearNow = calNow.getYear();
-        if (yearNow == yearTemp) {
-            return true;
-        }
-        return false;
+        return yearNow == yearTemp;
     }
 
 
@@ -868,22 +867,24 @@ public class DateTimeUtil {
         return formatter;
     }
 
-  /**
-   * Convert Long to LocalDate
-   * @param ms millisecond
-   * @return
-   */
+    /**
+     * Convert Long to LocalDate
+     *
+     * @param ms millisecond
+     * @return LocalDate
+     */
     public static LocalDate longToLocalDate(long ms) {
-      return Instant.ofEpochMilli(ms).atZone(ZoneOffset.ofHours(8)).toLocalDate();
+        return Instant.ofEpochMilli(ms).atZone(ZoneOffset.ofHours(8)).toLocalDate();
     }
 
-  /**
-   * Convert Long to LocalDate
-   * @param ms millisecond
-   * @return
-   */
+    /**
+     * Convert Long to LocalDate
+     *
+     * @param ms millisecond
+     * @return LocalDateTime
+     */
     public static LocalDateTime longToLocalDateTime(long ms) {
-      return Instant.ofEpochMilli(ms).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+        return Instant.ofEpochMilli(ms).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
     }
 
     /**
@@ -909,9 +910,9 @@ public class DateTimeUtil {
     }
 
     /**
-     *  Convert String to LocalDateTime
+     * Convert String to LocalDateTime
      *
-     * @param time     formatted string
+     * @param time    formatted string
      * @param pattern format
      * @return LocalDateTime
      */
@@ -927,8 +928,7 @@ public class DateTimeUtil {
      * @return long
      */
     public static long LocalDateTimeToLong(LocalDateTime dateTime) {
-        Long milliSecond = dateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
-        return milliSecond;
+        return dateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
     }
 
     /**

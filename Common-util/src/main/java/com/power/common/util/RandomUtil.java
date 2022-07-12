@@ -23,8 +23,8 @@ public class RandomUtil {
      * random selected characters and numbers
      */
     private static final String BASE_CHAR_NUMBER = BASE_CHAR + BASE_NUMBER;
-    private static String FORMAT = "0.00";
-    private static Random random = new Random();
+    private static final String FORMAT = "0.00";
+    private static final Random random = new Random();
 
     /**
      * random int value between min and max
@@ -73,8 +73,7 @@ public class RandomUtil {
      * @return long value
      */
     public static long randomLong(long min, long max) {
-        long rangeLong = min + (((long) (new Random().nextDouble() * (max - min))));
-        return rangeLong;
+        return min + (((long) (new Random().nextDouble() * (max - min))));
     }
 
     /**
@@ -106,7 +105,7 @@ public class RandomUtil {
      * @return random string
      */
     public static String randomString(String baseString, int length) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         if (length < 1) {
             length = 1;
@@ -190,7 +189,7 @@ public class RandomUtil {
             case "LocalDateTime":
                 return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_SECOND);
             case "ZonedDateTime":
-                return DateTimeUtil.zonedDateTimeToStr(ZonedDateTime.now(),DateTimeUtil.DATE_FORMAT_ZONED_DATE_TIME);
+                return DateTimeUtil.zonedDateTimeToStr(ZonedDateTime.now(), DateTimeUtil.DATE_FORMAT_ZONED_DATE_TIME);
             case "OffsetDateTime":
                 return OffsetDateTime.now().toString();
             case "uuid":

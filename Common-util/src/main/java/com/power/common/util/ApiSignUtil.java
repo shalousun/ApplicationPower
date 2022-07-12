@@ -1,6 +1,7 @@
 package com.power.common.util;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
@@ -16,7 +17,6 @@ public class ApiSignUtil {
 
     /**
      * Generate signature
-     *
      *
      * @param appID    appid
      * @param SECRET   secret
@@ -51,9 +51,9 @@ public class ApiSignUtil {
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
             crypt.reset();
-            crypt.update(string1.getBytes("UTF-8"));
+            crypt.update(string1.getBytes(StandardCharsets.UTF_8));
             signature = byteToHex(crypt.digest());
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return signature;
@@ -62,8 +62,8 @@ public class ApiSignUtil {
     /**
      * Byte to hex
      *
-     * @param hash
-     * @return
+     * @param hash byte array
+     * @return String
      */
     private static String byteToHex(final byte[] hash) {
         Formatter formatter = new Formatter();
