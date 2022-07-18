@@ -94,7 +94,8 @@ public class DateTimeUtil {
      * @return String
      */
     public static String zonedDateTimeToStr(ZonedDateTime zonedDateTime, String format) {
-        return DateTimeFormatter.ofPattern(format).format(zonedDateTime);
+        DateTimeFormatter formatter = createCacheFormatter(format);
+        return formatter.format(zonedDateTime);
     }
 
     /**
@@ -941,7 +942,7 @@ public class DateTimeUtil {
     public static String UTCToCST(String utc, String format) {
         ZonedDateTime zdt = ZonedDateTime.parse(utc);
         LocalDateTime localDateTime = zdt.toLocalDateTime();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        DateTimeFormatter formatter = createCacheFormatter(format);
         return formatter.format(localDateTime.plusHours(8));
     }
 
@@ -954,11 +955,11 @@ public class DateTimeUtil {
      * @return String
      */
     public static String CTSToUTC(String time, String inputFormat, String outFormat) {
-        OffsetDateTime utcTime = LocalDateTime.parse(time, DateTimeFormatter.ofPattern(inputFormat))
+        OffsetDateTime utcTime = LocalDateTime.parse(time, createCacheFormatter(inputFormat))
                 .atZone(ZoneId.systemDefault())
                 .toOffsetDateTime()
                 .withOffsetSameInstant(ZoneOffset.UTC);
-        return utcTime.format(DateTimeFormatter.ofPattern(outFormat));
+        return utcTime.format(createCacheFormatter(outFormat));
     }
 
     /**
@@ -973,7 +974,7 @@ public class DateTimeUtil {
                 .atZone(ZoneId.systemDefault())
                 .toOffsetDateTime()
                 .withOffsetSameInstant(ZoneOffset.UTC);
-        return utcTime.format(DateTimeFormatter.ofPattern(outFormat));
+        return utcTime.format(createCacheFormatter(outFormat));
     }
 
     private static Calendar initCalenderWithMillis(long ms) {
