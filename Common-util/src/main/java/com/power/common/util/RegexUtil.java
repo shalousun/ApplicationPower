@@ -1,9 +1,13 @@
 package com.power.common.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -46,4 +50,25 @@ public class RegexUtil {
             return false;
         }
     }
+
+    /**
+     * Extract strings
+     * @param pattern pattern
+     * @param msg msg
+     * @return Array of String
+     */
+    public static String[] extractStrings(String pattern, String msg) {
+        Matcher matcher = Pattern.compile(pattern).matcher(msg);
+        List<String> result = new ArrayList<>();
+        while (matcher.find()) {
+            int len = matcher.groupCount();
+            for (int i = 1; i <= len; ++i) {
+                String a = matcher.group(i);
+                result.add(a);
+            }
+        }
+        return result.toArray(new String[0]);
+    }
+
+
 }
