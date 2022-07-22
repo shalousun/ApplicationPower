@@ -1,5 +1,6 @@
 package com.power.common.util;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -26,9 +27,11 @@ public class RegexUtilTest {
 
   @Test
   public void testExtractMap() {
-    String msg = "2022-07-20 16:55:05.415 [10.10.10.10] [nio-8080-exec-4] INFO org.springframework.web.servlet.DispatcherServlet@initServletBean:547 - Completed initialization in 9 ms\n";
-    String reg = "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+\\.\\d+)\\s+\\[([^]]+)]\\s+\\[([^]]+)]\\s+(\\w+)\\s+(\\S+)\\s-\\s(.*)";
-    String[] arr = RegexUtil.extractStrings(reg,msg);
+    String msg = "2022-07-22 10:19:23.684 ERROR [springboot-docker] [http-nio-8080-exec-10] com.benchmark.springboot.controller.LogController : error log\n";
+    String reg = "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+\\.\\d+)\\s+(\\w+)\\s+\\[([^]]+)]\\s+\\[([^]]+)]\\s+(\\S+)\\s:\\s(.*)";
+    System.out.println(ValidateUtil.validate(msg,reg));
+
+    List<String> arr = RegexUtil.extractStrings(reg,msg);
     for(String str:arr) {
       System.out.println(str);
     }

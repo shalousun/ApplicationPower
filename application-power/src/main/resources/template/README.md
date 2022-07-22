@@ -5,7 +5,7 @@
 请补充你的项目说明。
 ## 主要技术
 
-- SpringBoot 2.5.7
+- SpringBoot 2.6.6
 - Mybatis Starter 2.2.0
 ## 构建部署操作
 
