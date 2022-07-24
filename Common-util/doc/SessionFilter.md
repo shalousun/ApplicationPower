@@ -1,4 +1,5 @@
 # SessionFilter过滤器
+
 SessionFilter过滤器是用来对系统登录做统一过滤拦截，本过滤器可以集成到需要自定义登录的系统中。
 
 SessionFilter的配置参考如下：
@@ -31,7 +32,9 @@ SessionFilter的配置参考如下：
 </filter-mapping>
 ```
 
-配置实例2：本例SessionFilter配置的url-pattern值/admin/* ,说明过滤器只对admin前缀路径url起作用,这种配置一般就不需要配置exceptUrlPattern了，当然如果想对admin路径下某个子路路径开例外，那么也可以配置exceptUrlPattern。
+配置实例2：本例SessionFilter配置的url-pattern值/admin/*
+,说明过滤器只对admin前缀路径url起作用,这种配置一般就不需要配置exceptUrlPattern了，当然如果想对admin路径下某个子路路径开例外，那么也可以配置exceptUrlPattern。
+
 ```
 <filter>
     <filter-name>SessionFilter</filter-name>

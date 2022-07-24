@@ -14,11 +14,11 @@ public class XssException extends BaseRuntimeException {
         super(message);
     }
 
-    public XssException(IMessage iMessage){
+    public XssException(IMessage iMessage) {
         super(iMessage);
     }
 
-    public XssException(IMessage errorCode, String errorMessage){
-        super(errorCode,errorMessage);
+    public XssException(IMessage errorCode, String errorMessage) {
+        super(errorCode, errorMessage);
     }
 }

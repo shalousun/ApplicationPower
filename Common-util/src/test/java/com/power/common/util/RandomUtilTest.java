@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 public class RandomUtilTest {
 
     @Test
-    public void testRandomInt(){
-        for(int i=0;i<100;i++){
-            System.out.println(RandomUtil.randomInt(0,3));
+    public void testRandomInt() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println(RandomUtil.randomInt(0, 3));
         }
 
     }

@@ -77,7 +77,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * generally define enumeration to implement IMessage
      *
      * @param message IMessage interface
-     * @param <T> Object
+     * @param <T>     Object
      * @return CommonResult
      */
     public static <T> CommonResult<T> ok(IMessage message) {
@@ -106,8 +106,8 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     /**
      * 失败或失败响应
      *
-     * @param code the error code
-     * @param message  error message
+     * @param code    the error code
+     * @param message error message
      * @return CommonResult
      */
     public static CommonResult fail(String code, String message) {
@@ -126,10 +126,11 @@ public class CommonResult<T> extends BaseResult implements Serializable {
 
     /**
      * Add traceId
+     *
      * @param traceId
      * @return
      */
-    public CommonResult<T> addTraceId(String traceId){
+    public CommonResult<T> addTraceId(String traceId) {
         this.setTraceId(traceId);
         return this;
     }

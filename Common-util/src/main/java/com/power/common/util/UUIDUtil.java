@@ -31,6 +31,7 @@ public class UUIDUtil {
 
     /**
      * 32-bit string is restored to Uuid
+     *
      * @param uuid uuid
      * @return UUID
      */
@@ -54,6 +55,7 @@ public class UUIDUtil {
 
     /**
      * Convert uuid to BigInteger
+     *
      * @param uuid uuid
      * @return BigInteger
      */

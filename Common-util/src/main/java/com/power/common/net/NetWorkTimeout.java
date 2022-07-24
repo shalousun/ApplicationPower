@@ -21,7 +21,7 @@ public class NetWorkTimeout {
     private long connectTimeout;
 
 
-    public static NetWorkTimeout builder(){
+    public static NetWorkTimeout builder() {
         return new NetWorkTimeout();
     }
 

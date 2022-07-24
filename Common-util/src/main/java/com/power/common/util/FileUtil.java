@@ -195,7 +195,7 @@ public class FileUtil {
         boolean flag = false;
         BufferedWriter output = null;
         try {
-            if (file.createNewFile()){
+            if (file.createNewFile()) {
                 output = new BufferedWriter(new FileWriter(file, append));
                 output.write(source);
                 flag = true;

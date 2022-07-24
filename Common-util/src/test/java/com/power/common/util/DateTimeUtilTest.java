@@ -1,10 +1,8 @@
 package com.power.common.util;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-
 import org.junit.jupiter.api.Test;
+
+import java.sql.Timestamp;
 
 
 public class DateTimeUtilTest {
@@ -23,14 +21,16 @@ public class DateTimeUtilTest {
     }
 
     @Test
-    public void testUTCToCST(){
+    public void testUTCToCST() {
         String UTC = "2022-07-06T11:56:55.102Z";
-        System.out.println(DateTimeUtil.UTCToCST(UTC,DateTimeUtil.DATE_FORMAT_MILLISECOND));
+        System.out.println(DateTimeUtil.UTCToCST(UTC, DateTimeUtil.DATE_FORMAT_MILLISECOND));
     }
+
     @Test
-    public void testGetCurrentMonthDays(){
+    public void testGetCurrentMonthDays() {
         System.out.println(DateTimeUtil.getLengthOfMonth(System.currentTimeMillis()));
     }
+
     @Test
     public void testLongToLocalDate() {
         System.out.println(DateTimeUtil.longToLocalDate(System.currentTimeMillis()));
@@ -38,7 +38,7 @@ public class DateTimeUtilTest {
 
     @Test
     public void testLongToLocalDateTime() {
-        System.out.println(DateTimeUtil.localDateTimeToStr(DateTimeUtil.longToLocalDateTime(System.currentTimeMillis()),DateTimeUtil.DATE_FORMAT_MILLISECOND));
+        System.out.println(DateTimeUtil.localDateTimeToStr(DateTimeUtil.longToLocalDateTime(System.currentTimeMillis()), DateTimeUtil.DATE_FORMAT_MILLISECOND));
     }
 
     @Test
@@ -47,85 +47,87 @@ public class DateTimeUtilTest {
     }
 
     @Test
-    public void testGetDayOfWeek(){
+    public void testGetDayOfWeek() {
         System.out.println(DateTimeUtil.getDayOfWeek(System.currentTimeMillis()));
-    }
-    @Test
-    public void testSetTimeToNextDay0H0M0S(){
-        long ms = DateTimeUtil.setTimeToNextDay0H0M0S(new Timestamp(System.currentTimeMillis()));
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
-    public void testSetTimeTo0H0M0S(){
+    public void testSetTimeToNextDay0H0M0S() {
+        long ms = DateTimeUtil.setTimeToNextDay0H0M0S(new Timestamp(System.currentTimeMillis()));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
+    }
+
+    @Test
+    public void testSetTimeTo0H0M0S() {
         long ms = DateTimeUtil.setTimeTo0H0M0S(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
     public void testSetToFirstDayOfCurrentMonth() {
         long ms = DateTimeUtil.setToFirstDayOfCurrentMonth(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
-    }
-    @Test
-    public void testSetToFirstDayOfNextMonth() {
-        long ms = DateTimeUtil.setToFirstDayOfNextMonth(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
-    public void testSetToFirstDayOfLastMonth(){
+    public void testSetToFirstDayOfNextMonth() {
+        long ms = DateTimeUtil.setToFirstDayOfNextMonth(System.currentTimeMillis());
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
+    }
+
+    @Test
+    public void testSetToFirstDayOfLastMonth() {
         long ms = DateTimeUtil.setToFirstDayOfLastMonth(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
     public void testSetToLastMonthCommonDay() {
         long ms = DateTimeUtil.setToLastMonthCommonDay(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
     public void testSetToNextYearCommonDay() {
         long ms = DateTimeUtil.setToNextYearCommonDay(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
+
     @Test
     public void testSetToLastYearCommonDay() {
         long ms = DateTimeUtil.setToLastYearCommonDay(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
     public void testSetToFirstDayOfNextYear() {
         long ms = DateTimeUtil.setToFirstDayOfNextYear(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
-    }
-    @Test
-    public void testSetSetToFirstDayOfCurrentYear() {
-        long ms = DateTimeUtil.setToFirstDayOfCurrentYear(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
-    public  void testGetFirstDayOfCurrentWeek(){
-        long ms = DateTimeUtil.getFirstDayOfCurrentWeek(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+    public void testSetSetToFirstDayOfCurrentYear() {
+        long ms = DateTimeUtil.setToFirstDayOfCurrentYear(System.currentTimeMillis());
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
+
     @Test
-    public void testGetLastDayOfCurrentWeek(){
+    public void testGetFirstDayOfCurrentWeek() {
+        long ms = DateTimeUtil.getFirstDayOfCurrentWeek(System.currentTimeMillis());
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
+    }
+
+    @Test
+    public void testGetLastDayOfCurrentWeek() {
         long ms = DateTimeUtil.getLastDayOfCurrentWeek(new Timestamp(System.currentTimeMillis()));
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
 
     @Test
     public void testGetFirstDayOfCurrentQuarter() {
         long ms = DateTimeUtil.getFirstDayOfNextQuarter(System.currentTimeMillis());
-        System.out.println(DateTimeUtil.long2Str(ms,DateTimeUtil.DATE_FORMAT_SECOND));
+        System.out.println(DateTimeUtil.long2Str(ms, DateTimeUtil.DATE_FORMAT_SECOND));
     }
-
-
-
 
 
 }

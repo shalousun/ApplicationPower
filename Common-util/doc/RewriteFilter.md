@@ -1,7 +1,10 @@
 # RewriteFilter过滤器
+
 RewriteFilter是用于重定向前端路由的过滤，如果当前流行的前端mvvm框架，并且将前端代码最后合并到后端时，将采用RewriteFilter
 来重写前端的路由。
+
 ## Springboot中配置实例：
+
 ```
 @SpringBootApplication
 public class SpringBootMainApplication {
@@ -23,6 +26,7 @@ public class SpringBootMainApplication {
 ```
 
 ## SpringMvc中配置实例：
+
 ```
  <filter>
     <filter-name>RewriteFilter</filter-name>

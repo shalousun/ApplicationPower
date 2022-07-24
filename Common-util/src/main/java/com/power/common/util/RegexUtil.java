@@ -1,10 +1,6 @@
 package com.power.common.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,8 +47,9 @@ public class RegexUtil {
 
     /**
      * Extract strings
+     *
      * @param pattern pattern
-     * @param msg msg
+     * @param msg     msg
      * @return List of String
      */
     public static List<String> extractStrings(String pattern, String msg) {

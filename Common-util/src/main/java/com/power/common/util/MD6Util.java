@@ -33,7 +33,7 @@ public class MD6Util {
     /**
      * md6 checksums
      *
-     * @param md6Str  md6 checksums
+     * @param md6Str    md6 checksums
      * @param plaintext plaintext
      * @return boolean
      */

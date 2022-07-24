@@ -11,14 +11,14 @@ public class StringEscapeUtilTest {
      * 对apache comment-text组件内工具包的补充
      */
     @Test
-    public void testEscapeJava(){
+    public void testEscapeJava() {
         String me = "appid=\"xx\"&timestamp=\"\"";
         System.out.println(me);
 
         String str = me.replaceAll("&", "&amp;")
-                .replaceAll("\"","&quot;")
-                .replaceAll("<","&lt;")
-                .replaceAll(">","&gt;");
+                .replaceAll("\"", "&quot;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;");
         System.out.println(str);
     }
 }

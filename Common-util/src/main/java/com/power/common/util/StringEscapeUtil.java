@@ -11,7 +11,6 @@ import java.util.Objects;
 public class StringEscapeUtil {
 
 
-    private static final Map<String, String> lookupMap = new HashMap<>();
     /**
      * A Map&lt;CharSequence, CharSequence&gt; to escape the Java
      * control characters.
@@ -19,6 +18,7 @@ public class StringEscapeUtil {
      * Namely: {@code \b \n \t \f \r}
      */
     public static final Map<CharSequence, CharSequence> JAVA_CTRL_CHARS_ESCAPE;
+    private static final Map<String, String> lookupMap = new HashMap<>();
 
     static {
         final Map<CharSequence, CharSequence> initialMap = new HashMap<>();

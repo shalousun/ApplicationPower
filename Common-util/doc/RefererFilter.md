@@ -1,7 +1,10 @@
 # RefererFilter过滤器
+
 RefererFilter过滤器是用来拦击跨站钓鱼伪造referer的行为。ignores是用来配置例外referer的，例如想入从一个门户挂个连接去访问一个其他系统
 则必须将门户的项目名称配置到ignores,否则将被视作跨站伪造请求。
+
 ## Springboot中配置实例：
+
 ```
 @SpringBootApplication
 public class SpringBootMainApplication {
@@ -21,7 +24,9 @@ public class SpringBootMainApplication {
     }
 }
 ```
+
 ## spring mvc中配置实例：
+
 ```
  <filter>
     <filter-name>RefererFilter</filter-name>

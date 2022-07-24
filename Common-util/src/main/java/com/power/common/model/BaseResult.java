@@ -10,7 +10,6 @@ public abstract class BaseResult<T> implements Serializable {
 
     /**
      * 是否成功
-     *
      */
     private boolean success = false;
 

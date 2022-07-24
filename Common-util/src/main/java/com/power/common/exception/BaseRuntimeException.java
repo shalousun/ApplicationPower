@@ -10,7 +10,7 @@ public class BaseRuntimeException extends RuntimeException implements IMessage {
 
     private String errorCode;
 
-    protected BaseRuntimeException(String message){
+    protected BaseRuntimeException(String message) {
         super(message);
         this.errorCode = BaseErrorCode.Common.UNKNOWN_ERROR.getCode();
     }

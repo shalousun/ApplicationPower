@@ -5,7 +5,7 @@ package com.power.common.util;
  */
 public class JsonFormatUtilTest {
     public static void main(String[] args) {
-        String str ="{\"name\":\"[\\\"a\\\",\\\"b\\\"]\",\"age\":\"a,b\"}";
+        String str = "{\"name\":\"[\\\"a\\\",\\\"b\\\"]\",\"age\":\"a,b\"}";
         System.out.println(JsonFormatUtil.formatJson(str));
     }
 }

@@ -10,18 +10,19 @@ import java.util.List;
  */
 public class ReflectionUtil {
 
-  /**
-   * Retrieving Fields, Contains Inherited Fields
-   * @param clazz Class
-   * @return Array of Field
-   */
-  public static Field[] getAllFields(Class<?> clazz) {
-    List<Field> fieldList = new ArrayList<>();
-    while (clazz != null){
-      fieldList.addAll(new ArrayList<>(Arrays.asList(clazz.getDeclaredFields())));
-      clazz = clazz.getSuperclass();
+    /**
+     * Retrieving Fields, Contains Inherited Fields
+     *
+     * @param clazz Class
+     * @return Array of Field
+     */
+    public static Field[] getAllFields(Class<?> clazz) {
+        List<Field> fieldList = new ArrayList<>();
+        while (clazz != null) {
+            fieldList.addAll(new ArrayList<>(Arrays.asList(clazz.getDeclaredFields())));
+            clazz = clazz.getSuperclass();
+        }
+        Field[] fields = new Field[fieldList.size()];
+        return fieldList.toArray(fields);
     }
-    Field[] fields = new Field[fieldList.size()];
-    return fieldList.toArray(fields);
-  }
 }

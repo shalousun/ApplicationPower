@@ -1,4 +1,5 @@
 # AESUtil方法介绍
+
 AESUtil是对常用的AES加解密的封装。所属的包为com.power.common.util。目前该工具类封装了
 两种加解密的模式，分别是AES的ECB和CBC模式，这两种模式基本可以满足平常的开发要求。1.5开始common-util中的
 AESUtil增加了对AES/CBC/PKCS7Padding的支持，常用的填充常量在AesPaddings中，对于不需要传递填充模式的方法
@@ -7,9 +8,8 @@ AESUtil增加了对AES/CBC/PKCS7Padding的支持，常用的填充常量在AesPa
 **注意：** 平时开发和别人协商一些接口签名验证时需要协商好双方所采用的AES加解密模式，是ECB还是CBC。
 AES加密模式中除了ECB模式外，都需要提供初始化加密向量，在使用该工具是也需要注意加解密的模式必须是相同的。
 
-
-
 ## 1. encodeByCBC(String content, String key, String initVector)方法
+
 该方法表示使用CBC模式来加密字符串
 
 参数 | 描述
@@ -17,7 +17,7 @@ AES加密模式中除了ECB模式外，都需要提供初始化加密向量，�
 content| 待加密字符串
 key|解密的密匙
 initVector|初始向量
- 
+
 Usage:
 
 ```
@@ -30,7 +30,9 @@ Usage:
  AESUtil.encodeByCBC("hello world",KEY,IV);//renturn "4ddee0776425fb5a3893a8fe1a9caa0b"
 
 ```
+
 ## 2. decodeByCBC(String content, String key, String initVector)方法
+
 该方法表示使用CBC模式来解密已加密的字符串
 
 参数 | 描述
@@ -38,7 +40,7 @@ Usage:
 content| 待解密字符串
 key|解密的密匙
 initVector|初始向量
- 
+
 Usage:
 
 ```
@@ -53,14 +55,16 @@ Usage:
  AESUtil.decodeByCBC(encodeStr,KEY,IV);// return "hello world"
 
 ```
+
 ## 3. encodeByECB(String content, String key)方法
+
 该方法表示使用EBC模式来加密字符串
 
 参数 | 描述
 ---|---
 content| 待加密字符串
 key|解密的密匙
- 
+
 Usage:
 
 ```
@@ -69,14 +73,16 @@ Usage:
  AESUtil.encodeByECB("hello world",KEY);//renturn "4uw/w/ozV7rZWZvcz57ExA=="
 
 ```
+
 ## 4. decodeByEBC(String content, String key)方法
+
 该方法表示使用ECB模式来解密已加密的字符串
 
 参数 | 描述
 ---|---
 content| 待解密字符串
 key|解密的密匙
- 
+
 Usage:
 
 ```
@@ -86,18 +92,18 @@ Usage:
  AESUtil.decodeByECB(encodeStr,KEY);// return "hello world"
 
 ```
+
 ## 5. decryptByECB(byte[] content, byte[] key)方法
+
 该方法使用ECB模式来解密，解密后返回二进制数组，本方法主要用于解密第三方加密的秘串，
 前面直接解密加密字符串，在解密其他人给的加密串是并不有效，因为加密实现不对等。
 但是该方法没有做任何多余实现，更够解密其他aes加密的二进制密文。
-
-
 
 参数 | 描述
 ---|---
 content| 待解密字符串
 key|解密的密匙
- 
+
 Usage:
 
 ```
@@ -112,14 +118,16 @@ Usage:
  //仅供参考，测试时请自行修改数据
 
 ```
+
 ## 6. encryptByECB(byte[] content, byte[] key)方法
+
 该方法表示使用ECB模式来加密字符串
 
 参数 | 描述
 ---|---
 content| 待加密字符串
 key|解密的密匙
- 
+
 Usage:
 
 ```

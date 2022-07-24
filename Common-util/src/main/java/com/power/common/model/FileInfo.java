@@ -30,7 +30,7 @@ public class FileInfo {
      */
     private String mimeType;
 
-    public static FileInfo builder(){
+    public static FileInfo builder() {
         return new FileInfo();
     }
 
