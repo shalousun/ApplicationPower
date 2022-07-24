@@ -9,18 +9,19 @@
     <artifactId>application-power</artifactId>
     <packaging>jar</packaging>
     <name>application-power</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
 
     <properties>
         <project.build.jdkVersion>1.8</project.build.jdkVersion>
         <log4j.version>2.17.2</log4j.version>
+        <junit.jupiter.version>5.8.2</junit.jupiter.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <!--log4j2-->
@@ -73,12 +74,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.8</version>
         </dependency>
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>common-util</artifactId>
-            <version>2.1.1</version>
+            <version>2.1.4</version>
         </dependency>
     </dependencies>
     <build>

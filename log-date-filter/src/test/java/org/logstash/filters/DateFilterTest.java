@@ -3,8 +3,8 @@ package org.logstash.filters;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.logstash.filters.parser.JodaParser;
 
 import java.util.HashMap;
@@ -180,8 +180,8 @@ public class DateFilterTest {
     }
 
     private void commonAssertions(String supplied, String expected) {
-        Assert.assertEquals(expected, supplied);
-        Assert.assertTrue(String.format("Unequal - expected: %s, actual: %s", expected, supplied), expected.equals(supplied));
+        Assertions.assertEquals(expected, supplied);
+        Assertions.assertTrue(expected.equals(supplied),String.format("Unequal - expected: %s, actual: %s", expected, supplied));
     }
 
     class TestClock implements JodaParser.Clock {

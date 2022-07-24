@@ -20,12 +20,13 @@
 package org.logstash.filters.parser;
 
 import org.joda.time.Instant;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class JodaParserTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void emptyShouldFail() {
         new TimestampParserFactory().makeParser("", "en", "UTC");
     }

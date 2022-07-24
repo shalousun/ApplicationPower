@@ -148,7 +148,6 @@ public class OkHttp3Util {
      */
     public static String syncPostJson(String url, String json) {
         RequestBody body = RequestBody.create(json, JSON_TYPE);
-        ;
         return doSyncPost(url, body, null);
     }
 
@@ -174,7 +173,6 @@ public class OkHttp3Util {
      */
     public static String syncPostJson(String url, String json, Map<String, String> headersMap) {
         RequestBody body = RequestBody.create(json, JSON_TYPE);
-        ;
         LOGGER.debug("OkHttp3 sync json param:{} ", json);
         return doSyncPost(url, body, headersMap);
     }
@@ -189,7 +187,6 @@ public class OkHttp3Util {
      */
     public static void asyncPostJson(String url, String json, Map<String, String> headersMap, Callback callback) {
         RequestBody body = RequestBody.create(json, JSON_TYPE);
-        ;
         LOGGER.debug("OkHttp3 async post json param:{} ", json);
         doAsyncPost(url, body, headersMap, callback);
     }
