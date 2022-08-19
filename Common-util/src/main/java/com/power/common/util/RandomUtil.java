@@ -183,6 +183,14 @@ public class RandomUtil {
             case "Time":  //91
             case "Date":
                 return DateTimeUtil.dateToStr(new Date(), DateTimeUtil.DATE_FORMAT_SECOND);
+            case "LocalTime":
+                return DateTimeUtil.dateToStr(new Date(), DateTimeUtil.LOCAL_TIME);
+            case "Year":
+                return DateTimeUtil.dateToStr(new Date(), DateTimeUtil.YEAR);
+            case "MonthDay":
+                return DateTimeUtil.dateToStr(new Date(), DateTimeUtil.MONTH_DAY);
+            case "YearMonth":
+                return DateTimeUtil.dateToStr(new Date(), DateTimeUtil.YEAR_MONTH);
             case "LocalDate":
                 return DateTimeUtil.long2Str(System.currentTimeMillis(), DateTimeUtil.DATE_FORMAT_DAY);
             case "Timestamp":  //91
