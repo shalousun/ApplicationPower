@@ -24,6 +24,14 @@ public class DateTimeUtil {
     public static final String DATE_FORMAT_SECOND = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT_SECOND_12 = "yyyy-MM-dd hh:mm:ss";
     public static final String DATE_FORMAT_MILLISECOND = "yyyy-MM-dd HH:mm:ss.SSS";
+
+    public static final String LOCAL_TIME = "HH:mm:ss";
+
+    public static final String YEAR = "yyyy";
+
+    public static final String YEAR_MONTH ="yyyy-MM";
+
+    public static final String MONTH_DAY = "MM-dd";
     public static final String DATE_FORMAT_CHINESE = "yyyy年MM月dd日";
     public static final String DATE_FORMAT_CHINESE_SECONDE = "yyyy年MM月dd日 HH:mm:ss";
     public static final String DATE_FORMAT_CHINESE_WEEK_SECONDE = "yyyy年MM月dd日 E HH:mm:ss";
