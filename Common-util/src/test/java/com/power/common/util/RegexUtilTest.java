@@ -26,8 +26,8 @@ public class RegexUtilTest {
 
     @Test
     public void testExtractMap() {
-        String msg = "2022-07-22 10:19:23.684 ERROR [springboot-docker] [http-nio-8080-exec-10] com.benchmark.springboot.controller.LogController : error log\n";
-        String reg = "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+\\.\\d+)\\s+(\\w+)\\s+\\[([^]]+)]\\s+\\[([^]]+)]\\s+(\\S+)\\s:\\s(.*)";
+        String msg = "2022-08-01 23:00:53.603 [http-nio-8080-exec-9] ERROR com.benchmark.springboot.controller.LogController@testLog:28 - error log";
+        String reg = "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+\\.\\d+)\\s+\\[([^]]+)]\\s+(\\w+)\\s+(\\S+)\\s-\\s(.*)";
         System.out.println(ValidateUtil.validate(msg, reg));
 
         List<String> arr = RegexUtil.extractStrings(reg, msg);

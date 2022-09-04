@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
+        <version>2.7.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.4.2</version>
+            <version>1.4.3</version>
         </dependency>
         <%} %>
         <%if(useDb){ %>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.9</version>
+            <version>1.2.11</version>
         </dependency>
          <%} %>
         <%if(useMybatisPlus){%>
@@ -104,7 +104,7 @@
         <dependency>
              <groupId>com.baomidou</groupId>
              <artifactId>mybatis-plus-boot-starter</artifactId>
-             <version>3.5.1</version>
+             <version>3.5.2</version>
         </dependency>
          <%}%>
          <!--log4j2 Asynchronous Loggers requires disruptor-->
@@ -133,7 +133,7 @@
         <dependency>
            <groupId>com.github.shalousun</groupId>
            <artifactId>common-util</artifactId>
-           <version>2.1.4</version>
+           <version>2.1.5</version>
          </dependency>
        <% if(lombok){%>
         <dependency>
@@ -157,7 +157,7 @@
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>2.4.8</version>
+                <version>2.5.2</version>
                 <configuration>
                     <!--smart-doc-->
                     <configFile>./src/main/resources/smart-doc.json</configFile>

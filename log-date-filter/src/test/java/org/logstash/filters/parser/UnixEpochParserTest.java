@@ -20,10 +20,7 @@
 package org.logstash.filters.parser;
 
 import org.joda.time.Instant;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -31,9 +28,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
-@RunWith(Parameterized.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class UnixEpochParserTest {
     static Random random = new Random();
     private Instant expected;
@@ -44,7 +42,6 @@ public class UnixEpochParserTest {
     }
 
     // XXX: Make these be theories and rules instead.
-    @Parameters
     public static Collection<Object[]> samples() {
         int count = random.nextInt(1000) + 1;
 

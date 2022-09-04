@@ -1,12 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.6'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
     id 'java'
     <%if(isUseDocker){ %>
     id 'docker'
      <% } %>
     id "maven-publish"
-    id "com.github.shalousun.smart-doc" version "2.4.5"
+    id "com.github.shalousun.smart-doc" version "2.5.2"
 }
 group '${basePackage}'
 version '1.0'
@@ -42,7 +42,6 @@ smartdoc {
 }
 
 dependencies {
-    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
     implementation('org.springframework.boot:spring-boot-starter'){
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
@@ -50,8 +49,8 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
     implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.2.2'
-    implementation group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.4.2'
-    implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.2.9'
+    implementation group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.4.3'
+    implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.2.11'
     runtimeOnly 'mysql:mysql-connector-java'
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'
@@ -64,11 +63,11 @@ dependencies {
     <% if(isMultipleDataSource){%>
     implementation 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    implementation 'com.github.shalousun:common-util:2.1.2'
+    implementation 'com.github.shalousun:common-util:2.1.5'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'com.github.shalousun:smart-doc:2.4.5'
+    testImplementation 'com.github.shalousun:smart-doc:2.5.2'
 
 }
 
