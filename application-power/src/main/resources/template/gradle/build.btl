@@ -6,7 +6,7 @@ plugins {
     id 'docker'
      <% } %>
     id "maven-publish"
-    id "com.github.shalousun.smart-doc" version "2.5.2"
+    id "com.github.shalousun.smart-doc" version "2.5.3"
 }
 group '${basePackage}'
 version '1.0'
