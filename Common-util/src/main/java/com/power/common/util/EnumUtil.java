@@ -29,6 +29,9 @@ public class EnumUtil {
         if (!clazz.isEnum()) {
             throw new RuntimeException(clazz.getCanonicalName() + " is not an enum class.");
         }
+        if (StringUtil.isEmpty(codeField) || StringUtil.isEmpty(descField)) {
+            throw new RuntimeException(clazz.getCanonicalName() + ":Please specify the code field name of the dictionary enumeration class and the field name that describes the dictionary code information");
+        }
         Class<Enum> enumClass = (Class<Enum>) clazz;
         Enum[] objects = enumClass.getEnumConstants();
         String valueMethodName = "get" + StringUtil.firstToUpperCase(codeField);
