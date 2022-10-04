@@ -5,8 +5,12 @@ import com.power.common.filter.FileNameFilter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -98,5 +102,28 @@ public class ClassUtil {
         } else {
             return "object";
         }
+    }
+
+    /**
+     * Get Map of final field and value
+     *
+     * @param clazz Java class
+     * @return Map
+     * @throws IllegalAccessException IllegalAccessException
+     */
+    public static Map<String, String> getFinalFieldValue(Class<?> clazz) throws IllegalAccessException {
+        String className = clazz.getName();
+        Field[] fields = clazz.getDeclaredFields();
+        Map<String, String> constants = new HashMap<>();
+        for (Field field : fields) {
+            if (Modifier.isPrivate(field.getModifiers())) {
+                continue;
+            }
+            if (Modifier.isFinal(field.getModifiers()) && Modifier.isStatic(field.getModifiers())) {
+                String name = field.getName();
+                constants.put(className + "." + name, String.valueOf(field.get(null)));
+            }
+        }
+        return constants;
     }
 }

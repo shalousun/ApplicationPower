@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.UUID;
 
 /**
+ * UUID util
  * @author yu 2018/10/14.
  */
 public class UUIDUtil {

@@ -9,32 +9,32 @@ import java.io.Serializable;
 public abstract class BaseResult<T> implements Serializable {
 
     /**
-     * 是否成功
+     * Is successful
      */
     private boolean success = false;
 
     /**
-     * 错误提示(成功succeed)
+     * Error message (while success is true return succeed)
      */
     private String message;
 
     /**
-     * 处理成功返回的业务数据
+     * Return data
      */
     private T data;
 
     /**
-     * 错误代码
+     * Error code
      */
     private String code;
 
     /**
-     * 响应时间
+     * Response time
      */
     private String timestamp;
 
     /**
-     * 链路ID
+     * Trace  ID
      */
     private String traceId;
 

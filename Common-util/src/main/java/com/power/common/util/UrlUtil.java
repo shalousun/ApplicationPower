@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Url Util
  * @author yu 2019/9/18.
  */
 public class UrlUtil {
@@ -47,8 +48,7 @@ public class UrlUtil {
         if (index != -1) {
             String urlHead = url.substring(0, index + 2);
             String urlTail = url.substring(index + 2).replaceAll("/+", "/");
-            String finalUrl = new StringBuilder().append(urlHead).append(urlTail).toString();
-            return finalUrl;
+            return new StringBuilder().append(urlHead).append(urlTail).toString();
         } else {
             return url.replaceAll("/+", "/");
         }

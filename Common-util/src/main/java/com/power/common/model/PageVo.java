@@ -37,17 +37,17 @@ public class PageVo<T> implements Serializable {
     private String url;
 
     /**
-     * 页码,当前页数
+     * page index
      */
     private Integer pageIndex;
 
     /**
-     * 分页条数
+     * page size
      */
     private Integer pageSize;
 
     /**
-     * 查询结果
+     * result items
      */
     private List<T> items;
 

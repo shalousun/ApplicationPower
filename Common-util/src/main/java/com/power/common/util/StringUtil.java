@@ -1,12 +1,14 @@
 package com.power.common.util;
 
 /**
+ * StringUtil
  * @author sunyu
  */
 
 import com.power.common.constants.Charset;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -93,7 +95,7 @@ public class StringUtil {
     public static String convertTo8859(String str) {
         String strOutPut = "";
         try {
-            byte[] tempStrByte = str.getBytes("ISO-8859-1");
+            byte[] tempStrByte = str.getBytes(StandardCharsets.ISO_8859_1);
             strOutPut = new String(tempStrByte);
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,7 +169,7 @@ public class StringUtil {
      */
     public static String cleanXSS(String value) {
         if (null == value) {
-            return value;
+            return null;
         } else {
             value = value.replaceAll("\\bselect\\b", "invalid character");
             value = value.replaceAll("\\band\\b", "invalid character");
@@ -354,7 +356,7 @@ public class StringUtil {
      * @return String
      */
     public static String binaryString2hexString(String bString) {
-        if (bString == null || bString.equals("") || bString.length() % 8 != 0) {
+        if (isEmpty(bString) || bString.length() % 8 != 0) {
             return null;
         }
         StringBuilder tmp = new StringBuilder();
@@ -388,11 +390,12 @@ public class StringUtil {
     }
 
     /**
+     * Usage: StringUtil.fillStringByArgs("key={0},value={1}", "1","2")
      * @param str
      * @param arr
      * @return
      */
-    private static String fillStringByArgs(String str, String[] arr) {
+    public static String fillStringByArgs(String str, String ...arr) {
         Matcher m = Pattern.compile("\\{(\\d)\\}").matcher(str);
         while (m.find()) {
             str = str.replace(m.group(), arr[Integer.parseInt(m.group(1))]);
@@ -423,18 +426,6 @@ public class StringUtil {
     }
 
     /**
-     * 生成指定长度的随机整数
-     *
-     * @param length int
-     * @return String
-     */
-    public static String createRandom(int length) {
-        double a = Math.pow(10, length - 1);
-        int num = (int) ((Math.random() * 9 + 1) * a);
-        return String.valueOf(num);
-    }
-
-    /**
      * Remove single or double quotes in query keywords to avoid sql errors
      *
      * @param str String
@@ -461,36 +452,6 @@ public class StringUtil {
         } else {
             return "";
         }
-    }
-
-    /**
-     * replace special character of html
-     *
-     * @param html html tag
-     * @return String after replaced}
-     */
-    public static String replaceHtml(String html) {
-        if (isEmpty(html)) {
-            return "";
-        }
-        String regEx = "<.+?>";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(html);
-        String s = m.replaceAll("");
-        return s;
-    }
-
-    /**
-     * replace special character of html
-     *
-     * @param html html tag
-     * @return String after replaced}
-     */
-    public static String replaceMobileHtml(String html) {
-        if (Objects.isNull(html)) {
-            return "";
-        }
-        return html.replaceAll("<([a-z]+?)\\s+?.*?>", "<$1>");
     }
 
 
