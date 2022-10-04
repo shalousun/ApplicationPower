@@ -57,6 +57,9 @@ public class FileUtil {
         File filePath = new File(path);
         if (filePath.isDirectory()) {
             File[] list = filePath.listFiles();
+            if (Objects.isNull(list)) {
+                list = new File[0];
+            }
             for (File file : list) {
                 String newPath = path + File.separator + file.getName();
                 String newCopyPath = copyPath + File.separator + file.getName();
@@ -202,7 +205,6 @@ public class FileUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            flag = false;
         } finally {
             try {
                 if (Objects.nonNull(output)) {

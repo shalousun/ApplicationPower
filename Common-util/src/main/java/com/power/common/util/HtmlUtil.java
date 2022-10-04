@@ -36,7 +36,7 @@ public class HtmlUtil {
      */
     public static String replaceMobileHtml(String html) {
         if (Objects.isNull(html)) {
-            return null;
+            return StringUtil.EMPTY;
         }
         return html.replaceAll("<([a-z]+?)\\s+?.*?>", "<$1>");
     }
@@ -49,7 +49,7 @@ public class HtmlUtil {
      */
     public static String replaceHtml(String html) {
         if (Objects.isNull(html)) {
-            return null;
+            return StringUtil.EMPTY;
         }
         String regEx = "<.+?>";
         Pattern p = Pattern.compile(regEx);

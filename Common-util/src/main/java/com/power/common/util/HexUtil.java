@@ -13,8 +13,8 @@ public class HexUtil {
      */
     public static String byteArr2HexStr(byte[] buf) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < buf.length; i++) {
-            String hex = Integer.toHexString(buf[i] & 0xFF);
+        for (byte b : buf) {
+            String hex = Integer.toHexString(b & 0xFF);
             if (hex.length() == 1) {
                 hex = '0' + hex;
             }

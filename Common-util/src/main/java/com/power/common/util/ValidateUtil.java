@@ -255,7 +255,7 @@ public class ValidateUtil {
      * @param str string
      * @return boolean
      */
-    public static boolean isNonnegativeInteger(String str) {
+    public static boolean isNonNegativeInteger(String str) {
         return validate(str, "^\\d+$");
     }
 
@@ -348,9 +348,8 @@ public class ValidateUtil {
     /**
      * Verify that it is a valid url address and does not support Chinese.
      * Usage:
-     * https://www.baidu.com:8080/a/n?a=5，
-     * https://192.168.15.96:8080/a/n?a=5
-     *
+     * <a href="https://www.baidu.com:8080/a/n?a=5">...</a>，
+     * <a href="https://192.168.15.96:8080/a/n?a=5">...</a>
      * @param url http,https,ftp url
      * @return boolean
      */
@@ -575,10 +574,7 @@ public class ValidateUtil {
         }
         Pattern p = Pattern.compile(CONTAINS_CHINESE_PATTERN);
         Matcher m = p.matcher(str);
-        if (m.find()) {
-            return true;
-        }
-        return false;
+        return m.find();
     }
 
     /**

@@ -103,27 +103,4 @@ public class ClassUtil {
             return "object";
         }
     }
-
-    /**
-     * Get Map of final field and value
-     *
-     * @param clazz Java class
-     * @return Map
-     * @throws IllegalAccessException IllegalAccessException
-     */
-    public static Map<String, String> getFinalFieldValue(Class<?> clazz) throws IllegalAccessException {
-        String className = clazz.getName();
-        Field[] fields = clazz.getDeclaredFields();
-        Map<String, String> constants = new HashMap<>();
-        for (Field field : fields) {
-            if (Modifier.isPrivate(field.getModifiers())) {
-                continue;
-            }
-            if (Modifier.isFinal(field.getModifiers()) && Modifier.isStatic(field.getModifiers())) {
-                String name = field.getName();
-                constants.put(className + "." + name, String.valueOf(field.get(null)));
-            }
-        }
-        return constants;
-    }
 }

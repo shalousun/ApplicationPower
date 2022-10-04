@@ -14,9 +14,9 @@ public class IpUtil {
     private static String serverIp;
 
     static {
-        InetAddress ia = null;
+        InetAddress ia;
         try {
-            ia = ia.getLocalHost();
+            ia = InetAddress.getLocalHost();
             serverIp = ia.getHostAddress();
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class IpUtil {
      * @param request HttpServletRequest
      * @return string
      */
-    public static String getIpAddr(HttpServletRequest request) {
+    public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
@@ -64,7 +64,7 @@ public class IpUtil {
      */
     public static Map<String, String> getLocalIPV4() {
         Map<String, String> map = new HashMap<>();
-        InetAddress ip = null;
+        InetAddress ip;
         try {
             Enumeration<NetworkInterface> netInterfaces = NetworkInterface.getNetworkInterfaces();
             while (netInterfaces.hasMoreElements()) {
@@ -90,7 +90,7 @@ public class IpUtil {
      */
     public static Map<String, String> getLocalIPV6() {
         Map<String, String> map = new HashMap<>();
-        InetAddress ip = null;
+        InetAddress ip;
         try {
             Enumeration<NetworkInterface> netInterfaces = NetworkInterface.getNetworkInterfaces();
             while (netInterfaces.hasMoreElements()) {

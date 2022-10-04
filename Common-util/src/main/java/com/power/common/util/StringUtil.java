@@ -52,7 +52,7 @@ public class StringUtil {
         String character = s.substring(0, 1);
         String replace = "";
         String test = s.replace(character, replace);
-        return "".equals(test);
+        return EMPTY.equals(test);
     }
 
     /**
@@ -128,9 +128,7 @@ public class StringUtil {
      * @return String
      */
     public static String filterStr(String str) {
-        if (isEmpty(str)) {
-            return str;
-        } else {
+        if (!isEmpty(str)) {
             str = str.replaceAll(";", "");
             str = str.replaceAll("%", "");
             str = str.replaceAll("--", "");
@@ -140,8 +138,8 @@ public class StringUtil {
             str = str.replaceAll("\\(", "&#40;").replace("\\)", "&#41;");
             str = str.replaceAll("<", "&lt");
             str = str.replaceAll(">", "&gt");
-            return str;
         }
+        return str;
     }
 
     /**
@@ -150,15 +148,13 @@ public class StringUtil {
      * @param str sql
      * @return string
      */
-    public static String cleanSqlWildCharater(String str) {
-        if (isEmpty(str)) {
-            return str;
-        } else {
+    public static String cleanSqlWildCharacter(String str) {
+        if (!isEmpty(str)) {
             str = str.replaceAll("%", "invalid character");
             str = str.replaceAll("_", "invalid character");
             str = str.replaceAll("=", "invalid character");
-            return str;
         }
+        return str;
     }
 
     /**
@@ -204,7 +200,7 @@ public class StringUtil {
      */
     public static String camelToUnderline(String param) {
         if (param == null || "".equals(param.trim())) {
-            return "";
+            return EMPTY;
         }
         int length = param.length();
         StringBuilder sb = new StringBuilder(length);
@@ -247,7 +243,7 @@ public class StringUtil {
      * @return String after Camel case
      */
     public static String toCapitalizeCamelCase(String s) {
-        if (s == null) {
+        if (Objects.isNull(s)) {
             return null;
         }
         s = underlineToCamel(s);
@@ -381,26 +377,27 @@ public class StringUtil {
         if (hexString == null || hexString.length() % 2 != 0) {
             return null;
         }
-        String bString = "", tmp;
+        StringBuilder bString = new StringBuilder();
+        String tmp;
         for (int i = 0; i < hexString.length(); i++) {
             tmp = "0000" + Integer.toBinaryString(Integer.parseInt(hexString.substring(i, i + 1), 16));
-            bString += tmp.substring(tmp.length() - 4);
+            bString.append(tmp.substring(tmp.length() - 4));
         }
-        return bString;
+        return bString.toString();
     }
 
     /**
      * Usage: StringUtil.fillStringByArgs("key={0},value={1}", "1","2")
-     * @param str
-     * @param arr
-     * @return
+     * @param format the format string
+     * @param args a list of arguments
+     * @return formatted string
      */
-    public static String fillStringByArgs(String str, String ...arr) {
-        Matcher m = Pattern.compile("\\{(\\d)\\}").matcher(str);
+    public static String fillStringByArgs(String format, String ...args) {
+        Matcher m = Pattern.compile("\\{(\\d)\\}").matcher(format);
         while (m.find()) {
-            str = str.replace(m.group(), arr[Integer.parseInt(m.group(1))]);
+            format = format.replace(m.group(), args[Integer.parseInt(m.group(1))]);
         }
-        return str;
+        return format;
     }
 
     /**
@@ -433,9 +430,9 @@ public class StringUtil {
      */
     public static String removeQuotes(String str) {
         if (isNotEmpty(str)) {
-            return str.replaceAll("'", "").replaceAll("\"", "");
+            return str.replaceAll("'", EMPTY).replaceAll("\"", EMPTY);
         } else {
-            return "";
+            return EMPTY;
         }
     }
 
@@ -448,9 +445,9 @@ public class StringUtil {
 
     public static String removeDoubleQuotes(String str) {
         if (isNotEmpty(str)) {
-            return str.replaceAll("\"", "");
+            return str.replaceAll("\"", EMPTY);
         } else {
-            return "";
+            return EMPTY;
         }
     }
 
@@ -463,7 +460,7 @@ public class StringUtil {
      */
     public static String getChinese(String str) {
         String reg = "[^\u4e00-\u9fa5]";
-        str = str.replaceAll(reg, "");
+        str = str.replaceAll(reg, EMPTY);
         return str;
     }
 
@@ -475,7 +472,7 @@ public class StringUtil {
      */
     public static String getNotChinese(String str) {
         String reg = "[^A-Za-z0-9_]";
-        str = str.replaceAll(reg, "");
+        str = str.replaceAll(reg, EMPTY);
         return str;
     }
 
@@ -536,7 +533,7 @@ public class StringUtil {
      */
     public static String unicode2String(String unicode) {
         if (StringUtil.isEmpty(unicode)) {
-            return "";
+            return EMPTY;
         }
         StringBuilder string = new StringBuilder();
         String[] hex = unicode.split("\\\\u");
@@ -549,7 +546,7 @@ public class StringUtil {
 
     private static String toCamel(String param, char s) {
         if (param == null || "".equals(param.trim())) {
-            return "";
+            return EMPTY;
         }
         int length = param.length();
         StringBuilder sb = new StringBuilder(length);
@@ -584,7 +581,7 @@ public class StringUtil {
      * @see java.lang.String#trim()
      */
     public static String[] tokenizeToStringArray(String str, String delimiters) {
-        return tokenizeToStringArray(str, delimiters, true, true);
+        return tokenizeToStringArray(str, delimiters, Boolean.TRUE, Boolean.TRUE);
     }
 
     /**
@@ -616,7 +613,7 @@ public class StringUtil {
             return null;
         }
         StringTokenizer st = new StringTokenizer(str, delimiters);
-        List tokens = new ArrayList();
+        List<String> tokens = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
             if (trimTokens) {
@@ -644,7 +641,7 @@ public class StringUtil {
         if (Objects.isNull(collection)) {
             return null;
         }
-        return (String[]) collection.toArray(new String[collection.size()]);
+        return (String[]) collection.toArray(new String[0]);
     }
 
 

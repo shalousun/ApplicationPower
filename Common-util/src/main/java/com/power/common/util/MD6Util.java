@@ -44,10 +44,7 @@ public class MD6Util {
         String rdStr = md6Str.substring(0, 2);
         String str = DigestUtils.md5Hex(rdStr + plaintext);
         str = rdStr + str.substring(0, 30);
-        if (str.equals(md6Str)) {
-            return true;
-        }
-        return false;
+        return str.equals(md6Str);
     }
 
 

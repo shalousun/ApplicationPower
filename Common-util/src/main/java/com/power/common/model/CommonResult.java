@@ -125,9 +125,9 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * Add traceId
+     * Add trace ID
      *
-     * @param traceId
+     * @param traceId Trace ID
      * @return
      */
     public CommonResult<T> addTraceId(String traceId) {
