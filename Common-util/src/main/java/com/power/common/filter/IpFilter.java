@@ -57,7 +57,7 @@ public class IpFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         //get client ip
         HttpServletRequest req = (HttpServletRequest) request;
-        String ip = IpUtil.getIpAddr(req);
+        String ip = IpUtil.getIpAddress(req);
         if (null != denySet) {
             if (denySet.contains(ip)) {
                 handleMsg(response, ip);
