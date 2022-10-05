@@ -9,6 +9,7 @@ import com.power.common.constants.Charset;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -387,17 +388,20 @@ public class StringUtil {
     }
 
     /**
-     * Usage: StringUtil.fillStringByArgs("key={0},value={1}", "1","2")
+     * Usage: StringUtil.format("key={},value={}", "1","2")
      * @param format the format string
      * @param args a list of arguments
      * @return formatted string
      */
-    public static String fillStringByArgs(String format, String ...args) {
-        Matcher m = Pattern.compile("\\{(\\d)\\}").matcher(format);
-        while (m.find()) {
-            format = format.replace(m.group(), args[Integer.parseInt(m.group(1))]);
+    public static String format(String format, Object ...args) {
+        if (Objects.isNull(format)) {
+            return null;
         }
-        return format;
+        int i = 0;
+        while(format.contains("{}")) {
+            format = format.replaceFirst(Pattern.quote("{}"), "{"+ i++ +"}");
+        }
+        return MessageFormat.format(format, args);
     }
 
     /**

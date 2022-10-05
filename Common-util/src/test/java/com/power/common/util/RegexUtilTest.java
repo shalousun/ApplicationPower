@@ -26,7 +26,7 @@ public class RegexUtilTest {
 
     @Test
     public void testExtractMap() {
-        String msg = "2022-08-01 23:00:53.603 [http-nio-8080-exec-9] ERROR com.benchmark.springboot.controller.LogController@testLog:28 - error log";
+        String msg = "2022-07-20 16:55:05.415 [http-nio-8080-exec-1] INFO org.springframework.web.servlet.DispatcherServlet@initServletBean:547 - Completed initialization in 9 ms";
         String reg = "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+\\.\\d+)\\s+\\[([^]]+)]\\s+(\\w+)\\s+(\\S+)\\s-\\s(.*)";
         System.out.println(ValidateUtil.validate(msg, reg));
 
