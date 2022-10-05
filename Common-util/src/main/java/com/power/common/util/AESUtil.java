@@ -309,7 +309,7 @@ public class AESUtil {
      * @param mode       Algorithmic mode
      * @param padding    padding pattern
      * @return byte array
-     * @throws GeneralSecurityException
+     * @throws GeneralSecurityException exception
      */
     private static byte[] doFinal(byte[] content, byte[] key, byte[] initVector, int mode, String padding)
             throws GeneralSecurityException {
@@ -342,7 +342,7 @@ public class AESUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return base64 ? new String(Objects.requireNonNull(Base64.encodeBase64(encryptResult))) : HexUtil.byteArr2HexStr(encryptResult);
+        return base64 ? new String(Objects.requireNonNull(Base64.encodeBase64(encryptResult))) : HexUtil.byteArr2HexStr(Objects.requireNonNull(encryptResult));
     }
 
     /**

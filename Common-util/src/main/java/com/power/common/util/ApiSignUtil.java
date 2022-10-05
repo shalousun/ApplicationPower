@@ -23,7 +23,7 @@ public class ApiSignUtil {
      * @return hash map
      */
     public static Map<String, Object> sign(String appID, String SECRET, String nonceStr) {
-        Map<String, Object> ret = new HashMap<>();
+        Map<String, Object> ret = new HashMap<>(4);
         long timestamp = System.currentTimeMillis() / 1000L;
         String signature = ApiSignUtil.getSignature(appID, SECRET, nonceStr, timestamp);
         ret.put("nonceStr", nonceStr);

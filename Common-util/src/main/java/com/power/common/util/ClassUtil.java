@@ -27,12 +27,11 @@ public class ClassUtil {
      * @return List
      */
     public static List<Class> getClasses(String modelPackage, String root) {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(root.replaceAll("\\\\", "/"));
-        buffer.append("/src/main/java/");
-        buffer.append(modelPackage.replace(".", "/"));
+        String buffer = root.replaceAll("\\\\", "/")
+            + "/src/main/java/"
+            + modelPackage.replace(".", "/");
         List<Class> list = new ArrayList<>();
-        File entryFile = new File(buffer.toString());
+        File entryFile = new File(buffer);
         File[] eFiles = entryFile.listFiles(new FileNameFilter("java"));
         try {
             for (File ef : eFiles) {

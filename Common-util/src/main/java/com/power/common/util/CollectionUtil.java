@@ -85,7 +85,7 @@ public class CollectionUtil {
     public static <T> List<List<T>> partition(List<T> list, final int size) {
         if (list != null && list.size() > 0) {
             return new ArrayList<>(IntStream.range(0, list.size()).boxed().collect(
-                    Collectors.groupingBy(e -> e / size, Collectors.mapping(e -> list.get(e), Collectors.toList())
+                    Collectors.groupingBy(e -> e / size, Collectors.mapping(list::get, Collectors.toList())
                     )).values());
         } else {
             throw new NullPointerException("List can't be null");
@@ -100,6 +100,7 @@ public class CollectionUtil {
      * @param a   object array
      * @return List
      */
+    @SafeVarargs
     public static <T> List<T> asList(T... a) {
         if (null != a) {
             return Arrays.asList(a);
@@ -121,17 +122,17 @@ public class CollectionUtil {
      */
     public static <T> List<T> mergeAndSwap(List<T> result1, List<T> result2) {
 
-        //两个数据都为空，则返回空的结合
+        // If both collections are empty, return an empty collection
         if (CollectionUtil.isEmpty(result1) && CollectionUtil.isEmpty(result2)) {
             return new ArrayList<>(0);
         }
 
-        //近使用result2的结果，无需合并
+        // Use only the result of result2, no need to merge
         if (CollectionUtil.isEmpty(result1) && CollectionUtil.isNotEmpty(result2)) {
             return result2;
         }
 
-        //仅仅使用result1的结果，无需合并
+        // Only use the result of result1, no need to merge
         if (CollectionUtil.isNotEmpty(result1) && CollectionUtil.isEmpty(result2)) {
             return result1;
         }
@@ -139,7 +140,7 @@ public class CollectionUtil {
         int a = result1.size();
         int b = result2.size();
         int size = a + b;
-        //两个list的值交叉合并算法(暂时未经过测试)
+        // Cross-merge the values ​​of two list collections
         List<T> finalResult = new ArrayList<>(size);
         if (a >= b) {
             for (int i = 0; i < size; i++) {
@@ -172,8 +173,9 @@ public class CollectionUtil {
 
 
     /**
-     * 将List集合中的无效的map数据清空，被指定为排除的字段
-     * 即使map中这些指定字段有值,只要其他的key是无效的数据都会被被移除，但是0并不代表没有值
+     * Clear the invalid map data in the List collection,
+     * Even if these specified fields in the map have values, as long as other keys are invalid data will be removed,
+     * but 0 does not mean no value
      *
      * @param list       list of map data
      * @param exceptKeys except keys

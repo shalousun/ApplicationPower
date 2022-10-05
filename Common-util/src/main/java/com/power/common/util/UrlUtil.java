@@ -1,6 +1,7 @@
 package com.power.common.util;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -18,7 +19,7 @@ public class UrlUtil {
      */
     public static String urlJoin(String url, Map<String, String> params) {
         StringBuilder endUrl = new StringBuilder(url);
-        if (null == params) {
+        if (Objects.isNull(params)) {
             return url;
         }
         boolean isFirst = true;
@@ -48,7 +49,7 @@ public class UrlUtil {
         if (index != -1) {
             String urlHead = url.substring(0, index + 2);
             String urlTail = url.substring(index + 2).replaceAll("/+", "/");
-            return new StringBuilder().append(urlHead).append(urlTail).toString();
+            return urlHead + urlTail;
         } else {
             return url.replaceAll("/+", "/");
         }

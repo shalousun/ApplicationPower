@@ -113,7 +113,6 @@ public class FileUtil {
         }
     }
 
-
     /**
      * Convert InputStream to byte array
      *
