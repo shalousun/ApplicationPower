@@ -8,11 +8,11 @@ FileUtil是一些常见的文件操作统一封装。所属的包为com.power.co
 
 该方法用于将字符串内容写到本地文件中，写文件时可选择是否追加，默认编码为utf-8
 
-参数 | 描述
----|---
-source| 字符串内容
-filePath | 保存的文件路径
-append | 是否使用文件追加，true表示追加
+| 参数       | 描述                |
+|----------|-------------------|
+| source   | 字符串内容             |
+| filePath | 保存的文件路径           |
+| append   | 是否使用文件追加，true表示追加 |
 
 Usage:
 
@@ -24,10 +24,10 @@ FileUtil.writeFile("hello", "/usr/local/hello.txt",true);//return true or false
 
 该方法用于字符串内容写到本地文件系统中，每次写入都会覆盖文件中旧的内容，默认编码为utf-8
 
-参数 | 描述
----|---
-source| 字符串内容
-filePath | 保存的文件路径
+| 参数       | 描述      |
+|----------|---------|
+| source   | 字符串内容   |
+| filePath | 保存的文件路径 |
 
 Usage:
 
@@ -39,11 +39,11 @@ FileUtil.writeFileNotAppend("hello", "/usr/local/hello.txt");//return true or fa
 
 该方法用于字符串内容写到本地文件系统中，写文件时可选择是否追加
 
-参数 | 描述
----|---
-source| 字符串内容
-file | 保存内容的文件
-append | 是否使用文件追加，true表示追加
+| 参数     | 描述                |
+|--------|-------------------|
+| source | 字符串内容             |
+| file   | 保存内容的文件           |
+| append | 是否使用文件追加，true表示追加 |
 
 Usage:
 
@@ -55,9 +55,9 @@ FileUtil.writeFile("hello", new File("/usr/local/hello.txt"),true);//return true
 
 该方法用于获取文件内容并将内容做为字符串返回
 
-参数 | 描述
----|---
-fileName| 文件名称
+| 参数       | 描述   |
+|----------|------|
+| fileName | 文件名称 |
 
 Usage:
 
@@ -69,18 +69,18 @@ FileUtil.getFileContent("/usr/local/hello.txt");//return "hello"
 
 该方法用于从输入流中获取字符串内容
 
-参数 | 描述
----|---
-is| 输入流
+| 参数  | 描述  |
+|-----|-----|
+| is  | 输入流 |
 
 ## 6. nioWriteFile(String contents,String filePath)方法
 
 该方法采用nio的方式将字符串内容写入到文件系统中，写入时旧的内容会被新的覆盖，默认编码为utf-8
 
-参数 | 描述
----|---
-source| 字符串内容
-filePath | 保存的文件路径
+| 参数       | 描述      |
+|----------|---------|
+| source   | 字符串内容   |
+| filePath | 保存的文件路径 |
 
 Usage:
 
@@ -92,10 +92,10 @@ FileUtil.nioWriteFile("hello","/usr/local/hello.txt");//return true or false
 
 该方法采用nio的方式将字符串内容写入到文件系统中，新的内容会被追加到旧的内容后面，默认编码为utf-8
 
-参数 | 描述
----|---
-source| 字符串内容
-filePath | 保存的文件路径
+| 参数       | 描述      |
+|----------|---------|
+| source   | 字符串内容   |
+| filePath | 保存的文件路径 |
 
 Usage:
 
@@ -107,10 +107,10 @@ FileUtil.nioWriteAppendable("hello","/usr/local/hello.txt");//return true or fal
 
 该方法采用nio的高效方式来实现文件复制。
 
-参数 | 描述
----|---
-source| 复制的源文件
-target| 目标文件
+| 参数     | 描述     |
+|--------|--------|
+| source | 复制的源文件 |
+| target | 目标文件   |
 
 Usage:
 
@@ -124,9 +124,9 @@ FileUtil.nioTransferCopy("/usr/local/hello.txt","/usr/local/hello1.txt");
 
 该方法用于获取文件名不带后缀的文件名。
 
-参数 | 描述
----|---
-fileName| 文件名称
+| 参数       | 描述   |
+|----------|------|
+| fileName | 文件名称 |
 
 Usage:
 

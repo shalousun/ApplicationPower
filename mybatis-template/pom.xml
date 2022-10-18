@@ -31,8 +31,8 @@
     </developers>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>5.3.19</spring.version>
-        <mybatis.version>3.5.10</mybatis.version>
+        <spring.version>5.3.23</spring.version>
+        <mybatis.version>3.5.11</mybatis.version>
         <mybatis-spring-version>2.0.7</mybatis-spring-version>
     </properties>
 
