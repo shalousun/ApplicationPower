@@ -198,7 +198,7 @@ List<${entitySimpleName}> queryAll();
 
   import java.util.List;
 
-  import javax.annotation.Resource;
+  import jakarta.annotation.Resource;
   import org.springframework.stereotype.Service;
   import ${basePackage}.model.${entitySimpleName};
   import ${basePackage}.dao.${entitySimpleName}Dao;
@@ -249,8 +249,8 @@ List<${entitySimpleName}> queryAll();
 
 
   import java.util.List;
-  import javax.annotation.Resource;
-  import javax.servlet.http.HttpServletRequest;
+  import jakarta.annotation.Resource;
+  import jakarta.servlet.http.HttpServletRequest;
 
   import org.springframework.stereotype.Controller;
   import org.springframework.ui.Model;

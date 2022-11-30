@@ -24,8 +24,12 @@ out/
 # OS X
 .DS_Store
 
-# NetBeans
-nb-configuration.xml
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
 # Visual Studio Code
 .vscode

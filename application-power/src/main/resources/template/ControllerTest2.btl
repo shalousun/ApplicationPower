@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import ${basePackage}.model.${entitySimpleName};
 

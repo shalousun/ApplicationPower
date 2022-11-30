@@ -58,7 +58,7 @@ ${mybatis}:
 server:
   port: 8080
   tomcat:
-    accesslog:
+    accessors:
       enabled: true
       directory: ../logs
   error:
