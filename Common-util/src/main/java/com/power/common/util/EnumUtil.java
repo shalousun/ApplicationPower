@@ -1,11 +1,15 @@
 package com.power.common.util;
 
-import com.power.common.model.EnumDictionary;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import com.power.common.model.EnumDictionary;
 
 /**
  * @author yu 2019/12/7.
@@ -30,12 +34,23 @@ public class EnumUtil {
             throw new RuntimeException(clazz.getCanonicalName() + " is not an enum class.");
         }
         if (StringUtil.isEmpty(codeField) || StringUtil.isEmpty(descField)) {
-            throw new RuntimeException(clazz.getCanonicalName() + ":Please specify the code field name of the dictionary enumeration class and the field name that describes the dictionary code information");
+            throw new RuntimeException(clazz.getCanonicalName()
+                + ":Please specify the code field name of the dictionary enumeration class and the field name that describes the dictionary code information");
         }
         Class<Enum> enumClass = (Class<Enum>) clazz;
         Enum[] objects = enumClass.getEnumConstants();
-        String valueMethodName = "get" + StringUtil.firstToUpperCase(codeField);
-        String descMethodName = "get" + StringUtil.firstToUpperCase(descField);
+        String valueMethodName;
+        if (codeField.endsWith("()")) {
+            valueMethodName = codeField.replace("()","");
+        } else {
+            valueMethodName = "get" + StringUtil.firstToUpperCase(codeField);
+        }
+        String descMethodName;
+        if (descField.endsWith("()")) {
+            descMethodName = descField.replace("()","");
+        } else {
+            descMethodName = "get" + StringUtil.firstToUpperCase(descField);
+        }
         List<T> enumDictionaryList = new ArrayList<>();
         try {
             Method valueMethod = clazz.getMethod(valueMethodName);
