@@ -207,4 +207,50 @@ public class RandomUtil {
                 return randomString(6);
         }
     }
+
+    public static String generateDefaultValueByType(String type) {
+        switch (type) {
+            //12
+            case "char":
+                return "";
+            case "Integer":    //4
+            case "int":
+            case "Long": //-5
+            case "long":
+            case "BigDecimal":    //3
+            case "BigInteger":
+                return "0";
+            case "Double": //8
+            case "double":
+            case "Float": //6
+            case "float":
+                return "0.0";
+            case "short":
+            case "Short":
+                return "0";
+            case "boolean":
+            case "Boolean":
+                return "true";
+            case "Time":  //91
+            case "Date":
+            case "Timestamp":
+            case "LocalDateTime":
+                return DateTimeUtil.DATE_FORMAT_SECOND;
+            case "LocalTime":
+                return DateTimeUtil.LOCAL_TIME;
+            case "Year":
+                return DateTimeUtil.YEAR;
+            case "MonthDay":
+                return DateTimeUtil.MONTH_DAY;
+            case "YearMonth":
+                return DateTimeUtil.YEAR_MONTH;
+            case "LocalDate":
+                return DateTimeUtil.DATE_FORMAT_DAY;
+            case "ZonedDateTime":
+            case "OffsetDateTime":
+                return DateTimeUtil.DATE_FORMAT_ZONED_DATE_TIME;
+            default:
+                return "";
+        }
+    }
 }

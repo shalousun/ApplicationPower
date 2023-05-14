@@ -13,7 +13,8 @@
         <module>common-util</module>
         <module>datasource-aspect</module>
         <module>mybatis-template</module>
-      <module>log-date-filter</module>
+        <module>log-date-filter</module>
+        <module>common-web</module>
     </modules>
 
 

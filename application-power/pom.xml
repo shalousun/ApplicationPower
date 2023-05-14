@@ -68,18 +68,18 @@
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
-            <version>3.13.0.RELEASE</version>
+            <version>3.15.2.RELEASE</version>
         </dependency>
         <!-- 格式化对象，方便输出日志 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>2.0.20</version>
+            <version>2.0.25</version>
         </dependency>
         <dependency>
             <groupId>com.github.shalousun</groupId>
             <artifactId>common-util</artifactId>
-            <version>2.1.7</version>
+            <version>2.1.8</version>
         </dependency>
     </dependencies>
     <build>

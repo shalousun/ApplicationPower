@@ -5,7 +5,7 @@ common-util是一个和任何模块都无关的模块，common-util模块中主�
 <dependency>
   <groupId>com.github.shalousun</groupId>
   <artifactId>common-util</artifactId>
-  <version>1.9.4</version>
+  <version>2.1.8</version>
 </dependency>
 ```
 
