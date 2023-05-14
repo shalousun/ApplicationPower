@@ -1,7 +1,7 @@
 package com.power.common.filter;
 
 import com.power.common.exception.IPException;
-import com.power.common.util.IpUtil;
+import com.power.common.util.WebIpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class IpFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         //get client ip
         HttpServletRequest req = (HttpServletRequest) request;
-        String ip = IpUtil.getIpAddress(req);
+        String ip = WebIpUtil.getIpAddress(req);
         if (null != denySet) {
             if (denySet.contains(ip)) {
                 handleMsg(response, ip);
