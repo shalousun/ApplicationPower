@@ -18,12 +18,12 @@ if [ -z "$PIDS" ]; then
 fi
 
 if [ "$1" != "skip" ]; then
-    $BIN_DIR/dump.sh
+    "$BIN_DIR"/dump.sh
 fi
 
 echo -e "Stopping the $SERVER_NAME ...\c"
 for PID in $PIDS ; do
-    kill $PID > /dev/null 2>&1
+    kill "$PID" > /dev/null 2>&1
 done
 
 COUNT=0
@@ -32,7 +32,7 @@ while [ $COUNT -lt 1 ]; do
     sleep 1
     COUNT=1
     for PID in $PIDS ; do
-        PID_EXIST=$(ps -f -p $PID | grep java)
+        PID_EXIST=$(ps -f -p "$PID" | grep java)
         if [ -n "$PID_EXIST" ]; then
             COUNT=0
             break

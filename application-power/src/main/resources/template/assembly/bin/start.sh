@@ -1,15 +1,17 @@
 #!/bin/bash
 # Startup script for spring boot project
 # @author shalousun
+# shellcheck disable=SC2126
+# shellcheck disable=SC2009
 # see https://github.com/Shalousun/ApplicationPower
 
 # include yaml_parse function
 . "$(dirname "$0")"/yaml.sh
 
 # the name of the project
-SERVER_NAME='${appName}'
-JAR_NAME='${jarName}'
-cd $(dirname $0)
+SERVER_NAME=${appName}
+JAR_NAME=${jarName}
+cd "$(dirname "$0")" || exit
 BIN_DIR=$(pwd)
 chmod 0755 *.sh
 cd ..
@@ -23,7 +25,8 @@ INIT_ENV=""
 if [ "$1" = "--env" ]; then
     INIT_ENV="$2"
     if [ -n "$INIT_ENV" ]; then
-       cp $CONF_DIR/$INIT_ENV/* $CONF_DIR
+       # shellcheck disable=SC2086
+       cp "$CONF_DIR"/$INIT_ENV/* $CONF_DIR
     fi
 fi
 # ====================================FIND SERVER PORT===================================================
@@ -74,14 +77,14 @@ if [ -n "$SERVER_PORT" ]; then
     if [ "$machine" == "Linux" ]; then
         SERVER_PORT_COUNT=$(netstat -tln | grep "\b$SERVER_PORT\b" | wc -l)
     elif [ "$machine" == "Mac" ]; then
-        SERVER_PORT_COUNT=$(lsof -t -i :$SERVER_PORT)
+        SERVER_PORT_COUNT=$(lsof -t -i :"$SERVER_PORT")
     else
         SERVER_PORT_COUNT=$(netstat -tln | grep "\b$SERVER_PORT\b" | wc -l)
     fi
 
     if [ "$SERVER_PORT_COUNT" == "" ]; then
     	echo "starting"
-    elif [ $SERVER_PORT_COUNT -gt 0 ]; then
+    elif [ "$SERVER_PORT_COUNT" -gt 0 ]; then
         echo "ERROR: The $SERVER_NAME port $SERVER_PORT already used!"
         exit 1
     fi
@@ -90,7 +93,7 @@ fi
 function getFilesUderDir(){
     for file in $1/*
     do
-    if test -f $file
+    if test -f "$file"
     then
         filename=$(basename "$file")
         extension="${extension}"
@@ -104,13 +107,13 @@ function getFilesUderDir(){
     fi
     done
 }
-getFilesUderDir $CONF_DIR
+getFilesUderDir "$CONF_DIR"
 FOUND_FILES=$(IFS=, ; echo "${arr}")
 echo "INFO: loaded config files $FOUND_FILES"
 # =================================init logging dir and config===========================================
 LOGS_DIR=$DEPLOY_DIR/logs
 if [ ! -d "$LOGS_DIR" ]; then
-    mkdir $LOGS_DIR
+    mkdir "$LOGS_DIR"
 fi
 STDOUT_FILE=$LOGS_DIR/catalina.out
 
@@ -159,7 +162,8 @@ else
     JAVA_OPTS_TEMP="$JAVA_DEFAULT_OPTS $JAVA_MEM_OPTS"
 fi
 echo -e "Starting the $SERVER_NAME ..."
-nohup java $JAVA_OPTS_TEMP $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -jar $DEPLOY_DIR/$JAR_NAME >> $STDOUT_FILE 2>&1 &
+
+nohup java "$JAVA_OPTS_TEMP" "$JAVA_DEBUG_OPTS" "$JAVA_JMX_OPTS" -jar "$DEPLOY_DIR"/"$JAR_NAME" >> "$STDOUT_FILE" 2>&1 &
 
 CHECK_COUNT=0
 COUNT=0
@@ -172,6 +176,7 @@ while [ "$COUNT" -lt 1 ]; do
         exit 1
     fi
     if [ -n "$SERVER_PORT" ]; then
+
         COUNT=$(netstat -an | grep "$SERVER_PORT" | wc -l)
     else
     	COUNT=$(ps -ef | grep java | grep "$DEPLOY_DIR" | awk '{print $2}' | wc -l)
@@ -183,6 +188,7 @@ done
 
 # ====================print finish info=================================================================================
 echo "OK!"
+
 PIDS=$(ps -ef | grep java | grep "$DEPLOY_DIR" | awk '{print $2}')
 echo "Command line argument: $JAVA_OPTS_TEMP"
 echo "PID: $PIDS"

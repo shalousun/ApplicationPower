@@ -1,6 +1,5 @@
 #!/bin/bash
-cd $(dirname $0)
-BIN_DIR=$(pwd)
+cd "$(dirname "$0")" || exit
 cd ..
 DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
@@ -13,6 +12,7 @@ if [ -z "$SERVER_NAME" ]; then
 	SERVER_NAME=$(hostname)
 fi
 
+# shellcheck disable=SC2009
 PIDS=$(ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}')
 if [ -z "$PIDS" ]; then
     echo "ERROR: The $SERVER_NAME does not started!"
@@ -21,71 +21,73 @@ fi
 
 LOGS_DIR=""
 if [ -n "$LOGS_FILE" ]; then
-	LOGS_DIR=$(dirname $LOGS_FILE)
+	LOGS_DIR=$(dirname "$LOGS_FILE")
 else
 	LOGS_DIR=$DEPLOY_DIR/logs
 fi
-if [ ! -d $LOGS_DIR ]; then
+if [ ! -d "$LOGS_DIR" ]; then
+	# shellcheck disable=SC2086
 	mkdir $LOGS_DIR
 fi
 DUMP_DIR=$LOGS_DIR/dump
-if [ ! -d $DUMP_DIR ]; then
-	mkdir $DUMP_DIR
+if [ ! -d "$DUMP_DIR" ]; then
+	mkdir "$DUMP_DIR"
 fi
 DUMP_DATE=$(date +%Y%m%d%H%M%S)
 DATE_DIR=$DUMP_DIR/$DUMP_DATE
-if [ ! -d $DATE_DIR ]; then
-	mkdir $DATE_DIR
+if [ ! -d "$DATE_DIR" ]; then
+	mkdir "$DATE_DIR"
 fi
 
 echo -e "Dumping the $SERVER_NAME ...\c"
 for PID in $PIDS ; do
-	jstack $PID > $DATE_DIR/jstack-$PID.dump 2>&1
+	jstack "$PID" > "$DATE_DIR"/jstack-"$PID".dump 2>&1
 	echo -e ".\c"
-	jinfo $PID > $DATE_DIR/jinfo-$PID.dump 2>&1
+	jinfo "$PID" > "$DATE_DIR"/jinfo-"$PID".dump 2>&1
 	echo -e ".\c"
-	jstat -gcutil $PID > $DATE_DIR/jstat-gcutil-$PID.dump 2>&1
+	jstat -gcutil "$PID" > "$DATE_DIR"/jstat-gcutil-"$PID".dump 2>&1
 	echo -e ".\c"
-	jstat -gccapacity $PID > $DATE_DIR/jstat-gccapacity-$PID.dump 2>&1
+	jstat -gccapacity "$PID" > "$DATE_DIR"/jstat-gccapacity-"$PID".dump 2>&1
 	echo -e ".\c"
-	jmap $PID > $DATE_DIR/jmap-$PID.dump 2>&1
+	jmap "$PID" > "$DATE_DIR"/jmap-"$PID".dump 2>&1
 	echo -e ".\c"
+	# shellcheck disable=SC2086
 	jmap -heap $PID > $DATE_DIR/jmap-heap-$PID.dump 2>&1
 	echo -e ".\c"
-	jmap -histo $PID > $DATE_DIR/jmap-histo-$PID.dump 2>&1
+	jmap -histo "$PID" > "$DATE_DIR"/jmap-histo-"$PID".dump 2>&1
 	echo -e ".\c"
 	if [ -r /usr/sbin/lsof ]; then
-	/usr/sbin/lsof -p $PID > $DATE_DIR/lsof-$PID.dump
+	/usr/sbin/lsof -p "$PID" > "$DATE_DIR"/lsof-"$PID".dump
 	echo -e ".\c"
 	fi
 done
 
 if [ -r /bin/netstat ]; then
-/bin/netstat -an > $DATE_DIR/netstat.dump 2>&1
+/bin/netstat -an > "$DATE_DIR"/netstat.dump 2>&1
 echo -e ".\c"
 fi
 if [ -r /usr/bin/iostat ]; then
-/usr/bin/iostat > $DATE_DIR/iostat.dump 2>&1
+/usr/bin/iostat > "$DATE_DIR"/iostat.dump 2>&1
 echo -e ".\c"
 fi
 if [ -r /usr/bin/mpstat ]; then
-/usr/bin/mpstat > $DATE_DIR/mpstat.dump 2>&1
+/usr/bin/mpstat > "$DATE_DIR"/mpstat.dump 2>&1
 echo -e ".\c"
 fi
 if [ -r /usr/bin/vmstat ]; then
-/usr/bin/vmstat > $DATE_DIR/vmstat.dump 2>&1
+/usr/bin/vmstat > "$DATE_DIR"/vmstat.dump 2>&1
 echo -e ".\c"
 fi
 if [ -r /usr/bin/free ]; then
-/usr/bin/free -t > $DATE_DIR/free.dump 2>&1
+/usr/bin/free -t > "$DATE_DIR"/free.dump 2>&1
 echo -e ".\c"
 fi
 if [ -r /usr/bin/sar ]; then
-/usr/bin/sar > $DATE_DIR/sar.dump 2>&1
+/usr/bin/sar > "$DATE_DIR"/sar.dump 2>&1
 echo -e ".\c"
 fi
 if [ -r /usr/bin/uptime ]; then
-/usr/bin/uptime > $DATE_DIR/uptime.dump 2>&1
+/usr/bin/uptime > "$DATE_DIR"/uptime.dump 2>&1
 echo -e ".\c"
 fi
 

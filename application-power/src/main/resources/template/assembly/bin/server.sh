@@ -7,14 +7,14 @@
 # Source function library.
 # if you want make as a boot server on linux ,edit and enable the next line
 # cd /usr/local/project_name/bin
-cd $(dirname $0)
+cd "$(dirname "$0")" || exit
 
 start(){
     ./start.sh
 }
 
 env(){
-    ./start.sh --env $1
+    ./start.sh --env "$1"
 }
 
 stop(){
@@ -44,7 +44,7 @@ case "$1" in
         start
         ;;
     --env)
-        env $2
+        env "$2"
         ;;
     stop)
         stop
