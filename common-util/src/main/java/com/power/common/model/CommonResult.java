@@ -12,7 +12,7 @@ import java.util.UUID;
  *
  * @author sunyu
  */
-public class CommonResult<T> extends BaseResult implements Serializable {
+public class CommonResult<T> extends BaseResult<T> implements Serializable {
 
     /**
      * serialVersionUID:.
@@ -68,7 +68,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      *
      * @return CommonResult
      */
-    public static CommonResult ok() {
+    public static <T> CommonResult<T> ok() {
         return ok(BaseErrorCode.Common.SUCCESS);
     }
 
@@ -89,7 +89,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      *
      * @return CommonResult
      */
-    public static CommonResult fail() {
+    public static <T> CommonResult<T> fail() {
         return fail(BaseErrorCode.Common.UNKNOWN_ERROR);
     }
 
@@ -99,7 +99,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @param message IMessage
      * @return CommonResult
      */
-    public static CommonResult fail(IMessage message) {
+    public static <T> CommonResult<T> fail(IMessage message) {
         return fail(message.getCode(), message.getMessage());
     }
 
@@ -110,7 +110,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @param message error message
      * @return CommonResult
      */
-    public static CommonResult fail(String code, String message) {
+    public static <T> CommonResult<T> fail(String code, String message) {
         return baseCreate(code, message, false);
     }
 
@@ -168,7 +168,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @return T
      */
     public T getData() {
-        return (T) super.getData();
+        return super.getData();
     }
 
 
