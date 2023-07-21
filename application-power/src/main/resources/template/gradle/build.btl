@@ -1,12 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '3.0.3'
+    id 'org.springframework.boot' version '3.1.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
     <%if(isUseDocker){ %>
     id 'docker'
      <% } %>
     id "maven-publish"
-    id "com.github.shalousun.smart-doc" version "2.6.7"
+    id "com.github.shalousun.smart-doc" version "2.7.3"
 }
 group '${basePackage}'
 version '1.0'
@@ -63,11 +63,11 @@ dependencies {
     <% if(isMultipleDataSource){%>
     implementation 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    implementation 'com.github.shalousun:common-util:2.1.8'
+    implementation 'com.github.shalousun:common-util:2.1.9'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'com.github.shalousun:smart-doc:2.6.7'
+    testImplementation 'com.github.shalousun:smart-doc:2.7.3'
 
 }
 
