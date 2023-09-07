@@ -15,9 +15,9 @@ public class OkHttp3UtilTest {
 
     @Test
     public void testSyncGet() {
-        String url = "http://smarthome.dq.ott4china.com:8899/iptv_oms_center/ProvinceControl";
+        String url = "http://www/baidu.com";
         Map<String, String> params = new HashMap<>();
-        params.put("res", "mnLue%2FPmm7oHWsqfMeWJC9svT6OsJ2wG4VkjAhQ8IAYT2%2FpRviOQpG%2FuDc1T7RrhAJgq34Zdrh%2FbyxwyZONt5XiPVVCs9Ahtcwb5ePFldwhsP8z51ICKQj3XDnPyQB5VDt83FQJ%2FgaxDBZSC0cA5Bw%3D%3D");
+        params.put("res", "xx");
         params.put("ver", "ver_0.0.1");
         System.out.println(OkHttp3Util.syncGet(url, params));
     }
