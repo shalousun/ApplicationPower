@@ -37,7 +37,6 @@ public class CasRefererFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         if (isExcluded(req)) {
             chain.doFilter(request, response);
-            return;
         } else {
             req.getRequestDispatcher("/hhhhhhhhh").forward(request, response);
         }

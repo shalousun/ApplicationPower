@@ -14,8 +14,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Http请求工具类
  *
+ * OkHttp3Util
  * @author yu 2018/06/19.
  */
 public class OkHttp3Util {
