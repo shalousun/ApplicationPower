@@ -2,6 +2,7 @@ package com.power.common.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -38,7 +39,7 @@ public class MD6Util {
      * @return boolean
      */
     public static boolean equal(String md6Str, String plaintext) {
-        if (md6Str == null || md6Str.length() != 32) {
+        if (Objects.isNull(md6Str) || md6Str.length() != 32) {
             return false;
         }
         String rdStr = md6Str.substring(0, 2);

@@ -2,6 +2,8 @@ package com.power.common.util;
 
 import com.power.common.exception.AssertException;
 
+import java.util.Objects;
+
 /**
  * @author yu 2019/11/1.
  */
@@ -15,7 +17,7 @@ public class Assert {
      * @param args    args
      */
     public static void notNull(Object object, String message, Object... args) {
-        if (object == null) {
+        if (Objects.isNull(object)) {
             throw new AssertException(String.format(message, args));
         }
     }
