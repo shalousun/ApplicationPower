@@ -25,7 +25,7 @@ public class DubboInterfaceBuilder {
     }
 
     /**
-     * 生成dubbo消费方服务注册列表
+     * Generate a registry list of Dubbo consumer services
      *
      * @param classes list of class
      * @return dubbo consumer references

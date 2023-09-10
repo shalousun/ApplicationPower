@@ -4,7 +4,7 @@ import com.power.common.interfaces.IMessage;
 
 /**
  * Description:
- * Xss攻击的exception
+ * Xss exception
  *
  * @author yu 2018/06/05.
  */
