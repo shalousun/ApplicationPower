@@ -2,6 +2,7 @@ package com.power.common.util;
 
 import org.junit.jupiter.api.Test;
 
+
 /**
  * @author yu 2020/4/24.
  */
@@ -20,5 +21,17 @@ public class StringEscapeUtilTest {
                 .replaceAll("<", "&lt;")
                 .replaceAll(">", "&gt;");
         System.out.println(str);
+    }
+
+    @Test
+    public void testUnescapeJava() {
+        String me = "我appid=><%&\"xx\"&timestamp=\"\"";
+        System.out.println(me);
+
+        String escapeJava = StringEscapeUtil.escapeJava(me);
+
+        System.out.println("escapeJava: " + escapeJava);
+        System.out.println("unescapeJava: " + StringEscapeUtil.unescapeJava(escapeJava));
+
     }
 }
