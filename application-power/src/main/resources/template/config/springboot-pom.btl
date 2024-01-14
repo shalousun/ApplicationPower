@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -76,13 +76,13 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>3.0.2</version>
+            <version>3.0.3</version>
         </dependency>
         <!--pagehelper-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.4.7</version>
+            <version>2.1.0</version>
         </dependency>
         <%} %>
         <%if(useDb){ %>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.18</version>
+            <version>1.2.21</version>
         </dependency>
          <%} %>
         <%if(useMybatisPlus){%>
@@ -104,14 +104,14 @@
         <dependency>
              <groupId>com.baomidou</groupId>
              <artifactId>mybatis-plus-boot-starter</artifactId>
-             <version>3.5.3.1</version>
+             <version>3.5.5</version>
         </dependency>
          <%}%>
          <!--log4j2 Asynchronous Loggers requires disruptor-->
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>3.4.4</version>
+            <version>4.0.0</version>
         </dependency>
 
          <%if(useJTA){ %>
@@ -133,7 +133,7 @@
         <dependency>
            <groupId>com.github.shalousun</groupId>
            <artifactId>common-util</artifactId>
-           <version>2.1.9</version>
+           <version>2.2.2</version>
          </dependency>
        <% if(lombok){%>
         <dependency>
@@ -155,9 +155,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.github.shalousun</groupId>
+                <groupId>com.ly.smart-doc</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>2.7.3</version>
+                <version>3.0.1</version>
                 <configuration>
                     <!--smart-doc-->
                     <configFile>./src/main/resources/smart-doc.json</configFile>
@@ -218,7 +218,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.12.1</version>
                 <configuration>
                     <source>\${java.version}</source>
                     <target>\${java.version}</target>
