@@ -3,14 +3,28 @@ package com.power.common.util;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 
 public class DateTimeUtilTest {
 
     @Test
     public void testGetBirthdayFormIdCard() {
-        DateTimeUtil.strToDate("2017-07-22", "yyyy-MM-dd");
-        System.out.println(DateTimeUtil.getNowTime());
+
+        String idCard = "41010519900307331";
+        Timestamp birthday = DateTimeUtil.getBirthdayFormIdCard(idCard);
+        System.out.println(birthday);
+    }
+
+    @Test
+    public void testLocalDateTimeToStr() {
+        LocalDateTime now = LocalDateTime.now();
+        String str = DateTimeUtil.localDateTimeToStr(now,DateTimeUtil.DATE_FORMAT_NANO);
+        System.out.println(str);
     }
 
     @Test

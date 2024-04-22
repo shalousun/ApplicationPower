@@ -26,8 +26,8 @@ public class RegexUtilTest {
 
     @Test
     public void testExtractMap() {
-        String msg = "2022-07-20 16:55:05.415 [http-nio-8080-exec-1] INFO org.springframework.web.servlet.DispatcherServlet@initServletBean:547 - Completed initialization in 9 ms";
-        String reg = "(\\d+-\\d+-\\d+ \\d+:\\d+:\\d+\\.\\d+)\\s+\\[([^]]+)]\\s+(\\w+)\\s+(\\S+)\\s-\\s(.*)";
+        String msg = "2024-04-19T21:42:07.307+08:00  INFO 23801 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]";
+        String reg = "(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2})\\s+(\\w+)\\s+\\d+\\s+---\\s+\\[(.*?)\\]\\s+(.*?)\\s+:\\s+(.*)";
         System.out.println(ValidateUtil.validate(msg, reg));
 
         List<String> arr = RegexUtil.extractStrings(reg, msg);

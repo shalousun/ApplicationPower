@@ -25,6 +25,8 @@ public class DateTimeUtil {
     public static final String DATE_FORMAT_SECOND_12 = "yyyy-MM-dd hh:mm:ss";
     public static final String DATE_FORMAT_MILLISECOND = "yyyy-MM-dd HH:mm:ss.SSS";
 
+    public static final String DATE_FORMAT_NANO = "yyyy-MM-dd HH:mm:ss.SSSSSSS";
+
     public static final String LOCAL_TIME = "HH:mm:ss";
 
     public static final String YEAR = "yyyy";
