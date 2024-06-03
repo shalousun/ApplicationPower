@@ -14,7 +14,10 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+
 /**
+ * A utility class providing useful methods for working with dates and times.
+ * @javadoc
  * @author sunyu
  */
 public class DateTimeUtil {
@@ -156,10 +159,12 @@ public class DateTimeUtil {
     }
 
     /**
-     * format a string time like '2013-02-13' to '2013-02-13 00:00:00.0'
+     * Converts a string representation of a date to a Timestamp.
+     * @apiNote This method provides a flexible way to convert date strings of a specific format to Timestamp values,
+     * mainly dealing with date strings without time information, defaulting to 00:00:00.0 of the date.
      *
-     * @param date String
-     * @return java.sql.Timestamp
+     * @param date String type date, formatted as 'yyyy-MM-dd'
+     * @return Returns the converted Timestamp value
      */
     public static Timestamp strToStamp(String date) {
         return strToStamp(date, DATE_FORMAT_SECOND);
@@ -556,14 +561,19 @@ public class DateTimeUtil {
     }
 
     /**
-     * 上月同期
+     * Adjusts the given timestamp to the corresponding date of the previous month
+     * @apiNote This method returns the updated timestamp in milliseconds.
+     * For instance, if the input represents a moment on June 15, 2022, the returned timestamp would correspond to May 15, 2022 at the same time.
      *
-     * @param ms millisecond
-     * @return millisecond
+     * @param ms The number of milliseconds since January 1, 1970, 00:00:00 GMT.
+     * @return The timestamp in milliseconds after adjusting to the same date of the previous month.
      */
     public static long setToLastMonthCommonDay(long ms) {
+        // Convert the milliseconds to a LocalDate object for date manipulation.
         LocalDate localDate = longToLocalDate(ms);
+        // Move the date back to the previous month.
         localDate = localDate.minusMonths(1);
+        // Convert the adjusted date back to milliseconds.
         return localDateToLong(localDate);
     }
 
@@ -776,11 +786,14 @@ public class DateTimeUtil {
     }
 
     /**
-     * 去年同期
+     * Obtains the date string for the same day of last year.
+     * @apiNote This method first converts the input date string into a timestamp in milliseconds,
+     * then adjusts this timestamp to the equivalent date of last year,
+     * and finally converts the adjusted timestamp back into a formatted date string.
      *
-     * @param strDate String of date
-     * @param format  time format
-     * @return String
+     * @param strDate A string representing the date to be transformed.
+     * @param format  A string specifying the date format for both input and output.
+     * @return The date string corresponding to the same day of the previous year.
      */
     public static String getLastYearCommonDay(String strDate, String format) {
         long ms = strToLong(strDate, format);
@@ -973,11 +986,12 @@ public class DateTimeUtil {
     }
 
     /**
-     * Convert CST to UTC
+     * Converts a timestamp in milliseconds to a UTC-formatted string.
+     * This method adapts the local timestamp to UTC, ensuring consistency in time representation across different time zones.
      *
-     * @param timestamp timestamp
-     * @param outFormat out format
-     * @return String
+     * @param timestamp The timestamp in milliseconds representing the local time.
+     * @param outFormat The format pattern string defining how the output UTC time should be formatted.
+     * @return A string representing the UTC time formatted according to the provided format.
      */
     public static String CTSToUTC(long timestamp, String outFormat) {
         OffsetDateTime utcTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())

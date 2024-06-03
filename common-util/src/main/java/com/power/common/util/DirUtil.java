@@ -10,6 +10,9 @@ import java.util.EnumSet;
 import java.util.Objects;
 
 /**
+ * A utility class for directory operations, providing directory copying functionality.
+ * @apiNote This class is designed to be a utility class, hence it is marked as final to prevent inheritance.
+ * @javadoc
  * @author yu 2018/06/03.
  */
 public class DirUtil {
@@ -19,10 +22,11 @@ public class DirUtil {
     }
 
     /**
-     * Copies a directory tree
+     * Copies a directory tree from one location to another.
+     * @apiNote This method recursively copies all files and subdirectories under the source directory to the target location.
      *
-     * @param from from
-     * @param to   to
+     * @param from The path of the source directory, which should exist and be a directory.
+     * @param to   The path of the target directory, where the source directory will be copied to.
      */
     public static void copy(Path from, Path to) {
         validate(from);
@@ -34,9 +38,10 @@ public class DirUtil {
     }
 
     /**
-     * validate path
+     * Validates the provided directory paths to ensure they are non-null and exist.
+     * @apiNote Throws an IllegalArgumentException if any of the paths are null or do not represent an existing directory.
      *
-     * @param paths array of path
+     * @param paths An array of Path objects representing the directories to be validated.
      */
     private static void validate(Path... paths) {
         for (Path path : paths) {

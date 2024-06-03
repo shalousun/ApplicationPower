@@ -15,9 +15,9 @@ import java.util.Objects;
 
 
 /**
- * Description:
- * AES Tools
  *
+ * AES Tools
+ * @javadoc
  * @author yu 2018/06/08.
  */
 public class AESUtil {

@@ -15,16 +15,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * A utility class for handling class-related operations.
+ * @javadoc
  * @author sunyu
  */
 public class ClassUtil {
 
     /**
-     * Scan the classes under the package
+     * Scans all classes in a specified package.
      *
-     * @param modelPackage String
-     * @param root         String
-     * @return List
+     * @param modelPackage The package name to scan.
+     * @param root         The root directory of the project.
+     * @return List of classes found.
      */
     public static List<Class> getClasses(String modelPackage, String root) {
         String buffer = root.replaceAll("\\\\", "/")
@@ -47,11 +49,11 @@ public class ClassUtil {
     }
 
     /**
-     * Read the source code to get the class name
+     * Reads the source code of a Java file to find the name of a specific class.
      *
-     * @param filePath        java source file path
-     * @param simpleClassName Compare with a simple class name to avoid reading further down
-     * @return string
+     * @param filePath        The path to the Java source file.
+     * @param simpleClassName The simple class name to search for.
+     * @return The full class name, or null if not found.
      */
     public static String getClassName(String filePath, String simpleClassName) {
         final String regex = "(class (.*?)\\{)|(interfase (.*?)\\{)";

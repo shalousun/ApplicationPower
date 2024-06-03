@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * OpenAPI Signature Generation Tool
  * <p>
- * Created by yu on 2017/7/27.
+ * @author Created by yu on 2017/7/27.
  */
 public class ApiSignUtil {
 

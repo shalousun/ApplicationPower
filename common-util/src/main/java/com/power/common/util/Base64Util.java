@@ -8,7 +8,7 @@ import java.util.Base64;
 
 /**
  * Base64 Tools
- *
+ * @javadoc
  * @author yu 2018/12/08.
  */
 public class Base64Util {

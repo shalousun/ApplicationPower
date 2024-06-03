@@ -111,9 +111,21 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.ly.smart-doc</groupId>
+                <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <configuration>
+                    <!--skip option is used to disable plugin in child module-->
+                    <!--<skip>true</skip>-->
+                    <!--Specify the configuration file used to generate the document-->
+                    <configFile>./smart-doc.json</configFile>
+                </configuration>
+            </plugin>
         </plugins>
         <finalName>common-util</finalName>
     </build>
+
     <profiles>
         <profile>
             <id>release</id>
@@ -147,5 +159,4 @@
             </distributionManagement>
         </profile>
     </profiles>
-
 </project>

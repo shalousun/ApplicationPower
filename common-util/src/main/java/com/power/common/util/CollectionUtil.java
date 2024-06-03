@@ -6,6 +6,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
+ * CollectionUtil class provides utility methods for working with collections.
+ * @javadoc
  * @author yu
  * @since JDK 1.8+
  */
