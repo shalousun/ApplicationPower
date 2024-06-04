@@ -157,7 +157,7 @@
             <plugin>
                 <groupId>com.ly.smart-doc</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.0.4</version>
                 <configuration>
                     <!--smart-doc-->
                     <configFile>./src/main/resources/smart-doc.json</configFile>

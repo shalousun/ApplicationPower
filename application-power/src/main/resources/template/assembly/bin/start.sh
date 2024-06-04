@@ -13,7 +13,7 @@ SERVER_NAME=${appName}
 JAR_NAME=${jarName}
 cd "$(dirname "$0")" || exit
 BIN_DIR=$(pwd)
-chmod 0755 *.sh
+chmod 0755 ./*.sh
 cd ..
 DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
@@ -37,7 +37,7 @@ then
     sed -i "s/$(echo -e '\015')/\n/g" config/application.yml
     # read yml file
     eval $(YamlParse__parse "config/application.yml" "config_")
-    SERVER_PORT=$config_server_port
+    SERVER_PORT="${config_server_port}"
 else
     SERVER_PORT=$(sed '/server.port/!d;s/.*=//' config/application.properties | tr -d '\r')
 fi
@@ -90,8 +90,8 @@ if [ -n "$SERVER_PORT" ]; then
     fi
 fi
 # ==============================Dynamically loading configuration file====================================
-function getFilesUderDir(){
-    for file in $1/*
+function getFilesUnderDir(){
+    for file in "$1"/*
     do
     if test -f "$file"
     then
@@ -170,13 +170,12 @@ COUNT=0
 while [ "$COUNT" -lt 1 ]; do
     echo -e ".\\c"
     sleep 1
-    let CHECK_COUNT+=1;
+    (( CHECK_COUNT++ )) || true
     if [ "$CHECK_COUNT" -gt 20 ];then
         echo -e "\nERROR: The $SERVER_NAME start failed, Please open $STDOUT_FILE to view the error log"
         exit 1
     fi
     if [ -n "$SERVER_PORT" ]; then
-
         COUNT=$(netstat -an | grep "$SERVER_PORT" | wc -l)
     else
     	COUNT=$(ps -ef | grep java | grep "$DEPLOY_DIR" | awk '{print $2}' | wc -l)
