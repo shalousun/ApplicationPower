@@ -40,8 +40,6 @@ spring:
     log-dir: classpath:tx-logs
     transaction-manager-id: txManager
   <%}%>
-  mvc:
-    throw-exception-if-no-handler-found: true
   web:
     resources:
       add-mappings: true
@@ -79,7 +77,7 @@ management:
     web:
       exposure:
         include: '*'
-  metrics:
-    export:
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true

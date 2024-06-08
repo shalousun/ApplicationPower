@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  *
  * OkHttp3Util
+ * @javadoc
  * @author yu 2018/06/19.
  */
 public class OkHttp3Util {

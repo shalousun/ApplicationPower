@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * Url Util
+ * @javadoc
  * @author yu 2019/9/18.
  */
 public class UrlUtil {

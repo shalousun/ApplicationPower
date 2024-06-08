@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Random;
 
 /**
+ * RandomUtil
+ * @javadoc
  * @author yu 2018/06/03.
  */
 public class RandomUtil {

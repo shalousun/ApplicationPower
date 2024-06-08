@@ -6,15 +6,16 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
+ * Utility class for generating mock ID card numbers.
  * @author yu 2018/9/15.
  */
 public class IDCardUtil {
 
 
     /**
-     * generate IdCard
+     * Generates a random ID card number.
      *
-     * @return String
+     * @return The generated ID card number as a string.
      */
     public static String getIdCard() {
         String[] provinces = {"11", "12", "13", "14", "15", "21", "22", "23", "31", "32", "33", "34", "35", "36", "37", "41", "42", "43", "44", "45", "46", "50", "51", "52", "53", "54", "61", "62", "63", "64", "65", "71", "81", "82"};
@@ -29,6 +30,12 @@ public class IDCardUtil {
     }
 
 
+    /**
+     * Selects a random element from the given array.
+     *
+     * @param arr The input array.
+     * @return A randomly selected element from the array.
+     */
     private static String randomOne(String[] arr) {
         if (Objects.isNull(arr)) {
             return StringUtil.EMPTY;
@@ -38,11 +45,24 @@ public class IDCardUtil {
     }
 
 
+    /**
+     * Randomly generates a two-digit string between 01 and the specified maximum.
+     *
+     * @param max The upper limit for the generated number.
+     * @return The generated two-digit string.
+     */
     private static String randomCityCode(int max) {
         int i = new Random().nextInt(max) + 1;
         return i > 9 ? i + "" : "0" + i;
     }
 
+    /**
+     * Randomly generates a birth date string within a specified age range.
+     *
+     * @param minAge The minimum age.
+     * @param maxAge The maximum age.
+     * @return The generated birth date string in YYYYMMDD format.
+     */
     private static String randomBirth(int minAge, int maxAge) {
         Calendar date = Calendar.getInstance();
         date.setTime(new Date());

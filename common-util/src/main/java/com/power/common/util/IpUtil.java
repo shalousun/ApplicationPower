@@ -8,6 +8,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A utility class for working with IP addresses, providing methods to retrieve
+ * the local server IP and lists of local IPv4 and IPv6 addresses.
+ */
 public class IpUtil {
 
     private static String serverIp;
@@ -32,9 +36,11 @@ public class IpUtil {
     }
 
     /**
-     * Get IPV4 address
+     * Gets a map of local IPv4 addresses,
+     * @apiNote where the key represents the network interface name
+     * and the value is the corresponding IP address.
      *
-     * @return hash map,key is net interface, value is ip address
+     * @return A map containing network interfaces and their associated IPv4 addresses.
      */
     public static Map<String, String> getLocalIPV4() {
         Map<String, String> map = new HashMap<>();
@@ -58,9 +64,11 @@ public class IpUtil {
     }
 
     /**
-     * Get IPV6 address
+     * Retrieves a map of local IPv6 addresses
+     * @apiNote Where the key represents the network interface name
+     * and the value is the corresponding IP address.
      *
-     * @return hash map,key is net interface, value is ip address
+     * @return A map containing network interfaces and their associated IPv6 addresses.
      */
     public static Map<String, String> getLocalIPV6() {
         Map<String, String> map = new HashMap<>();

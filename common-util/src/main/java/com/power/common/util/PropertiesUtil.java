@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
+ * PropertiesUtil
+ * @javadoc
  * @author sunyu 2018/01/04
  */
 public class PropertiesUtil {

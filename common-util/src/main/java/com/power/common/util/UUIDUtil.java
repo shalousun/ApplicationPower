@@ -7,6 +7,7 @@ import java.util.UUID;
 
 /**
  * UUID util
+ * @javadoc
  * @author yu 2018/10/14.
  */
 public class UUIDUtil {

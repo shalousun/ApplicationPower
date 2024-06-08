@@ -13,6 +13,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * File utility class
+ * @javadoc
  * Created by yu on 2017/3/9.
  */
 public class FileUtil {

@@ -2,6 +2,7 @@ package com.power.common.util;
 
 /**
  * StringUtil
+ * @javadoc
  * @author sunyu
  */
 

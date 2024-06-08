@@ -12,19 +12,25 @@ import java.util.Objects;
 import com.power.common.model.EnumDictionary;
 
 /**
+ * Utility class for handling operations related to enums.
+ * @javadoc
  * @author yu 2019/12/7.
  */
 public class EnumUtil {
 
 
     /**
-     * get enum values
+     * Retrieves the enumeration constant information based on the specified class, code field, and description field.
+     * @apiNote This method dynamically obtains the code and description information of enumeration constants through reflection,
+     * and returns a list containing the information of all enumeration constants.
      *
-     * @param clazz     class
-     * @param codeField code field
-     * @param descField desc field
-     * @param <T>       subclass of EnumDictionary
-     * @return list
+     * @param clazz The class object of the enumeration type.
+     * @param codeField The name of the field or method used to obtain the code information of the enumeration constant.
+     * @param descField The name of the field or method used to obtain the description information of the enumeration constant.
+     * @param <T> A subclass of EnumDictionary that specifies the type of the returned list.
+     * @return A list containing the information of all enumeration constants.
+     * @throws RuntimeException If the input class is not an enumeration type, or the specified codeField or descField is empty,
+     * this exception will be thrown.
      */
     public static <T extends EnumDictionary> List<T> getEnumInformation(Class<?> clazz, String codeField, String descField) {
         if (Objects.isNull(clazz)) {
@@ -78,10 +84,14 @@ public class EnumUtil {
     }
 
     /**
-     * Get enum information
+     * Retrieves information about all enum constants in a specified enum class.
+     * @apiNote This method dynamically obtains the names and values of all fields and methods defined in the enum constants,
+     * as well as their ordinal values.
      *
-     * @param clazz java class
-     * @return hash map, Key is class Name ,value is enum Constants.
+     * @param clazz The class object of the enum type to be queried.
+     * @return A Map containing the information of all enum constants. The key is the class name of the enum,
+     *         and the value is a List of Maps, each Map representing the information of a single enum constant.
+     * @throws RuntimeException If the input parameter is null or does not represent an enum class.
      */
     public static Map<String, List<Map<String, Object>>> getEnumInformation(Class<?> clazz) {
         if (Objects.isNull(clazz)) {
@@ -118,10 +128,12 @@ public class EnumUtil {
     }
 
     /**
-     * Get enum names
+     * Retrieves the names of all constants in an enumeration class as a list.
+     * @apiNote This method provides a way to obtain all the names of enumeration constants, which is useful when needing to process or display enumeration names in a list format.
      *
-     * @param enumClass Enum Class
-     * @return List of enum name
+     * @param enumClass The class object of the enumeration type, cannot be null.
+     * @return A list containing the names of all enumeration constants. If the enumeration class does not have any constants, returns an empty list.
+     * @throws RuntimeException If the input class object is null, throws a runtime exception indicating the enumeration class cannot be null.
      */
     public static List<String> getNames(Class<? extends Enum<?>> enumClass) {
         if (Objects.isNull(enumClass)) {

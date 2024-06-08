@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * @javadoc
  * @author yu 2020/4/29.
  */
 public class RegexUtil {
