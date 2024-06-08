@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * Generate a font library icon list by reading the css file of the front-end font library
- * @java
+ * @javadoc
  * @author sunyu
  */
 public class FontIconUtil {
