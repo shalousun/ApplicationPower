@@ -9,6 +9,7 @@
   "packageFilters": "",
   "md5EncryptedHtmlName": false,
   "projectName": "${applicationName}",
+  "componentType": "NORMAL",
   "errorCodeDictionaries": [{
     "title": "title",
     "enumClassName": "com.power.common.enums.HttpCodeEnum",
