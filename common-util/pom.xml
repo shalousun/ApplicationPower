@@ -34,7 +34,7 @@
     </developers>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+        <junit.jupiter.version>5.11.0</junit.jupiter.version>
     </properties>
     <dependencies>
         <dependency>
@@ -46,12 +46,12 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.14.0</version>
+            <version>3.17.0</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.17.0</version>
+            <version>1.17.1</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -101,7 +101,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.10.0</version>
                 <configuration>
                     <tags>
                         <tag>
@@ -129,7 +129,7 @@
             <plugin>
                 <groupId>com.ly.smart-doc</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>3.0.5</version>
+                <version>3.0.7</version>
                 <configuration>
                     <!--skip option is used to disable plugin in child module-->
                     <!--<skip>true</skip>-->
@@ -159,7 +159,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.4</version>
+                        <version>3.2.5</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
