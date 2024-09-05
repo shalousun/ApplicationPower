@@ -150,6 +150,44 @@ public class EnumUtil {
         return list;
     }
 
+    /**
+     * Retrieves the value of a field from an enumeration class using a specified method name.
+     * @apiNote This method retrieves the value of a field from an enumeration class using a specified method name.
+     * @param clazz
+     * @param getMethodName
+     * @return
+     */
+    public static Object getFieldValueByMethod(Class<?> clazz, String getMethodName) {
+        if (Objects.isNull(clazz)) {
+            throw new RuntimeException("Enum class can't be null.");
+        }
+        Class<Enum> enumClass = (Class<Enum>) clazz;
+        Enum[] objects = enumClass.getEnumConstants();
+        try {
+            Method method = clazz.getMethod(getMethodName);
+            method.setAccessible(true);
+            for (Enum enumType : objects) {
+                return method.invoke(enumType);
+            }
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * Retrieves the value of a field from an enumeration class using a specified field name.
+     * @apiNote This method retrieves the value of a field from an enumeration class using a specified field name.
+     * @param clazz
+     * @param fieldName
+     * @return
+     */
+    public static Object getFieldValue(Class<?> clazz, String fieldName) {
+        String methodName = "get" + (fieldName.charAt(0) + "").toUpperCase() + fieldName.substring(1);
+        return getFieldValueByMethod(clazz, methodName);
+    }
+
     private static Map<String, Method> getMethods(Class<Enum> enumClass, Enum[] enumConstants) {
         List<String> enumNames = new ArrayList<>();
         Map<String, Method> methods = new HashMap<>();

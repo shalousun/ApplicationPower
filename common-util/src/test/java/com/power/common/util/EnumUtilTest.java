@@ -29,6 +29,16 @@ public class EnumUtilTest {
     }
 
     @Test
+    public void testGetFieldValue() {
+        System.out.println(EnumUtil.getFieldValue(HttpCodeEnum.class, "code"));
+    }
+
+    @Test
+    public void testGetFieldValueByMethod(){
+        System.out.println(EnumUtil.getFieldValueByMethod(HttpCodeEnum.class, "getCode"));
+    }
+
+    @Test
     public void testGetEnumNames() {
         List<String> list = EnumUtil.getNames(HttpCodeEnum.class);
         System.out.println(list);
