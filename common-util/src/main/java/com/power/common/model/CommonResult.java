@@ -104,7 +104,7 @@ public class CommonResult<T> extends BaseResult<T> implements Serializable {
     }
 
     /**
-     * 失败或失败响应
+     * Failed response
      *
      * @param code    the error code
      * @param message error message
