@@ -12,7 +12,7 @@ import java.util.UUID;
  *
  * @author sunyu
  */
-public class CommonResult<T> extends BaseResult implements Serializable {
+public class CommonResult<T> extends BaseResult<T> implements Serializable {
 
     /**
      * serialVersionUID:.
@@ -68,7 +68,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      *
      * @return CommonResult
      */
-    public static CommonResult ok() {
+    public static <T> CommonResult<T> ok() {
         return ok(BaseErrorCode.Common.SUCCESS);
     }
 
@@ -89,7 +89,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      *
      * @return CommonResult
      */
-    public static CommonResult fail() {
+    public static <T> CommonResult<T> fail() {
         return fail(BaseErrorCode.Common.UNKNOWN_ERROR);
     }
 
@@ -99,7 +99,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @param message IMessage
      * @return CommonResult
      */
-    public static CommonResult fail(IMessage message) {
+    public static <T> CommonResult<T> fail(IMessage message) {
         return fail(message.getCode(), message.getMessage());
     }
 
@@ -110,12 +110,20 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @param message error message
      * @return CommonResult
      */
-    public static CommonResult fail(String code, String message) {
+    public static <T> CommonResult<T> fail(String code, String message) {
         return baseCreate(code, message, false);
     }
 
+    /**
+     * Create a response object
+     *
+     * @param code    error code
+     * @param msg error message
+     * @param success success or not
+     * @return CommonResult
+     */
     private static <T> CommonResult<T> baseCreate(String code, String msg, boolean success) {
-        CommonResult result = new CommonResult();
+        CommonResult<T> result = new CommonResult<>();
         result.setCode(code);
         result.setSuccess(success);
         result.setMessage(msg);
@@ -128,7 +136,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * Add trace ID
      *
      * @param traceId Trace ID
-     * @return
+     * @return CommonResult
      */
     public CommonResult<T> addTraceId(String traceId) {
         this.setTraceId(traceId);
