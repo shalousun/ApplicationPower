@@ -73,6 +73,16 @@ public class CommonResult<T> extends BaseResult<T> implements Serializable {
     }
 
     /**
+     * Successful response (default response code is 0000)
+     *
+     * @param data data
+     * @return CommonResult
+     */
+    public static <T> CommonResult<T> ok(T data) {
+        return ok(BaseErrorCode.Common.SUCCESS, data);
+    }
+
+    /**
      * Customize success response message,
      * generally define enumeration to implement IMessage
      *
@@ -82,6 +92,20 @@ public class CommonResult<T> extends BaseResult<T> implements Serializable {
      */
     public static <T> CommonResult<T> ok(IMessage message) {
         return baseCreate(message.getCode(), message.getMessage(), true);
+    }
+
+
+    /**
+     * Customize success response message,
+     * generally define enumeration to implement IMessage
+     *
+     * @param message IMessage interface
+     * @param <T>     Object
+     * @param data    data
+     * @return CommonResult
+     */
+    public static <T> CommonResult<T> ok(IMessage message, T data) {
+        return baseCreate(message.getCode(), message.getMessage(), true, data);
     }
 
     /**
@@ -106,6 +130,28 @@ public class CommonResult<T> extends BaseResult<T> implements Serializable {
     /**
      * Failed response
      *
+     * @param message IMessage
+     * @param data    data
+     * @return CommonResult
+     */
+    public static <T> CommonResult<T> fail(IMessage message, T data) {
+        return fail(message.getCode(), message.getMessage());
+    }
+
+    /**
+     * Failed response
+     *
+     * @param data data
+     * @return CommonResult
+     */
+    public static <T> CommonResult<T> fail(T data) {
+        return fail(BaseErrorCode.Common.UNKNOWN_ERROR, data);
+    }
+
+
+    /**
+     * Failed response
+     *
      * @param code    the error code
      * @param message error message
      * @return CommonResult
@@ -114,23 +160,52 @@ public class CommonResult<T> extends BaseResult<T> implements Serializable {
         return baseCreate(code, message, false);
     }
 
+
+    /**
+     * Failed response
+     *
+     * @param code    the error code
+     * @param message error message
+     * @param data    data
+     * @return CommonResult
+     */
+    public static <T> CommonResult<T> fail(String code, String message, T data) {
+        return baseCreate(code, message, false, data);
+    }
+
     /**
      * Create a response object
      *
      * @param code    error code
-     * @param msg error message
+     * @param msg     error message
      * @param success success or not
      * @return CommonResult
      */
     private static <T> CommonResult<T> baseCreate(String code, String msg, boolean success) {
+        return baseCreate(code, msg, success, null);
+    }
+
+
+    /**
+     * Create a response object
+     *
+     * @param code    error code
+     * @param msg     error message
+     * @param success success or not
+     * @param data    data
+     * @return CommonResult
+     */
+    private static <T> CommonResult<T> baseCreate(String code, String msg, boolean success, T data) {
         CommonResult<T> result = new CommonResult<>();
         result.setCode(code);
         result.setSuccess(success);
         result.setMessage(msg);
         result.setTimestamp(DateTimeUtil.nowStrTime());
         result.setTraceId(UUID.randomUUID().toString());
+        result.setData(data);
         return result;
     }
+
 
     /**
      * Add trace ID
