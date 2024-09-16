@@ -129,7 +129,7 @@
             <plugin>
                 <groupId>com.ly.smart-doc</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>3.0.7</version>
+                <version>3.0.8</version>
                 <configuration>
                     <!--skip option is used to disable plugin in child module-->
                     <!--<skip>true</skip>-->
