@@ -180,6 +180,37 @@ public class EnumUtil {
         return null;
     }
 
+    /**
+     * Retrieves the value of a field from an enumeration class using a specified method name and enum constant.
+     *
+     * @param clazz         class
+     * @param getMethodName method name
+     * @param enumConstant  enum constant
+     * @return Object
+     * @apiNote This method retrieves the value of a field from an enumeration class using a specified method name and enum constant.
+     */
+    @SuppressWarnings("unchecked")
+    public static Object getFieldValueByMethod(Class<?> clazz, String getMethodName, String enumConstant) {
+        if (Objects.isNull(clazz)) {
+            throw new RuntimeException("Enum class can't be null.");
+        }
+        Class<Enum<?>> enumClass = (Class<Enum<?>>) clazz;
+        Enum<?>[] objects = enumClass.getEnumConstants();
+        try {
+            // fix method is not public
+            Method method = clazz.getDeclaredMethod(getMethodName);
+            method.setAccessible(true);
+            for (Enum<?> enumType : objects) {
+                if (enumType.name().equals(enumConstant)) {
+                    return method.invoke(enumType);
+                }
+            }
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * Retrieves the value of a field from an enumeration class using a specified field name.
@@ -212,6 +243,44 @@ public class EnumUtil {
         }
         return null;
     }
+
+
+    /**
+     * Retrieves the value of a field from an enumeration class using a specified field name.
+     *
+     * @param clazz     class
+     * @param fieldName field name
+     * @param enumConstant enum constant
+     * @return Object
+     * @apiNote This method retrieves the value of a field from an enumeration class using a specified field name.
+     */
+    public static Object getFieldValue(Class<?> clazz, String fieldName, String enumConstant) {
+        if (Objects.isNull(clazz)) {
+            throw new RuntimeException("Enum class can't be null.");
+        }
+        Class<Enum<?>> enumClass = (Class<Enum<?>>) clazz;
+        try {
+            Enum<?>[] enumConstants = enumClass.getEnumConstants();
+            if (enumConstants.length > 0) {
+                // get field
+                Field declaredField = enumClass.getDeclaredField(fieldName);
+                declaredField.setAccessible(true);
+
+                for (Enum<?> enumType : enumConstants) {
+                    if (enumType.name().equals(enumConstant)) {
+                        return declaredField.get(enumType);
+                    }
+                }
+            }
+        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+            e.printStackTrace();
+            // retry get method
+            String methodName = "get" + (fieldName.charAt(0) + "").toUpperCase() + fieldName.substring(1);
+            return getFieldValueByMethod(clazz, methodName, enumConstant);
+        }
+        return null;
+    }
+
 
     /**
      * Retrieves the methods of an enumeration class.
