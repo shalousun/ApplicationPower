@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
-            <version>3.16.2.RELEASE</version>
+            <version>3.18.0.RELEASE</version>
         </dependency>
         <!-- 格式化对象，方便输出日志 -->
         <dependency>
