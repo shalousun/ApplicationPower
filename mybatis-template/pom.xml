@@ -33,7 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>6.2.8</spring.version>
         <mybatis.version>3.5.19</mybatis.version>
-        <mybatis-spring-version>3.0.4</mybatis-spring-version>
+        <mybatis-spring-version>3.0.5</mybatis-spring-version>
     </properties>
 
     <dependencies>
