@@ -28,7 +28,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Reference apache comment-text StringEscapeUtils
+ * StringEscapeUtil
+ * @apiNote Reference apache comment-text StringEscapeUtils
  *
  * @author yu 2020/4/24.
  */

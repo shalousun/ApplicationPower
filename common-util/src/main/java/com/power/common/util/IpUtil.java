@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A utility class for working with IP addresses, providing methods to retrieve
+ * IpUtil
+ * @apiNote A utility class for working with IP addresses, providing methods to retrieve
  * the local server IP and lists of local IPv4 and IPv6 addresses.
  */
 public class IpUtil {

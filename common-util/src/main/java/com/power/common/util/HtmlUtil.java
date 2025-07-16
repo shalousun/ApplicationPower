@@ -5,7 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * HTML util
+ * HtmlUtil
+ * @apiNote html util
  * @javadoc
  * @author yu 2022/10/4.
  */

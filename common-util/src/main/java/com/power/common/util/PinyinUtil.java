@@ -1,6 +1,7 @@
 package com.power.common.util;
 
 /**
+ * PinyinUtil
  * @javadoc
  * Created by yu on 2017/8/13.
  */

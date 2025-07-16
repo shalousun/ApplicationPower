@@ -12,8 +12,8 @@ import java.util.Objects;
 import com.power.common.model.EnumDictionary;
 
 /**
- * Utility class for handling operations related to enums.
- *
+ * EnumUtil
+ * @apiNote This class provides utility methods for working with enumerations.
  * @author yu 2019/12/7.
  * @javadoc
  */

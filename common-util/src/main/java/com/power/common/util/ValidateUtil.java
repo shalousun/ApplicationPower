@@ -4,7 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Data verification tool
+ * ValidateUtil
+ * @apiNote Data verification tool
  * @javadoc
  * @author sunyu
  */

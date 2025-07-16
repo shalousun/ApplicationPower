@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 /**
- * Base64 Tools
+ * Base64Uti
  * @javadoc
  * @author yu 2018/12/08.
  */

@@ -15,7 +15,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A utility class for handling class-related operations.
+ * ClassUtil
+ * @apiNote A utility class for handling class-related operations.
  * @javadoc
  * @author sunyu
  */

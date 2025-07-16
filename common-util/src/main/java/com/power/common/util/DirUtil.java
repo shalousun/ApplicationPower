@@ -10,7 +10,7 @@ import java.util.EnumSet;
 import java.util.Objects;
 
 /**
- * A utility class for directory operations, providing directory copying functionality.
+ * DirUtil
  * @apiNote This class is designed to be a utility class, hence it is marked as final to prevent inheritance.
  * @javadoc
  * @author yu 2018/06/03.

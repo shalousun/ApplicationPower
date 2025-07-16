@@ -1,6 +1,7 @@
 package com.power.common.util;
 
 /**
+ * HexUtil
  * @javadoc
  * @author yu 2018/11/30.
  */

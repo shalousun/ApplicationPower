@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * RSA TOOls
+ * RSAUtil
  * @javadoc
  * @author yusun
  */

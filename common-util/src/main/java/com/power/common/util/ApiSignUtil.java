@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * OpenAPI Signature Generation Tool
+ * ApiSignUtil
+ * @apiNote OpenAPI Signature Generation Tool
  * @javadoc
  * @author Created by yu on 2017/7/27.
  */

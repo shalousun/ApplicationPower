@@ -6,7 +6,8 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * Utility class for generating mock ID card numbers.
+ * IDCardUtil
+ * @apiNote Utility class for generating mock ID card numbers.
  * @author yu 2018/9/15.
  */
 public class IDCardUtil {

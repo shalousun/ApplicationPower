@@ -16,7 +16,8 @@ import java.util.concurrent.ConcurrentMap;
 
 
 /**
- * A utility class providing useful methods for working with dates and times.
+ * DateTimeUtil
+ * @apiNote A utility class providing useful methods for working with dates and times.
  * @javadoc
  * @author sunyu
  */

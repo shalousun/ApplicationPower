@@ -22,8 +22,9 @@ package com.power.common.util;
 import java.util.List;
 
 /**
- * reference Spring
- * Created by yu on 2021/6/27.
+ * PathUtil
+ * @apiNote reference Spring
+ * @author yu on 2021/6/27.
  */
 public class PathUtil {
 

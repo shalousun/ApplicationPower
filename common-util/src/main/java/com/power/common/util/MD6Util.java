@@ -6,7 +6,8 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * md6 decrypt
+ * MD6Util
+ * @apiNote md6 decrypt
  * @javadoc
  * @author yu 2018/06/09.
  */

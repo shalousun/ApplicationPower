@@ -5,7 +5,8 @@ import com.power.common.exception.AssertException;
 import java.util.Objects;
 
 /**
- * The Assert class provides static methods for performing assertion checks.
+ * Assert
+ * @apiNote The Assert class provides static methods for performing assertion checks.
  * @javadoc
  * @author yu 2019/11/1.
  */
