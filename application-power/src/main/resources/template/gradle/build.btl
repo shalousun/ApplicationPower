@@ -1,12 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '3.3.3'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '4.0.7'
+    id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
     <%if(isUseDocker){ %>
     id 'docker'
      <% } %>
     id "maven-publish"
-    id "com.ly.smart-doc" version "3.0.8"
+    id "com.ly.smart-doc" version "3.1.1"
 }
 group '${basePackage}'
 version '1.0'
@@ -48,13 +48,24 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
-    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '3.0.3'
-    implementation group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '2.1.0'
-    implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.2.23'
-    runtimeOnly 'mysql:mysql-connector-java'
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
-    implementation group: 'com.lmax', name: 'disruptor', version: '4.0.0'
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
     implementation ('org.springframework.boot:spring-boot-starter-aop')
+    implementation ('org.springframework.boot:spring-boot-starter-validation')
+    implementation ('org.springframework.boot:spring-boot-starter-actuator')
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    <%if(useDb&&!useMybatisPlus){ %>
+    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '4.0.1'
+    implementation group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '4.1.0'
+    <%} %>
+    <%if(useDb){ %>
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.2.23'
+    <%} %>
+    <%if(useMybatisPlus){%>
+    implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.5.16'
+    <%}%>
+    implementation group: 'com.lmax', name: 'disruptor', version: '4.0.0'
     implementation group: 'com.alibaba.fastjson2', name: 'fastjson2', version: '2.0.52'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
     <%if(useJTA){ %>
@@ -63,11 +74,12 @@ dependencies {
     <% if(isMultipleDataSource){%>
     implementation 'com.github.shalousun:mybatis-template:1.0'
     <% } %>
-    implementation 'io.github.shalousun:common-util:2.2.6'
+    implementation 'io.github.shalousun:common-util:2.2.9'
+    <% if(lombok){%>
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'com.ly.smart-doc:smart-doc:3.0.8'
+    <%}%>
+    testImplementation 'com.ly.smart-doc:smart-doc:3.1.1'
 
 }
 
